@@ -1,0 +1,66 @@
+#+INCLUDE: "./css/level-0.orgcss"  
+#+TITLE:  
+
+#+BEGIN_HTML
+<div id="outline-container-sec-0" class="outline-2">
+<Table border="0" cellpadding="0" cellspacing="0" width="750"><TBODY>
+<TD align="left" width="10px"></td>
+
+<TD align="left"><IMG src="images/photo-small.png" height="300px"></TD>
+<TD align="left">
+
+<SPAN style="vertical-align: top; font-family: helvetica,arial,sans-serif;">
+<BIG><BIG><BIG><SPAN style="font-weight: bold;">Chenggang (Frank) LIU</SPAN></BIG></BIG></BIG>
+      <BR><BR>
+      <SPAN style="font-weight: bold;">Research Staff as Postdoctoral Fellow</SPAN><BR style="font-weight: bold;">
+      <SPAN style="font-weight: bold;">Robotics Institute</SPAN><BR style="font-weight: bold;">
+      <SPAN style="font-weight: bold;">School of Computer Science</SPAN><BR style="font-weight: bold;">
+      <SPAN style="font-weight: bold;">Carnegie Mellon University</SPAN><BR style="font-weight: bold;">
+<BR>
+Office: A412 Newell-Simon Hall<br>
+Office Phone: 412-268-1726<br>
+Email: cgliu [at] andrew.cmu.edu
+</TD>
+</TBODY>
+</TABLE>
+</div>
+#+END_HTML
+
+* About me
+  I am currently a Postdoctoral Research Fellow with [[http://www.ri.cmu.edu/][Robotics Institute]], Carnegie Mellon University. I am now working with Prof. [[http://www.cs.cmu.edu/~cga/][Chris G. Atkeson]]. I received M.S. degree and Ph.D. degree in Control Theory and Control Engineering (Computer Science) in [[http://www.sjtu.edu.cn/][Shanghai Jiao Tong University]]. 
+
+
+* Research Interests:
+** COMMENT 
+   To our human beings, all our life is about understanding and changing the world and ourselves for some purpose. 
+
+   To the robots, the former calls perception and later calls control.    
+   To achieve long-term goal with minimum cost, it need to plan.  
+
+   Most of past work is focus on the control and planning, aiming to improve robot's mobility and manipulation capabilities.  
+   and eventually achieve superb agility. 
+
+   I resort to optimization technologies, such as parametric and nonparametric optimization, 
+   trajectory optimizaation, Dynamic Programming and Reinforcement learning. 
+  
+** 
+  - Legged robot locomotion and manipulation
+  - Humanoid robot planning and control
+  - High-speed visual servo
+  - Advanced computer infrastructure for optimization-based planning and control
+
+
+#+ATTR_HTML: :width 400 
+[[file:images/egress.JPG]]       
+
+#+ATTR_HTML: :width 400 
+#+CAPTION:   CMUROBOTCONTEST
+[[file:images/test_driving.JPG]]  
+
+
+
+
+
+
+
+

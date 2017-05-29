@@ -1,0 +1,19 @@
+#+INCLUDE: "./css/level-0.orgcss" 
+#+TITLE:  
+
+* DARPA Robotics Challenge
+
+  I am now working on full-body motion planning and control for DRC tasks such as getting the robot out of a car, opening doors and cleaning debris and etc. The robot is a large hydraulic humanoid robot named Atlas, which is provide by DARPA. 
+  
+  
+  Before this, I've been working on a trajectory library approach for humanoid robot balancing and walking control. For more information, please visit [[http://rcir.sjtu.edu.cn/~cgliu/diss.html][HERE.]]
+
+   
+#+ATTR_HTML: :width 400 
+[[file:images/egress.JPG]]       
+
+#+ATTR_HTML: :width 400 
+#+CAPTION:   CMUROBOTCONTEST
+[[file:images/test_driving.JPG]]  
+
+

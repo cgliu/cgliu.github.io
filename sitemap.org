@@ -1,0 +1,15 @@
+#+TITLE: Sitemap
+
+   + gallery
+     + [[file:gallery/index.org][index]]
+   + project-demo-updated
+     + [[file:project-demo-updated/index.org][index]]
+   + [[file:contact.org][contact]]
+   + [[file:howto.org][howto]]
+   + [[file:index.org][index]]
+   + [[file:links.org][links]]
+   + [[file:patents.org][patents]]
+   + [[file:projects.org][projects]]
+   + [[file:publications.org][publications]]
+   + [[file:research.org][research]]
+   + [[file:robotics.org][robotics]]

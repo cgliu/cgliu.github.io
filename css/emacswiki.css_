@@ -1,0 +1,109 @@
+/* 
+ * Stylesheet for the Emacs Wiki http://www.emacswiki.org/
+ * Copyright (C) 2005 Lawrence Mitchell <wence@gmx.li>
+ */
+body { 
+    font-size : 100%;
+    margin-left : 15%;
+    max-width: 85ex;
+    color : rgb(0,0,0);
+    background : rgb(255,255,255);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    border-bottom: solid 1px #88f;
+    margin-right : 2em;
+    margin-left : -2em;
+    margin-bottom : 0.7em;
+}
+
+h1 { font-size : 155%; }
+h2 { font-size : 135%; }
+h3 { font-size : 125%; }
+h4 { font-size : 115%; }
+h5 { font-size : 110%; }
+h6 { font-size : 105%; }
+
+/* Links */
+a { text-decoration : none; }
+a[href] { font-weight : bold; }
+
+a:link { color : rgb(0, 0, 255);  background : transparent; } /* blue */
+
+a:visited { color : rgb(180, 0, 180); background : transparent; } /* pink */
+
+a[href]:hover, a:active {
+    color : rgb(0, 160,70);     /* sea green */
+    background : transparent;
+}
+
+/* Flag up external links */
+a[href^="http:"] { 
+    padding-right : 12px;
+    background : transparent url("http://www.emacswiki.org/cgi-bin/wiki/download/LawrenceMitchellExternalLinkImage")
+        right no-repeat;
+}
+
+a[href^="http://www.emacswiki.org/"] {
+    padding-right : 0;
+    background : inherit;
+}
+a.near:link { color:#093; }
+a.near:visited { color:#550; }
+a.near:active, a.near:hover { color:#0E0; }
+
+
+/* Footer display */
+hr { display : none; }
+div.footer { 
+    border-top : solid 1px #88f; 
+    padding-top : 1em;
+    font-size : 70%; 
+}
+
+
+li { padding : 0.5ex; }
+
+/* Images */
+img { border:0; }
+img.logo { 
+    display : none;
+}
+
+/* Display of "conversations" */
+
+div.color { clear : left; }
+div.one, div.two { 
+    margin-left : 1em;
+    margin-top : 0.5em;
+    margin-bottom: 0.5em;
+    padding : 0.2em;
+    padding-left : 1em;
+    background : rgb(240,240,240); 
+}
+div.two { 
+    background : rgb(220,220,220); 
+}
+
+
+
+/* Display of code */
+pre {
+    font-size : 70%;
+    border: rgb(100,100,100) 1px solid;
+    margin : 0;
+    padding : 0.5em;
+    padding-top : 1em;
+    padding-bottom : 1em;
+    margin-right : 1em;
+    background-color: rgb(230,230,230);
+}
+
+@media print {
+    span.gotobar { display:none }
+    span.specialdays { display:none }
+    div.refer { display:none }
+    div.footer { display:none }
+    div.near { display:none }
+    div.sister { display:none }
+}
