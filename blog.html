@@ -289,8 +289,9 @@ for the JavaScript code in this tag.
 <h2 id="orgad41e9b">How to create a beautiful homepage with Emacs org-mode and Bootstrap</h2>
 <div class="outline-text-2" id="text-orgad41e9b">
 <ul class="org-ul">
-<li>Configure org-mode project</li>
-</ul>
+<li><p>
+Configure org-mode project
+</p>
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp">(<span style="color: #fff59d; font-weight: bold;">setq</span> org-publish-project-alist
       '(
@@ -325,21 +326,81 @@ for the JavaScript code in this tag.
         ))
 
 </code></pre>
-</div>
-<ul class="org-ul">
+</div></li>
+
 <li>Download <a href="http://getbootstrap.com/2.3.2/">Bootstrap</a> and extract .zip. Make sure these folders (css, img and js) are in the same folder as your org files.</li>
-<li></li>
 
-<li>Create level-0.include as following and save it in /css</li>
+<li><p>
+Create level-0.include as following and save it
+</p>
+<div class="org-src-container">
+<pre><code class="src src-html">#+options: author:nil creator:nil timestamp:nil email:nil
+#+options: h:0 toc:nil title:nil
+#+options: html-style:t
 
-<li>Put the following line in the first line in your org files.</li>
-</ul>
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">meta</span> <span style="color: #ffcc80;">http-equiv</span>=<span style="color: #9ccc65;">"Content-Type"</span> <span style="color: #ffcc80;">content</span>=<span style="color: #9ccc65;">"text/html; charset=UTF-8"</span> /&gt;
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">title</span>&gt;<span style="font-weight: bold; text-decoration: underline;">Chenggang Liu's Homepage</span>&lt;/<span style="color: #84ffff;">title</span>&gt;
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./fonts/Serif/cmun-serif.css"</span> /&gt;
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./fonts/Serif-Slanted/cmun-serif-slanted.css"</span> /&gt;
+#+HTML_HEAD:        <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">BOOTSTRAP</span><span style="color: #b0bec5;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./bootstrap/css/bootstrap.min.css"</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span>&gt;
+#+HTML_HEAD:        <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">mobile first</span><span style="color: #b0bec5;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">meta</span> <span style="color: #ffcc80;">name</span>=<span style="color: #9ccc65;">"viewport"</span> <span style="color: #ffcc80;">content</span>=<span style="color: #9ccc65;">"width=device-width, initial-scale=1.0"</span>&gt;
+#+HTML_HEAD:
+#+HTML_HEAD:        <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">removed html from url but still is html</span><span style="color: #b0bec5;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">meta</span> <span style="color: #ffcc80;">http-equiv</span>=<span style="color: #9ccc65;">"Content-Type"</span> <span style="color: #ffcc80;">content</span>=<span style="color: #9ccc65;">"text/html; charset=UTF-8"</span> /&gt;
+#+HTML_HEAD:
+#+HTML_HEAD:        <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">font awesome</span><span style="color: #b0bec5;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span>&gt;
+#+HTML_HEAD:
+#+HTML_HEAD:        <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">fonts: allan &amp; cardo</span><span style="color: #b0bec5;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"http://fonts.googleapis.com/css?family=Droid+Serif"</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span> <span style="color: #ffcc80;">type</span>=<span style="color: #9ccc65;">"text/css"</span>&gt;
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"http://fonts.googleapis.com/css?family=Droid+Sans"</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span> <span style="color: #ffcc80;">type</span>=<span style="color: #9ccc65;">"text/css"</span>&gt;
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./css/sticky-footer-navbar.css"</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span>&gt;
+#+HTML_HEAD:
+#+HTML_HEAD:        <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">Highlight</span><span style="color: #b0bec5;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./highlight/styles/github.css"</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span>&gt;
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./favicon.ico"</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"shortcut icon"</span> /&gt;
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">script</span> <span style="color: #ffcc80;">type</span>=<span style="color: #9ccc65;">"text/javascript"</span> <span style="color: #ffcc80;">src</span>=<span style="color: #9ccc65;">"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"</span>&gt;&lt;/<span style="color: #84ffff;">script</span>&gt;
+
+#+BEGIN_EXPORT html
+&lt;<span style="color: #84ffff;">nav</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"navbar navbar-inverse navbar-static-top"</span> <span style="color: #ffcc80;">role</span>=<span style="color: #9ccc65;">"navigation"</span>&gt;
+  &lt;<span style="color: #84ffff;">div</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"container"</span>&gt;
+    <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">Toggle header for mobile</span><span style="color: #b0bec5;">--&gt;</span>
+    &lt;<span style="color: #84ffff;">div</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"navbar-header"</span>&gt;
+      &lt;<span style="color: #84ffff;">button</span> <span style="color: #ffcc80;">type</span>=<span style="color: #9ccc65;">"button"</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"navbar-toggle"</span> <span style="color: #ffcc80;">data-toggle</span>=<span style="color: #9ccc65;">"collapse"</span> <span style="color: #ffcc80;">data-target</span>=<span style="color: #9ccc65;">".navbar-collapse"</span>&gt;
+        &lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"sr-only"</span>&gt;Toggle navigation&lt;/<span style="color: #84ffff;">span</span>&gt;
+        &lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"icon-bar"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;
+        &lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"icon-bar"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;
+        &lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"icon-bar"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;
+      &lt;/<span style="color: #84ffff;">button</span>&gt;
+      &lt;<span style="color: #84ffff;">a</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"navbar-brand active"</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./index.html"</span> <span style="color: #ffcc80;">id</span>=<span style="color: #9ccc65;">"home"</span>&gt;Chenggang Liu's Homepage&lt;/<span style="color: #84ffff;">a</span>&gt;
+    &lt;/<span style="color: #84ffff;">div</span>&gt;
+    <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">normal header</span><span style="color: #b0bec5;">--&gt;</span>
+    &lt;<span style="color: #84ffff;">div</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"navbar-collapse collapse"</span>&gt;
+      &lt;<span style="color: #84ffff;">ul</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"nav navbar-nav navbar-right"</span>&gt;
+        &lt;<span style="color: #84ffff;">li</span>&gt;&lt;<span style="color: #84ffff;">a</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./index.html"</span>&gt;&lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"glyphicon glyphicon-home"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;  Home&lt;/<span style="color: #84ffff;">a</span>&gt;&lt;/<span style="color: #84ffff;">a</span>&gt;&lt;/<span style="color: #84ffff;">li</span>&gt;
+        &lt;<span style="color: #84ffff;">li</span>&gt;&lt;<span style="color: #84ffff;">a</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./blog.html"</span>&gt;&lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"glyphicon glyphicon-pencil"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;  Blog&lt;/<span style="color: #84ffff;">a</span>&gt;&lt;/<span style="color: #84ffff;">li</span>&gt;
+        &lt;<span style="color: #84ffff;">li</span>&gt;&lt;<span style="color: #84ffff;">a</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./projects.html"</span>&gt;&lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"glyphicon glyphicon-tags"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;  Projects&lt;/<span style="color: #84ffff;">a</span>&gt;&lt;/<span style="color: #84ffff;">li</span>&gt;
+        &lt;<span style="color: #84ffff;">li</span>&gt;&lt;<span style="color: #84ffff;">a</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./about.html"</span>&gt;&lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"glyphicon glyphicon-user"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;  About&lt;/<span style="color: #84ffff;">a</span>&gt;&lt;/<span style="color: #84ffff;">li</span>&gt;
+        &lt;<span style="color: #84ffff;">li</span>&gt;&lt;<span style="color: #84ffff;">a</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./contact.html"</span>&gt;&lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"glyphicon glyphicon-envelope"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;  Contact&lt;/<span style="color: #84ffff;">a</span>&gt;&lt;/<span style="color: #84ffff;">li</span>&gt;
+      &lt;/<span style="color: #84ffff;">ul</span>&gt;
+    &lt;/<span style="color: #84ffff;">div</span>&gt;<span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">/.nav-collapse </span><span style="color: #b0bec5;">--&gt;</span>
+  &lt;/<span style="color: #84ffff;">div</span>&gt;
+&lt;/<span style="color: #84ffff;">nav</span>&gt;
+#+END_EXPORT
+
+</code></pre>
+</div></li>
+
+<li><p>
+On top of your org files, add:
+</p>
 <pre class="example">
-#+INCLUDE: "./css/level-0.orgcss"
-#+TITLE:
-</pre>
-<ul class="org-ul">
-<li>you are done and enjoy!</li>
+#+INCLUDE: "./level-0.include"
+</pre></li>
+
+<li>You are done and enjoy!</li>
 </ul>
 </div>
 </div>
