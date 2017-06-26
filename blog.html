@@ -290,7 +290,7 @@ for the JavaScript code in this tag.
 <div class="outline-text-2" id="text-orgad41e9b">
 <ul class="org-ul">
 <li><p>
-Configure org-mode project
+Configure org-mode html export project
 </p>
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp">(<span style="color: #fff59d; font-weight: bold;">setq</span> org-publish-project-alist
@@ -331,7 +331,7 @@ Configure org-mode project
 <li>Download <a href="http://getbootstrap.com/2.3.2/">Bootstrap</a> and extract .zip. Make sure these folders (css, img and js) are in the same folder as your org files.</li>
 
 <li><p>
-Create level-0.include as following and save it
+Create level-0.include as following and save it to YOUR_INC_PATH
 </p>
 <div class="org-src-container">
 <pre><code class="src src-html">#+options: author:nil creator:nil timestamp:nil email:nil
@@ -397,7 +397,7 @@ Create level-0.include as following and save it
 On top of your org files, add:
 </p>
 <pre class="example">
-#+INCLUDE: "./level-0.include"
+#+INCLUDE: "YOUR_INC_PATH/level-0.include"
 </pre></li>
 
 <li>You are done and enjoy!</li>
