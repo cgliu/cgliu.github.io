@@ -1,0 +1,80 @@
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono|Droid+Serif);
+
+@media all
+{
+            /* TOC inspired by http://jashkenas.github.com/coffee-script */
+  #table-of-contents {
+                       font-size: 10pt;
+                       position: fixed;
+                       right: 0em;
+                       top: 5em;
+                       background: white;
+                       line-height: 12pt;
+                       text-align: right;
+                       box-shadow: 0 0 1em #777777;
+                       webkit-box-shadow: 0 0 1em #777777;
+                       moz-box-shadow: 0 0 1em #777777;
+                       webkit-border-bottom-left-radius: 5px;
+                       moz-border-radius-bottomleft: 5px;
+                       /* ensure doesn't flow off the screen when expanded */
+                       max-height: 80%;
+                       overflow: auto; }
+  #table-of-contents h2 {
+                          font-size: 13pt;
+                          max-width: 9em;
+                          border: 0;
+                          font-weight: normal;
+                          padding-left: 0.5em;
+                          padding-right: 0.5em;
+                          padding-top: 0.05em;
+                          padding-bottom: 0.05em; }
+  #table-of-contents #text-table-of-contents {
+                                               display: none;
+                                               text-align: left; }
+  #table-of-contents:hover #text-table-of-contents {
+                                                     display: block;
+                                                     padding: 0.5em;
+                                                     margin-top: -1.5em; }
+
+    /* Styles for org-info.js */
+
+    .org-info-js_info-navigation
+    {
+	border-style:none;
+    }
+
+    #org-info-js_console-label
+    {
+	font-size:10px;
+	font-weight:bold;
+	white-space:nowrap;
+    }
+
+    .org-info-js_search-highlight
+    {
+	background-color:#ffff00;
+	color:#000000;
+	font-weight:bold;
+    }
+
+    #org-info-js-window
+    {
+	border-bottom:1px solid black;
+	padding-bottom:10px;
+	margin-bottom:10px;
+    }
+
+    /* Styles for org-info.js */
+} /* END OF @media all */
+
+
+
+@media screen
+{
+    #table-of-contents {
+	float: right;
+	border: 1px solid #CCC;
+	max-width: 50%;
+	overflow: auto;
+    }
+} /* END OF @media screen */
