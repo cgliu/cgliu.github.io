@@ -184,10 +184,6 @@
 <link rel="stylesheet" href="./fonts/Serif-Slanted/cmun-serif-slanted.css" />
 <!--BOOTSTRAP-->
 <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!--mobile first-->
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--removed html from url but still is html-->
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <!--font awesome-->
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 <!--fonts: allan & cardo-->
@@ -196,10 +192,8 @@
 <link href="./css/sticky-footer-navbar.css" rel="stylesheet">
 <!--Highlight-->
 <link href="./highlight/styles/github.css" rel="stylesheet">
-<link href="./favicon.ico" rel="shortcut icon" />
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <link href="./css/default.css" rel="stylesheet">
-<link href="./css/index.css" rel="stylesheet">
 <link href="./css/mine.css" rel="stylesheet" type="text/css">
 <script type="text/javascript">
 /*
@@ -274,11 +268,6 @@ for the JavaScript code in this tag.
     </div><!--/.nav-collapse -->
   </div>
 </nav>
-<div class="container theme-showcase" role="main">
-<div class="jumbotron jumbotron-fluid">
-
-
-
 <div class="row">
 <div class="col-md-6">
 
@@ -289,12 +278,12 @@ for the JavaScript code in this tag.
 </div>
 <div class="col-md-6">
 <p>
-Self-driving car, Uber ATG
+Self-driving car, Uber ATG, Pittsburgh, 2015-present
 </p>
 <ul class="org-ul">
 <li>System architecture and performance analysis</li>
-<li>Motion planning and control</li>
-<li>Learning from demonstration</li>
+<li>Optimization-based motion planning and control</li>
+<li>Learning from imitation</li>
 </ul>
 <p class="lead">
 <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
@@ -312,13 +301,14 @@ Self-driving car, Uber ATG
 </div>
 <div class="col-md-6">
 <p>
-The DARPA Robotics Challenge, WPI-CMU team
+The DARPA Robotics Challenge, Carnegie Mellon University, Pittsburgh, 2013-2015
 </p>
 <ul class="org-ul">
-<li>Full-body motion planning and control of humanoid robots for the egress task details</li>
+<li>Full-body motion planning and control</li>
+<li>The egress task</li>
 </ul>
 <p class="lead">
-<a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+<a class="btn btn-primary btn-lg" href="./projects/drc.html" role="button">Learn more</a>
 </p>
 </div>
 </div>
@@ -335,12 +325,12 @@ The DARPA Robotics Challenge, WPI-CMU team
 </div>
 <div class="col-md-6">
 <p>
-China's Passenger Jet C919, GE Aviation and Aviage Systems, Ltd.
+China's C919 project, GE Aviation and Aviage Systems, Ltd., 2011-2013
 </p>
 <ul class="org-ul">
-<li>Integrated Modular Avionics System requirement development</li>
-<li>High integrity ADN (Advanced Data Networks) requirement development</li>
-<li>ADN switch ground tool development requirement development</li>
+<li>Integrated Modular Avionics (IMA) system design</li>
+<li>High integrity ADN (Advanced Data Networks) design</li>
+<li>ADN switch configuration tool and analysis tool design</li>
 </ul>
 <p class="lead">
 <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
@@ -359,51 +349,16 @@ China's Passenger Jet C919, GE Aviation and Aviage Systems, Ltd.
 </div>
 <div class="col-md-6">
 <p>
-Control using an optimal trajectory library, PhD Thesis, SJTU
+Control using an optimal trajectory library, PhD Thesis, SJTU, 2006-2011
 </p>
 <ul class="org-ul">
-<li>Control using a trajectory library is studied from two aspects: trajectory optimization and control law construction.</li>
-<li>Application to tasks with an equilibrium state (standing balance control).</li>
-<li>Application to tasks with a limit cycles (walking control).</li>
 <li>Trajectory-based dynamic programming</li>
+<li>Trajectory optimization and policy optimization
+<ul class="org-ul">
+<li>Application to tasks with an equilibrium state (standing balance control)</li>
+<li>Application to tasks with a limit cycles (walking control)</li>
+</ul></li>
 </ul>
-<p class="lead">
-<a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-</p>
-</div>
-</div>
-
-
-<div class="row">
-<div class="col-md-6">
-
-<div class="figure">
-<p><img src="projects/covers/walking.png" alt="walking.png" width="90%" />
-</p>
-</div>
-</div>
-<div class="col-md-6">
-<p>
-Biped Walking control using an optimal trajectory library, CMU
-</p>
-<p class="lead">
-<a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-</p>
-</div>
-</div>
-
-<div class="row">
-<div class="col-md-6">
-
-<div class="figure">
-<p><img src="projects/covers/sarcos.png" alt="sarcos.png" width="90%" />
-</p>
-</div>
-</div>
-<div class="col-md-6">
-<p>
-Optimization-based controller design technologies, CMU
-</p>
 <p class="lead">
 <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
 </p>
@@ -420,9 +375,8 @@ Optimization-based controller design technologies, CMU
 </div>
 <div class="col-md-6">
 <p>
-Standing Balance Control of a Humanoid Robot, CMU
+Standing Balance Control of a Humanoid Robot under constant force, Shanghai Jiao Tong University
 </p>
-
 <p class="lead">
 <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
 </p>
@@ -439,11 +393,12 @@ Standing Balance Control of a Humanoid Robot, CMU
 </div>
 <div class="col-md-6">
 <p>
-Roboray humanoid robot, CMU, Samsung, Ltd. and SeeGrid, ltd.
+Roboray humanoid robot system development, Carnegie Mellon University, Samsung, Ltd. and SeeGrid, ltd.
 </p>
 <ul class="org-ul">
-<li>Sensor calibration and signal processing</li>
-<li>Balance control</li>
+<li>Sensor calibration</li>
+<li>Filter design</li>
+<li>Balance controller development</li>
 </ul>
 <p class="lead">
 <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
@@ -461,7 +416,7 @@ Roboray humanoid robot, CMU, Samsung, Ltd. and SeeGrid, ltd.
 </div>
 <div class="col-md-6">
 <p>
-Biped walking control, SJTU
+Biped walking control, Shanghai Jiao Tong University, 2007
 </p>
 <ul class="org-ul">
 <li>ZMP-based walking control</li>
@@ -483,9 +438,8 @@ Biped walking control, SJTU
 </div>
 <div class="col-md-6">
 <p>
-Biped skate control, SJTU
+Biped skating control, Shanghai Jiao Tong University, 2007
 </p>
-
 <p class="lead">
 <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
 </p>
@@ -502,13 +456,12 @@ Biped skate control, SJTU
 </div>
 <div class="col-md-6">
 <p>
-A small humanoid robot system development, 2008-2010, SJTU
+Small humanoid robot system development, Shanghai Jiao Tong University, 2006-2008
 </p>
 <ul class="org-ul">
 <li>Motion control system (HW/SW) design and implement</li>
 <li>ZMP-based walking control implement</li>
 </ul>
-
 <p class="lead">
 <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
 </p>
@@ -526,12 +479,10 @@ A small humanoid robot system development, 2008-2010, SJTU
 </div>
 <div class="col-md-6">
 <p>
-Motor control system design and implementation, 2007-2008, SJTU
+Motor control system development, Shanghai Jiao Tong University, 2007-2008
 </p>
 <ul class="org-ul">
-<li>Compact (smaller than commercial products)</li>
 <li>6 DoFs control (more DoFs than off-the-shelf products of  the same size)</li>
-<li>TI F2000 DSP</li>
 <li>High precision speed/position control</li>
 <li>6 DoFs coupling control</li>
 </ul>
@@ -553,11 +504,11 @@ Motor control system design and implementation, 2007-2008, SJTU
 </div>
 <div class="col-md-6">
 <p>
-Sensory-motor coordination research, 2006-2007, SJTU
+Sensory-motor coordination research, Shanghai Jiao Tong University, 2006-2007
 </p>
 <ul class="org-ul">
 <li>Basic behavior acquisition with multisensor integration.</li>
-<li>This research enables a robot to emerge a controller based on its interaction with the environment without specific programming.</li>
+<li>This research enables a robot to emerge a behavior controller based on its interaction with the environment without specific programming.</li>
 </ul>
 <p class="lead">
 <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
@@ -575,14 +526,13 @@ Sensory-motor coordination research, 2006-2007, SJTU
 </div>
 <div class="col-md-6">
 <p>
-GPU logic design, 2003-2006, S3 graphics, Inc.
+Graphic Processing Unit logic design, S3 graphics, Inc., 2003-2006
 </p>
 <ul class="org-ul">
 <li>H.264 Video Decoder Development</li>
 <li>Multiple Graphic Processing Unit Support Techniques Development</li>
-<li>Bus Interface Unit Development</li>
+<li>Bus Interface Development</li>
 </ul>
-
 <p class="lead">
 <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
 </p>
@@ -599,16 +549,17 @@ GPU logic design, 2003-2006, S3 graphics, Inc.
 </div>
 <div class="col-md-6">
 <p>
-Active vision system design and development, 2001-2003, SJTU
+Active vision system development, Shanghai Jiao Tong University, 2001-2003
 </p>
 <ul class="org-ul">
-<li>TI C6000 floating point DSP</li>
-<li>PAL Video decode</li>
-<li>50 frame per second processing capability</li>
-<li>Support real-time display</li>
-<li>2-DoFs pan-tilt camera system</li>
-<li>Fast moving obstacles, such as volleyball,  tracking capability</li>
+<li>Fast moving object tracking @ 50 Hz:
+<ul class="org-ul">
+<li>Real-time image processing with TI C6000 floating point DSP</li>
+<li>Real-time display</li>
+<li>Real-time 2-DoFs pan-tilt camera system control</li>
+</ul></li>
 </ul>
+
 <p class="lead">
 <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
 </p>
@@ -625,8 +576,9 @@ Active vision system design and development, 2001-2003, SJTU
 </div>
 <div class="col-md-6">
 <p>
-Large ship pose prediction algorithm and software
+Short-term ship pose prediction algorithm and software development, Harbin Engineering University and China Ship Scientific Research Center, 2001
 </p>
+
 
 <p class="lead">
 <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
@@ -656,9 +608,9 @@ Document manage software for Windows
 </div>
 </div>
 
-
-</div>
-</div>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 </div>
 </body>
 </html>

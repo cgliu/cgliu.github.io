@@ -184,10 +184,6 @@
 <link rel="stylesheet" href="./fonts/Serif-Slanted/cmun-serif-slanted.css" />
 <!--BOOTSTRAP-->
 <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!--mobile first-->
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--removed html from url but still is html-->
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <!--font awesome-->
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 <!--fonts: allan & cardo-->
@@ -196,7 +192,6 @@
 <link href="./css/sticky-footer-navbar.css" rel="stylesheet">
 <!--Highlight-->
 <link href="./highlight/styles/github.css" rel="stylesheet">
-<link href="./favicon.ico" rel="shortcut icon" />
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <link href="./css/default.css" rel="stylesheet">
 <link href="./css/index.css" rel="stylesheet">
@@ -281,10 +276,10 @@ for the JavaScript code in this tag.
 <h2 id="org9f4cde0">Goal</h2>
 <div class="outline-text-2" id="text-org9f4cde0">
 <p>
-Endow robots with the dexterity, robustness and autonomy of animals and humans and enable them to work in diverse ﬁelds
-such as human working&amp;living environment and degraded environments. In practice, I'd like to build robots that can
-understand their task, the world, and themselves, learn from humans and other creatures, survive and execute their tasks
-in an elegant, dexterous, and agile way to surpass their teachers.
+My life goal is to endow robots with the dexterity, robustness and autonomy of animals and humans and enable them to
+work in diverse fields such as human working&amp;living environment and degraded environments. In practice, I'd like to
+design robots that can understand the tasks, the environment, and themselves; learn from humans and other creatures; and
+execute their tasks in a elegant, efficient and agile way to surpass their creators.
 </p>
 </div>
 </div>
@@ -293,32 +288,96 @@ in an elegant, dexterous, and agile way to surpass their teachers.
 <h2 id="orgd6b05e1">Approaches</h2>
 <div class="outline-text-2" id="text-orgd6b05e1">
 <p>
-"We begin not with a sensory stimulus, but with a sensorimotor co-ordination . . . In a certain sense it is the movement
+Optimal control and reinforcement learning is the main focus of my research.
+</p>
+
+<pre class="example">
+We begin not with a sensory stimulus, but with a sensorimotor co-ordination . . . In a certain sense it is the movement
 which is primary, and the sensation which is secondary, the movement of the body, head, and eye muscles determining the
-quality of what is experienced.” (Dewey, 1898) To achieve strong AI, we can’t regard AI problems as information
-processing problems, but instead, we need to have a real robot locomote , manipulate and interact with the world. I
-believe the goal of AI is not just to help us understand our world, but to construct a better world.
-</p>
+quality of what is experienced
+-- Dewey, 1898
+</pre>
 
 <p>
-“The laws of movement and of rest deduced from this principle being precisely the same as those observed in nature, we
-can admire the application of it to all phenomena. The movement of animals, the vegetative growth of plants &#x2026; are only
+Perception, prediction and planning are tightly coupled. I believe we can't solve AI problems by regarding them as
+information processing problems, but instead, we need to have physical robots to move around and interact with the
+world.
+</p>
+
+<pre class="example">
+The laws of movement and of rest deduced from this principle being precisely the same as those observed in nature, we
+can admire the application of it to all phenomena. The movement of animals, the vegetative growth of plants ... are only
 its consequences; and the spectacle of the universe becomes so much the grander, so much more beautiful, the worthier of
-its Author, when one knows that a small number of laws, most wisely established, suffice for all movements.” (Pierre
-Louis Maupertuis)
-</p>
+its Author, when one knows that a small number of laws, most wisely established, suffice for all movements.
+-- Pierre Louis Maupertuis
+</pre>
 
 <p>
-Although full of chaos, the world is governed by optimality principle. The optimality remains central in thermodynamics,
-fluid mechanics, the theory of relativity, quantum mechanics, particle physics, string theory, optics, so and so. Thanks
-to mankind's great scientists, Isaac Newton, Leonhard Euler, Joseph-Louis Lagrange, Willian Rowan Hamilton, Lev
-Pontryagin, Richard Bellman, Carl Gustav Jacob Jacobi, and etc. , we have powerful mathematical weapons to formulate
-these problems and thanks to high speed computers and clusters, we have chance to actually solve these problems in our
-generation.
+Although full of chaos, the world is governed by optimality principle. The optimality is so ubiquitous that it remains
+central in thermodynamics, fluid mechanics, the theory of relativity, quantum mechanics, particle physics, string
+theory, optics, so and so. Thanks to mankind's great scientists, Isaac Newton, Leonhard Euler, Joseph-Louis Lagrange,
+Willian Rowan Hamilton, Lev Pontryagin, Richard Bellman, Carl Gustav Jacob Jacobi, and etc. , they provide powerful
+mathematical weapons to formulate these problems and thanks to high speed computers and clusters, they enable us to
+solve these problems.
 </p>
+
+<div class="row">
+<div class="col-md-2">
+
+<div class="figure">
+<p><img src="images/covers/ihr.jpg" alt="ihr.jpg" width="100%" />
+</p>
+</div>
+</div>
+
+<div class="col-md-2">
+
+<div class="figure">
+<p><img src="images/covers/roboray.png" alt="roboray.png" width="100%" />
+</p>
+</div>
+</div>
+
+<div class="col-md-2">
+
+<div class="figure">
+<p><img src="images/covers/sarcos.png" alt="sarcos.png" width="100%" />
+</p>
+</div>
+</div>
+
+<div class="col-md-2">
+
+<div class="figure">
+<p><img src="images/covers/atlas1.png" alt="atlas1.png" width="100%" />
+</p>
+</div>
+</div>
+
+<div class="col-md-2">
+
+<div class="figure">
+<p><img src="images/covers/atlas2.jpg" alt="atlas2.jpg" width="100%" />
+</p>
+</div>
+</div>
+
+<div class="col-md-2">
+
+<div class="figure">
+<p><img src="images/covers/hrobot.png" alt="hrobot.png" width="100%" />
+</p>
+</div>
+</div>
+
+</div>
+
 
 </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 </div>
 </div>
 </div>
