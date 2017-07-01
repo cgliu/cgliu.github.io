@@ -1,0 +1,978 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2017-07-01 Sat 15:08 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title></title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Chenggang Liu" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgedb08f2">Deep RF Resources</a></li>
+<li><a href="#orgfc5deb0">Deeplearning</a>
+<ul>
+<li><a href="#org279b8f4">good materials</a></li>
+<li><a href="#org0df14d9">Good tutorials</a></li>
+</ul>
+</li>
+<li><a href="#org9f8f71d">Motion Control</a>
+<ul>
+<li><a href="#orge7926f9">Open sources</a></li>
+<li><a href="#orgdbf4bc6">Good websites</a></li>
+</ul>
+</li>
+<li><a href="#orge1190c5">Laboratories and organizations</a></li>
+<li><a href="#org0609da7">Homepage links</a></li>
+<li><a href="#orgdc83034">Researchers</a>
+<ul>
+<li><a href="#org820a5b8">Leg locomotion</a></li>
+<li><a href="#orga5459fd">motion planning</a></li>
+<li><a href="#org2ec5765">optimal control and path planning</a></li>
+<li><a href="#orge17e5e9">model based control</a></li>
+</ul>
+</li>
+<li><a href="#org1624276">Optimization Tools</a></li>
+<li><a href="#org82e0e20">Resource Links</a>
+<ul>
+<li><a href="#orgb56b062">dynamics simulation and visualization</a></li>
+<li><a href="#org6cd941b">Motion planning</a></li>
+<li><a href="#orgce8bf93">Others</a></li>
+<li><a href="#org83a83b2">free optimization solver</a></li>
+</ul>
+</li>
+<li><a href="#org1bff6fe">Journals</a></li>
+<li><a href="#org02f6d51">Conference</a></li>
+<li><a href="#orga784bd9">Robots</a>
+<ul>
+<li><a href="#org2673071">Walking and running robots</a></li>
+<li><a href="#orgd9f5699">soft robot</a></li>
+</ul>
+</li>
+<li><a href="#orgfb4e12c">DRC</a>
+<ul>
+<li><a href="#org46cd550">Videos on YouTube</a></li>
+</ul>
+</li>
+<li><a href="#orgea06bc7">robots</a></li>
+<li><a href="#org2e95772">Good webs</a></li>
+<li><a href="#org684fcdd">libs</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgedb08f2" class="outline-2">
+<h2 id="orgedb08f2">Deep RF Resources</h2>
+<div class="outline-text-2" id="text-orgedb08f2">
+<ul class="org-ul">
+<li>David Silver
+<a href="http://www0.cs.ucl.ac.uk/staff/D.Silver/web/Teaching.html">http://www0.cs.ucl.ac.uk/staff/D.Silver/web/Teaching.html</a> <br />
+<a href="https://www.youtube.com/watch?v=2pWv7GOvuf0&amp;index=3&amp;list=PLIP2-uMeSSLseV4oXPVgcO0llKd3HCy-s&amp;t=2228s">https://www.youtube.com/watch?v=2pWv7GOvuf0&amp;index=3&amp;list=PLIP2-uMeSSLseV4oXPVgcO0llKd3HCy-s&amp;t=2228s</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgfc5deb0" class="outline-2">
+<h2 id="orgfc5deb0">Deeplearning</h2>
+<div class="outline-text-2" id="text-orgfc5deb0">
+</div>
+<div id="outline-container-org279b8f4" class="outline-3">
+<h3 id="org279b8f4">good materials</h3>
+<div class="outline-text-3" id="text-org279b8f4">
+<p>
+<a href="http://sebastianruder.com/optimizing-gradient-descent/index.html#batchgradientdescent">http://sebastianruder.com/optimizing-gradient-descent/index.html#batchgradientdescent</a>
+</p>
+</div>
+</div>
+<div id="outline-container-org0df14d9" class="outline-3">
+<h3 id="org0df14d9">Good tutorials</h3>
+<div class="outline-text-3" id="text-org0df14d9">
+<p>
+<a href="http://www.cs.cmu.edu/~rsalakhu/">http://www.cs.cmu.edu/~rsalakhu/</a> <br />
+<a href="http://videolectures.net/deeplearning2015_salakhutdinov_deep_learning/">http://videolectures.net/deeplearning2015_salakhutdinov_deep_learning/</a> <br />
+<a href="http://videolectures.net/deeplearning2015_salakhutdinov_deep_learning_2/">http://videolectures.net/deeplearning2015_salakhutdinov_deep_learning_2/</a> <br />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9f8f71d" class="outline-2">
+<h2 id="org9f8f71d">Motion Control</h2>
+<div class="outline-text-2" id="text-org9f8f71d">
+</div>
+<div id="outline-container-orge7926f9" class="outline-3">
+<h3 id="orge7926f9">Open sources</h3>
+<div class="outline-text-3" id="text-orge7926f9">
+<ul class="org-ul">
+<li>Computational Learning and Motor Control Lab
+<a href="http://www-clmc.usc.edu/Resources/Software">http://www-clmc.usc.edu/Resources/Software</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgdbf4bc6" class="outline-3">
+<h3 id="orgdbf4bc6">Good websites</h3>
+<div class="outline-text-3" id="text-orgdbf4bc6">
+<p>
+<a href="https://studywolf.wordpress.com/category/robotics/dynamic-movement-primitive/">https://studywolf.wordpress.com/category/robotics/dynamic-movement-primitive/</a>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge1190c5" class="outline-2">
+<h2 id="orge1190c5">Laboratories and organizations</h2>
+<div class="outline-text-2" id="text-orge1190c5">
+<ul class="org-ul">
+<li>GRASP in Univ. of Pennsylvania <br />
+<a href="http://www.grasp.upenn.edu/">http://www.grasp.upenn.edu/</a> <br />
+General Robotics, Automation, Sensing and Perception</li>
+<li>Auton Lab @ CMU  <br />
+<a href="http://www.autonlab.org/autonweb/2.html">http://www.autonlab.org/autonweb/2.html</a></li>
+<li>LAIRLab <br />
+<a href="http://robotwhisperer.org/">http://robotwhisperer.org/</a>   <br /></li>
+<li>Stefan Schaal Lab <br />
+<a href="http://www-clmc.usc.edu/Research/LeggedLocomotion">http://www-clmc.usc.edu/Research/LeggedLocomotion</a></li>
+<li>Sarcos Inc. <br />
+<a href="http://www.sarcos.com/">http://www.sarcos.com/</a></li>
+<li>Boston Dynamics Inc. <br />
+<a href="http://www.bostondynamics.com/">http://www.bostondynamics.com/</a></li>
+<li>the Institute for Human and Machine Cognition &amp; Yobotics <br />
+<a href="http://www.ihmc.us/Research/projects/HumanoidRobots/index.html">http://www.ihmc.us/Research/projects/HumanoidRobots/index.html</a>  <br />
+Jerry Patt</li>
+<li>Leg lab in MIT <br />
+<a href="http://www.ai.mit.edu/projects/leglab/">http://www.ai.mit.edu/projects/leglab/</a> <br />
+Found by Marc Raibert</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0609da7" class="outline-2">
+<h2 id="org0609da7">Homepage links</h2>
+<div class="outline-text-2" id="text-org0609da7">
+<ul class="org-ul">
+<li><a href="http://groups.csail.mit.edu/locomotion/index.html">http://groups.csail.mit.edu/locomotion/index.html</a></li>
+<li><a href="http://www.cs.cmu.edu/~cga/kdc-07/">http://www.cs.cmu.edu/~cga/kdc-07/</a></li>
+<li><a href="http://people.cs.ubc.ca/~van/papers/index.html">http://people.cs.ubc.ca/~van/papers/index.html</a>    <br />
+<a href="http://people.cs.ubc.ca/~van/">http://people.cs.ubc.ca/~van/</a>  physically-based animation and simulation</li>
+<li><a href="http://groups.csail.mit.edu/locomotion/index.html">http://groups.csail.mit.edu/locomotion/index.html</a>  <br />
+MIT Robot Locomotion Group</li>
+<li><a href="http://alice.nc.huji.ac.il/~tassa/pmwiki.php?n=Main.YuvalTassa">http://alice.nc.huji.ac.il/~tassa/pmwiki.php?n=Main.YuvalTassa</a>   <br />
+Yuval Tassa's homepage, who provide DDP code to download. <br />
+See also his advisor's homepage <br />
+<a href="http://www.cs.washington.edu/homes/todorov/index.htm">http://www.cs.washington.edu/homes/todorov/index.htm</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgdc83034" class="outline-2">
+<h2 id="orgdc83034">Researchers</h2>
+<div class="outline-text-2" id="text-orgdc83034">
+<ul class="org-ul">
+<li>Matthew A. Zucker
+CHOMP: Co-variant Hamiltonian Optimization for Motion Planning
+<a href="http://www.ri.cmu.edu/pub_files/2009/5/icra09-chomp.pdf">http://www.ri.cmu.edu/pub_files/2009/5/icra09-chomp.pdf</a></li>
+
+<li class="off"><code>[&#xa0;]</code> <a href="http://www.nathanratliff.com/home">http://www.nathanratliff.com/home</a>
+<a href="http://www.nathanratliff.com/reading-lists/motion-optimization">http://www.nathanratliff.com/reading-lists/motion-optimization</a>
+MMP, optimal control, good reading list for optimal control</li>
+
+<li>Jur van den Berg, Lab director (Extended LQR)
+Algorithmic Robotics Lab
+<a href="http://arl.cs.utah.edu/">http://arl.cs.utah.edu/</a></li>
+<li>Sergey Levine
+UC Berkeley, Electrical Engineering and Computer Sciences
+Post-Doctoral Researcher
+<a href="http://www.eecs.berkeley.edu/~svlevine/">http://www.eecs.berkeley.edu/~svlevine/</a>
+optimal control, machine learning, deep learning
+some interesting result.</li>
+<li><a href="http://robotics.stanford.edu/~latombe/cs326/2009/links.htm">http://robotics.stanford.edu/~latombe/cs326/2009/links.htm</a>
+<b>list many famous researcher in the field of manipulation</b></li>
+
+<li>Peter Corke, Professor in Electrical Enginering at the University of Melbourne.
+<a href="http://www.petercorke.com/About.html">http://www.petercorke.com/About.html</a>
+You can find many usefyl Robotics Matlab tookbox from his website.</li>
+
+<li>Igor Mordatch PhD student
+University of Washington
+works on contact invariant optimization</li>
+<li>Micheal Mistry USC PhD, Assistant Prof. at University of Birmingham  <br />
+inverse dynamics control of floating-base robots with external contraints</li>
+</ul>
+</div>
+<div id="outline-container-org820a5b8" class="outline-3">
+<h3 id="org820a5b8">Leg locomotion</h3>
+<div class="outline-text-3" id="text-org820a5b8">
+<ul class="org-ul">
+<li>Hartmut Geyer <br />
+<a href="http://www.cs.cmu.edu/~hgeyer/index.html">http://www.cs.cmu.edu/~hgeyer/index.html</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orga5459fd" class="outline-3">
+<h3 id="orga5459fd">motion planning</h3>
+<div class="outline-text-3" id="text-orga5459fd">
+<ul class="org-ul">
+<li><b>Kris Hauser</b>
+Associate Professor with Duke University
+<a href="http://www.cs.indiana.edu/~hauserk/">http://www.cs.indiana.edu/~hauserk/</a></li>
+
+<li>Dmitry Berenson
+major work on CBiRRT
+<a href="http://users.wpi.edu/~dberenson/">http://users.wpi.edu/~dberenson/</a></li>
+
+<li>James J. Kuffner Jr.
+Associate Professor at the Robotics Institute at Carnegie Mellon University and manager at Google.
+famous for RRTS</li>
+
+<li>Steven M. LaValle
+a Professor of Computer Science at the University of Illinois at Urbana-Champaign.
+known for his work on RRT</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2ec5765" class="outline-3">
+<h3 id="org2ec5765">optimal control and path planning</h3>
+<div class="outline-text-3" id="text-org2ec5765">
+<ul class="org-ul">
+<li>Dr. Scott Kuindersma
+Postdoctoral Associate, MIT CSAIL
+<a href="http://people.csail.mit.edu/scottk/index.html">http://people.csail.mit.edu/scottk/index.html</a>
+convex optimal control, DRC</li>
+
+<li>Dr. Panagiotis Teodoro's
+<a href="http://soliton.ae.gatech.edu/people/ptsiotra/">http://soliton.ae.gatech.edu/people/ptsiotra/</a>
+<ul class="org-ul">
+<li>Abstract: Computing efficiently a feasible or optimal trajectory between two states lies at the core of almost
+every autonomous system. Traditional techniques, based on optimal control or discrete (grid-based) abstractions
+of the problem can provide optimal trajectories for a variety of problems. However, the usefulness of these
+techniques diminishes very quickly when one wants to plan trajectories in high-dimensional state/configuration
+spaces, especially in the presence of several state constraints and/or obstacles. To remedy some of these
+hindrances, recently there has been an increased focus on the use of probabilistic techniques to solve motion and
+path planning problems (e.g., PRM, RRT, RRT* and their numerous variants). In this talk I will discuss our recent
+work on developing asymptotically optimal motion planning algorithms using sampling-based methods that expedite
+convergence using ideas from dynamic programming, thus bridging the gap between these recent methods and the more
+traditional methods from optimal control. We show that the approach also leads to the exploration of $A!0(Bnatural$A!1(B
+sampling strategies that allow the dense exploration of the relevant space where the optimal path is more likely
+to be found, using standard machine learning techniques. Finally, I will discuss how sampling-based methods can
+be used to solve some problems encountered in stochastic optimal control via the path-integral approach.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge17e5e9" class="outline-3">
+<h3 id="orge17e5e9">model based control</h3>
+<div class="outline-text-3" id="text-orge17e5e9">
+<ul class="org-ul">
+<li>Rosen Diankov, Ph.D, OpenRave, JSK
+<a href="http://www.programmingvision.com/">http://www.programmingvision.com/</a>
+Motion planning</li>
+
+<li><p>
+<b>Luis Sentis</b>
+Assistant Professor
+</p>
+
+<p>
+Depart. of Mechanical Engineering
+The University of Texas at Austin
+<a href="http://www.me.utexas.edu/~lsentis/">http://www.me.utexas.edu/~lsentis/</a>
+</p></li>
+
+<li>Christopher G. Atkeson <br />
+Machine Learning, Motion Control, Humanoid Robots <br />
+<a href="http://www.cs.cmu.edu/~cga/">http://www.cs.cmu.edu/~cga/</a></li>
+
+<li>Andreas Hofmann  <br />
+Humanoid Robot Balance &amp; Walk control <br />
+<a href="http://people.csail.mit.edu/hofma/Index.htm">http://people.csail.mit.edu/hofma/Index.htm</a></li>
+
+<li>Paul Vernaza <br />
+University of Pennsylvania <br />
+Machine Learning, Robotics <br />
+<a href="http://www.seas.upenn.edu/~vernaza/">http://www.seas.upenn.edu/~vernaza/</a></li>
+
+<li>Marc Raibert <br />
+Founder of MIT leg lab</li>
+
+<li>Stefan Schall <br />
+Machine Learning, Motion Control, Humanoid Robots  <br />
+<a href="http://www-clmc.usc.edu/~sschaal/">http://www-clmc.usc.edu/~sschaal/</a></li>
+
+<li>Remi Munos <br />
+<a href="http://sequel.futurs.inria.fr/munos">http://sequel.futurs.inria.fr/munos</a> <br />
+Approximate Dynamic Programming, RL, policy gradient, planning
+Variance reduction techniques</li>
+<li>Jerry Pratt <br />
+<a href="http://www.ihmc.us/users/jpratt/">http://www.ihmc.us/users/jpratt/</a>  <br />
+His approach of maximizing speed, agility, and biological similarity
+through the understanding of biological counterparts, is helping to
+remove the stereotype of robots as being clunky, jerky-moving
+machines.</li>
+<li>David M. Thompson,    <br />
+Class Introduction to the study of human walking  <br />
+<a href="http://moon.ouhsc.edu/dthompso/">http://moon.ouhsc.edu/dthompso/</a></li>
+<li>Garth Zeglin <br />
+#+   one of Chris Lab's members
+<a href="http://www.cs.cmu.edu/~garthz/">http://www.cs.cmu.edu/~garthz/</a></li>
+<li>Darrin Bentivegna   <br />
+Learning from demonstration &amp; hydraulic control <br />
+<a href="http://www.andrew.cmu.edu/user/darrinb/">http://www.andrew.cmu.edu/user/darrinb/</a></li>
+
+<li>David Mayne <br />
+Differential Dynamic Programming  <br />
+<a href="http://www.ee.ic.ac.uk/CAP/Staff/Dqm/">http://www.ee.ic.ac.uk/CAP/Staff/Dqm/</a></li>
+<li>Evangelos Theodorou <br />
+PhD student in USC PI<sup>2</sup> <br />
+<a href="http://www-clmc.usc.edu/Main/EvangelosTheodorou">http://www-clmc.usc.edu/Main/EvangelosTheodorou</a></li>
+<li>Yuval Tassa <br />
+PhD student, DDP, swimmer with code <br />
+<a href="http://alice.nc.huji.ac.il/~tassa/">http://alice.nc.huji.ac.il/~tassa/</a></li>
+<li>Bill Smart <br />
+Washington Univ. <br />
+Motion control, reinforce learning <br />
+<a href="http://www.cse.wustl.edu/~wds/">http://www.cse.wustl.edu/~wds/</a></li>
+<li>Tom Erez  <br />
+PhD student of Bill Smart <br />
+#+ , collaborating with Yuval Tassa, <br />
+walking control, swimmer, optimal control, reinforcement learning, and adaptive dynamic programming <br />
+<a href="http://www.cse.wustl.edu/~etom/Main/HomePage">http://www.cse.wustl.edu/~etom/Main/HomePage</a></li>
+
+<li>Matthew West <br />
+Variational Integrator &amp; trajectory optimization <br />
+<a href="http://lagrange.mechse.illinois.edu/mwest/">http://lagrange.mechse.illinois.edu/mwest/</a></li>
+<li>J.E. Marsden <br />
+Variational Integrator &amp; trajectory optimization <br />
+<a href="http://www.cds.caltech.edu/~marsden/dcm/home">http://www.cds.caltech.edu/~marsden/dcm/home</a></li>
+<li>Professor Emanuel Todorov <br />
+Homepage Website
+<a href="http://www.cs.washington.edu/homes/todorov/index.htm">http://www.cs.washington.edu/homes/todorov/index.htm</a></li>
+<li>Russ Tedrake  <br />
+<a href="http://groups.csail.mit.edu/locomotion/russt.html">http://groups.csail.mit.edu/locomotion/russt.html</a></li>
+<li>Jessy W. Grizzle <br />
+Nonlinear Control <br />
+<a href="http://www.eecs.umich.edu/~grizzle/papers/index.html">http://www.eecs.umich.edu/~grizzle/papers/index.html</a></li>
+<li>Martin Stolle <br />
+PhD thesis on 'Policies based on Libraries' <br />
+<a href="http://www.cs.cmu.edu/~mstoll/main.shtml">http://www.cs.cmu.edu/~mstoll/main.shtml</a></li>
+<li>Yuval Tassa <br />
+PhD student, who use DDP and a trajectory library to control a simulated multi-link swimmer. <br />
+<a href="http://alice.nc.huji.ac.il/~tassa/pmwiki.php?n=Main.YuvalTassa">http://alice.nc.huji.ac.il/~tassa/pmwiki.php?n=Main.YuvalTassa</a></li>
+
+<li><b>Andrew Bagnell</b> CMU RI Associate Prof.
+<a href="http://robotwhisperer.org/">http://robotwhisperer.org/</a>
+Adaptive Control and Reinforcement Learning</li>
+
+<li><b>Matt Zucker</b>  Assistant Prof. with  Engineering department at Swarthmore College <br />
+Little dog motion planning <br />
+<a href="http://www.cs.cmu.edu/~mzucker/">http://www.cs.cmu.edu/~mzucker/</a>
+<a href="http://www.swarthmore.edu/NatSci/mzucker1/">http://www.swarthmore.edu/NatSci/mzucker1/</a>
+Reinforcement Planning: RL for Optimal Planners</li>
+
+<li>$A3BPKAV(B <br />
+$A9~6{1u9$R54sQ'(B <br /></li>
+<li>Steven H. Collins.  <br />
+Efficient bipedal robots based on passive-dynamic walkers <br />
+<a href="http://www-personal.umich.edu/~shc/">http://www-personal.umich.edu/~shc/</a></li>
+<li>Garth Zeglin with CMU<br />
+dynamic programming, biped <br />
+<a href="http://www-old.ri.cmu.edu/people/zeglin_garth.html">http://www-old.ri.cmu.edu/people/zeglin_garth.html</a></li>
+<li>Jun Morimoto  <br />
+Minimax DDP, biped <br />
+<a href="http://www-old.ri.cmu.edu/people/morimoto_jun.html">http://www-old.ri.cmu.edu/people/morimoto_jun.html</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org1624276" class="outline-2">
+<h2 id="org1624276">Optimization Tools</h2>
+<div class="outline-text-2" id="text-org1624276">
+<ul class="org-ul">
+<li>qpOASES (open-source c++ implementation of the online active set strategy)
+<a href="https://projects.coin-or.org/qpOASES/wiki">https://projects.coin-or.org/qpOASES/wiki</a></li>
+<li>ACADO Toolkit
+open-source ACADO Toolkit is a software environment
+and algorithm collection for automatic control and dynamic
+optimization.</li>
+
+<li><p>
+nlopt
+<a href="http://ab-initio.mit.edu/wiki/index.php/NLopt">http://ab-initio.mit.edu/wiki/index.php/NLopt</a>
+</p>
+
+<p>
+NLopt is a free/open-source library for nonlinear optimization,
+providing a common interface for a number of different free
+optimization routines available online as well as original
+implementations of various other algorithms.
+</p></li>
+</ul>
+
+
+<ul class="org-ul">
+<li>FeatureStone
+supper good multiple link dynamic algorithm
+<a href="http://royfeatherstone.org/">http://royfeatherstone.org/</a></li>
+
+<li>KNITRO NLP solver <br />
+<a href="http://www.artelys.com/en/optimization-tools/knitro">http://www.artelys.com/en/optimization-tools/knitro</a></li>
+
+<li>MOSEK linear programming, mixed integer programming and many types of nonlinear convex optimization problems.
+<a href="http://mosek.com/">http://mosek.com/</a></li>
+<li>CPLEX
+<a href="http://www-01.ibm.com/software/integration/optimization/cplex-cp-optimizer/">http://www-01.ibm.com/software/integration/optimization/cplex-cp-optimizer/</a></li>
+<li>GPOPS Open Source Gauss Pseudo-spectral Optimal Control Software
+<a href="http://www.gpops.org/page5/page5.html">http://www.gpops.org/page5/page5.html</a></li>
+<li>ACADO Toolkit Open Source Toolkit for Automatic Control and Dynamic
+Optimization (C++, MATLAB interface available)
+<a href="http://www.acadotoolkit.org/">http://www.acadotoolkit.org/</a></li>
+<li>GSL GNU Scientific Library
+<a href="http://www.gnu.org/software/gsl/manual/html_node/">http://www.gnu.org/software/gsl/manual/html_node/</a></li>
+<li>OOL Open Optimization Library
+<a href="http://ool.sourceforge.net/">http://ool.sourceforge.net/</a></li>
+<li>PROPT  Matlab Optimal Control Software (DAE, ODE) (Commercial Software)
+<a href="http://tomdyn.com/">http://tomdyn.com/</a></li>
+<li>numerical recipes
+<a href="http://www.fizyka.umk.pl/nrbook/bookcpdf.html">http://www.fizyka.umk.pl/nrbook/bookcpdf.html</a></li>
+<li>NEOS Server for Optimization
+<a href="http://www.neos-server.org/neos/">http://www.neos-server.org/neos/</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org82e0e20" class="outline-2">
+<h2 id="org82e0e20">Resource Links</h2>
+<div class="outline-text-2" id="text-org82e0e20">
+</div>
+<div id="outline-container-orgb56b062" class="outline-3">
+<h3 id="orgb56b062">dynamics simulation and visualization</h3>
+<div class="outline-text-3" id="text-orgb56b062">
+<ul class="org-ul">
+<li>simbody High-performance C++ multibody dynamics/physics library
+for simulating articulated biomechanical and mechanical systems
+like vehicles, robots, and the human skeleton.
+<a href="https://github.com/simbody/simbody">https://github.com/simbody/simbody</a></li>
+<li>MOdy  Moby rigid body simulator
+<a href="http://physsim.sourceforge.net/index.html">http://physsim.sourceforge.net/index.html</a></li>
+<li>ODE</li>
+<li>DART
+<a href="http://golems.github.io/grip2/index.html">http://golems.github.io/grip2/index.html</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6cd941b" class="outline-3">
+<h3 id="org6cd941b">Motion planning</h3>
+<div class="outline-text-3" id="text-org6cd941b">
+<ul class="org-ul">
+<li><b>Motion Planning Kit</b> worth a try
+developed by Standford Univ., include SBL (Single-query Bi-directional PRM with Lazy collision checking.
+<a href="http://robotics.stanford.edu/~mitul/mpk/">http://robotics.stanford.edu/~mitul/mpk/</a></li>
+
+<li>Motion Strategy Library <br />
+<a href="http://msl.cs.uiuc.edu/msl/">http://msl.cs.uiuc.edu/msl/</a>
+The Motion Strategy Library (MSL) allows easy development and testing of motion planning algorithms for a wide variety of applications. The software architecture is object-oriented and the general design is highly modular. It was developed on a Linux system using GNU C++, STL, and the FOX GUI Toolkit.</li>
+
+<li>good introduction with animation and photos for RRT
+<a href="http://msl.cs.uiuc.edu/rrt/">http://msl.cs.uiuc.edu/rrt/</a>
+wiki
+<a href="http://en.wikipedia.org/wiki/Rapidly-exploring_random_tree">http://en.wikipedia.org/wiki/Rapidly-exploring_random_tree</a></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgce8bf93" class="outline-3">
+<h3 id="orgce8bf93">Others</h3>
+<div class="outline-text-3" id="text-orgce8bf93">
+<ul class="org-ul">
+<li>Algorithms for Optimization and Learning
+<a href="http://homes.soic.indiana.edu/classes/spring2012/csci/b553-hauserk/schedule.htm">http://homes.soic.indiana.edu/classes/spring2012/csci/b553-hauserk/schedule.htm</a></li>
+<li>High-Precision Software Directory
+<a href="http://crd-legacy.lbl.gov/~dhbailey/mpdist/">http://crd-legacy.lbl.gov/~dhbailey/mpdist/</a>
+not try yet.</li>
+<li>Data Mining by Andrew Moore @CMU <br />
+<a href="http://www.autonlab.org/tutorials/">http://www.autonlab.org/tutorials/</a></li>
+<li>Virtual humans, a real-time, physical simulation of a human that
+could interact with its virtual environment. <br />
+<a href="http://www.washedashore.com/Humans/">http://www.washedashore.com/Humans/</a></li>
+
+<li>CGA dynamic optimization <br />
+<a href="http://www.cs.cmu.edu/~cga/dynopt/">http://www.cs.cmu.edu/~cga/dynopt/</a></li>
+<li>Robert F. Stengel homepage  <br />
+optimal control docs
+<a href="http://www.princeton.edu/~stengel/">http://www.princeton.edu/~stengel/</a></li>
+
+<li>Dynamic Programming and Optimal Control (Book)
+<a href="http://www.athenasc.com/dpbook.html">http://www.athenasc.com/dpbook.html</a></li>
+
+<li>Yobotics! Simulation Construction Set. in Java <br />
+<a href="http://yobotics.com/simulation/simulation.htm">http://yobotics.com/simulation/simulation.htm</a></li>
+
+<li>C &amp; C++ programming resource
+<ul class="org-ul">
+<li>boost C++ library
+<a href="https://www.boostpro.com/">https://www.boostpro.com/</a></li>
+</ul></li>
+<li>ADIC
+<a href="http://www.mcs.anl.gov/research/projects/adic/">http://www.mcs.anl.gov/research/projects/adic/</a></li>
+<li>Introduction to the study of human walking  <br />
+<a href="http://moon.ouhsc.edu/dthompso/gait/intro.htm#term">http://moon.ouhsc.edu/dthompso/gait/intro.htm#term</a></li>
+<li>CDD  LP solver <br />
+<a href="http://control.ee.ethz.ch/~hybrid/cdd.php">http://control.ee.ethz.ch/~hybrid/cdd.php</a></li>
+<li>MPT Multi-Parametric Toolbox <br />
+<a href="http://control.ee.ethz.ch/~mpt/downloads/">http://control.ee.ethz.ch/~mpt/downloads/</a> (free)</li>
+<li>Geometric Bounding Toolbox (GBT 7.3) for MATLAB <br />
+<a href="http://sysbrain.com/gbt/gbt/index.htm">http://sysbrain.com/gbt/gbt/index.htm</a></li>
+<li>qpOASES $(G!9(B Online Active Set Strategy  QP online <br />
+<a href="http://www.kuleuven.be/optec/software/qpOASES">http://www.kuleuven.be/optec/software/qpOASES</a></li>
+<li>Professor Emanuel Todorov<br />
+papers and codes, such as Iterative LQG, Kalman<sub>LQG</sub>, Mimimum Jerk trajectory <br />
+<a href="http://www.cs.washington.edu/homes/todorov/index.htm">http://www.cs.washington.edu/homes/todorov/index.htm</a></li>
+<li>Optimal Control Systems Class examples and downloadable Matlab code <br />
+Department of Electrical and Computer Engineering in Cleveland State University <br />
+<a href="http://academic.csuohio.edu/simond/courses/eec644/">http://academic.csuohio.edu/simond/courses/eec644/</a></li>
+<li>Optimal Control and Estimation Class in Princeton University, good introductions <br />
+<a href="http://www.princeton.edu/~stengel/MAE546.html">http://www.princeton.edu/~stengel/MAE546.html</a></li>
+<li>Optimal control at Scholarpedia <br />
+<a href="http://www.scholarpedia.org/article/Optimal_control">http://www.scholarpedia.org/article/Optimal_control</a></li>
+<li>Stanford Convex Optimization Coarse, book, videos, and slides<br />
+<a href="http://www.stanford.edu/~boyd/cvxbook/">http://www.stanford.edu/~boyd/cvxbook/</a></li>
+<li>Lectures notes in Dynamic Optimization by Richard Woodward with Texas A&amp;M University <br />
+<a href="http://agecon2.tamu.edu/people/faculty/woodward-richard/637/notes/default.htm">http://agecon2.tamu.edu/people/faculty/woodward-richard/637/notes/default.htm</a></li>
+<li>Control tutorials for Matlab , wonderful resource of learning automatic control <br />
+<a href="http://www.engin.umich.edu/group/ctm/index.html">http://www.engin.umich.edu/group/ctm/index.html</a></li>
+<li>Constrained Control and Estimation, an optimization approach  by Graham C. Goodwin <br />
+<a href="http://www.eng.newcastle.edu.au/eecs/cdsc/books/cce/">http://www.eng.newcastle.edu.au/eecs/cdsc/books/cce/</a>
+code, lecture notes, good!!</li>
+<li>Reinforcement Learning: An Introduction  by Richard S. Sutton  <br />
+free book, code, solutions
+<a href="http://webdocs.cs.ualberta.ca/~sutton/book/the-book.html">http://webdocs.cs.ualberta.ca/~sutton/book/the-book.html</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org83a83b2" class="outline-3">
+<h3 id="org83a83b2">free optimization solver</h3>
+<div class="outline-text-3" id="text-org83a83b2">
+<ul class="org-ul">
+<li>IPOPT
+Ipopt (Interior Point OPTimizer, pronounced eye-pea-Opt) is a software package for large-scale nonlinear optimization.
+<a href="https://projects.coin-or.org/Ipopt">https://projects.coin-or.org/Ipopt</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org1bff6fe" class="outline-2">
+<h2 id="org1bff6fe">Journals</h2>
+<div class="outline-text-2" id="text-org1bff6fe">
+<ul class="org-ul">
+<li>Journal of Applied Mathematics
+The most recent Impact Factor for Journal of Applied Mathematics is 0.834 according to 2012 Journal Citation Reports released by Thomson Reuters (ISI) in 2013.</li>
+</ul>
+
+<p>
+Journal of Applied Mathematics currently has an acceptance rate of 34%. The average time between submission and final decision is 58 days and the average time between acceptance and final publication is 39 days.
+</p>
+
+<ul class="org-ul">
+<li>Impact factor search
+<a href="http://www.ncba.cn/Sci_Impact_Factor/SciIF.asp">Link here</a></li>
+
+<li>Transactions on Robotics
+<a href="http://www.ieee-ras.org/">Link here</a>
+impact factor: 3.02
+issues per year: 6</li>
+</ul>
+
+
+<ul class="org-ul">
+<li>Autonomous Robots
+<a href="http://www.springer.com/new+&amp;+forthcoming+titles+/journal/10514">Link here</a>
+impact factor: 2.07</li>
+</ul>
+
+
+<ul class="org-ul">
+<li>International Journal of Robotics Research
+<a href="http://www.sagepub.com/journalsProdDesc.nav?prodId=Journal201324">Link here</a>
+impact factor: 1.66</li>
+
+<li>Robotics and Autonomous Systems
+<a href="http://www.elsevier.com/wps/find/journaldescription.cws_home/505622/description#description">Link here</a>
+impact factor: 1.33  (5 years)
+frequency: 12</li>
+
+<li>Robotics and Computer-Integrated Manufacturing
+<a href="http://www.elsevier.com/wps/find/journaldescription.cws_home/704/description#description">Link here</a>
+impact factor: 1.09</li>
+
+<li>the IEEE Robotics and Automation Magazine
+<a href="http://www.ieee-ras.org/ram">Link here</a>
+impact factor: 0.85
+four issues per year</li>
+
+<li>Robotica
+<a href="http://journals.cambridge.org/action/displayJournal?jid=ROB">Link here</a>
+impact factor: 0.781</li>
+
+<li>Journal of Robotic System (Journal of Field Robotics)
+<a href="http://www3.interscience.wiley.com/journal/117946193/tocgroup">Link here</a>
+impact factor: 0.7</li>
+
+<li>IEEE Transactions on Automation Science and Engineering
+frequency: 4</li>
+
+<li>Advanced Robotics
+<a href="http://www.rsj.or.jp/AR/index_e.html">Link here</a>
+impact factor: 0.737</li>
+
+<li>JOURNAL OF GUIDANCE, CONTROL, AND DYNAMICS
+<a href="http://www.aiaa.org/content.cfm?pageid=322&amp;lupubid=23">Link here</a>
+impact factor: 0.88 (year 2002)
+frequency:</li>
+
+<li>Optimal Control Application and Methods
+<a href="http://www3.interscience.wiley.com/journal/2133/home">Link here</a>
+impact factor: 0.833
+Frequency: Approximately 5 times a year
+review time:</li>
+
+<li>journal of computer science and technology (China)
+<a href="http://jcst.ict.ac.cn:8080/jcst/EN/column/column4.shtml">Link here</a>
+impact fact:  0.576
+issues per year: 6</li>
+
+<li>IEEE TRANSACTIONS ON AUTOMATIC CONTROL
+<a href="http://www.nd.edu/~ieeetac/special.html">Link here</a>
+impact factor: 0.8
+issues: 12</li>
+
+<li>International Journal of Humanoid Robotics (IJHR)
+<a href="http://www.worldscinet.com/ijhr/">Link here</a>
+impact factor: 0.542</li>
+
+<li>Dynamical System An International Journal
+<a href="http://www.tandf.co.uk/journals/tf/14689367.html">Link here</a>
+IPF: 0.718</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org02f6d51" class="outline-2">
+<h2 id="org02f6d51">Conference</h2>
+<div class="outline-text-2" id="text-org02f6d51">
+<ul class="org-ul">
+<li>IEEE International Symposium on Approximate Dynamic Programming and Reinforcement Learning (ADPRL),</li>
+<li>ICRA</li>
+<li>International Conference on Intelligent Robots and Systems (IROS)</li>
+<li>CLAWAR</li>
+<li>Humanoids</li>
+<li>International Conference on Decision and Control (CDC)</li>
+<li>Robotics Science and Systems (RSS)</li>
+<li>Advances in Neural Information Processing Systems (NIPS)</li>
+</ul>
+
+<p>
+#+ - The World Congress on Intelligent Control and Automation  (WCICA)
+#+ - Chinese Control and Decision Conference (CCDC)
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga784bd9" class="outline-2">
+<h2 id="orga784bd9">Robots</h2>
+<div class="outline-text-2" id="text-orga784bd9">
+</div>
+<div id="outline-container-org2673071" class="outline-3">
+<h3 id="org2673071">Walking and running robots</h3>
+<div class="outline-text-3" id="text-org2673071">
+<ul class="org-ul">
+<li>ATRIAS in CMU <a href="http://mime.oregonstate.edu/research/drl/robots/atrias_2_0/">http://mime.oregonstate.edu/research/drl/robots/atrias_2_0/</a></li>
+<li>Atlas</li>
+<li>Sarcos in CMU</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd9f5699" class="outline-3">
+<h3 id="orgd9f5699">soft robot</h3>
+<div class="outline-text-3" id="text-orgd9f5699">
+<p>
+<a href="http://softroboticstoolkit.com/">http://softroboticstoolkit.com/</a>
+</p>
+
+<p>
+<a href="http://www.cs.cmu.edu/~cga/soft/">http://www.cs.cmu.edu/~cga/soft/</a>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfb4e12c" class="outline-2">
+<h2 id="orgfb4e12c">DRC</h2>
+<div class="outline-text-2" id="text-orgfb4e12c">
+</div>
+<div id="outline-container-org46cd550" class="outline-3">
+<h3 id="org46cd550">Videos on YouTube</h3>
+<div class="outline-text-3" id="text-org46cd550">
+<p>
+<a href="https://www.youtube.com/watch?v=YhGdqZjjQZU#t=1972">https://www.youtube.com/watch?v=YhGdqZjjQZU#t=1972</a>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgea06bc7" class="outline-2">
+<h2 id="orgea06bc7">robots</h2>
+<div class="outline-text-2" id="text-orgea06bc7">
+<p>
+Denso 6
+Yumi
+Adept Quattro s650
+</p>
+</div>
+</div>
+<div id="outline-container-org2e95772" class="outline-2">
+<h2 id="org2e95772">Good webs</h2>
+<div class="outline-text-2" id="text-org2e95772">
+<ul class="org-ul">
+<li>Many intersting visualization examples to help understand optimization and ML:
+<a href="http://arogozhnikov.github.io/2016/12/19/markov_chain_monte_carlo.html">http://arogozhnikov.github.io/2016/12/19/markov_chain_monte_carlo.html</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org684fcdd" class="outline-2">
+<h2 id="org684fcdd">libs</h2>
+<div class="outline-text-2" id="text-org684fcdd">
+<ul class="org-ul">
+<li><a href="https://github.com/lava/matplotlib-cpp">https://github.com/lava/matplotlib-cpp</a>
+Welcome to matplotlib-cpp, possibly the simplest C++ plotting library. It is built to resemble the plotting API used by Matlab and matplotlib.</li>
+</ul>
+</div>
+</div>
+</div>
+</body>
+</html>

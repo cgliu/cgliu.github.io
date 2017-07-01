@@ -1,0 +1,1126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2017-07-01 Sat 15:08 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title></title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Chenggang Liu" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org283bc7b">Installation Emacs from source</a></li>
+<li><a href="#org50286b6">Automatically install missing package</a></li>
+<li><a href="#org459c1bf">helm mode settings</a></li>
+<li><a href="#orgb535126">Programming in Emacs</a>
+<ul>
+<li><a href="#orga3c4a6f">Find things at fingertip</a></li>
+<li><a href="#orga6a117c">Index special file format (for example, .hidl files)</a></li>
+<li><a href="#org4837130">Git integration</a></li>
+<li><a href="#orge60ba26">elpy usage</a></li>
+<li><a href="#orgd2c31ef">Other convenient things</a></li>
+</ul>
+</li>
+<li><a href="#orgbb661cd">Useful commands</a>
+<ul>
+<li><a href="#org41fb97a">Multiple line edit (rectangle edit)</a></li>
+<li><a href="#orgcfcd2fc">How to decide whether to save (diff buffer with original file)</a></li>
+<li><a href="#orgb185f3a">How to split into 3 even windows</a></li>
+<li><a href="#orgf271edb">change font size</a></li>
+<li><a href="#orgadce7e5">run shell command in Emacs</a></li>
+<li><a href="#orgf509e40">Show all key bindings</a></li>
+</ul>
+</li>
+<li><a href="#orgd9123f6">rtags c++ indexer</a>
+<ul>
+<li><a href="#orgf3ddffb">General</a></li>
+<li><a href="#org607a1ff">install</a></li>
+<li><a href="#orgabeb090">usage</a></li>
+<li><a href="#org3018d7e">help</a></li>
+<li><a href="#org78cf06c">Emacs setting for rtags</a></li>
+</ul>
+</li>
+<li><a href="#orge203996">Terminal in Emacs</a></li>
+<li><a href="#orge3c2be8">terminal color theme settings</a></li>
+<li><a href="#orgc03bc9f">set fill-paragraph width</a></li>
+<li><a href="#orgba8dddb">MobileOrg setting</a></li>
+<li><a href="#org3e48304">Common key bindings</a></li>
+<li><a href="#orgb09fe90">color theme</a>
+<ul>
+<li><a href="#orgdb8b597">Cool website that can generate color theme online:</a></li>
+<li><a href="#org9ab52f7">Using Emacs native color theme (maybe only for V24 or later)</a></li>
+</ul>
+</li>
+<li><a href="#org5cbadf9">Column View in org-mode</a></li>
+<li><a href="#org3c007ba">Search in Emacs</a></li>
+<li><a href="#org41bf3bc">How to get rid of ^M&#xa0;&#xa0;&#xa0;<span class="tag"><span class="EMACS">EMACS</span>&#xa0;<span class="REMOVE">REMOVE</span></span></a></li>
+<li><a href="#orgca11c5d">org-mode&#xa0;&#xa0;&#xa0;<span class="tag"><span class="EMACS">EMACS</span>&#xa0;<span class="KEYS">KEYS</span></span></a>
+<ul>
+<li><a href="#org552535a">demote and promote</a></li>
+</ul>
+</li>
+<li><a href="#org685eee4">Emacs org clocking&#xa0;&#xa0;&#xa0;<span class="tag"><span class="EMACS">EMACS</span>&#xa0;<span class="CLOCK_KEYS">CLOCK_KEYS</span></span></a></li>
+<li><a href="#org2837ace">Spreadsheet</a></li>
+<li><a href="#org35b7da9">UI settings</a></li>
+<li><a href="#orgc78e378">Switch between input method</a></li>
+<li><a href="#org6995d59">Make presentation / slides</a>
+<ul>
+<li><a href="#org64c263c">for 8.2.3b</a></li>
+<li><a href="#org106e47e">S5 solution (A Simple Standards-Based Slide Show System)</a></li>
+<li><a href="#org4f7082d">reveal</a></li>
+</ul>
+</li>
+<li><a href="#org55b849a">How to create a beautiful homepage with Emacs org-mode and Bootstrap</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org283bc7b" class="outline-2">
+<h2 id="org283bc7b">Installation Emacs from source</h2>
+<div class="outline-text-2" id="text-org283bc7b">
+<ul class="org-ul">
+<li>install all dependencies</li>
+</ul>
+<pre class="example">
+sudo apt-get build-dep emacs24
+</pre>
+<ul class="org-ul">
+<li>download source code from
+<a href="http://www.gnu.org/software/emacs/">http://www.gnu.org/software/emacs/</a></li>
+<li>extract emacs-xx.x.tar.gz and install</li>
+</ul>
+<pre class="example">
+tar -zxvf emacs-24.3.tar.gz
+cd emacs-24.3
+./configure
+make
+sudo make install
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org50286b6" class="outline-2">
+<h2 id="org50286b6">Automatically install missing package</h2>
+<div class="outline-text-2" id="text-org50286b6">
+<div class="org-src-container">
+<pre><code class="src src-emacs-lisp">(package-initialize)
+(<span style="color: #8b0000;">require</span> '<span style="color: #cd0000;">package</span>)
+(add-to-list 'package-archives '(<span style="color: #008b00;">"melpa"</span> . <span style="color: #008b00;">"http://melpa.org/packages/"</span>))
+<span style="color: #00008b;">;; </span><span style="color: #00008b;">Install use-package</span>
+(<span style="color: #8b0000;">setq</span> package-list '(<span style="color: #8b0000;">use-package</span>))
+(<span style="color: #8b0000;">dolist</span> (package package-list)
+(<span style="color: #8b0000;">unless</span> (package-installed-p package)
+ (package-install package)))
+<span style="color: #00008b;">;; </span><span style="color: #00008b;">Let use-package to ensure a package is installed.</span>
+(<span style="color: #8b0000;">use-package</span> <span style="color: #cd0000;">THE-PACKAGE-YOU-WANT-TO-INSTALL</span> <span style="color: #cd0000;">:ensure</span> t)
+</code></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org459c1bf" class="outline-2">
+<h2 id="org459c1bf">helm mode settings</h2>
+<div class="outline-text-2" id="text-org459c1bf">
+<p>
+helm is a must-have package, it can Emacs run like a magic.
+<a href="https://tuhdo.github.io/helm-intro.html">https://tuhdo.github.io/helm-intro.html</a>
+My settings:
+</p>
+<div class="org-src-container">
+<pre><code class="src src-emacs-lisp">(<span style="color: #8b0000;">use-package</span> <span style="color: #cd0000;">helm</span> <span style="color: #cd0000;">:ensure</span> t)
+(<span style="color: #8b0000;">use-package</span> <span style="color: #cd0000;">helm-swoop</span> <span style="color: #cd0000;">:ensure</span> t)
+(<span style="color: #8b0000;">use-package</span> <span style="color: #cd0000;">helm-projectile</span> <span style="color: #cd0000;">:ensure</span> t)
+
+(<span style="color: #8b0000;">require</span> '<span style="color: #cd0000;">helm-config</span>)
+(helm-mode 1)
+
+(define-key helm-map (kbd <span style="color: #008b00;">"&lt;tab&gt;"</span>) 'helm-execute-persistent-action) <span style="color: #00008b;">; </span><span style="color: #00008b;">rebind tab to run persistent action</span>
+(define-key helm-map (kbd <span style="color: #008b00;">"C-i"</span>) 'helm-execute-persistent-action) <span style="color: #00008b;">; </span><span style="color: #00008b;">make TAB work in terminal</span>
+(define-key helm-map (kbd <span style="color: #008b00;">"C-z"</span>)  'helm-select-action) <span style="color: #00008b;">; </span><span style="color: #00008b;">list actions using C-z</span>
+
+
+(<span style="color: #8b0000;">setq</span> helm-buffers-fuzzy-matching t
+helm-recentf-fuzzy-match    t)
+
+<span style="color: #00008b;">;; </span><span style="color: #00008b;">=== projectile ===</span>
+(projectile-global-mode)
+(<span style="color: #8b0000;">setq</span> projectile-completion-system 'helm)
+(helm-projectile-on)
+(<span style="color: #8b0000;">setq</span> projectile-switch-project-action 'helm-projectile)
+<span style="color: #00008b;">;; </span><span style="color: #00008b;">C-c p p switch projects</span>
+<span style="color: #00008b;">;; </span><span style="color: #00008b;">C-c p f find files in a project</span>
+<span style="color: #00008b;">;; </span><span style="color: #00008b;">C-c p F find files in projects</span>
+
+<span style="color: #00008b;">;; </span><span style="color: #00008b;">helm semantic</span>
+<span style="color: #00008b;">;; </span><span style="color: #00008b;">(semantic-mode 1)</span>
+<span style="color: #00008b;">;; </span><span style="color: #00008b;">(setq helm-semantic-fuzzy-match t</span>
+<span style="color: #00008b;">;;       </span><span style="color: #00008b;">helm-imenu-fuzzy-match    t)</span>
+
+<span style="color: #00008b;">;; </span><span style="color: #00008b;">hem-man-woman</span>
+(add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
+(<span style="color: #8b0000;">setq</span> helm-locate-fuzzy-match t)
+</code></pre>
+</div>
+<p>
+My key bindings:
+</p>
+<div class="org-src-container">
+<pre><code class="src src-emacs-lisp"><span style="color: #00008b;">;; </span><span style="color: #00008b;">keybinding for helm</span>
+(global-set-key (kbd <span style="color: #008b00;">"C-x i"</span>) `helm-complete-file-name-at-point)
+(global-set-key (kbd <span style="color: #008b00;">"C-x b"</span>) `helm-mini)
+(global-set-key (kbd <span style="color: #008b00;">"C-x C-b"</span>) `helm-buffers-list)
+(global-set-key (kbd <span style="color: #008b00;">"C-x C-f"</span>) `helm-find-files)
+(global-set-key (kbd <span style="color: #008b00;">"C-x C-r"</span>) `helm-recentf)
+(global-set-key (kbd <span style="color: #008b00;">"C-x r b"</span>) `helm-bookmarks)
+(global-set-key (kbd <span style="color: #008b00;">"M-x"</span>) `helm-M-x)
+(global-set-key (kbd <span style="color: #008b00;">"M-y"</span>) `helm-show-kill-ring)
+
+(global-set-key (kbd <span style="color: #008b00;">"C-c i"</span>) 'helm-semantic-or-imenu)
+
+
+(global-set-key (kbd <span style="color: #008b00;">"C-x c o"</span>) 'helm-occur)
+(global-set-key (kbd <span style="color: #008b00;">"C-h SPC"</span>) 'helm-all-mark-rings)
+(global-set-key (kbd <span style="color: #008b00;">"C-c C-g"</span>) 'helm-google-suggest)
+(global-set-key (kbd <span style="color: #008b00;">"C-p"</span>) 'helm-projectile-find-file)
+</code></pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb535126" class="outline-2">
+<h2 id="orgb535126">Programming in Emacs</h2>
+<div class="outline-text-2" id="text-orgb535126">
+</div>
+<div id="outline-container-orga3c4a6f" class="outline-3">
+<h3 id="orga3c4a6f">Find things at fingertip</h3>
+<div class="outline-text-3" id="text-orga3c4a6f">
+<ul class="org-ul">
+<li>Find files in a project
+helm projectile</li>
+<li>Indexing (find function, variable definitions and references)
+If your project is not big, a good solution is <a href="#orgd9123f6">rtags c++ indexer</a>.
+But if your project is large, I recommend using global with ctags.
+It works really well and it is super fast
+<ul class="org-ul">
+<li>Installation
+<ul class="org-ul">
+<li>install Exuberant Ctags <a href="http://ctags.sourceforge.net/">http://ctags.sourceforge.net/</a></li>
+<li>install Universal Ctags <a href="https://github.com/universal-ctags/ctags">https://github.com/universal-ctags/ctags</a></li>
+<li><p>
+install gtags as:
+</p>
+<pre class="example">
+./configure --with-exuberant-ctags=PATH_TO_CTAGS --with-universal-ctags=PATH_TO_UNIVERSAL_CTAGS
+./make
+sudo make install
+</pre></li>
+</ul></li>
+<li><p>
+A script to generate index files
+</p>
+<div class="org-src-container">
+<pre><code class="src src-shell"><span style="color: #00008b;">#</span><span style="color: #00008b;">!/bin/</span><span style="color: #8b0000;">bash</span>
+find . -type d <span style="color: #008b00;">\(</span> -name <span style="color: #008b00;">"skip_foler1"</span> <span style="color: #008b00;">\</span>
+-o -name <span style="color: #008b00;">"skip_folder2"</span> <span style="color: #008b00;">\)</span> -prune -o <span style="color: #008b00;">\</span>
+-type f <span style="color: #008b00;">\(</span> -name <span style="color: #008b00;">"*.cc"</span> -o -name <span style="color: #008b00;">"*.hh"</span> -o -name <span style="color: #008b00;">"*.py"</span> -o -name <span style="color: #008b00;">"*.c"</span> -o -name <span style="color: #008b00;">"*.h"</span> -o -name <span style="color: #008b00;">"*.hidl"</span> <span style="color: #008b00;">\)</span>  <span style="color: #008b00;">\</span>
+-print &gt; file_list
+gtags -i -v -f file_list
+</code></pre>
+</div></li>
+<li><p>
+Emacs settings
+</p>
+<div class="org-src-container">
+<pre><code class="src src-emacs-lisp"><span style="color: #00008b;">;; </span><span style="color: #00008b;">--------------------------------------------------</span>
+(<span style="color: #8b0000;">use-package</span> <span style="color: #cd0000;">helm-gtags</span> <span style="color: #cd0000;">:ensure</span> t)
+(<span style="color: #8b0000;">require</span> '<span style="color: #cd0000;">helm-gtags</span>)
+(<span style="color: #8b0000;">setq</span>
+ helm-gtags-ignore-case t
+ helm-gtags-auto-update t
+ helm-gtags-use-input-at-cursor t
+ helm-gtags-pulse-at-cursor t
+ helm-gtags-prefix-key <span style="color: #008b00;">"\C-cg"</span>
+ helm-gtags-suggested-key-mapping nil
+ )
+
+<span style="color: #00008b;">;;; </span><span style="color: #00008b;">Enable helm-gtags-mode</span>
+(add-hook 'dired-mode-hook 'helm-gtags-mode)
+(add-hook 'eshell-mode-hook 'helm-gtags-mode)
+(add-hook 'c-mode-hook 'helm-gtags-mode)
+(add-hook 'c++-mode-hook 'helm-gtags-mode)
+(add-hook 'asm-mode-hook 'helm-gtags-mode)
+(add-hook 'python-mode-hook 'helm-gtags-mode)
+
+<span style="color: #00008b;">;; </span><span style="color: #00008b;">(define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)</span>
+(define-key helm-gtags-mode-map (kbd <span style="color: #008b00;">"C-j"</span>) 'helm-gtags-select)
+(define-key helm-gtags-mode-map (kbd <span style="color: #008b00;">"M-."</span>) 'helm-gtags-dwim)
+(define-key helm-gtags-mode-map (kbd <span style="color: #008b00;">"M-r"</span>) 'helm-gtags-find-rtag)
+(define-key helm-gtags-mode-map (kbd <span style="color: #008b00;">"M-t"</span>) 'helm-gtags-find-tag)
+(define-key helm-gtags-mode-map (kbd <span style="color: #008b00;">"M-s"</span>) 'helm-gtags-find-symbol)
+<span style="color: #00008b;">;; </span><span style="color: #00008b;">(define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)</span>
+(define-key helm-gtags-mode-map (kbd <span style="color: #008b00;">"M-*"</span>) 'helm-gtags-resume)
+<span style="color: #00008b;">;;</span>
+(define-key helm-gtags-mode-map (kbd <span style="color: #008b00;">"C-c &lt;left&gt;"</span>) 'helm-gtags-previous-history)
+(define-key helm-gtags-mode-map (kbd <span style="color: #008b00;">"C-c &lt;right&gt;"</span>) 'helm-gtags-next-history)
+<span style="color: #00008b;">;;</span>
+<span style="color: #00008b;">;; </span><span style="color: #00008b;">(define-key helm-gtags-mode-map (kbd "C-c g") 'vc-git-grep)</span>
+
+</code></pre>
+</div></li>
+</ul></li>
+<li>locate and search
+<ul class="org-ul">
+<li>global search by M-x rgrep</li>
+<li>or M-x locate</li>
+<li>or M-x helm-locate</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orga6a117c" class="outline-3">
+<h3 id="orga6a117c">Index special file format (for example, .hidl files)</h3>
+<div class="outline-text-3" id="text-orga6a117c">
+<p>
+To use a specific parser to index a specific file types, you can change the field of ':langmap' in your local .globalrc file.
+For example, if you want to index .hidl as c++, you can map it to c++ type.
+</p>
+<pre class="example">
+:langmap=c\:.c.h,yacc\:.y,asm\:.s.S,java\:.java,cpp\:.c++.cc.cpp.cxx.hxx.hpp.hh.hidl.C.H,php\:.php.php3.phtml:
+</pre>
+</div>
+</div>
+<div id="outline-container-org4837130" class="outline-3">
+<h3 id="org4837130">Git integration</h3>
+<div class="outline-text-3" id="text-org4837130">
+<p>
+matgit
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge60ba26" class="outline-3">
+<h3 id="orge60ba26">elpy usage</h3>
+<div class="outline-text-3" id="text-orge60ba26">
+<ul class="org-ul">
+<li>elpy-goto-definition M-.</li>
+<li>xref-pop-marker-stack M-,</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd2c31ef" class="outline-3">
+<h3 id="orgd2c31ef">Other convenient things</h3>
+<div class="outline-text-3" id="text-orgd2c31ef">
+<ul class="org-ul">
+<li>minimap mode</li>
+<li>narrowing for programming
+<dl class="org-dl">
+<dt>C-x n n</dt><dd>Narrow down to between point and mark (narrow-to-region).</dd>
+<dt>C-x n d</dt><dd>Narrow down to the current defun (narrow-to-defun).</dd>
+<dt>C-x n w</dt><dd>cancel narrow down (widen)</dd>
+</dl></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbb661cd" class="outline-2">
+<h2 id="orgbb661cd">Useful commands</h2>
+<div class="outline-text-2" id="text-orgbb661cd">
+</div>
+<div id="outline-container-org41fb97a" class="outline-3">
+<h3 id="org41fb97a">Multiple line edit (rectangle edit)</h3>
+<div class="outline-text-3" id="text-org41fb97a">
+<p>
+C+x r t  (string-rectangle)
+For more, please see
+M-x xxx-rectange
+</p>
+</div>
+</div>
+<div id="outline-container-orgcfcd2fc" class="outline-3">
+<h3 id="orgcfcd2fc">How to decide whether to save (diff buffer with original file)</h3>
+<div class="outline-text-3" id="text-orgcfcd2fc">
+<ul class="org-ul">
+<li>M-x diff-buffer-with-file</li>
+</ul>
+<p>
+or
+</p>
+<ul class="org-ul">
+<li>C-x s then d</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgb185f3a" class="outline-3">
+<h3 id="orgb185f3a">How to split into 3 even windows</h3>
+<div class="outline-text-3" id="text-orgb185f3a">
+<ul class="org-ul">
+<li>C-x 3 to add one more frame</li>
+<li>C-x + to equally size all windows</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgf271edb" class="outline-3">
+<h3 id="orgf271edb">change font size</h3>
+<div class="outline-text-3" id="text-orgf271edb">
+<ul class="org-ul">
+<li>C-x C-+ increase font size</li>
+<li>C-x C&#x2013; decrease fint size</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgadce7e5" class="outline-3">
+<h3 id="orgadce7e5">run shell command in Emacs</h3>
+<div class="outline-text-3" id="text-orgadce7e5">
+<p>
+M-! run shell command in Emacs
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf509e40" class="outline-3">
+<h3 id="orgf509e40">Show all key bindings</h3>
+<div class="outline-text-3" id="text-orgf509e40">
+<p>
+C+h b    (describe-bindings)
+C+h k    (describe-key)
+</p>
+
+
+<ul class="org-ul">
+<li>C-c ; Toggle the COMMENT keyword at the beginning of an entry, which won't be exported.</li>
+<li>C-c / search in current buffer shown as a sparse tree.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd9123f6" class="outline-2">
+<h2 id="orgd9123f6">rtags c++ indexer</h2>
+<div class="outline-text-2" id="text-orgd9123f6">
+</div>
+<div id="outline-container-orgf3ddffb" class="outline-3">
+<h3 id="orgf3ddffb">General</h3>
+<div class="outline-text-3" id="text-orgf3ddffb">
+<p>
+I have tried rtags with Emacs. It works well after index. It takes a pretty long time to index a large project.
+Since gtags is much faster and works for me, I don't use it.
+</p>
+</div>
+</div>
+<div id="outline-container-org607a1ff" class="outline-3">
+<h3 id="org607a1ff">install</h3>
+<div class="outline-text-3" id="text-org607a1ff">
+<pre class="example">
+sudo apt-get install libclang-dev llvm
+cd ~/local/
+git clone --recursive http://github.com/Andersbakken/rtags
+cd rtags
+mkdir build
+cd build &amp;&amp; cmake -DCMAKE_BUILD_TYPE=Release ..
+make
+sudo make install
+</pre>
+</div>
+</div>
+<div id="outline-container-orgabeb090" class="outline-3">
+<h3 id="orgabeb090">usage</h3>
+<div class="outline-text-3" id="text-orgabeb090">
+<ul class="org-ul">
+<li>start
+$nice ionice -c idle rdm -j6</li>
+
+<li>Pointing rtags to the av tree</li>
+</ul>
+
+<p>
+$ rc -J ./source/bazel-out/local<sub>linux</sub>-fastbuild/genfiles/compile<sub>commands.json</sub>
+</p>
+
+<p>
+$ rc -J ./av/build/compile<sub>commands.json</sub>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3018d7e" class="outline-3">
+<h3 id="org3018d7e">help</h3>
+<div class="outline-text-3" id="text-org3018d7e">
+<p>
+rc &#x2013;help
+</p>
+</div>
+</div>
+<div id="outline-container-org78cf06c" class="outline-3">
+<h3 id="org78cf06c">Emacs setting for rtags</h3>
+</div>
+</div>
+
+<div id="outline-container-orge203996" class="outline-2">
+<h2 id="orge203996">Terminal in Emacs</h2>
+<div class="outline-text-2" id="text-orge203996">
+<ul class="org-ul">
+<li>ansi-term</li>
+<li>To modify the color scheme: M-x customize-group RET term RET</li>
+<li><p>
+emacs settings
+</p>
+<div class="org-src-container">
+<pre><code class="src src-emacs_lisp">(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+
+(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+</code></pre>
+</div></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge3c2be8" class="outline-2">
+<h2 id="orge3c2be8">terminal color theme settings</h2>
+<div class="outline-text-2" id="text-orge3c2be8">
+<ol class="org-ol">
+<li>put the following into .bashrc or .profile
+export TERM=xterm-256color</li>
+<li>check the effect in Emacs by:
+M-x list-colors-display</li>
+<li>select color theme you like by:
+M-x color-theme-xx</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgc03bc9f" class="outline-2">
+<h2 id="orgc03bc9f">set fill-paragraph width</h2>
+<div class="outline-text-2" id="text-orgc03bc9f">
+<p>
+C-x f set-fill-column
+default is 70
+</p>
+</div>
+</div>
+<div id="outline-container-orgba8dddb" class="outline-2">
+<h2 id="orgba8dddb">MobileOrg setting</h2>
+<div class="outline-text-2" id="text-orgba8dddb">
+<p>
+<a href="http://jonathanchu.is/posts/org-mode-and-mobileorg-installation-and-config/">http://jonathanchu.is/posts/org-mode-and-mobileorg-installation-and-config/</a>
+</p>
+</div>
+</div>
+<div id="outline-container-org3e48304" class="outline-2">
+<h2 id="org3e48304">Common key bindings</h2>
+<div class="outline-text-2" id="text-org3e48304">
+<dl class="org-dl">
+<dt>alt-x</dt><dd>same as M-x</dd>
+<dt>C-h a</dt><dd>search for command
+c-h i :: information page
+c-h f :: help on function
+c-h k :: help on key bindings
+c-h m :: help on current mode</dd>
+<dt>C-/  </dt><dd>undo</dd>
+<dt>C-x (</dt><dd>start recording macro
+C-x ) :: stop recording macro
+C-x e :: execute</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-orgb09fe90" class="outline-2">
+<h2 id="orgb09fe90">color theme</h2>
+<div class="outline-text-2" id="text-orgb09fe90">
+</div>
+<div id="outline-container-orgdb8b597" class="outline-3">
+<h3 id="orgdb8b597">Cool website that can generate color theme online:</h3>
+<div class="outline-text-3" id="text-orgdb8b597">
+<p>
+<a href="http://jasonm23.github.io/emacs-theme-editor/">http://jasonm23.github.io/emacs-theme-editor/</a>#
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9ab52f7" class="outline-3">
+<h3 id="org9ab52f7">Using Emacs native color theme (maybe only for V24 or later)</h3>
+<div class="outline-text-3" id="text-org9ab52f7">
+<ul class="org-ul">
+<li>try ESC-x color-theme
+TAB to show all available themes.</li>
+<li>after you have find a favorite theme, you can add the following to .emacs (theme manoj-dark for example)</li>
+</ul>
+<div class="org-src-container">
+<pre><code class="src src-emacs-lisp">(load-theme  'manoj-dark)
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5cbadf9" class="outline-2">
+<h2 id="org5cbadf9">Column View in org-mode</h2>
+<div class="outline-text-2" id="text-org5cbadf9">
+<ul class="org-ul">
+<li>setting what to show</li>
+</ul>
+<pre class="example">
+#+COLUMNS: %25ITEM %TAGS %Effort(EV) %CLOCKSUM(RC) %TODO
+</pre>
+<dl class="org-dl">
+<dt>C-c C-x C-c</dt><dd>column view</dd>
+<dt>C-c C-x i  </dt><dd>generate gdynamic table</dd>
+<dt>q          </dt><dd>quit column view</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-org3c007ba" class="outline-2">
+<h2 id="org3c007ba">Search in Emacs</h2>
+<div class="outline-text-2" id="text-org3c007ba">
+<ul class="org-ul">
+<li>find a file with its name</li>
+</ul>
+<pre class="example">
+M-x find-name-dired
+</pre>
+<p>
+or
+</p>
+<pre class="example">
+*M-x find-dired*  (accept any command that find do)
+</pre>
+<p>
+e.g. case-insensitive search
+-iname \*xxx\*
+Note: '\' is necessary
+</p>
+
+<ul class="org-ul">
+<li>find a file with its contain</li>
+</ul>
+<pre class="example">
+M-x rgrep
+</pre>
+<ul class="org-ul">
+<li>locate or locate-with-filter</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org41bf3bc" class="outline-2">
+<h2 id="org41bf3bc">How to get rid of ^M&#xa0;&#xa0;&#xa0;<span class="tag"><span class="EMACS">EMACS</span>&#xa0;<span class="REMOVE">REMOVE</span></span></h2>
+<div class="outline-text-2" id="text-org41bf3bc">
+<pre class="example">
+M-x replace-string C-q C-m RET
+</pre>
+<p>
+or run dos2unix
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgca11c5d" class="outline-2">
+<h2 id="orgca11c5d">org-mode&#xa0;&#xa0;&#xa0;<span class="tag"><span class="EMACS">EMACS</span>&#xa0;<span class="KEYS">KEYS</span></span></h2>
+<div class="outline-text-2" id="text-orgca11c5d">
+<dl class="org-dl">
+<dt>C-c C-&lt;       </dt><dd>outline-promote</dd>
+<dt>C-c C-&gt;       </dt><dd>outline-demote</dd>
+
+<dt>C-j       </dt><dd>org-return-indent</dd>
+
+<dt>C-c C-x v</dt><dd>Copy the visible text in the region into the kill ring.</dd>
+<dt>C-c C-u  </dt><dd>Backward to higher level heading.</dd>
+<dt>C-c C-j  </dt><dd>Jump to a different place without changing the current outline visibility. Shows
+the document structure in a temporary buffer, where you can use the following
+keys to find your destination</dd>
+
+<dt>(no term)</dt><dd>C-c C-x C-s subtree archive</dd>
+<dt>C-c l</dt><dd>store a internal link</dd>
+<dt>C-c C-l</dt><dd>insert a link to current location</dd>
+<dt>C-c &amp;</dt><dd>return back</dd>
+</dl>
+</div>
+
+<div id="outline-container-org552535a" class="outline-3">
+<h3 id="org552535a">demote and promote</h3>
+<div class="outline-text-3" id="text-org552535a">
+<ul class="org-ul">
+<li>M-x outline-demote</li>
+<li>M-x demote selected region</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org685eee4" class="outline-2">
+<h2 id="org685eee4">Emacs org clocking&#xa0;&#xa0;&#xa0;<span class="tag"><span class="EMACS">EMACS</span>&#xa0;<span class="CLOCK_KEYS">CLOCK_KEYS</span></span></h2>
+<div class="outline-text-2" id="text-org685eee4">
+<dl class="org-dl">
+<dt>C-c C-x C-i</dt><dd>clock in</dd>
+<dt>C-c C-x C-o</dt><dd>clock out</dd>
+<dt>C-c C-x C-i</dt><dd>clock jump</dd>
+<dt>C-c C-c    </dt><dd>recalculate the time interval</dd>
+<dt>C-c C-x C-d</dt><dd>Display time summaries for each subtree in the current buffer (C-c C-c  cancel)</dd>
+<dt>C-c C-x C-r</dt><dd>Insert a dynamic block (see Dynamic blocks) containing a clock report</dd>
+<dt>M-x org-resolve-clocks</dt><dd>You can also check all the files visited by your Org agenda for dangling clocks at any time using M-x org-resolve-clocks.</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-org2837ace" class="outline-2">
+<h2 id="org2837ace">Spreadsheet</h2>
+<div class="outline-text-2" id="text-org2837ace">
+<ul class="org-ul">
+<li>C-c } you can always turn on the reference visualization grid with</li>
+<li>first formula: :=vmean($2..$3)
+hit C-c C-c you should observe two things</li>
+<li>C-c ' interactive formula editor / C-c = simple interactive formula editor</li>
+<li>C-c | convertactive region into a table.
+items can be separated by s whitespace, comma, or tab.</li>
+<li>C-c ^ sort according to current column.</li>
+<li>&lt;N&gt; in the column to set the field width. as follows:</li>
+</ul>
+<pre class="example">
+| &lt;4&gt;  | &lt;5&gt;   | &lt;7&gt;     |
+</pre>
+</div>
+</div>
+<div id="outline-container-org35b7da9" class="outline-2">
+<h2 id="org35b7da9">UI settings</h2>
+<div class="outline-text-2" id="text-org35b7da9">
+<ul class="org-ul">
+<li>How to show line numbers? <br />
+(global-linum-mode 1) ; display line numbers in margin. Emacs 23 only.</li>
+<li>How to show the cursor's column position? <br />
+(column-number-mode 1)</li>
+<li>How to have lines soft wrapped at word boundary? <br />
+Pull the menu ?Options ? Line Wrapping in this Buffer?, or call visual-line-mode.</li>
+<li>How to have lines soft wrapped at word boundary? <br />
+(global-visual-line-mode 1) ; 1 for on, 0 for off.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc78e378" class="outline-2">
+<h2 id="orgc78e378">Switch between input method</h2>
+<div class="outline-text-2" id="text-orgc78e378">
+<ul class="org-ul">
+<li>C-\</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6995d59" class="outline-2">
+<h2 id="org6995d59">Make presentation / slides</h2>
+<div class="outline-text-2" id="text-org6995d59">
+</div>
+<div id="outline-container-org64c263c" class="outline-3">
+<h3 id="org64c263c">for 8.2.3b</h3>
+<div class="outline-text-3" id="text-org64c263c">
+<ul class="org-ul">
+<li>add the following at the beginning of an org file</li>
+</ul>
+<pre class="example">
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+</pre>
+<ul class="org-ul">
+<li>add the following to .emacs</li>
+</ul>
+<pre class="example">
+(require 'ox-latex)
+(add-to-list 'org-latex-classes
+          '("beamer"
+            "\\documentclass\[presentation\]\{beamer\}"
+            ("\\section\{%s\}" . "\\section*\{%s\}")
+            ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
+            ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}")))
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org106e47e" class="outline-3">
+<h3 id="org106e47e">S5 solution (A Simple Standards-Based Slide Show System)</h3>
+<div class="outline-text-3" id="text-org106e47e">
+<ul class="org-ul">
+<li>add the following to .emacs</li>
+</ul>
+<div class="org-src-container">
+<pre><code class="src src-emacs-lisp"><span style="color: #00008b;">;; </span><span style="color: #00008b;">export slides in org mode</span>
+<span style="color: #00008b;">;; </span><span style="color: #00008b;">remember to copy folder "ui" to your pub folder</span>
+(add-to-list 'load-path <span style="color: #008b00;">"~/site-lisp/org-s5-master"</span>)
+(<span style="color: #8b0000;">require</span> '<span style="color: #cd0000;">org-export-as-s5</span>)
+<span style="color: #00008b;">;;</span><span style="color: #00008b;">(setq org-s5-theme "railscast")   ; based off `</span><span style="color: #00008b;">color-theme-railscasts</span><span style="color: #00008b;">'</span>
+(<span style="color: #8b0000;">setq</span> org-s5-theme <span style="color: #008b00;">"default"</span>)     <span style="color: #00008b;">; </span><span style="color: #00008b;">the default S5 theme</span>
+<span style="color: #00008b;">;;</span><span style="color: #00008b;">(setq org-s5-theme "i18n")        ; the i18n theme by the author of S5</span>
+<span style="color: #00008b;">;;</span><span style="color: #00008b;">(setq org-s5-theme "advanced_gfx")</span>
+</code></pre>
+</div>
+<ul class="org-ul">
+<li>to export an org buffer to S5 slides, run the following command:
+org-export-as-s5</li>
+<li>get more themes from:    S5<sub>1.3beta7</sub></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org4f7082d" class="outline-3">
+<h3 id="org4f7082d">reveal</h3>
+<div class="outline-text-3" id="text-org4f7082d">
+<ol class="org-ol">
+<li>copy ~/site-lisp/org-reveal-master to DIR1</li>
+<li>copy ~/site-lisp/reveal-master to DIR2</li>
+<li>setting emacs</li>
+</ol>
+<div class="org-src-container">
+<pre><code class="src src-emacs-lisp"><span style="color: #00008b;">;; </span><span style="color: #00008b;">org reveal export</span>
+(add-to-list 'load-path <span style="color: #008b00;">"~/site-lisp/org-reveal-master/"</span>)
+(<span style="color: #8b0000;">require</span> '<span style="color: #cd0000;">ox-reveal</span>)
+(<span style="color: #8b0000;">setq</span> org-reveal-root <span style="color: #008b00;">"file:///D:/cgliu/emacs-24.2/site-lisp/reveal-master/"</span>)
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org55b849a" class="outline-2">
+<h2 id="org55b849a">How to create a beautiful homepage with Emacs org-mode and Bootstrap</h2>
+<div class="outline-text-2" id="text-org55b849a">
+<ul class="org-ul">
+<li><p>
+Configure org-mode html export project
+</p>
+<div class="org-src-container">
+<pre><code class="src src-emacs-lisp">(<span style="color: #8b0000;">setq</span> org-publish-project-alist
+      '(
+        (<span style="color: #008b00;">"org-notes"</span>               <span style="color: #00008b;">;</span><span style="color: #00008b;">Used to export .org file</span>
+         <span style="color: #cd0000;">:base-directory</span> <span style="color: #008b00;">"~/www/"</span>  <span style="color: #00008b;">;</span><span style="color: #00008b;">directory holds .org files</span>
+         <span style="color: #cd0000;">:base-extension</span> <span style="color: #008b00;">"org"</span>     <span style="color: #00008b;">;</span><span style="color: #00008b;">process .org file only</span>
+         <span style="color: #cd0000;">:publishing-directory</span> <span style="color: #008b00;">"~/public_html/"</span>    <span style="color: #00008b;">;</span><span style="color: #00008b;">export destination</span>
+         <span style="color: #cd0000;">:recursive</span> t
+         <span style="color: #cd0000;">:publishing-function</span> org-html-publish-to-html
+         <span style="color: #cd0000;">:headline-levels</span> 4               <span style="color: #00008b;">; </span><span style="color: #00008b;">Just the default for this project.</span>
+         <span style="color: #00008b;">;; </span><span style="color: #00008b;">:auto-preamble t</span>
+         <span style="color: #cd0000;">:auto-sitemap</span> t                  <span style="color: #00008b;">; </span><span style="color: #00008b;">Generate sitemap.org automagically...</span>
+         <span style="color: #cd0000;">:sitemap-filename</span> <span style="color: #008b00;">"sitemap.org"</span>  <span style="color: #00008b;">; </span><span style="color: #00008b;">... call it sitemap.org (it's the default)...</span>
+         <span style="color: #cd0000;">:sitemap-title</span> <span style="color: #008b00;">"Sitemap"</span>         <span style="color: #00008b;">; </span><span style="color: #00008b;">... with title 'Sitemap'.</span>
+         <span style="color: #cd0000;">:export-creator-info</span> nil    <span style="color: #00008b;">; </span><span style="color: #00008b;">Disable the inclusion of "Created by Org" in the postamble.</span>
+         <span style="color: #cd0000;">:export-author-info</span> nil     <span style="color: #00008b;">; </span><span style="color: #00008b;">Disable the inclusion of "Author: Your Name" in the postamble.</span>
+         <span style="color: #cd0000;">:auto-postamble</span> nil         <span style="color: #00008b;">; </span><span style="color: #00008b;">Disable auto postamble</span>
+         <span style="color: #cd0000;">:table-of-contents</span> t        <span style="color: #00008b;">; </span><span style="color: #00008b;">Set this to "t" if you want a table of contents, set to "nil" disables TOC.</span>
+         <span style="color: #cd0000;">:section-numbers</span> nil        <span style="color: #00008b;">; </span><span style="color: #00008b;">Set this to "t" if you want headings to have numbers.</span>
+         <span style="color: #cd0000;">:style-include-default</span> nil  <span style="color: #00008b;">;</span><span style="color: #00008b;">Disable the default css style</span>
+         <span style="color: #cd0000;">:html-preamble</span> nil
+         <span style="color: #cd0000;">:html-postamble</span> nil
+        )
+        (<span style="color: #008b00;">"org-static"</span>                <span style="color: #00008b;">;</span><span style="color: #00008b;">Used to publish static files</span>
+         <span style="color: #cd0000;">:base-directory</span> <span style="color: #008b00;">"~/www/"</span>
+         <span style="color: #cd0000;">:base-extension</span> <span style="color: #008b00;">"css</span><span style="color: #008b00; font-weight: bold;">\\</span><span style="color: #008b00; font-weight: bold;">|</span><span style="color: #008b00;">js</span><span style="color: #008b00; font-weight: bold;">\\</span><span style="color: #008b00; font-weight: bold;">|</span><span style="color: #008b00;">png</span><span style="color: #008b00; font-weight: bold;">\\</span><span style="color: #008b00; font-weight: bold;">|</span><span style="color: #008b00;">JPG</span><span style="color: #008b00; font-weight: bold;">\\</span><span style="color: #008b00; font-weight: bold;">|</span><span style="color: #008b00;">jpg</span><span style="color: #008b00; font-weight: bold;">\\</span><span style="color: #008b00; font-weight: bold;">|</span><span style="color: #008b00;">gif</span><span style="color: #008b00; font-weight: bold;">\\</span><span style="color: #008b00; font-weight: bold;">|</span><span style="color: #008b00;">pdf</span><span style="color: #008b00; font-weight: bold;">\\</span><span style="color: #008b00; font-weight: bold;">|</span><span style="color: #008b00;">mp3</span><span style="color: #008b00; font-weight: bold;">\\</span><span style="color: #008b00; font-weight: bold;">|</span><span style="color: #008b00;">ogg</span><span style="color: #008b00; font-weight: bold;">\\</span><span style="color: #008b00; font-weight: bold;">|</span><span style="color: #008b00;">swf"</span>
+         <span style="color: #cd0000;">:publishing-directory</span> <span style="color: #008b00;">"~/public_html/"</span>    <span style="color: #00008b;">;</span><span style="color: #00008b;">export destination</span>
+         <span style="color: #cd0000;">:recursive</span> t
+         <span style="color: #cd0000;">:publishing-function</span> org-publish-attachment
+         )
+        (<span style="color: #008b00;">"org"</span> <span style="color: #cd0000;">:components</span> (<span style="color: #008b00;">"org-notes"</span> <span style="color: #008b00;">"org-static"</span>)) <span style="color: #00008b;">;</span><span style="color: #00008b;">combine "org-notes" and "org-static" into one function call</span>
+        ))
+
+</code></pre>
+</div></li>
+
+<li>Download <a href="http://getbootstrap.com/2.3.2/">Bootstrap</a> and extract .zip. Make sure these folders (css, img and js) are in the same folder as your org files.</li>
+
+<li><p>
+Create level-0.include as following and save it to YOUR<sub>INC</sub><sub>PATH</sub>
+</p>
+<div class="org-src-container">
+<pre><code class="src src-html">#+options: author:nil creator:nil timestamp:nil email:nil
+#+options: h:0 toc:nil title:nil
+#+options: html-style:t
+
+#+HTML_HEAD:        &lt;<span style="color: #8b2323;">meta</span> <span style="color: #8b008b;">http-equiv</span>=<span style="color: #008b00;">"Content-Type"</span> <span style="color: #8b008b;">content</span>=<span style="color: #008b00;">"text/html; charset=UTF-8"</span> /&gt;
+#+HTML_HEAD:        &lt;<span style="color: #8b2323;">title</span>&gt;<span style="font-weight: bold; text-decoration: underline;">Chenggang Liu's Homepage</span>&lt;/<span style="color: #8b2323;">title</span>&gt;
+#+HTML_HEAD:        &lt;<span style="color: #8b2323;">link</span> <span style="color: #8b008b;">rel</span>=<span style="color: #008b00;">"stylesheet"</span> <span style="color: #8b008b;">href</span>=<span style="color: #008b00;">"./fonts/Serif/cmun-serif.css"</span> /&gt;
+#+HTML_HEAD:        &lt;<span style="color: #8b2323;">link</span> <span style="color: #8b008b;">rel</span>=<span style="color: #008b00;">"stylesheet"</span> <span style="color: #8b008b;">href</span>=<span style="color: #008b00;">"./fonts/Serif-Slanted/cmun-serif-slanted.css"</span> /&gt;
+#+HTML_HEAD:        <span style="color: #00008b;">&lt;!--</span><span style="color: #00008b;">BOOTSTRAP</span><span style="color: #00008b;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #8b2323;">link</span> <span style="color: #8b008b;">href</span>=<span style="color: #008b00;">"./bootstrap/css/bootstrap.min.css"</span> <span style="color: #8b008b;">rel</span>=<span style="color: #008b00;">"stylesheet"</span>&gt;
+#+HTML_HEAD:        <span style="color: #00008b;">&lt;!--</span><span style="color: #00008b;">mobile first</span><span style="color: #00008b;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #8b2323;">meta</span> <span style="color: #8b008b;">name</span>=<span style="color: #008b00;">"viewport"</span> <span style="color: #8b008b;">content</span>=<span style="color: #008b00;">"width=device-width, initial-scale=1.0"</span>&gt;
+#+HTML_HEAD:
+#+HTML_HEAD:        <span style="color: #00008b;">&lt;!--</span><span style="color: #00008b;">removed html from url but still is html</span><span style="color: #00008b;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #8b2323;">meta</span> <span style="color: #8b008b;">http-equiv</span>=<span style="color: #008b00;">"Content-Type"</span> <span style="color: #8b008b;">content</span>=<span style="color: #008b00;">"text/html; charset=UTF-8"</span> /&gt;
+#+HTML_HEAD:
+#+HTML_HEAD:        <span style="color: #00008b;">&lt;!--</span><span style="color: #00008b;">font awesome</span><span style="color: #00008b;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #8b2323;">link</span> <span style="color: #8b008b;">href</span>=<span style="color: #008b00;">"//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"</span> <span style="color: #8b008b;">rel</span>=<span style="color: #008b00;">"stylesheet"</span>&gt;
+#+HTML_HEAD:
+#+HTML_HEAD:        <span style="color: #00008b;">&lt;!--</span><span style="color: #00008b;">fonts: allan &amp; cardo</span><span style="color: #00008b;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #8b2323;">link</span> <span style="color: #8b008b;">href</span>=<span style="color: #008b00;">"http://fonts.googleapis.com/css?family=Droid+Serif"</span> <span style="color: #8b008b;">rel</span>=<span style="color: #008b00;">"stylesheet"</span> <span style="color: #8b008b;">type</span>=<span style="color: #008b00;">"text/css"</span>&gt;
+#+HTML_HEAD:        &lt;<span style="color: #8b2323;">link</span> <span style="color: #8b008b;">href</span>=<span style="color: #008b00;">"http://fonts.googleapis.com/css?family=Droid+Sans"</span> <span style="color: #8b008b;">rel</span>=<span style="color: #008b00;">"stylesheet"</span> <span style="color: #8b008b;">type</span>=<span style="color: #008b00;">"text/css"</span>&gt;
+#+HTML_HEAD:        &lt;<span style="color: #8b2323;">link</span> <span style="color: #8b008b;">href</span>=<span style="color: #008b00;">"./css/sticky-footer-navbar.css"</span> <span style="color: #8b008b;">rel</span>=<span style="color: #008b00;">"stylesheet"</span>&gt;
+#+HTML_HEAD:
+#+HTML_HEAD:        <span style="color: #00008b;">&lt;!--</span><span style="color: #00008b;">Highlight</span><span style="color: #00008b;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #8b2323;">link</span> <span style="color: #8b008b;">href</span>=<span style="color: #008b00;">"./highlight/styles/github.css"</span> <span style="color: #8b008b;">rel</span>=<span style="color: #008b00;">"stylesheet"</span>&gt;
+#+HTML_HEAD:        &lt;<span style="color: #8b2323;">link</span> <span style="color: #8b008b;">href</span>=<span style="color: #008b00;">"./favicon.ico"</span> <span style="color: #8b008b;">rel</span>=<span style="color: #008b00;">"shortcut icon"</span> /&gt;
+#+HTML_HEAD:        &lt;<span style="color: #8b2323;">script</span> <span style="color: #8b008b;">type</span>=<span style="color: #008b00;">"text/javascript"</span> <span style="color: #8b008b;">src</span>=<span style="color: #008b00;">"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"</span>&gt;&lt;/<span style="color: #8b2323;">script</span>&gt;
+
+#+BEGIN_EXPORT html
+&lt;<span style="color: #8b2323;">nav</span> <span style="color: #8b008b;">class</span>=<span style="color: #008b00;">"navbar navbar-inverse navbar-static-top"</span> <span style="color: #8b008b;">role</span>=<span style="color: #008b00;">"navigation"</span>&gt;
+  &lt;<span style="color: #8b2323;">div</span> <span style="color: #8b008b;">class</span>=<span style="color: #008b00;">"container"</span>&gt;
+    <span style="color: #00008b;">&lt;!--</span><span style="color: #00008b;">Toggle header for mobile</span><span style="color: #00008b;">--&gt;</span>
+    &lt;<span style="color: #8b2323;">div</span> <span style="color: #8b008b;">class</span>=<span style="color: #008b00;">"navbar-header"</span>&gt;
+      &lt;<span style="color: #8b2323;">button</span> <span style="color: #8b008b;">type</span>=<span style="color: #008b00;">"button"</span> <span style="color: #8b008b;">class</span>=<span style="color: #008b00;">"navbar-toggle"</span> <span style="color: #8b008b;">data-toggle</span>=<span style="color: #008b00;">"collapse"</span> <span style="color: #8b008b;">data-target</span>=<span style="color: #008b00;">".navbar-collapse"</span>&gt;
+        &lt;<span style="color: #8b2323;">span</span> <span style="color: #8b008b;">class</span>=<span style="color: #008b00;">"sr-only"</span>&gt;Toggle navigation&lt;/<span style="color: #8b2323;">span</span>&gt;
+        &lt;<span style="color: #8b2323;">span</span> <span style="color: #8b008b;">class</span>=<span style="color: #008b00;">"icon-bar"</span>&gt;&lt;/<span style="color: #8b2323;">span</span>&gt;
+        &lt;<span style="color: #8b2323;">span</span> <span style="color: #8b008b;">class</span>=<span style="color: #008b00;">"icon-bar"</span>&gt;&lt;/<span style="color: #8b2323;">span</span>&gt;
+        &lt;<span style="color: #8b2323;">span</span> <span style="color: #8b008b;">class</span>=<span style="color: #008b00;">"icon-bar"</span>&gt;&lt;/<span style="color: #8b2323;">span</span>&gt;
+      &lt;/<span style="color: #8b2323;">button</span>&gt;
+      &lt;<span style="color: #8b2323;">a</span> <span style="color: #8b008b;">class</span>=<span style="color: #008b00;">"navbar-brand active"</span> <span style="color: #8b008b;">href</span>=<span style="color: #008b00;">"./index.html"</span> <span style="color: #8b008b;">id</span>=<span style="color: #008b00;">"home"</span>&gt;Chenggang Liu's Homepage&lt;/<span style="color: #8b2323;">a</span>&gt;
+    &lt;/<span style="color: #8b2323;">div</span>&gt;
+    <span style="color: #00008b;">&lt;!--</span><span style="color: #00008b;">normal header</span><span style="color: #00008b;">--&gt;</span>
+    &lt;<span style="color: #8b2323;">div</span> <span style="color: #8b008b;">class</span>=<span style="color: #008b00;">"navbar-collapse collapse"</span>&gt;
+      &lt;<span style="color: #8b2323;">ul</span> <span style="color: #8b008b;">class</span>=<span style="color: #008b00;">"nav navbar-nav navbar-right"</span>&gt;
+        &lt;<span style="color: #8b2323;">li</span>&gt;&lt;<span style="color: #8b2323;">a</span> <span style="color: #8b008b;">href</span>=<span style="color: #008b00;">"./index.html"</span>&gt;&lt;<span style="color: #8b2323;">span</span> <span style="color: #8b008b;">class</span>=<span style="color: #008b00;">"glyphicon glyphicon-home"</span>&gt;&lt;/<span style="color: #8b2323;">span</span>&gt;  Home&lt;/<span style="color: #8b2323;">a</span>&gt;&lt;/<span style="color: #8b2323;">a</span>&gt;&lt;/<span style="color: #8b2323;">li</span>&gt;
+        &lt;<span style="color: #8b2323;">li</span>&gt;&lt;<span style="color: #8b2323;">a</span> <span style="color: #8b008b;">href</span>=<span style="color: #008b00;">"./blog.html"</span>&gt;&lt;<span style="color: #8b2323;">span</span> <span style="color: #8b008b;">class</span>=<span style="color: #008b00;">"glyphicon glyphicon-pencil"</span>&gt;&lt;/<span style="color: #8b2323;">span</span>&gt;  Blog&lt;/<span style="color: #8b2323;">a</span>&gt;&lt;/<span style="color: #8b2323;">li</span>&gt;
+        &lt;<span style="color: #8b2323;">li</span>&gt;&lt;<span style="color: #8b2323;">a</span> <span style="color: #8b008b;">href</span>=<span style="color: #008b00;">"./projects.html"</span>&gt;&lt;<span style="color: #8b2323;">span</span> <span style="color: #8b008b;">class</span>=<span style="color: #008b00;">"glyphicon glyphicon-tags"</span>&gt;&lt;/<span style="color: #8b2323;">span</span>&gt;  Projects&lt;/<span style="color: #8b2323;">a</span>&gt;&lt;/<span style="color: #8b2323;">li</span>&gt;
+        &lt;<span style="color: #8b2323;">li</span>&gt;&lt;<span style="color: #8b2323;">a</span> <span style="color: #8b008b;">href</span>=<span style="color: #008b00;">"./about.html"</span>&gt;&lt;<span style="color: #8b2323;">span</span> <span style="color: #8b008b;">class</span>=<span style="color: #008b00;">"glyphicon glyphicon-user"</span>&gt;&lt;/<span style="color: #8b2323;">span</span>&gt;  About&lt;/<span style="color: #8b2323;">a</span>&gt;&lt;/<span style="color: #8b2323;">li</span>&gt;
+        &lt;<span style="color: #8b2323;">li</span>&gt;&lt;<span style="color: #8b2323;">a</span> <span style="color: #8b008b;">href</span>=<span style="color: #008b00;">"./contact.html"</span>&gt;&lt;<span style="color: #8b2323;">span</span> <span style="color: #8b008b;">class</span>=<span style="color: #008b00;">"glyphicon glyphicon-envelope"</span>&gt;&lt;/<span style="color: #8b2323;">span</span>&gt;  Contact&lt;/<span style="color: #8b2323;">a</span>&gt;&lt;/<span style="color: #8b2323;">li</span>&gt;
+      &lt;/<span style="color: #8b2323;">ul</span>&gt;
+    &lt;/<span style="color: #8b2323;">div</span>&gt;<span style="color: #00008b;">&lt;!--</span><span style="color: #00008b;">/.nav-collapse </span><span style="color: #00008b;">--&gt;</span>
+  &lt;/<span style="color: #8b2323;">div</span>&gt;
+&lt;/<span style="color: #8b2323;">nav</span>&gt;
+#+END_EXPORT
+
+</code></pre>
+</div></li>
+
+<li><p>
+On top of your org files, add:
+</p>
+<pre class="example">
+#+INCLUDE: "YOUR_INC_PATH/level-0.include"
+</pre></li>
+
+<li>You are done and enjoy!</li>
+</ul>
+</div>
+</div>
+</div>
+</body>
+</html>

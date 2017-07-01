@@ -1,0 +1,838 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2017-07-01 Sat 15:08 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title></title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Chenggang Liu" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgdaab2e7">Introduction of Optimal Control</a>
+<ul>
+<li><a href="#orgf44bad1">Infinite Time Horizon Optimal Control</a></li>
+<li><a href="#org89efce1">Solution via Dynamic Programming</a></li>
+</ul>
+</li>
+<li><a href="#org48b94f4">Introduction of Model Predictive Control</a>
+<ul>
+<li><a href="#org71b74f9">Model Predictive Control (MPC)</a></li>
+<li><a href="#orga0cae57">Variation on MPC</a></li>
+<li><a href="#org2ca882b">Variation on MPC (Continuation)</a></li>
+</ul>
+</li>
+<li><a href="#org356c084">Value Function Approximation</a>
+<ul>
+<li><a href="#orga4dd3fe">General solution</a></li>
+<li><a href="#orge8f5f1d">Tasks with a goal state (LQR)</a></li>
+<li><a href="#org6ee4597">Tasks that can be converted to tasks with a goal state</a></li>
+<li><a href="#org25c8958">Tasks without a goal state, periodic motion</a></li>
+<li><a href="#orgbf1fcef">Hybrid tasks</a></li>
+</ul>
+</li>
+<li><a href="#org423779e">CHOMP (Co-variant Hamiltonian Optimization for Motion Planning)</a>
+<ul>
+<li><a href="#orga5a7ada">Remarks</a></li>
+<li><a href="#org69f7c3e">Problem formulation</a></li>
+<li><a href="#org9e61638">Functional gradient</a></li>
+<li><a href="#org6df6ef8">Functional gradient</a></li>
+<li><a href="#orgf06b880">Functionals and Co-variant Gradients for Trajectory Optimization</a></li>
+<li><a href="#orgb956d58">Waypoint Trajectory Parameterization</a></li>
+<li><a href="#org3f48a14">Update rule:</a></li>
+<li><a href="#orga610fbe">Hamiltonian Monte Carlo</a></li>
+</ul>
+</li>
+<li><a href="#orgc198e6b">Optimal Smoothing and Its Application</a>
+<ul>
+<li><a href="#org7d428f4">Optimal Smoothing Background</a>
+<ul>
+<li><a href="#org4a6ad5b">Optimal smoothing</a></li>
+<li><a href="#orgeb292ba">Optimal linear quadratic smoother</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgdaab2e7" class="outline-2">
+<h2 id="orgdaab2e7">Introduction of Optimal Control</h2>
+<div class="outline-text-2" id="text-orgdaab2e7">
+</div>
+<div id="outline-container-orgf44bad1" class="outline-3">
+<h3 id="orgf44bad1">Infinite Time Horizon Optimal Control</h3>
+<div class="outline-text-3" id="text-orgf44bad1">
+<p>
+\[
+   \min J  = \sum_{k=0}^{\infty} L(x_k, u_k)
+   \]
+</p>
+
+<p>
+subject to
+\[  x_{k+1} & = F(x_k, u_k) \]
+\[  x_0 & = x(0) \]
+\[ \ldots  \]
+</p>
+
+
+<ul class="org-ul">
+<li>variables: state and control trajectories \(x_0, x_1, \ldots \in \mathrm{R}^N\), \(u_0, u_1, \ldots \in \mathbf{R}^M\)</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org89efce1" class="outline-3">
+<h3 id="org89efce1">Solution via Dynamic Programming</h3>
+<div class="outline-text-3" id="text-org89efce1">
+<ul class="org-ul">
+<li>(Bellman)  value function \(V(x)\) is optimal value of control problem as a function of state x.
+\[
+     V(x_0) = \min \sum_{k=0}^{\infty} L(x_k, u_k)
+     \]</li>
+<li>\(V\) satisfies Bellman or dynamic programming equation
+\[
+     V(x_k) = \min_{u_k} \{L(x_k, u_k) + V(x_{k+1})\}
+     \]</li>
+<li>Optimal control variable is given by
+\[
+     u^* = \arg & \min_{u_k} \{L(x, u) + V(F(x, u)\}
+     \]
+NOTE: the optimal control has 'state feedback form' that \(u_k = \pi(x_k)\)</li>
+
+<li>For a time-invariant linear system, there is analytical solution for \(V(x)\) (solution of Algebraic Riccati Equation)</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org48b94f4" class="outline-2">
+<h2 id="org48b94f4">Introduction of Model Predictive Control</h2>
+<div class="outline-text-2" id="text-org48b94f4">
+</div>
+<div id="outline-container-org71b74f9" class="outline-3">
+<h3 id="org71b74f9">Model Predictive Control (MPC)</h3>
+<div class="outline-text-3" id="text-org71b74f9">
+<p>
+\[
+    \min J = \sum_{k=0}^{k=N} L(x_k, u_k)
+    \]
+</p>
+
+<p>
+subject to
+\[ x_{k+1} = F(x_k, u_k) \]
+\[ x_0 = x(0) \]
+\[ x \in X \]
+\[ u \in U \]
+\[ \ldots \]
+with variables \(x_1, \ldots, x_N, u_0, \ldots, u_{N-1}\)
+</p>
+
+<ul class="org-ul">
+<li>we take \(u = u_0\)</li>
+<li>this also gives a state feedback control \(u_k = \pi_{mpc}(x_k)\)</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orga0cae57" class="outline-3">
+<h3 id="orga0cae57">Variation on MPC</h3>
+<div class="outline-text-3" id="text-orga0cae57">
+<ul class="org-ul">
+<li>Add final state cost \(\hat{V}(x_f)\) such that
+\[
+    \min \{ \sum_{k=0}^{k=N} L(x_k, u_k) + \hat{V}(x_{N+1}) \}
+    \]</li>
+
+<li>if \(\hat{V} = V\), MPC gives optimal control</li>
+
+<li><p>
+Why?
+</p>
+
+<p>
+Recall Bellman's Principle of Optimality,
+\[ \min \sum_{k=0}^{\infty} L(x_k, u_k) = \min \{ \sum_{k=0}^{N}L(x_k, u_k) + \sum_{k=N+1}^{\infty} L(x_k, u_k) \} \]
+then we have
+\[ \min \sum_{k=0}^{\infty} L(x_k, u_k) = \min \{ \sum_{k=0}^{N}L(x_k, u_k) + V(x_f) \} \]
+where \(x_f = x_{N+1}\)
+</p></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org2ca882b" class="outline-3">
+<h3 id="org2ca882b">Variation on MPC (Continuation)</h3>
+<div class="outline-text-3" id="text-org2ca882b">
+<ul class="org-ul">
+<li>what's the benefit?
+<ul class="org-ul">
+<li><p>
+\color{red} If we have a good approximation to \(V\), MPC's time horizon can be reduced by a lot.
+</p>
+
+<p>
+NOTE: the computation benefit is at the cost of ignoring future dynamic changes.
+</p></li>
+</ul></li>
+
+<li>A MPC with a short time horizon can give almost the same result as a MPC with a long time horizon,
+which means we can save a lot of computation!</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org356c084" class="outline-2">
+<h2 id="org356c084">Value Function Approximation</h2>
+<div class="outline-text-2" id="text-org356c084">
+</div>
+<div id="outline-container-orga4dd3fe" class="outline-3">
+<h3 id="orga4dd3fe">General solution</h3>
+<div class="outline-text-3" id="text-orga4dd3fe">
+<ul class="org-ul">
+<li><p>
+Dynamic programming, value iteration
+</p>
+
+<p>
+pros: it gives a general solution <br />
+cons: computation and storage increase exponentially with increasing dimensions (the curse of dimensionality)
+</p></li>
+
+<li>Differential Dynamic Programming (DDP) or iLQR, piece-wise second order approximation
+<a href="http://www.cs.cmu.edu/~bstephe1/cga-nips07.pdf">http://www.cs.cmu.edu/~bstephe1/cga-nips07.pdf</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge8f5f1d" class="outline-3">
+<h3 id="orge8f5f1d">Tasks with a goal state (LQR)</h3>
+<div class="outline-text-3" id="text-orge8f5f1d">
+<ul class="org-ul">
+<li>For example, stop at a stop sign
+<ul class="org-ul">
+<li><p>
+Linearizing the dynamics around the goal state \(x^*\) gives:
+\[ x \approx F(x^*, u^*) + F_{x}(x^*, u^*)(x-x^*) + F_u(x^8, u^*) ( u - u^*)\]
+</p>
+
+<p>
+Equivalently:
+\[ x - x^* = A ( x-x^*) + B(u-u^*) \]
+Let \(z = x - x^*\)  and  \(v = u-u^*\), then
+\[ z_{k+1} = A z_k  + B v_k \]
+\[ L_k = z_k^{\top} Q z_k + v_k^{\top} R v_k \]
+</p>
+
+<p>
+NOTE: this is a standard LQR
+</p></li>
+</ul></li>
+
+<li>\(V\) can be found by solving an algebraic Roccati equation (ARE)
+\[ P = Q + A^\top P A - A^\top P B (R + B^\top P B) ^{-1} B^{\top} P A \]
+and \(V(z)\) is given by
+\[ V(z) = z^{\top} P z \]</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6ee4597" class="outline-3">
+<h3 id="org6ee4597">Tasks that can be converted to tasks with a goal state</h3>
+<div class="outline-text-3" id="text-org6ee4597">
+<p>
+Affine systems
+\[
+   x_{k+1} = \mathbf{A} x_k + \mathbf{B} u_k + c
+   \]
+</p>
+
+<ul class="org-ul">
+<li>driving in a long road</li>
+<li>stop behind a stop line (not at a point)</li>
+<li>&#x2026;</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org25c8958" class="outline-3">
+<h3 id="org25c8958">Tasks without a goal state, periodic motion</h3>
+<div class="outline-text-3" id="text-org25c8958">
+<ul class="org-ul">
+<li>drive a circle</li>
+<li>&#x2026;</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgbf1fcef" class="outline-3">
+<h3 id="orgbf1fcef">Hybrid tasks</h3>
+<div class="outline-text-3" id="text-orgbf1fcef">
+<ul class="org-ul">
+<li>ACC behavior</li>
+<li>TL behavior</li>
+<li>Lane change behavior</li>
+<li>pedestrian avoidance behavior</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org423779e" class="outline-2">
+<h2 id="org423779e">CHOMP (Co-variant Hamiltonian Optimization for Motion Planning)</h2>
+<div class="outline-text-2" id="text-org423779e">
+</div>
+<div id="outline-container-orga5a7ada" class="outline-3">
+<h3 id="orga5a7ada">Remarks</h3>
+<div class="outline-text-3" id="text-orga5a7ada">
+<ul class="org-ul">
+<li>Suited for gradient-cheap application, where gradient can be computed inexpensively</li>
+<li>Trajectory optimization is invariant to parameterization
+<ul class="org-ul">
+<li>trajectory: a mapping from time t to configuration q</li>
+<li>objective function: a function of trajectory (functional)</li>
+</ul></li>
+<li>Compared with sampling-based method, optimal control, and trajectory optimization (DDP and iLQR)</li>
+<li><p>
+The meaning of the name: Co-variant gradient and Hamiltonian Monte Carlo
+</p>
+
+<p>
+<a href="https://personalrobotics.ri.cmu.edu/files/courses/papers/CHOMP12-ijrr.pdf">https://personalrobotics.ri.cmu.edu/files/courses/papers/CHOMP12-ijrr.pdf</a>
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org69f7c3e" class="outline-3">
+<h3 id="org69f7c3e">Problem formulation</h3>
+<div class="outline-text-3" id="text-org69f7c3e">
+<p>
+\[ \xi(t)^* = \arg \min_{\xi} U(\xi(t)) \]
+where  \(U (\xi(t)) = F_{smooth}(\xi(t)) + \lambda F_{obs}(\xi(t))\), and
+</p>
+
+<p>
+The smoothness objective:
+\[\
+    F_{smooth}(\xi(t)) = \frac{1}{2} \int_{0}^{1} ||\frac{d}{dt} \xi(t) ||^2 dt
+    \]
+</p>
+
+<p>
+The obstacle objective:
+\[
+    F_{obs}(\xi(t)) = \int_{0}^{1} \int_{B} c(x(\xi(t), u)) || \frac{d}{dt} x(\xi(t), u)|| du dt
+    \]
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9e61638" class="outline-3">
+<h3 id="org9e61638">Functional gradient</h3>
+<div class="outline-text-3" id="text-org9e61638">
+<ul class="org-ul">
+<li>The functional gradient \(\nabla U\) is the perturbation \(\phi\)
+that maximizes \(U[\xi + \epsilon \phi]\) as \(\epsilon \to 0\).
+Choosing a traditional Euclidean norm \(||\xi||^2 = \int \xi(t)^2
+     dt\), for any differential objective of form \(F(\xi) = \int L(t,
+     \xi, \xi') dt\), the Euclidean functional gradient: \[ \nabla
+     F(\xi) = \frac{\partial L}{\partial \xi} - \frac{d}{dt}
+     \frac{\partial L}{\partial \dot{\xi}} \]</li>
+
+<li>Euler-Lagrange equation
+\[
+     \frac{\partial L}{\partial q} - \frac{d}{dt} \frac{\partial L}{\partial \dot{q}} = 0
+     \]
+Euler-Lagrange equation is the stationary condition for:
+\[
+     \min_{q(t)} S(q) = \int_{a}^{b} L(t, q, \dot{q}) dt
+     \]</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6df6ef8" class="outline-3">
+<h3 id="org6df6ef8">Functional gradient</h3>
+<div class="outline-text-3" id="text-org6df6ef8">
+<ul class="org-ul">
+<li>The functional gradient of the smoothness objective:</li>
+</ul>
+<p>
+\[
+    \nabla F_{smooth} = - \ddot{\xi}
+    \]
+</p>
+
+<ul class="org-ul">
+<li>The functional gradient of the obstacle objective</li>
+</ul>
+<p>
+\[
+    \nabla F_{obs} = \int_{B} J^T ||x'|| \big( (I - \hat{x}'\hat{x}^T)\nabla{c} -ck\big) du
+    \]
+where \(k = \frac{(I - \hat{x}'\hat{x}'^T) x''}{||x'||^2}\) is the curvature vector along the workspace trajectory.
+</p>
+
+<p>
+The matrix \((I - \hat{x}'\hat{x}'^T)\) is a projection matrix that projects workspace gradients orthogonally to the trajectory’s direction of motion.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf06b880" class="outline-3">
+<h3 id="orgf06b880">Functionals and Co-variant Gradients for Trajectory Optimization</h3>
+<div class="outline-text-3" id="text-orgf06b880">
+<ul class="org-ul">
+<li>To removing the dependence on the parametrization (finite difference),
+defining a norm on trajectory perturbations to depend solely on the
+dynamical quantities of the trajectory:
+\[ ||\xi||_A := \int \sum_{n=1}^{k} \alpha_n (D^n \xi(t))^2 dt \]
+where \(D\) is differential operator, \(A = D^T D\).</li>
+</ul>
+
+
+<p>
+Invariant norm \(||\xi(t)||_{A} := <\xi, A\xi> = \int (D\xi(t))^2 dt\)
+</p>
+
+<ul class="org-ul">
+<li>Functional gradients based on the invariant norm:
+\[ \bar{\nabla}_{A} U(\xi) := A^{-1} \bar{\nabla} U(\xi) \]</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb956d58" class="outline-3">
+<h3 id="orgb956d58">Waypoint Trajectory Parameterization</h3>
+<div class="outline-text-3" id="text-orgb956d58">
+<p>
+refer to the paper
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3f48a14" class="outline-3">
+<h3 id="org3f48a14">Update rule:</h3>
+<div class="outline-text-3" id="text-org3f48a14">
+<p>
+\[ \xi_{i+1} = \arg \min_{\xi} U(\xi_i) + (\xi - \xi_i)^T \nabla U(\xi_i) + \frac{\eta}{2} || \xi - \xi_i||_M \]
+</p>
+
+<p>
+This update rule is covariant in the sense that the change to the trajectory that results from the update
+is a function only of the trajectory itself, and not the particular representation used (e.g. waypoint
+based), at least in the limit of small step size and fine discretization.
+</p>
+
+<p>
+The overall CHOMP objective function is strongly convex – that is, it can be
+lower-bounded over the entire region by a quadratic with curvature A
+\[ \xi_{i+1} = \xi_{i} - \eta A^{-1} \nabla U(\xi_{i}) \]
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga610fbe" class="outline-3">
+<h3 id="orga610fbe">Hamiltonian Monte Carlo</h3>
+<div class="outline-text-3" id="text-orga610fbe">
+<p>
+refer: <a href="http://arogozhnikov.github.io/2016/12/19/markov_chain_monte_carlo.html">http://arogozhnikov.github.io/2016/12/19/markov_chain_monte_carlo.html</a>
+</p>
+
+<ul class="org-ul">
+<li>Intuition
+\[ p(\xi, \alpha) \propto exp(-\alpha U(\xi)) \]</li>
+
+<li><p>
+define a Hamilton function as
+\[ H(\xi, \gamma) := U(\xi) + K(\gamma)  \]
+where \(K(\gamma) = \frac{1}{2} \gamma'\gamma\).
+</p>
+
+<p>
+\[ p(\xi, \gamma) \propto exp(-H(\xi, \gamma)) \]
+</p>
+
+<p>
+The system dynamics (Hamilton equation):
+\[ \frac{d\xi}{dt} = \gamma \]
+\[ \frac{\gamma}{dt} = -\nabla U(\xi) \]
+</p>
+
+<p>
+The full numerically robust Hamiltonian Monte Carlo. refer to the paper
+</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc198e6b" class="outline-2">
+<h2 id="orgc198e6b">Optimal Smoothing and Its Application</h2>
+<div class="outline-text-2" id="text-orgc198e6b">
+</div>
+<div id="outline-container-org7d428f4" class="outline-3">
+<h3 id="org7d428f4">Optimal Smoothing Background</h3>
+<div class="outline-text-3" id="text-org7d428f4">
+</div>
+<div id="outline-container-org4a6ad5b" class="outline-4">
+<h4 id="org4a6ad5b">Optimal smoothing</h4>
+<div class="outline-text-4" id="text-org4a6ad5b">
+<p>
+To quantify the uncertainty associated with an unobserved variable, \(X\), given some information pertaining to that
+variable, \(Y\). In a sequential context, this relates to the calculation of the posterior density, \(p(x_{1:T}|
+   y_{1:T})\), where \(x_{1:T} := {x_1, \ldots, x_T }\), \(y_{1:T} := {y_1, \ldots, y_T}\), are the state to estimate and the
+observation processes, and the discrete time index \(t\in \mathbb{N}^+\).
+</p>
+
+<p>
+To facilitate sequential estimation, a first order Markovian state space model is
+often assumed and defined by its initial probability \(X_1 \sim \mu(\cdot)\) and
+for \(t > 0\):
+</p>
+
+<p>
+\[ X_t| (X_{t-1} = x_{t-1}) \sim f(\cdot| x_{t-1});   \]
+</p>
+
+<p>
+Furthermore, the observations are conditional upon the state and are
+assumed to be statistically independent and distributed according to:
+</p>
+
+<p>
+\[ Y_t | (X_t=x_t) \sim g(\cdot| x_t), \]
+</p>
+
+<p>
+where we assume that \(\mu(\cdot)\), \(f(\cdot| x_{t-1})\) and \(g(\cdot| x_t)\) are
+probability densities with respect to some dominating measure.
+</p>
+
+<p>
+The joint posterior density \(p(x_{1:T}| y_{1:T})\) is simply given by:
+\[ p(x_{1:t}| y_{1:t}) \propto \mu(x_1)\prod_{k=2}^{t}f(x_k | x_{k-1}) \prod_{k=1}^{t} g(y_k | x_k) \]
+</p>
+
+<p>
+Given the empirical observations \(y_{1:T}\), the optimal fix-interval smoother
+tries to find a sequence of the state variables that gives the maximum a
+posterior probability (MAP):
+</p>
+
+\begin{equation}
+\max_{x_{1:T}} \mu(x_1)\prod_{k=2}^{t}f(x_k | x_{k-1}) \prod_{k=1}^{t} g(y_k | x_k)
+\end{equation}
+
+<p>
+subjective to
+\[ X_t| (X_{t-1} = x_{t-1}) \sim f(\cdot| x_{t-1});   \]
+\[ Y_t | (X_t=x_t) \sim g(\cdot| x_t), \]
+\[ X_1 \sim \mu(\cdot) \]
+</p>
+</div>
+</div>
+<div id="outline-container-orgeb292ba" class="outline-4">
+<h4 id="orgeb292ba">Optimal linear quadratic smoother</h4>
+<div class="outline-text-4" id="text-orgeb292ba">
+<p>
+The process model:
+\[ x_{k} = A_k x_{k-1}  + w_{k-1}  \]
+The observation model:
+\[ y_k = H_k x_k + v_k\]
+</p>
+
+<p>
+where \(w_k\) is the process noise which is assumed to be drawn from a zero
+mean multivariate normal distribution, \(w_k \sim \mathcal{N}(0, Q_k)\), and
+\(v_k\) is the observation noise which is assumed to be zero mean Gaussian
+white noise with covariance \(R_k\), \(v_k \sim \mathcal{N}(0, R_k)\). The
+covariances of the two noise models are assumed stationary over time and are
+given by: \[ Q = E(w_k, w_k) \] \[ R = E(v_k, v_k) \]
+</p>
+
+<p>
+Recall Eq. \ref{eq:1}, for the linear process model and observation model, we have:
+\[ \mu(x_1) = |2 \pi P|^{-2} \exp(-(x_1 - \hat{x}_1)^{\top} P^{-1} (x_1 - \hat{x}_1)) \]
+\[ f(x_k| x_{k-1}) = |2 \pi Q|^{-2} \exp(-(x_k - A_{k-1} x_{k-1})^{\top} Q^{-1}  (x_k - A_{k-1} x_{k-1}) ) \]
+\[ g(y_k| x_k) = |2 \pi R|^{-2} \exp(-(y_k - H_k x_k)^{\top} R^{-1} (y_k - H_k x_k)) \]
+where \(\hat{x}_1\) and \(P\) are the initial state's prior estimation and covariance.
+</p>
+
+<p>
+Then, the fix-interval optimal smoother problem can be reformulated as:
+</p>
+\begin{equation}
+\min_{x_{1:T}} \frac{1}{2} \sum_{k=1}^{N} v_k^{\top} R^{-1} v_k +
+\frac{1}{2} \sum_{k=2}^{T} w_k^{\top} Q^{-1} w_k +
+\frac{1}{2} (x_1 -\hat{x}_1)^{\top} P^{-1} (x_1 - \hat{x}_1)
+\end{equation}
+<p>
+where
+\[ v_k = y_k - H_k x_k \]
+\[w_k = x_k - A_{k-1} x_{k-1} \]
+</p>
+
+<p>
+In practice, Eq. \ref{eq:2} can be solved by batch least square (BLS)
+estimation methods or sequential recursive estimation methods, such as Fraser
+and Potter (1969), Rauch, Tung, and Striebel (1965), and etc.
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
