@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-03 Mon 20:03 -->
+<!-- 2017-07-03 Mon 20:13 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Notes on optimal control</title>
@@ -335,9 +335,8 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#orgdaab2e7">1. Introduction of Optimal Control</a></li>
 <li><a href="#org48b94f4">2. Introduction of Model Predictive Control</a></li>
-<li><a href="#org356c084">3. Value Function Approximation</a></li>
-<li><a href="#org423779e">4. CHOMP (Co-variant Hamiltonian Optimization for Motion Planning)</a></li>
-<li><a href="#orgc198e6b">5. Optimal Smoothing and Its Application</a></li>
+<li><a href="#org423779e">3. CHOMP (Co-variant Hamiltonian Optimization for Motion Planning)</a></li>
+<li><a href="#orgc198e6b">4. Optimal Smoothing and Its Application</a></li>
 </ul>
 </div>
 </div>
@@ -473,109 +472,13 @@ which means we can save a lot of computation!</li>
 </div>
 </div>
 
-<div id="outline-container-org356c084" class="outline-2">
-<h2 id="org356c084"><span class="section-number-2">3</span> Value Function Approximation</h2>
+<div id="outline-container-org423779e" class="outline-2">
+<h2 id="org423779e"><span class="section-number-2">3</span> CHOMP (Co-variant Hamiltonian Optimization for Motion Planning)</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-orga4dd3fe" class="outline-3">
-<h3 id="orga4dd3fe"><span class="section-number-3">3.1</span> General solution</h3>
-<div class="outline-text-3" id="text-3-1">
-<ul class="org-ul">
-<li><p>
-Dynamic programming, value iteration
-</p>
-
-<p>
-pros: it gives a general solution <br />
-cons: computation and storage increase exponentially with increasing dimensions (the curse of dimensionality)
-</p></li>
-
-<li>Differential Dynamic Programming (DDP) or iLQR, piece-wise second order approximation
-<a href="http://www.cs.cmu.edu/~bstephe1/cga-nips07.pdf">http://www.cs.cmu.edu/~bstephe1/cga-nips07.pdf</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-orge8f5f1d" class="outline-3">
-<h3 id="orge8f5f1d"><span class="section-number-3">3.2</span> Tasks with a goal state (LQR)</h3>
-<div class="outline-text-3" id="text-3-2">
-<ul class="org-ul">
-<li>For example, stop at a stop sign
-<ul class="org-ul">
-<li><p>
-Linearizing the dynamics around the goal state \(x^*\) gives:
-\[ x \approx F(x^*, u^*) + F_{x}(x^*, u^*)(x-x^*) + F_u(x^8, u^*) ( u - u^*)\]
-</p>
-
-<p>
-Equivalently:
-\[ x - x^* = A ( x-x^*) + B(u-u^*) \]
-Let \(z = x - x^*\)  and  \(v = u-u^*\), then
-\[ z_{k+1} = A z_k  + B v_k \]
-\[ L_k = z_k^{\top} Q z_k + v_k^{\top} R v_k \]
-</p>
-
-<p>
-NOTE: this is a standard LQR
-</p></li>
-</ul></li>
-
-<li>\(V\) can be found by solving an algebraic Roccati equation (ARE)
-\[ P = Q + A^\top P A - A^\top P B (R + B^\top P B) ^{-1} B^{\top} P A \]
-and \(V(z)\) is given by
-\[ V(z) = z^{\top} P z \]</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org6ee4597" class="outline-3">
-<h3 id="org6ee4597"><span class="section-number-3">3.3</span> Tasks that can be converted to tasks with a goal state</h3>
-<div class="outline-text-3" id="text-3-3">
-<p>
-Affine systems
-\[
-   x_{k+1} = \mathbf{A} x_k + \mathbf{B} u_k + c
-   \]
-</p>
-
-<ul class="org-ul">
-<li>driving in a long road</li>
-<li>stop behind a stop line (not at a point)</li>
-<li>&#x2026;</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org25c8958" class="outline-3">
-<h3 id="org25c8958"><span class="section-number-3">3.4</span> Tasks without a goal state, periodic motion</h3>
-<div class="outline-text-3" id="text-3-4">
-<ul class="org-ul">
-<li>drive a circle</li>
-<li>&#x2026;</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-orgbf1fcef" class="outline-3">
-<h3 id="orgbf1fcef"><span class="section-number-3">3.5</span> Hybrid tasks</h3>
-<div class="outline-text-3" id="text-3-5">
-<ul class="org-ul">
-<li>ACC behavior</li>
-<li>TL behavior</li>
-<li>Lane change behavior</li>
-<li>pedestrian avoidance behavior</li>
-</ul>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org423779e" class="outline-2">
-<h2 id="org423779e"><span class="section-number-2">4</span> CHOMP (Co-variant Hamiltonian Optimization for Motion Planning)</h2>
-<div class="outline-text-2" id="text-4">
-</div>
 <div id="outline-container-orga5a7ada" class="outline-3">
-<h3 id="orga5a7ada"><span class="section-number-3">4.1</span> Remarks</h3>
-<div class="outline-text-3" id="text-4-1">
+<h3 id="orga5a7ada"><span class="section-number-3">3.1</span> Remarks</h3>
+<div class="outline-text-3" id="text-3-1">
 <ul class="org-ul">
 <li>Suited for gradient-cheap application, where gradient can be computed inexpensively</li>
 <li>Trajectory optimization is invariant to parameterization
@@ -596,8 +499,8 @@ The meaning of the name: Co-variant gradient and Hamiltonian Monte Carlo
 </div>
 
 <div id="outline-container-org69f7c3e" class="outline-3">
-<h3 id="org69f7c3e"><span class="section-number-3">4.2</span> Problem formulation</h3>
-<div class="outline-text-3" id="text-4-2">
+<h3 id="org69f7c3e"><span class="section-number-3">3.2</span> Problem formulation</h3>
+<div class="outline-text-3" id="text-3-2">
 <p>
 \[ \xi(t)^* = \arg \min_{\xi} U(\xi(t)) \]
 where  \(U (\xi(t)) = F_{smooth}(\xi(t)) + \lambda F_{obs}(\xi(t))\), and
@@ -619,9 +522,9 @@ The obstacle objective:
 </div>
 </div>
 
-<div id="outline-container-org6c90221" class="outline-3">
-<h3 id="org6c90221"><span class="section-number-3">4.3</span> Functional gradient</h3>
-<div class="outline-text-3" id="text-4-3">
+<div id="outline-container-orge4292d0" class="outline-3">
+<h3 id="orge4292d0"><span class="section-number-3">3.3</span> Functional gradient</h3>
+<div class="outline-text-3" id="text-3-3">
 <ul class="org-ul">
 <li>The functional gradient \(\nabla U\) is the perturbation \(\phi\)
 that maximizes \(U[\xi + \epsilon \phi]\) as \(\epsilon \to 0\).
@@ -643,9 +546,9 @@ Euler-Lagrange equation is the stationary condition for:
 </div>
 </div>
 
-<div id="outline-container-orge4292d0" class="outline-3">
-<h3 id="orge4292d0"><span class="section-number-3">4.4</span> Functional gradient</h3>
-<div class="outline-text-3" id="text-4-4">
+<div id="outline-container-org9b644a6" class="outline-3">
+<h3 id="org9b644a6"><span class="section-number-3">3.4</span> Functional gradient</h3>
+<div class="outline-text-3" id="text-3-4">
 <ul class="org-ul">
 <li>The functional gradient of the smoothness objective:</li>
 </ul>
@@ -672,8 +575,8 @@ The matrix \((I - \hat{x}'\hat{x}'^T)\) is a projection matrix that projects wor
 </div>
 
 <div id="outline-container-orgf06b880" class="outline-3">
-<h3 id="orgf06b880"><span class="section-number-3">4.5</span> Functionals and Co-variant Gradients for Trajectory Optimization</h3>
-<div class="outline-text-3" id="text-4-5">
+<h3 id="orgf06b880"><span class="section-number-3">3.5</span> Functionals and Co-variant Gradients for Trajectory Optimization</h3>
+<div class="outline-text-3" id="text-3-5">
 <ul class="org-ul">
 <li>To removing the dependence on the parametrization (finite difference),
 defining a norm on trajectory perturbations to depend solely on the
@@ -695,8 +598,8 @@ Invariant norm \(||\xi(t)||_{A} := <\xi, A\xi> = \int (D\xi(t))^2 dt\)
 </div>
 
 <div id="outline-container-orgb956d58" class="outline-3">
-<h3 id="orgb956d58"><span class="section-number-3">4.6</span> Waypoint Trajectory Parameterization</h3>
-<div class="outline-text-3" id="text-4-6">
+<h3 id="orgb956d58"><span class="section-number-3">3.6</span> Waypoint Trajectory Parameterization</h3>
+<div class="outline-text-3" id="text-3-6">
 <p>
 refer to the paper
 </p>
@@ -704,8 +607,8 @@ refer to the paper
 </div>
 
 <div id="outline-container-org3f48a14" class="outline-3">
-<h3 id="org3f48a14"><span class="section-number-3">4.7</span> Update rule:</h3>
-<div class="outline-text-3" id="text-4-7">
+<h3 id="org3f48a14"><span class="section-number-3">3.7</span> Update rule:</h3>
+<div class="outline-text-3" id="text-3-7">
 <p>
 \[ \xi_{i+1} = \arg \min_{\xi} U(\xi_i) + (\xi - \xi_i)^T \nabla U(\xi_i) + \frac{\eta}{2} || \xi - \xi_i||_M \]
 </p>
@@ -725,8 +628,8 @@ lower-bounded over the entire region by a quadratic with curvature A
 </div>
 
 <div id="outline-container-orga610fbe" class="outline-3">
-<h3 id="orga610fbe"><span class="section-number-3">4.8</span> Hamiltonian Monte Carlo</h3>
-<div class="outline-text-3" id="text-4-8">
+<h3 id="orga610fbe"><span class="section-number-3">3.8</span> Hamiltonian Monte Carlo</h3>
+<div class="outline-text-3" id="text-3-8">
 <p>
 refer: <a href="http://arogozhnikov.github.io/2016/12/19/markov_chain_monte_carlo.html">http://arogozhnikov.github.io/2016/12/19/markov_chain_monte_carlo.html</a>
 </p>
@@ -760,16 +663,16 @@ The full numerically robust Hamiltonian Monte Carlo. refer to the paper
 </div>
 
 <div id="outline-container-orgc198e6b" class="outline-2">
-<h2 id="orgc198e6b"><span class="section-number-2">5</span> Optimal Smoothing and Its Application</h2>
-<div class="outline-text-2" id="text-5">
+<h2 id="orgc198e6b"><span class="section-number-2">4</span> Optimal Smoothing and Its Application</h2>
+<div class="outline-text-2" id="text-4">
 </div>
 <div id="outline-container-org7d428f4" class="outline-3">
-<h3 id="org7d428f4"><span class="section-number-3">5.1</span> Optimal Smoothing Background</h3>
-<div class="outline-text-3" id="text-5-1">
+<h3 id="org7d428f4"><span class="section-number-3">4.1</span> Optimal Smoothing Background</h3>
+<div class="outline-text-3" id="text-4-1">
 </div>
 <div id="outline-container-org4a6ad5b" class="outline-4">
-<h4 id="org4a6ad5b"><span class="section-number-4">5.1.1</span> Optimal smoothing</h4>
-<div class="outline-text-4" id="text-5-1-1">
+<h4 id="org4a6ad5b"><span class="section-number-4">4.1.1</span> Optimal smoothing</h4>
+<div class="outline-text-4" id="text-4-1-1">
 <p>
 To quantify the uncertainty associated with an unobserved variable, \(X\), given some information pertaining to that
 variable, \(Y\). In a sequential context, this relates to the calculation of the posterior density, \(p(x_{1:T}|
@@ -825,8 +728,8 @@ subjective to
 </div>
 </div>
 <div id="outline-container-orgeb292ba" class="outline-4">
-<h4 id="orgeb292ba"><span class="section-number-4">5.1.2</span> Optimal linear quadratic smoother</h4>
-<div class="outline-text-4" id="text-5-1-2">
+<h4 id="orgeb292ba"><span class="section-number-4">4.1.2</span> Optimal linear quadratic smoother</h4>
+<div class="outline-text-4" id="text-4-1-2">
 <p>
 The process model:
 \[ x_{k} = A_k x_{k-1}  + w_{k-1}  \]
