@@ -11,6 +11,7 @@ body {
     width:90%;
     margin-left:auto;
     margin-right:auto;
+    margin-bottom: 50pt;   
     background-color: #f7f7f7
 }
 
@@ -55,14 +56,14 @@ pre {
     position: relative;
     left: 10px;
     font-family: Courier New;
-    font-size: 18pt;
+    font-size: 14pt;
 }
 
 .outline-2 h3 {
     position: relative;
     left: 10px;
     font-family: Courier New;
-    font-size: 12pt;
+    font-size: 14pt;
 }
 
 .outline-text-2, .outline-text-3, .outline-text-4, .outline-text-5, .outline-3 > ul, .outline-4 > ol, #text-footnotes {
