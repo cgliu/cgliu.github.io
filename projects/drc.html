@@ -3,9 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
+<!-- 2017-07-05 Wed 20:47 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title></title>
+<title>Humanoid robot full-body motion planning and control</title>
 <meta name="generator" content="Org mode" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
@@ -178,24 +179,79 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Chenggang Liu's Homepage</title>
-<link rel="stylesheet" href="../fonts/Serif/cmun-serif.css" />
-<link rel="stylesheet" href="../fonts/Serif-Slanted/cmun-serif-slanted.css" />
-<!--BOOTSTRAP-->
-<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!--mobile first-->
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--removed html from url but still is html-->
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<!--fonts: allan & cardo-->
-<link href="../css/sticky-footer-navbar.css" rel="stylesheet">
-<link href="../css/inlineDisqussions.css" rel="stylesheet">
-<!--Highlight-->
-<link href="../highlight/styles/github.css" rel="stylesheet">
-<link href="../favicon.ico" rel="shortcut icon" />
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<link href="../css/default.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../css/org-info.css" />
+
+<script type="text/javascript" src="../js/org-info.js">
+/**
+ *
+ * @source: ../js/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in ../js/org-info.js.
+ *
+ * Copyright (C) 2012-2013 Free Software Foundation, Inc.
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in ../js/org-info.js.
+ *
+ */
+</script>
+
+<script type="text/javascript">
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "1");
+org_html_manager.set("LINK_HOME", "../index.html");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "0");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "#dddddd");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "0");
+org_html_manager.set("VIEW", "showall");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -244,43 +300,34 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="content">
-<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-  <div class="container">
-    <!--Toggle header for mobile-->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand active" href="../index.html" id="home">Chenggang Liu's Homepage</a>
-    </div>
-    <!--normal header-->
-    <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="../index.html"><span class="glyphicon glyphicon-home"></span>  Home</a></a></li>
-        <li><a href="../blog.html"><span class="glyphicon glyphicon-pencil"></span>  Blog</a></li>
-        <li><a href="../projects.html"><span class="glyphicon glyphicon-tags"></span>  Projects</a></li>
-        <li><a href="../about.html"><span class="glyphicon glyphicon-user"></span>  About</a></li>
-        <li><a href="../contact.html"><span class="glyphicon glyphicon-envelope"></span>  Contact</a></li>
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div>
-</nav>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href=""> UP </a>
+ |
+ <a accesskey="H" href="../index.html"> HOME </a>
+</div><div id="content">
+<h1 class="title">Humanoid robot full-body motion planning and control</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org6b49873">1. Description</a></li>
+<li><a href="#orgf23f04a">2. Publications</a></li>
+<li><a href="#org50cb7d3">3. Demos</a></li>
+</ul>
+</div>
+</div>
 
 <div id="outline-container-org6b49873" class="outline-2">
-<h2 id="org6b49873">Description</h2>
-<div class="outline-text-2" id="text-org6b49873">
+<h2 id="org6b49873"><span class="section-number-2">1</span> Description</h2>
+<div class="outline-text-2" id="text-1">
 <p>
 <a href="https://docs.google.com/presentation/d/1FIocgUKf9-H4XpwADbMofnPw8FwoaCvTtiAaVGLsxBg/edit?usp=sharing">Slides</a>
 </p>
 </div>
 </div>
 <div id="outline-container-orgf23f04a" class="outline-2">
-<h2 id="orgf23f04a">Publications</h2>
-<div class="outline-text-2" id="text-orgf23f04a">
+<h2 id="orgf23f04a"><span class="section-number-2">2</span> Publications</h2>
+<div class="outline-text-2" id="text-2">
 <ul class="org-ul">
 <li>Full-body motion planning and control for the car egress task of the darpa robotics challenge,
 Chenggang Liu, Christopher G Atkeson, Siyuan Feng, X Xinjilefu,
@@ -294,8 +341,8 @@ Humanoid Robots (Humanoids), 2015 IEEE-RAS 15th International Conference on</li>
 </div>
 </div>
 <div id="outline-container-org50cb7d3" class="outline-2">
-<h2 id="org50cb7d3">Demos</h2>
-<div class="outline-text-2" id="text-org50cb7d3">
+<h2 id="org50cb7d3"><span class="section-number-2">3</span> Demos</h2>
+<div class="outline-text-2" id="text-3">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/lyLMXZRcNiA?ecver=1" frameborder="0" allowfullscreen></iframe>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/1ShKXWCpuqQ?ecver=1" frameborder="0" allowfullscreen></iframe>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/GCBkoTov-ag?ecver=1" frameborder="0" allowfullscreen></iframe>
