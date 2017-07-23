@@ -1,0 +1,1203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2017-07-23 Sun 18:54 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cool Things in Optimization and Physics</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Chenggang Liu" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/readtheorg/js/readtheorg.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Cool Things in Optimization and Physics</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org65a5ecd">1. General optimization</a>
+<ul>
+<li><a href="#org27f49d4">1.1. Method of Lagrange Multipliers</a></li>
+<li><a href="#org6f652d2">1.2. Euler-Lagrange Equation</a>
+<ul>
+<li><a href="#orgd5a0e32">1.2.1. History background</a></li>
+<li><a href="#orgfaae77b">1.2.2. Theorem</a></li>
+<li><a href="#org170f4ee">1.2.3. Derivation</a></li>
+</ul>
+</li>
+<li><a href="#orge05b458">1.3. Hamilton-Jacobi equation</a></li>
+</ul>
+</li>
+<li><a href="#orgcfeeda6">2. Optimal control</a>
+<ul>
+<li><a href="#org1ff10c6">2.1. Bellman equation</a>
+<ul>
+<li><a href="#orgf01b910">2.1.1. Background</a></li>
+<li><a href="#org4f42035">2.1.2. Theoram</a></li>
+</ul>
+</li>
+<li><a href="#org81c385b">2.2. Hamilton-Jacobi-Bellman equation (HJB)</a>
+<ul>
+<li><a href="#org2270dce">2.2.1. Background</a></li>
+<li><a href="#org056eaf7">2.2.2. Theorom</a></li>
+<li><a href="#org2b4f6b4">2.2.3. Derivation</a></li>
+<li><a href="#org9a71701">2.2.4. Discussion</a></li>
+</ul>
+</li>
+<li><a href="#org680140b">2.3. Pontryagin Maximum Principle</a>
+<ul>
+<li><a href="#org25dd2ec">2.3.1. Thearom</a></li>
+<li><a href="#orgcfcbdd6">2.3.2. Derivation using the HJB equation</a></li>
+<li><a href="#orgcf1e17c">2.3.3. Derivation using the method of Lagrange Multipliers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge8e5693">3. Physics</a>
+<ul>
+<li><a href="#orgdf18fbe">3.1. Introduction</a></li>
+<li><a href="#org4167fa5">3.2. Action functional</a></li>
+<li><a href="#orgcbe5e2f">3.3. Principle of least action</a>
+<ul>
+<li><a href="#org5dc0783">3.3.1. Background</a></li>
+</ul>
+</li>
+<li><a href="#org9cb832a">3.4. Lagrangian mechanics</a>
+<ul>
+<li><a href="#org393a53c">3.4.1. Background</a></li>
+<li><a href="#org8d39054">3.4.2. Theorem</a></li>
+</ul>
+</li>
+<li><a href="#orgabec666">3.5. Hamiltonian mechanics</a>
+<ul>
+<li><a href="#orgcb325a3">3.5.1. Background</a></li>
+<li><a href="#org49a8e0b">3.5.2. Theorem</a></li>
+<li><a href="#org4c77868">3.5.3. Link to Lagrangian mechanics</a></li>
+<li><a href="#org9cdde62">3.5.4. Link to Newtonian mechanics</a></li>
+</ul>
+</li>
+<li><a href="#orge4baebd">3.6. Newton's force and Lagrange multiplier</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org65a5ecd" class="outline-2">
+<h2 id="org65a5ecd"><span class="section-number-2">1</span> General optimization</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org27f49d4" class="outline-3">
+<h3 id="org27f49d4"><span class="section-number-3">1.1</span> Method of Lagrange Multipliers</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+\[ \min_x f(x) \]
+s.t.
+\[ g(x) = 0 \]
+where \(f(.) \in R\), \(x \in R^N\), and \(g(x) \in R^M\) and \(M < N\).
+</p>
+
+<p>
+One way is to substitute \(M\) optimization variables with the other \(N-M\) ones. We would then proceed in the usual way
+to find the stationary solution points of \(f\) by considering the partial derivative of \(f\) with respect to the
+remaining variables, setting those partial derivatives equal to zero, and then solving that system equations. But
+sometimes solving the constraint equations may be very difficult, and the method of Lagrange multiplier provides an
+elegant alternative.
+</p>
+
+<p>
+The idea of the method of Lagrange multipliers is to convert the constrained optimization problem to an
+¡®unconstrained¡¯ one as follows. Form the Lagrangian function:
+</p>
+
+<p>
+\[ L(x,\lambda) := f(x) + \lambda' g(x) \]
+</p>
+
+<p>
+where the parameter variables \(\lambda \in R^M\) are known as the Lagrange multipliers.
+</p>
+
+<p>
+The partial derivatives of \(L\) with respect to all of its dependent variables are:
+</p>
+\begin{eqnarray*}
+\nabla_{x} L &=& \nabla_x f + \lambda \nabla_x g \\
+\nabla_{\lambda} &=& g
+\end{eqnarray*}
+</div>
+</div>
+
+<div id="outline-container-org6f652d2" class="outline-3">
+<h3 id="org6f652d2"><span class="section-number-3">1.2</span> Euler-Lagrange Equation</h3>
+<div class="outline-text-3" id="text-1-2">
+</div>
+<div id="outline-container-orgd5a0e32" class="outline-4">
+<h4 id="orgd5a0e32"><span class="section-number-4">1.2.1</span> History background</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<p>
+The <i>Euler-Lagrange equation</i> was developed in the 1750s by Euler and Lagrange in connection with their studies of
+the <i>tautochrone problem</i>. This is the problem of determining a curve on which a weighted particle will fall to a
+fixed point in a fixed amount of time, independent of the starting point. Lagrange solved this problem in 1755 and
+sent the solution to Euler. The two further developed <i>Lagrange's method</i> and applied it to mechanics, which led to
+the formulation of <i>Lagrangian mechanics</i>. Their correspondence ultimately led to <i>the calculus of variations</i>, a
+term coined by Euler himself in 1766.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfaae77b" class="outline-4">
+<h4 id="orgfaae77b"><span class="section-number-4">1.2.2</span> Theorem</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<p>
+In <i>calculus of variations</i>, the <i>Euler-Lagrange equation</i>, or <i>Lagrange's equation</i>, is a differential equation
+whose solutions are the functions for which a given functional is stationary. Because a differentiable functional is
+stationary at its local maxima and minima, the <i>Euler-Lagrange equation</i> is useful for solving optimization problems
+in which, given some functional, one seeks the function minimizing (or maximizing) it.
+</p>
+
+<p>
+The <i>Euler-Lagrange equation</i> is an equation satisfied by a function \(q\) of a real argument t which is a
+stationary point of the functional:
+</p>
+\begin{equation}
+  \label{eq:el-eqn-1}
+  S(q) = \int_{a}^{b}L(t,q,\dot{q})dt
+\end{equation}
+
+<p>
+The <i>Euler-Lagrange equation</i>, then, is the ordinary differential equation
+</p>
+\begin{equation}
+  \label{eq:el-eqn-2}
+  \frac{\partial L}{\partial q}-\frac{d}{dt}\frac{\partial L}{\partial
+  \dot{q}} = 0
+\end{equation}
+
+<p>
+The solution of this Eq. \ref{eq:el-eqn-2} is the stationary solution of Eq. \ref{eq:el-eqn-1}.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org170f4ee" class="outline-4">
+<h4 id="org170f4ee"><span class="section-number-4">1.2.3</span> Derivation</h4>
+<div class="outline-text-4" id="text-1-2-3">
+<p>
+For \(q\) to be a stationary solution of Eq. \ref{eq:el-eqn-1}:
+</p>
+\begin{equation}
+\label{eq:11}
+\frac{\delta S}{\delta q} = 0
+\end{equation}
+
+\begin{eqnarray*}
+  \label{eq:33}
+  \delta S(q(t)) &=& \int_{t_0}^{t_f} \{ \frac{\partial L}{\partial q}\delta q +
+  \frac{\partial{L}}{\partial{\dot{q}}}\delta{\dot{q}} \} dt \\
+  &=& \frac{\partial{L}}{\partial{\dot{q}}}\delta{q}(t)\Big|^{t_f}_{t_0} + \int_{t_0}^{t_f}
+  \Big(\frac{\partial{L}}{\partial{q}} -
+  \frac{d}{dt}\frac{\partial{L}}{\partial{\dot{q}}}\Big)\delta{q} dt
+\end{eqnarray*}
+
+<p>
+Major trick:
+\[ \frac{d}{dt} \{ \frac{\partial L}{\partial \dot{q}} \delta q \} = \frac{d}{dt} \{ \frac{\partial L}{\partial \dot{q}} \} \delta q +
+    \frac{\partial L}{\partial \dot{q}} \delta \dot{q} \]
+Then we have:
+\[
+    \frac{\partial L}{\partial \dot{q}} \delta \dot{q} =
+    \frac{d}{dt} \{ \frac{\partial L}{\partial \dot{q}} \delta q \} - \frac{d}{dt} \{ \frac{\partial L}{\partial \dot{q}} \} \delta q
+    \]
+</p>
+
+
+
+<p>
+The boundary conditions, \(\delta{q}(t_0) = 0\) and \(\delta{q}(t_f)=0\), causes the first term to vanish.
+Therefore, the stationary solution of Eq. \ref{eq:el-eqn-1} must satisfy:
+\[   \frac{\partial L}{\partial q}-\frac{d}{dt}\frac{\partial L}{\partial \dot{q}} = 0 \]
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge05b458" class="outline-3">
+<h3 id="orge05b458"><span class="section-number-3">1.3</span> Hamilton-Jacobi equation</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+For a general optimization problem:
+</p>
+\begin{equation}
+\label{eq:gen-1}
+\min_{y(x)} L(y(x), y(x)', x) dx
+\end{equation}
+<p>
+where \(L\) is the Lagrangian and \(y'\) is the derivative of \(y\) with respect to \(x\).
+</p>
+
+<p>
+According to EL equation, the stationary solution of Eq. \ref{eq:gen-1} should satisfy:
+\[ \frac{d}{dx} (\nabla_{y'} L(y,y',x)) - \nabla_{y} L(y,y',x) = 0 \]
+</p>
+
+<p>
+If we define the momentum as:
+\[ p := \nabla_{y'} L(y,y',x) \]
+and Hamiltonian as:
+\[ H:= p y' - L \]
+</p>
+
+<p>
+Note: Hamiltonian method provides a way to find a constant quantity
+</p>
+
+<p>
+Eq. \ref{eq:gen-1} can be re-written as:
+</p>
+\begin{equation}
+\label{eq:gen-2}
+p' = \nabla_y L = - \nabla_y H
+\end{equation}
+
+<p>
+Therefore,
+</p>
+\begin{eqnarray*}
+p' &=& - \nabla_y H(y,y',p,x) \\
+y' &=& \nabla_p H(y,y',p,x)
+\end{eqnarray*}
+<p>
+where
+\[ p := \nabla_{y'} L(y,y',x) \]
+\[ H := py' - L(y,y',x) \]
+</p>
+
+<p>
+Important poperty of the Hamiltonian:
+\[
+   H'  = \nabla_{x} H + \nabla_{y} H y' + \nabla_{y'} H y'' + \nabla_p H p'
+   \]
+Notice that
+\[ \nabla_{y'}Hy'' = (p - \nabla_{y'} L) y'' = 0 \]
+</p>
+
+<p>
+We get:
+\[ H' = \nabla_x H = - l_x \]
+</p>
+
+<p>
+If \(l\) doesn't depend on \(x\), then \(H\) is constant.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgcfeeda6" class="outline-2">
+<h2 id="orgcfeeda6"><span class="section-number-2">2</span> Optimal control</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org1ff10c6" class="outline-3">
+<h3 id="org1ff10c6"><span class="section-number-3">2.1</span> Bellman equation</h3>
+<div class="outline-text-3" id="text-2-1">
+</div>
+<div id="outline-container-orgf01b910" class="outline-4">
+<h4 id="orgf01b910"><span class="section-number-4">2.1.1</span> Background</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+A Bellman equation, named after its discoverer, Richard Bellman, also known as a dynamic programming equation, is a
+necessary condition for optimality associated with the mathematical optimization method known as dynamic programming.
+It writes the value of a decision problem at a certain point in time in terms of the payoff from some initial choices
+and the value of the remaining decision problem that results from those initial choices. This breaks a dynamic
+optimization problem into simpler subproblems, as Bellman's 'Principle of Optimality' prescribes. The Bellman equation
+was first applied to engineering control theory and to other topics in applied mathematics, and subsequently became an
+important tool in economic theory. Almost any problem which can be solved using optimal control theory can also be
+solved by analyzing the appropriate Bellman equation. However, the term 'Bellman equation' usually refers to the
+dynamic programming equation associated with discrete-time optimization problems. In continuous-time optimization
+problems, the analogous equation is a partial differential equation which is usually called the
+<a href="#org81c385b">Hamilton-Jacobi-Bellman equation (HJB)</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4f42035" class="outline-4">
+<h4 id="org4f42035"><span class="section-number-4">2.1.2</span> Theoram</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<p>
+<a id="org077b99a"></a>
+For the discrete-time optimal control problem:
+\[ J_k({x}_k) = \min_{{u}_k \in \cal{U}_k} \{ \phi(x_N) + \sum_{k=0}^{N-1} L_k({x}_k,{u}_k)  \} \]
+s.t.
+\[ x_{k+1} = F(x_k, u_k, k) \]
+</p>
+
+<p>
+Bellman equation says \(J_k(x_k)\), the optimal cost-to-go function, should satisfy:
+</p>
+
+\begin{equation}
+\label{eq:bellman}
+J_k(x_k) =  \min_{{u}_k \in \cal{U}_k} \{ L_k(x_k, u_k) + J_{k+1}(x_{k+1}, u_{k+1}) \}
+\end{equation}
+</div>
+</div>
+</div>
+
+<div id="outline-container-org81c385b" class="outline-3">
+<h3 id="org81c385b"><span class="section-number-3">2.2</span> Hamilton-Jacobi-Bellman equation (HJB)</h3>
+<div class="outline-text-3" id="text-2-2">
+</div>
+<div id="outline-container-org2270dce" class="outline-4">
+<h4 id="org2270dce"><span class="section-number-4">2.2.1</span> Background</h4>
+<div class="outline-text-4" id="text-2-2-1">
+<p>
+The Hamilton-Jacobi-Bellman (HJB) equation is a partial differential equation which is central to optimal control
+theory. The solution of the HJB equation is the <i>value function</i>, which gives the optimal cost-to-go for a given
+dynamical system with an associated cost function. The solution is open loop, but it also permits the solution of the
+closed loop problem. Classical <i>variational problems</i>, for example, the brachistochrone problem can be solved using this
+method. The HJB method can be generalized to stochastic systems as well.
+</p>
+
+
+<p>
+The equation is a result of the theory of <i>dynamic programming</i> which was pioneered in the 1950s by Richard Bellman and
+coworkers. The corresponding discrete-time equation is usually referred to as the <a href="#org077b99a">Bellman equation</a>. In continuous
+time, the result can be seen as an extension of earlier work in classical physics on the Hamilton-Jacobi equation by
+William Rowan Hamilton and Carl Gustav Jacob Jacobi.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org056eaf7" class="outline-4">
+<h4 id="org056eaf7"><span class="section-number-4">2.2.2</span> Theorom</h4>
+<div class="outline-text-4" id="text-2-2-2">
+<p>
+For the continuous time optimal control problem:
+\[ V(\mathbf{x}, t) = \min_{\mathbf{u}} \{ \phi(x(T)) + \int_t^T l(\mathbf{x}(t),\mathbf{u}(t), t) dt \} \]
+s.t.
+\[ \dot{x} = f(x,u,t) \]
+</p>
+
+<p>
+The HJB equation says \(V(x, t)\), the value function, should satisfy:
+</p>
+
+\begin{equation}
+\label{eq:HJB}
+-V_{t}(\mathbf{x},t) = \min_{\mathbf{u}}\{l(\mathbf{x},\mathbf{u}, t) + V_{\mathbf{x}}f(\mathbf{x},\mathbf{u}, t)\}
+\end{equation}
+
+<p>
+Compare with the discrete time Bellman equation:
+\[ J_k(x_k) =  \min_{{u}_k \in \cal{U}_k} \{ L_k(x_k, u_k) + J_{k+1}(x_{k+1}, u_{k+1}) \} \]
+</p>
+
+<p>
+Note: \(V_t(x,t)\) in HJB equation is the gradient of \(V\) w.r.t time \(t\). It is different from \(\dot{V}\). The
+relation between these two are: \[ \dot{V}(x, t) = V_x \dot{x} + V_t \]
+</p>
+
+<p>
+As we can see, if we can solve for \(V\) then we can find from it a close-form control policy
+\(u\) that achieves the minimum cost.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2b4f6b4" class="outline-4">
+<h4 id="org2b4f6b4"><span class="section-number-4">2.2.3</span> Derivation</h4>
+<div class="outline-text-4" id="text-2-2-3">
+<p>
+Intuitively, HJB can be derived as follows:
+</p>
+
+<p>
+If \(V(x(t),t)\) is the optimal cost-to-go function (also called the 'value function'),
+then by Richard Bellman's principle of optimality, going from time \(t\) to \(t + dt\), we have
+</p>
+\begin{equation*}
+V(\mathbf{x}(t),t) = \min_{\mathbf{u}} \{l(\mathbf{x}(t),\mathbf{u}(t),t) dt + V(\mathbf{x}(t+ dt),t + dt)\}
+\end{equation*}
+
+<p>
+The Taylor expansion of the last term is:
+</p>
+\begin{equation*}
+V(\mathbf{x}(t+ dt),t+ dt) = V(\mathbf{x},t) + V_t dt +  V_{\mathbf{x}}\dot{\mathbf{x}} dt + o( dt^2)
+\end{equation*}
+<p>
+where \(o( dt^2)\) denotes the terms in the Taylor expansion of higher order than one. Then if we cancel \(V(\mathbf{x}(t),t)\)
+on both sides, divide by \(dt\), and take the limit as \(dt\) approaches zero, then we obtain the HJB equation \ref{eq:HJB}.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9a71701" class="outline-4">
+<h4 id="org9a71701"><span class="section-number-4">2.2.4</span> Discussion</h4>
+<div class="outline-text-4" id="text-2-2-4">
+<p>
+Many books and papers mentioned that HJB is necessary and sufficient condition. However, so far, I think it is a necessary condition.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org680140b" class="outline-3">
+<h3 id="org680140b"><span class="section-number-3">2.3</span> Pontryagin Maximum Principle</h3>
+<div class="outline-text-3" id="text-2-3">
+</div>
+<div id="outline-container-org25dd2ec" class="outline-4">
+<h4 id="org25dd2ec"><span class="section-number-4">2.3.1</span> Thearom</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<div class="definition">
+<p>
+<a id="org233bc46"></a>
+deterministic Hamiltonian
+</p>
+
+<p>
+\[ H(x,u,\lambda) := l(x,u) + f(x,u)^T\lambda \]
+where \(\lambda(t)\) is the gradient of the optimal cost-to-go function (called co-state), also denoted as \(V_x\).
+</p>
+
+</div>
+
+<div class="theorem">
+<p>
+<a id="org74be288"></a>
+continuous-time Pontryagin's maximum principle
+</p>
+
+<p>
+if \(x(t)\), \(u(t)\), \(1 \le t \le T\) is the optimal state-control trajectory starting at \(x(0)\), then there exists a costate trajectory \(\lambda(t)\) with \(\lambda(T) = \phi_x(x(T))\) satisfying
+</p>
+\begin{eqnarray}
+\label{eq:6}
+\dot{x} &=& H_{\lambda}(x,u,\lambda) = f(x,u) \\
+-\dot{\lambda} &=& H_x(x,u, \lambda) = l_x(x,u) + f_x(x,u)^T\lambda \\
+\end{eqnarray}
+<p>
+s.t.
+</p>
+\begin{eqnarray*}
+x(0) &=& x_0 \\
+\lambda(T) &=& \phi_x(T)
+\end{eqnarray*}
+<p>
+and
+\[ u = \arg \min_{u} H(x,u,\lambda) \]
+</p>
+
+</div>
+
+<p>
+Eq. \ref{eq:6} is often referred to as 'canonical equation'canonical equation'.
+As we can see there are boundary constraints on the initial state and the final co-state,
+therefore, we need to solve a two point BVP.
+</p>
+
+<p>
+It shows that the optimal control \(\mathbf{u}^*\) is the value of \(\mathbf{u}\) that globally minimizes the Hamiltonian
+\(H(\mathbf{x},\mathbf{u},t,V_{\mathbf{x}})\), holding \(\mathbf{x}\), \(V_{\mathbf{x}}\), and \(t\) constant. It was
+formulated by the Russian mathematician Lev Semenovich Pontryagin and his students and known as <i>Pontryagin's maximum
+principle</i>.
+</p>
+
+<p>
+One of the most effective way to solve HJB, which is a first-order nonlinear partial differential equation, is the
+method of characteristic. It amounts to find a field of extremals. We can use Euler-Lagrange Equations, which is
+ordinary differential equation (ODE), to solve a particular optimal path and its associate optimal function, thus get
+the field of extremals.
+</p>
+</div>
+</div>
+<div id="outline-container-orgcfcbdd6" class="outline-4">
+<h4 id="orgcfcbdd6"><span class="section-number-4">2.3.2</span> Derivation using the HJB equation</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<p>
+<a id="orgeeb4aed"></a>
+</p>
+
+<p>
+Recall the HJB equation \ref{eq:HJB}:
+\[
+    V_{t}(\mathbf{x},t) + \min_{\mathbf{u}}\{V_{\mathbf{x}}^Tf(\mathbf{x},\mathbf{u}) + l(\mathbf{x},\mathbf{u})\} = 0
+    \]
+</p>
+
+<p>
+if the optimal control law is \(\pi(x,t)\), we can set \(u=\pi\) and drop 'min':
+\[ 0 = v_t(x,t) + l(x, \pi) + f(x, \pi)^T V_x(x,t) \]
+Now differentiate w.r.t \(x\) and suppress the dependences for clarity:
+\[ 0 = V_{tx} + l_x + l_u u_x + (f_x^T + f_u^T u_x^T) V_x + V_{xx} f \]
+</p>
+
+<p>
+Using the identify \[ \dot{V}_x = V_{tx} + V_{xx}f \] and regrouping yields:
+\[ 0 = \dot{V}_x + (l_x + f_x^T V_x) + u_x^T(l_u + f_u^T V_x) = \dot{V}_x + H_x + u_x^T H_u \]
+</p>
+
+<p>
+When u is the optimal we have \(H_u = 0\), thus \[ - \dot{\lambda} = H_x(x,u,t) \] where \(\lambda := V_x\).
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgcf1e17c" class="outline-4">
+<h4 id="orgcf1e17c"><span class="section-number-4">2.3.3</span> Derivation using the method of Lagrange Multipliers</h4>
+<div class="outline-text-4" id="text-2-3-3">
+<p>
+\[ \min \int_0^T l(x,u,t) dt \]
+s.t.
+\[ \dot{x} = f(x,u,t) \]
+</p>
+
+<p>
+Let's convert the constrained optimization to unconstrained optimization using
+<a href="#org27f49d4">Method of Lagrange Multipliers</a> method:
+\[ \min \int_0^T  l(x,u,t) +  \lambda^T (f(x,u,t) - \dot{x}) \]
+Let's define the Lagrange as:
+\[ L := l(x,u,t) + \lambda^T (f(x,u,t) - \dot{x}) \]
+</p>
+
+<p>
+To extreme the functional, it should satisfies <a href="#org6f652d2">Euler-Lagrange Equation</a>:
+\[ \frac{d}{dt} \nabla_{\dot{x}} L - \nabla_x L = 0 \]
+\[ \frac{d}{dt} \nabla_{\dot{\lambda}} L - \nabla_{\lambda} L = 0 \]
+\[ \frac{d}{dt} \nabla_{\dot{u}} L - \nabla_u L = 0 \]
+</p>
+
+<p>
+Therefore we have:
+\[ \dot{\lambda} = - \nabla_x L \]
+\[ \dot{x} = f(x,u,t) \]
+\[ \nabla_u l + \lambda^T \nabla_u f(x,u,t) \]
+</p>
+
+<p>
+Let's see how to find the same Hamiltonian by a general method:
+First, let's define a momentum:
+\[ p := \nabla_{\dot{x} L = - \lambda \]
+then Hamiltonian is:
+\[ H := p\dot{x} - L = -l - \lambda^T f(x,u,t) \]
+</p>
+
+<p>
+We have a different sign here, but if we choose
+\(\lambda\) as the momentum, we will have the same Hamiltonian.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orge8e5693" class="outline-2">
+<h2 id="orge8e5693"><span class="section-number-2">3</span> Physics</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-orgdf18fbe" class="outline-3">
+<h3 id="orgdf18fbe"><span class="section-number-3">3.1</span> Introduction</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+I have introduced some cool things in optimization, In this section, I will introduce how we can apply the idea of
+optimization to solve the motion of mechanical systems. First, I will introduce <a href="#orgcbe5e2f">the principle of least action</a>, which
+is cited broadly. The principle of least action provides a philosophy idea to understand the movement of animals,
+plans, and mechanical systems.
+</p>
+
+<p>
+Then I will introduce <a href="#org9cb832a">Lagrangian mechanics</a>. Rather than explicitly calculating the force and the path inch by inch,
+Lagrangian mechanics provides a way to solve the whole path without considering the internal forces. In simple cases,
+the Lagrangian is equal to the difference of the kinetic energy and the potential energy, K-V. For a conservative
+system, the action functional is equal to the two times of the total work, \(\int_0^T (K-V) dt = 2W\). Therefore, the
+path a object will take extremes the total 'work'.
+</p>
+
+<p>
+I will then introduce <a href="#orgabec666">Hamiltonian mechanics.</a> We can convert a Lagrangian into Hamiltonian. So essentially they are
+solving the same problem but in different forms. Lagrangian mechanics solves a second order partial derivative
+equation, while Hamiltonian solves two first-order ODE. But Hamiltonian provides a good way to find constant quantities
+in a system.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org4167fa5" class="outline-3">
+<h3 id="org4167fa5"><span class="section-number-3">3.2</span> Action functional</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+In mathematics, and particularly in functional analysis and the calculus of variations, a functional is a function
+from a vector space into its underlying field of scalars. Commonly the vector space is a space of functions; thus the
+functional takes a function for its input argument, then it is sometimes considered a function of a function (a
+higher-order function).
+</p>
+
+<p>
+Define \(\cal{F}\) to be a function space, a set of integral function \(q(t)\) on the time interval \([a,b]\). Then
+functional \(F\) is a mapping from this function space to the reals:
+\[ F: \cal{F} \rightarrow \cal{R} \]
+</p>
+
+<p>
+A particular functional, called the action or action functional, given for the Newtonian mechanics of a single
+particle by:
+\[ S(q) = \int_a^b L(q, \dot{q}, t) dt \]
+where the Lagrangian, \(L(q, \dot{q}, t)\), is the difference between the kinetic energy \(T\) and potential energy \(V\),
+\[ L(q, \dot{q}, t) = T - V \]
+</p>
+
+<p>
+The stationary solution of the action functional satisfies <a href="#org6f652d2">Euler-Lagrange Equation</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcbe5e2f" class="outline-3">
+<h3 id="orgcbe5e2f"><span class="section-number-3">3.3</span> Principle of least action</h3>
+<div class="outline-text-3" id="text-3-3">
+</div>
+<div id="outline-container-org5dc0783" class="outline-4">
+<h4 id="org5dc0783"><span class="section-number-4">3.3.1</span> Background</h4>
+<div class="outline-text-4" id="text-3-3-1">
+<p>
+Credit for the formulation of the principle of least action is commonly given to Pierre Louis Maupertuis, who wrote
+about it in 1744 and 1746, although the true priority is less clear, as discussed below.
+</p>
+<blockquote>
+<p>
+Maupertuis felt that "Nature is thrifty in all its actions", and applied the principle broadly: The laws of movement
+and of rest deduced from this principle being precisely the same as those observed in nature, we can admire the
+application of it to all phenomena. The movement of animals, the vegetative growth of plants &#x2026; are only its
+consequences; and the spectacle of the universe becomes so much the grander, so much more beautiful, the worthier of
+its Author, when one knows that a small number of laws, most wisely established, suffice for all movements.
+</p>
+</blockquote>
+
+<p>
+<i>Hamilton's principle</i> is William Rowan Hamilton's formulation of the principle of stationary action. It states that
+the dynamics of a physical system is determined by a variational problem for a functional based on a single function,
+the Lagrangian, which contains all physical information concerning the system and the forces acting on it. The
+evolution \(q(t)\) of a system described by \(q(t) \in \mathbb{R}^N\) between \((t_1,q(t_1))\) and \((t_2,q(t_2))\) is an
+extremum of the action functional
+</p>
+
+\begin{equation}
+\label{eq:29}
+S(q):=\int_{t_1}^{t_2}L(t,q,\dot{q})dt
+\end{equation}
+<p>
+where \(L(t,q,\dot{q}):= K-V\) is the Lagrangian function for the system.
+</p>
+
+<p>
+A good tutorial can be found at: <br />
+</p>
+<ul class="org-ul">
+<li><a href="http://www.eftaylor.com/software/ActionApplets/LeastAction.html">http://www.eftaylor.com/software/ActionApplets/LeastAction.html</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9cb832a" class="outline-3">
+<h3 id="org9cb832a"><span class="section-number-3">3.4</span> Lagrangian mechanics</h3>
+<div class="outline-text-3" id="text-3-4">
+</div>
+<div id="outline-container-org393a53c" class="outline-4">
+<h4 id="org393a53c"><span class="section-number-4">3.4.1</span> Background</h4>
+<div class="outline-text-4" id="text-3-4-1">
+<p>
+Lagrangian mechanics is a re-formulation of classical mechanics that combines conservation of momentum with
+conservation of energy. It was introduced by Italian mathematician Joseph-Louis Lagrange in 1788. In Lagrangian
+mechanics, the trajectory of a system of particles is derived by solving the Lagrange equations in one of two forms:
+</p>
+<ul class="org-ul">
+<li>the Lagrange equations of the first kind, which treat constraints explicitly as extra equations, often using
+<a href="#org27f49d4">Method of Lagrange Multipliers</a>; and</li>
+<li>the Lagrange equations of the second kind, which incorporate the constraints directly
+by judicious choice of generalized coordinates.</li>
+</ul>
+
+<p>
+The fundamental lemma of the calculus of variations shows that solving the Lagrange equations is equivalent to finding
+the path for which the <a href="#org4167fa5">Action functional</a> is stationary, a quantity that is the integral of the Lagrangian over time.
+</p>
+</div>
+</div>
+<div id="outline-container-org8d39054" class="outline-4">
+<h4 id="org8d39054"><span class="section-number-4">3.4.2</span> Theorem</h4>
+<div class="outline-text-4" id="text-3-4-2">
+<p>
+Define the following scalar function (<a href="#org4167fa5">Action functional</a>)
+</p>
+\begin{equation}
+  \label{eq:lagrange}
+  L=K(\dot{q})-V(q),
+\end{equation}
+<p>
+where \(K\) is kinetic energy and is a function of only \(\dot{q}\), \(V\)
+is the potential energy and is a function of only \(q\), \(q\) is called
+generalized coordinate. Lagrange equations are often written as
+</p>
+\begin{equation}
+  \label{eq:lagrange-eqn}
+  \frac{d}{dt}\frac{\partial L}{\partial \dot{q}} - \frac{\partial
+    L}{\partial q} = 0.
+\end{equation}
+
+<p>
+Intuitive example: <br />
+</p>
+\begin{equation}
+  \label{eq:23}
+  L = \frac{1}{2}mv^2-mgh
+\end{equation}
+<p>
+where \(v:=\dot{q}\) and \(h:=z\),the
+generalized coordinate is \(q:=(x,y,z)'\).
+The first term of \ref{eq:lagrange-eqn}
+</p>
+\begin{equation}
+  \label{eq:24}
+  \frac{d}{dt}\frac{\partial L}{\partial \dot{q}} = m\ddot{q}.
+\end{equation}
+<p>
+The second term is
+</p>
+\begin{equation}
+  \label{eq:27}
+  \frac{\partial L}{\partial q} = (0,0,mg)'
+\end{equation}
+<p>
+According to Newton's second law, \(m\ddot{q}-(0,0,mg) = 0\).
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgabec666" class="outline-3">
+<h3 id="orgabec666"><span class="section-number-3">3.5</span> Hamiltonian mechanics</h3>
+<div class="outline-text-3" id="text-3-5">
+</div>
+<div id="outline-container-orgcb325a3" class="outline-4">
+<h4 id="orgcb325a3"><span class="section-number-4">3.5.1</span> Background</h4>
+<div class="outline-text-4" id="text-3-5-1">
+<p>
+Hamiltonian mechanics is a reformulation of classical mechanics that was introduced in 1833 by Irish mathematician
+William Rowan Hamilton. It arose from Lagrangian mechanics, a previous reformulation of classical mechanics introduced
+by Joseph Louis Lagrange in 1788, but can be formulated without recourse to Lagrangian mechanics using symplectic
+spaces (see Mathematical formalism, below). The Hamiltonian method differs from the Lagrangian method in that instead
+of expressing second-order differential constraints on an n-dimensional coordinate space (where n is the number of
+degrees of freedom of the system), it expresses <b>first-order constraints on a 2n-dimensional phase space</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org49a8e0b" class="outline-4">
+<h4 id="org49a8e0b"><span class="section-number-4">3.5.2</span> Theorem</h4>
+<div class="outline-text-4" id="text-3-5-2">
+<p>
+In Hamiltonian mechanics, a classical physical system is described by a set of canonical coordinates \(r = (q, p)\),
+where each component of the coordinate \(q_i\), \(p_i\) is indexed to the frame of reference of the system. The time
+evolution of the system is uniquely defined by Hamilton's equations
+</p>
+\begin{eqnarray}
+  \label{eq:hamilton-formula}
+  \dot{p} &=& -\frac{\partial H}{\partial q} \\
+  \dot{q} &=&  \frac{\partial H}{\partial p} \nonumber
+\end{eqnarray}
+<p>
+where \(p(t)\) is generalized momenta, \(q(t)\) is generalized coordinates, \(H\) is the Hamiltonian function, which often
+corresponds to the total energy of the system. For a closed system, it is the sum of the kinetic and potential energy
+in the system. . It is simply the total energy of the material point.
+</p>
+
+<p>
+Intuitive Example: <br />
+</p>
+\begin{equation}
+  \label{eq:25}
+  H=\frac{p^2}{2m}+V(q)
+\end{equation}
+<p>
+with the variable defined as:
+</p>
+
+<ul class="org-ul">
+<li>\(p = m\dot{q}\): the momentum of the material point</li>
+<li>\(q=(x,y,z)'\): the location of the material point</li>
+<li>\(V(q)\): the potential energy</li>
+</ul>
+
+<p>
+Recall that \(F=\dot{p}=-\frac{\partial V}{\partial q}\), then Eq. \ref{eq:hamilton-formula} stands.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4c77868" class="outline-4">
+<h4 id="org4c77868"><span class="section-number-4">3.5.3</span> Link to Lagrangian mechanics</h4>
+<div class="outline-text-4" id="text-3-5-3">
+<ul class="org-ul">
+<li>Write out the Lagrangian \(L=T - V\). Express \(T\) and \(V\) as though you were going to use Lagrange's equation.</li>
+<li>Calculate the momenta by differentiating the Lagrangian with
+respect to velocity, as \(p=\frac{\partial{L}}{\partial{\dot{q}}}\)</li>
+<li>\(H=p\dot{q}-L\).</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org9cdde62" class="outline-4">
+<h4 id="org9cdde62"><span class="section-number-4">3.5.4</span> Link to Newtonian mechanics</h4>
+<div class="outline-text-4" id="text-3-5-4">
+<p>
+Kinetic energy:
+\[ E_k = \frac{1}{2} m \dot{x}^2 = p^2 / (2m)\]
+where \(p = \dot{x} m\) is the momentum.
+</p>
+
+<p>
+Potential energy:
+\[ E_p = V(x) \]
+</p>
+
+<p>
+the action functional:
+\[ \int (E_k - E_p) dt \]
+where
+\[ L = \frac{1}{2m} p^2 - V(x) \]
+define:
+\[ H := p\dot{x} - L = m \dot{x}^2 - L =
+    \frac{1}{2m} p^2 + V(x) \]
+We have:
+\[ - \dot{p} = \nabla_{x} H = \nabla_x V \]
+(which is the Newton's second law)
+and
+\[ \dot{x} = \nabla_{p} H = p/m \]
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge4baebd" class="outline-3">
+<h3 id="orge4baebd"><span class="section-number-3">3.6</span> Newton's force and Lagrange multiplier</h3>
+<div class="outline-text-3" id="text-3-6">
+<p>
+According to the Newton's second law:
+\[ F = m a \]
+Force can be measured by the accelerate of a object with a mass of m.
+</p>
+
+<p>
+However, if we don't know the Newton's second law,
+can we study the force from an optimization perspective?
+</p>
+
+<p>
+According to the principle of least action, the motion of a mechanical system
+satisfies:
+\[ \min \int_{0}^{T} L(x, x', t) dt \]
+It can be solved by Euler Lagrange equation or Hamiltonian
+equation.
+</p>
+
+<p>
+Image that we are pushing a object and we can measure the motion of our hand,
+we want to know the contact force between our hand and the object.
+To solve the motion of the object, we need to solve
+the following equations:
+\[ \min \int_{0}^{T} L(x, x', t) dt \]
+s.t.
+\[ h(x,t) = 0 \]
+where the constraint is the motion of the hand.
+</p>
+
+<p>
+We can convert the above constrained optimization problem to unconstrained
+optimization by using <a href="#org27f49d4">Method of Lagrange Multipliers</a> as:
+\[ \min \int_{0}^{T} [L(x, x', t) + \lambda^T h(x,t) ] dt \]
+</p>
+
+<p>
+Let's define the Lagrange \(L' := L + \lambda^T h(x,t)\),
+according to EL equation:
+\[ \frac{d}{dt} \nabla_{x'} L' - \nabla_{x} L' = 0 \]
+we have:
+\[ \frac{d}{dt} \nabla_{x'} L = \nabla_x L + \lambda^T \nabla_x h \]
+As we know, in Newtonian Mechanics, the change rate of momentum
+(on the left hand side) equals to the net force (on the right hand side).
+So we know that:
+\[ F = \nabla_x L + \lambda^T \nabla_x h \]
+</p>
+
+<p>
+Recall that \(L = K - V\), where \(K\) is the kinetic energy and \(V\) is the potential
+energy, so the first term on the right hand side is the conservative force
+of the potential field and the second term is the contact force between the
+the object and the hand, where \(\nabla_x h\) is the Jacobian at the contact.
+</p>
+
+<p>
+So we see that the contact force is the Lagrange multipliers.
+</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,912 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chenggang Liu's Homepage</title>
+<meta name="generator" content="Org mode" />
+<meta name="description" content="chenggang's homepage"
+ />
+<meta name="keywords" content="homepage optimal control reinforcement learning" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link href="./css/sticky-footer-navbar.css" rel="stylesheet">
+<link href="./highlight/styles/github.css" rel="stylesheet">
+<link href="./favicon.ico" rel="shortcut icon" />
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/readtheorg/js/readtheorg.js"></script>
+<link rel="stylesheet" type="text/css" href="./css/theme-readtheorg-custom.css" />
+<body style="background: #ffffff url('images/black.jpg') no-repeat center center fixed;-moz-background-size:cover;-webkit-background-size:cover;-o-background-size:cover;background-size:cover; min-width: 394px;">
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Chenggang Liu's Homepage</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgd65b940">Research Interest</a></li>
+<li><a href="#orgfbef941">Blogs</a></li>
+<li><a href="#org3d1c7b1">Current Project</a></li>
+<li><a href="#org0f23c44">Past Projects</a>
+<ul>
+<li><a href="#orgef17334">DARPA Robotics Challenge Egress Control</a></li>
+<li><a href="#orgd3c79f9">Integrated Modular Avionics System</a></li>
+<li><a href="#org90dcc49">Biped Walking Control using an Optimal Trajectory Library</a></li>
+<li><a href="#org9818b11">Standing Balance Control using an Optimal Trajectory Library</a></li>
+<li><a href="#org1469fa3">Roboray Humanoid Robot System Design</a></li>
+<li><a href="#org7e0c646">Biped Walking Control</a></li>
+<li><a href="#org3dadda0">Biped Skating Control</a></li>
+<li><a href="#org58646be">Small Humanoid Robot System Development</a></li>
+<li><a href="#orgb961277">Motor Control System Development</a></li>
+<li><a href="#org8e8b277">Sensorimotor Coordination Research</a></li>
+<li><a href="#orgcb33801">GPU Design</a></li>
+<li><a href="#org03e8746">Embedded Active Vision System Development</a></li>
+<li><a href="#org68a292d">Short-term Ship Motion Prediction</a></li>
+<li><a href="#orgb2ba7bf">Document Management Software</a></li>
+</ul>
+</li>
+<li><a href="#org07fd528">Publications</a>
+<ul>
+<li><a href="#org2de608e">Book Chapter</a></li>
+<li><a href="#orga5c4351">Journal papers</a></li>
+<li><a href="#org9990ce3">Conference papers</a></li>
+<li><a href="#org130fe4c">Patents</a></li>
+</ul>
+</li>
+<li><a href="#orgb053889">About</a></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgd65b940" class="outline-2">
+<h2 id="orgd65b940">Research Interest</h2>
+<div class="outline-text-2" id="text-orgd65b940">
+
+<div class="figure">
+<p><img src="images/covers/cover1.png" alt="cover1.png" width="90%" />
+</p>
+</div>
+
+<p>
+My life goal is to endow robots with the dexterity, robustness and autonomy of animals and humans and enable them to
+work in diverse fields such as human working&amp;living environment and degraded environments. In practice, I'd like to
+design robots that can understand the tasks, the environment, and themselves; learn from humans and other creatures; and
+execute their tasks in such an elegant and efficient way that they can outperform their teachers.
+</p>
+
+<p>
+<b>Optimal control and reinforcement learning are the man focus of my research</b>.
+</p>
+
+<blockquote>
+<p>
+We begin not with a sensory stimulus, but with a sensorimotor co-ordination &#x2026;
+In a certain sense it is the movement which is primary, and the sensation
+which is secondary, the movement of the body, head, and eye muscles determining
+the quality of what is experienced
+&#x2013; Dewey, 1898
+</p>
+</blockquote>
+
+<p>
+I believe perception, prediction and motion planning are tightly coupled with each other and we can't solve AI problems
+by regarding them as information processing problems, but instead, we need to have a physical robot and let it gain
+knowledge and intelligence from the interaction with the physical world.
+</p>
+
+<blockquote>
+<p>
+The laws of movement and of rest deduced from this principle being precisely the same as those observed in nature, we
+can admire the application of it to all phenomena. The movement of animals, the vegetative growth of plants &#x2026; are only
+its consequences; and the spectacle of the universe becomes so much the grander, so much more beautiful, the worthier of
+its Author, when one knows that a small number of laws, most wisely established, suffice for all movements.
+&#x2013; Pierre Louis Maupertuis
+</p>
+</blockquote>
+
+<p>
+Although full of chaos, the world is governed by optimality principle. The optimality is so ubiquitous that it remains
+central in thermodynamics, fluid mechanics, the theory of relativity, quantum mechanics, particle physics, string
+theory, optics, so and so. Thanks to mankind's great scientists, Isaac Newton, Leonhard Euler, Joseph-Louis Lagrange,
+Willian Rowan Hamilton, Lev Pontryagin, Richard Bellman, Carl Gustav Jacob Jacobi, and etc. , we have powerful
+mathematical weapons to formulate these problems and thanks to advanced hardware, we can solve these problems in our
+generation.
+</p>
+
+
+<div class="figure">
+<p><img src="images/covers/cover2.png" alt="cover2.png" width="90%" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfbef941" class="outline-2">
+<h2 id="orgfbef941">Blogs</h2>
+<div class="outline-text-2" id="text-orgfbef941">
+<div class="row">
+
+<div class="col-md-6">
+<a href="./posts/emacs_note.html" class="thumbnail">
+<img src="images/covers/emacs.png" alt="Emacs Notes" width=60%>
+<div class="caption"
+<p>
+Notes on Emacs
+</p>
+</div>
+</a>
+</div>
+
+<div class="col-md-6">
+<a href="./posts/optimization-physics.pdf" class="thumbnail">
+<img src="images/covers/euler-lagrange.jpg" alt="Cool Things in Optimization and Physics" width=80%>
+<div class="caption"
+<p>
+Newtonian, Euler-Lagrange, Hamiltonian, Bellman, Pontryagin, and &#x2026;
+</p>
+</div>
+</a>
+</div>
+
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3d1c7b1" class="outline-2">
+<h2 id="org3d1c7b1">Current Project</h2>
+<div class="outline-text-2" id="text-org3d1c7b1">
+<div class="row">
+<div class="col-md-6">
+
+<div class="figure">
+<p><img src="projects/covers/self-driving.png" alt="self-driving.png" width="90%" />
+</p>
+</div>
+</div>
+<div class="col-md-6">
+<p>
+Self-driving car, Uber ATG, Pittsburgh, 2015-present
+</p>
+<ul class="org-ul">
+<li>System architecture and performance analysis</li>
+<li>Optimization-based motion planning and control</li>
+<li>Learning from imitation</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0f23c44" class="outline-2">
+<h2 id="org0f23c44">Past Projects</h2>
+<div class="outline-text-2" id="text-org0f23c44">
+</div>
+<div id="outline-container-orgef17334" class="outline-3">
+<h3 id="orgef17334">DARPA Robotics Challenge Egress Control</h3>
+<div class="outline-text-3" id="text-orgef17334">
+<div class="row">
+<div class="col-md-6">
+
+<div class="figure">
+<p><img src="projects/covers/egress.png" alt="egress.png" width="90%" />
+</p>
+</div>
+</div>
+<div class="col-md-6">
+<p>
+The DARPA Robotics Challenge, Carnegie Mellon University, Pittsburgh, 2013-2015
+</p>
+<ul class="org-ul">
+<li>Full-body motion planning and control</li>
+<li>The egress task</li>
+</ul>
+<p class="lead">
+<a class="btn btn-default" href="./projects/drc.html" role="button">Learn more</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd3c79f9" class="outline-3">
+<h3 id="orgd3c79f9">Integrated Modular Avionics System</h3>
+<div class="outline-text-3" id="text-orgd3c79f9">
+<div class="row">
+<div class="col-md-6">
+
+<div class="figure">
+<p><img src="projects/covers/ima.png" alt="ima.png" width="90%" />
+</p>
+</div>
+</div>
+<div class="col-md-6">
+<p>
+China's C919 project, GE Aviation and Aviage Systems, Ltd., 2011-2013
+</p>
+<ul class="org-ul">
+<li>Integrated Modular Avionics (IMA) system design</li>
+<li>High integrity ADN (Advanced Data Networks) design</li>
+<li>ADN switch configuration tool and analysis tool design</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org90dcc49" class="outline-3">
+<h3 id="org90dcc49">Biped Walking Control using an Optimal Trajectory Library</h3>
+<div class="outline-text-3" id="text-org90dcc49">
+<div class="row">
+<div class="col-md-6">
+
+<div class="figure">
+<p><img src="projects/covers/traj-lib.png" alt="traj-lib.png" width="90%" />
+</p>
+</div>
+</div>
+<div class="col-md-6">
+<p>
+Control using an optimal trajectory library, PhD Thesis, SJTU, 2006-2011
+</p>
+<ul class="org-ul">
+<li>Trajectory-based dynamic programming</li>
+<li>Trajectory optimization and policy optimization
+<ul class="org-ul">
+<li>Application to tasks with an equilibrium state (standing balance control)</li>
+<li>Application to tasks with a limit cycles (walking control)</li>
+</ul></li>
+</ul>
+<p class="lead">
+<a class="btn btn-default" href="./projects/walking.html" role="button">Learn more</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9818b11" class="outline-3">
+<h3 id="org9818b11">Standing Balance Control using an Optimal Trajectory Library</h3>
+<div class="outline-text-3" id="text-org9818b11">
+<div class="row">
+<div class="col-md-6">
+
+<div class="figure">
+<p><img src="projects/covers/standing.png" alt="standing.png" width="90%" />
+</p>
+</div>
+</div>
+<div class="col-md-6">
+<p>
+Standing Balance Control Using an Optimal Trajectory Library
+</p>
+<p class="lead">
+<a class="btn btn-default" href="./projects/standing_balance_control.html" role="button">Learn more</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1469fa3" class="outline-3">
+<h3 id="org1469fa3">Roboray Humanoid Robot System Design</h3>
+<div class="outline-text-3" id="text-org1469fa3">
+<div class="row">
+<div class="col-md-6">
+
+<div class="figure">
+<p><img src="projects/covers/roboray.png" alt="roboray.png" width="90%" />
+</p>
+</div>
+</div>
+<div class="col-md-6">
+<p>
+Roboray humanoid robot system development, Carnegie Mellon University, Samsung, Ltd. and SeeGrid, ltd.
+</p>
+<ul class="org-ul">
+<li>Sensor calibration</li>
+<li>Filter design</li>
+<li>Balance controller development</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7e0c646" class="outline-3">
+<h3 id="org7e0c646">Biped Walking Control</h3>
+<div class="outline-text-3" id="text-org7e0c646">
+<div class="row">
+<div class="col-md-6">
+
+<div class="figure">
+<p><img src="projects/covers/zmp.png" alt="zmp.png" width="90%" />
+</p>
+</div>
+</div>
+<div class="col-md-6">
+<p>
+Biped walking control, Shanghai Jiao Tong University, 2007
+</p>
+<ul class="org-ul">
+<li>ZMP-based walking control</li>
+<li>LIMP-based walking control</li>
+</ul>
+<p class="lead">
+<a class="btn btn-default" href="./projects/walking.html" role="button">Learn more</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3dadda0" class="outline-3">
+<h3 id="org3dadda0">Biped Skating Control</h3>
+<div class="outline-text-3" id="text-org3dadda0">
+<div class="row">
+<div class="col-md-6">
+
+<div class="figure">
+<p><img src="projects/covers/skate.png" alt="skate.png" width="90%" />
+</p>
+</div>
+</div>
+<div class="col-md-6">
+<p>
+Biped skating control, Shanghai Jiao Tong University, 2007
+</p>
+<p class="lead">
+<a class="btn btn-default" href="./projects/skating_control.html" role="button">Learn more</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org58646be" class="outline-3">
+<h3 id="org58646be">Small Humanoid Robot System Development</h3>
+<div class="outline-text-3" id="text-org58646be">
+<div class="row">
+<div class="col-md-6">
+
+<div class="figure">
+<p><img src="projects/covers/IHR.png" alt="IHR.png" width="90%" />
+</p>
+</div>
+</div>
+<div class="col-md-6">
+<p>
+Small humanoid robot system development, Shanghai Jiao Tong University, 2006-2008
+</p>
+<ul class="org-ul">
+<li>Motion control system (HW/SW) design and implement</li>
+<li>ZMP-based walking control implement</li>
+</ul>
+<p class="lead">
+<a class="btn btn-default" href="./projects/ihr.html" role="button">Learn more</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb961277" class="outline-3">
+<h3 id="orgb961277">Motor Control System Development</h3>
+<div class="outline-text-3" id="text-orgb961277">
+<div class="row">
+<div class="col-md-6">
+
+<div class="figure">
+<p><img src="projects/covers/f2000.png" alt="f2000.png" width="90%" />
+</p>
+</div>
+</div>
+<div class="col-md-6">
+<p>
+Motor control system development, Shanghai Jiao Tong University, 2007-2008
+</p>
+<ul class="org-ul">
+<li>6 DoFs control (more DoFs than off-the-shelf products of  the same size)</li>
+<li>High precision speed/position control</li>
+<li>6 DoFs coupling control</li>
+</ul>
+<p class="lead">
+<a class="btn btn-default" href="./projects/ihr.html" role="button">Learn more</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8e8b277" class="outline-3">
+<h3 id="org8e8b277">Sensorimotor Coordination Research</h3>
+<div class="outline-text-3" id="text-org8e8b277">
+<div class="row">
+<div class="col-md-6">
+
+<div class="figure">
+<p><img src="projects/covers/smc.png" alt="smc.png" width="90%" />
+</p>
+</div>
+</div>
+<div class="col-md-6">
+<p>
+Sensory-motor coordination research, Shanghai Jiao Tong University, 2006-2007
+</p>
+<ul class="org-ul">
+<li>Basic behavior acquisition with multisensor integration.</li>
+<li>This research enables a robot to emerge a behavior controller based on its interaction with the environment without specific programming.</li>
+</ul>
+<p class="lead">
+<a class="btn btn-default" href="./projects/smc.html" role="button">Learn more</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcb33801" class="outline-3">
+<h3 id="orgcb33801">GPU Design</h3>
+<div class="outline-text-3" id="text-orgcb33801">
+<div class="row">
+<div class="col-md-6">
+
+<div class="figure">
+<p><img src="projects/covers/gpu.png" alt="gpu.png" width="90%" />
+</p>
+</div>
+</div>
+<div class="col-md-6">
+<p>
+Graphic Processing Unit logic design, S3 graphics, Inc., 2003-2006
+</p>
+<ul class="org-ul">
+<li>H.264 Video Decoder Development</li>
+<li>Multiple Graphic Processing Unit Support Techniques Development</li>
+<li>Bus Interface Development</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org03e8746" class="outline-3">
+<h3 id="org03e8746">Embedded Active Vision System Development</h3>
+<div class="outline-text-3" id="text-org03e8746">
+<div class="row">
+<div class="col-md-6">
+
+<div class="figure">
+<p><img src="projects/covers/active_vision.png" alt="active_vision.png" width="90%" />
+</p>
+</div>
+</div>
+<div class="col-md-6">
+<p>
+Active vision system development, Shanghai Jiao Tong University, 2001-2003
+</p>
+<ul class="org-ul">
+<li>Fast moving object tracking @ 50 Hz:
+<ul class="org-ul">
+<li>Real-time image processing with TI C6000 floating point DSP</li>
+<li>Real-time display</li>
+<li>Real-time 2-DoFs pan-tilt camera system control</li>
+</ul></li>
+</ul>
+
+<p class="lead">
+<a class="btn btn-default" href="./projects/active_vision.html" role="button">Learn more</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org68a292d" class="outline-3">
+<h3 id="org68a292d">Short-term Ship Motion Prediction</h3>
+<div class="outline-text-3" id="text-org68a292d">
+<div class="row">
+<div class="col-md-6">
+
+<div class="figure">
+<p><img src="projects/covers/arm.png" alt="arm.png" width="90%" />
+</p>
+</div>
+</div>
+<div class="col-md-6">
+<p>
+Short-term ship pose prediction algorithm and software development, Harbin Engineering University and China Ship Scientific Research Center, 2001
+</p>
+
+
+<p class="lead">
+<a class="btn btn-default" href="./projects/ship_motion_prediction.html" role="button">Learn more</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb2ba7bf" class="outline-3">
+<h3 id="orgb2ba7bf">Document Management Software</h3>
+<div class="outline-text-3" id="text-orgb2ba7bf">
+<div class="row">
+<div class="col-md-6">
+
+<div class="figure">
+<p><img src="projects/covers/docm.png" alt="docm.png" width="90%" />
+</p>
+</div>
+</div>
+<div class="col-md-6">
+<p>
+Document manage software for Windows
+</p>
+<ul class="org-ul">
+<li>A hobby software</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org07fd528" class="outline-2">
+<h2 id="org07fd528">Publications</h2>
+<div class="outline-text-2" id="text-org07fd528">
+</div>
+<div id="outline-container-org2de608e" class="outline-3">
+<h3 id="org2de608e">Book Chapter</h3>
+<div class="outline-text-3" id="text-org2de608e">
+<ul class="org-ul">
+<li>Chapter 1: Trajectory-based dynamic programming, Christopher G. Atkeson and Chenggang LIU, Modeling,
+Simulation and Optimization of Bipedal Walking Cognitive Systems Monographs Volume 18, 2013, pp 1-15
+<a href="10.1007/978-3-642-36368-91">10.1007/978-3-642-36368-91</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orga5c4351" class="outline-3">
+<h3 id="orga5c4351">Journal papers</h3>
+<div class="outline-text-3" id="text-orga5c4351">
+<ul class="org-ul">
+<li>Team WPI-CMU: Achieving Reliable Humanoid Behavior in the DARPA Robotics Challenge
+Mathew DeDonato, Felipe Polido, Kevin Knoedler, Benzun PW Babu, Nandan Banerjee, Christoper P Bove,
+Xiongyi Cui, Ruixiang Du, Perry Franklin, Joshua P Graff, Peng He, Aaron Jaeger, Lening Li,
+Dmitry Berenson, Michael A Gennert, Siyuan Feng, Chenggang Liu, X Xinjilefu, Joohyung Kim,
+Christopher G Atkeson, Xianchao Long, Taskin Padir
+<i>Journal of Field Robotics</i> <b>34 (2)</b>, 381-399</li>
+<li>What Happened in the DARPA Robotics Challenge, and Why?
+C. G. Atkeso, B. P. W. Babu, N. Banerjee, D.
+Berenson, C. P. Bove, X. Cui, M. DeDonato, R. Du, S. Feng, P. Franklin, M. Gennert, J. P. Graff, P. He, A. Jaeger, J.
+Kim, K. Knoedler, L. Li, C. Liu, X. Long, T. Padir, F. Polido, G. G. Tighe, X. Xinjilefu, submitted to Journal of
+<i>Field Robotics</i></li>
+<li>Team WPI-CMU's Report from the DARPA Robotics Challenge Finals, Christopher G. Atkeson, Christoper P. Bov,
+Perry Franklin, Benzun P.W. Babu, Mathew DeDonato, Nandan Banerjee, Xiongyi Cui, Michael A. Gennert, Kevin Knoedler,
+Lening Li, Joshua P. Graff, Chenggang Liu, Ruixiang Du, Peng He, Xianchao Long, Dmitry Berenson, Siyuan Feng, Aaron
+Jaeger, Taskin Padir, Felipe Polido, X Xinjilefu, submitted to <i>Journal of Field Robotics</i></li>
+<li>Biped walking control using a trajectory library Chenggang LIU, Christopher G. Atkeson, and Jianbo SU,
+<i>Robotica</i>, Volume 31 Issue 2, March 2013, Pages 311-322 Cambridge University Press New York, NY, USA DOI:
+10.1017/S0263574712000203</li>
+<li>Neighboring optimal control for periodic tasks for systems with discontinuous dynamics Chenggang LIU,
+Christopher G. Atkeson, and Jianbo SU, <i>SCIENCE CHINA Information Sciences</i>, 2011, 54 (3): 653-663. DOI:
+10.1007/s11432-011-4185-z</li>
+<li>Basic Behavior Acquisition with Multisensor Integration for a Robot System Chenggang LIU and Jianbo SU,
+<i>Advanced Robotics</i>, 2009, 23 (12-13), 1561-1578. DOI: 10.1163/016918609X12496339824450</li>
+<li>Design and Implementation of Motor Control System for Small Humanoid Robot (in Chinese) ZHANG Yi, LIU
+Cheng-gang, XING Deng-peng COMPUTER ENGINEERING, 2009, 35(24)<a href="10.3969/j.issn.1000-3428.2009.24.082">10.3969/j.issn.1000-3428.2009.24.082</a></li>
+<li>Step Motor Control Strategy in High Speed Pan/Tilt/Zoom Camera System (in Chinese) Chenggang LIU, Jianbo SU
+<i>Electric Automation</i>, 2002</li>
+<li>Calibration-Free Hand-Eye Coordination based on Coupled Auto-Disturbance Rejection Controller,
+<i>Systems Engineering and Electronics</i>, Vol.25(11), 2003, pp. 1385-1388 (In Chinese)</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org9990ce3" class="outline-3">
+<h3 id="org9990ce3">Conference papers</h3>
+<div class="outline-text-3" id="text-org9990ce3">
+<ul class="org-ul">
+<li>Full-body motion planning and control for the car egress task of the DARPA robotics challenge, Chenggang LIU, C.G.
+Atkeson, Siyuan Feng, and Xinjilefu, <i>Humanoids 2015</i>, 3-5 Nov. 2015. DOI: 10.1109/HUMANOIDS.2015.7363583</li>
+<li>No falls, no resets: Reliable humanoid behavior in the DARPA robotics challenge, Atkeson, C.G, Babu, B.P.W,
+Banerjee, N., Berenson, D., Bove, C.P., Cui, X., DeDonato, M., Du, R., Feng, S., Franklin, P., Gennert, M., Graff,
+J.P., He, P., Jaeger, A., Kim, J., Knoedler, K., Li, L., Liu, C., Long, X., Padir, T., Polido, F., Tighe, G.G., and
+Xinjilefu, <i>Humanoids 2015</i>, 3-5 Nov. 2015. DOI: 10.1109/HUMANOIDS.2015.7363436</li>
+<li>Implementation of a trajectory library approach to controlling humanoid standing balance Chenggang LIU
+and Jianbo SU (2011), <i>Systems, Man, and Cybernetics (SMC), 2011 IEEE International Conference on</i> DOI:
+10.1109/ICSMC.2011.6083884</li>
+<li>Biped walking control using offline and online optimization Chenggang LIU and Jianbo SU,
+<i>China Control Conference (CCC)</i>, 2011 30th Chinese, 22-24 July 2011</li>
+<li>Standing Balance Control of a Humanoid Robot In the Presence of Continous Perturbations (in Chinese)
+Chenggang LIU and Jianbo SU, <i>China Control Conference (CCC)</i>, 2011 30th Chinese, 22-24 July 2011</li>
+<li>Standing balance control using a trajectory library Chenggang LIU and Christopher G. Atkeson, Dynamic
+Walking, 2009.</li>
+<li>Standing balance control using a trajectory library Chenggang LIU and Christopher G. Atkeson(2009),
+<i>IEEE/RSJ International Conference on Intelligent Robots and Systems, 2009</i>, 3031-3036.
+<a href="10.1109/IROS.2009.5354018">10.1109/IROS.2009.5354018</a></li>
+<li>Basic behavior acquisition based on multisensor integration of a robot head Chenggang LIU and Jianbo
+SU, <i>IEEE International Conference on Robotics and Automation</i>, 2008, 3094-3099. DOI:
+10.1109/ROBOT.2008.4543681</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org130fe4c" class="outline-3">
+<h3 id="org130fe4c">Patents</h3>
+<div class="outline-text-3" id="text-org130fe4c">
+<ul class="org-ul">
+<li>A general learning framework for event detection and classification for self-driving cars, Uber ATG, 2017</li>
+<li>Vehicle signaling device for self-driving cars, Uber ATG, 2016</li>
+<li>Camera System for Auto-detecting and Tracking Suspicious Subjects, ZL03116154.5 (Issued)</li>
+<li>Electric Wire Driven Actuator for Artificial Joint, ZL200710038296.6 (Issued)</li>
+<li>General Distributed Control System for Humanoid Robots, ZL200910054322.3 (Issued)</li>
+<li>Method and System for Multiple GPU Support, ZL200610128006.2 (Issued)</li>
+<li>Method and System for Multiple GPU Support, ZL200610110751.4 (Issued)</li>
+<li>Distributed Dual-bus Motion Control System for Humanoid Robots, 200810038844.X  (Published)</li>
+<li>Method and System for Multiple GPU Support, US7325086 B2 (Issued)</li>
+<li>Switching Method and System for Multiple GPU Support, US7340557 B2 (Issued)</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb053889" class="outline-2">
+<h2 id="orgb053889">About</h2>
+<div class="outline-text-2" id="text-orgb053889">
+<div class="thumbnail">
+<img src="images/portrait-min.jpg" alt="">
+<div class="caption"
+
+<p>
+I am currently working on self-driving cars in <a href="https://www.uber.com/info/atg/">Uber ATG</a> in Pittsburgh since 2015. Before this, I worked on humanoid
+robot full-body motion planning and control as a postdoctoral researcher in the Robotics Institute of the Carnegie
+Mellon University during 2013 and 2015. I attended <a href="http://www.darpa.mil/program/darpa-robotics-challenge">the DARPA Robotics Challenge</a> with the team <a href="http://drc.wpi.edu/">WPI-CMU</a> and took charge of
+the egress task. We completed the egresss task within 4 minutes with a 100% success rate and we were the only Atlas team
+that never fell. I did my visiting research in Carnegie Mellon University during 2008-2010 and got PhD degree in Control
+Theory and Control Engineering in the Shanghai Jiao Tong University in 2011. Beside Robotics, I once worked on GPU
+(Graphics Processing Unit) logic design in S3Graphics, which inspired me to explore super computational power and strong
+AI. I also once worked on IMA (Integrated Modular Avionics) system in the C919 project, where I gained solid knowledge
+and experience in safety-critical system design. I am still a curious learner and an passionate explorer in the field of
+robotics.
+</p>
+
+<p>
+Contact: cgliu2008 AT gmail.com
+</p>
+</div>
+</div>
+
+<p>
+This website is powered by Emacs org-mode and Boostrap
+</p>
+</div>
+</div>
+</div>
+</body>
+</html>
