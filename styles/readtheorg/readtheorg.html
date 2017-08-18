@@ -3,30 +3,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-17 Thu 21:15 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>ReadTheOrg style</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Fabrice Niessen" />
+<!-- 2017-08-17 Thu 22:16 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Fabrice Niessen" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
+  .title  { text-align: center; }
   .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
+  .done   { color: green; }
   .tag    { background-color: #eee; font-family: monospace;
             padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
   .underline { text-decoration: underline; }
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
@@ -53,111 +46,27 @@
     border: 1px solid black;
   }
   pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
   pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
 
   table { border-collapse:collapse; }
   caption.t-above { caption-side: top; }
   caption.t-bottom { caption-side: bottom; }
   td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
   dt { font-weight: bold; }
-  .footpara { display: inline; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
@@ -177,7 +86,6 @@
     { font-size: 10px; font-weight: bold; white-space: nowrap; }
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
 <script type="text/javascript">
@@ -185,7 +93,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -234,47 +142,47 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org54d910b">1. Overview</a></li>
-<li><a href="#org7ec1d6f">2. Typography</a>
+<li><a href="#sec-1">1. Overview</a></li>
+<li><a href="#sec-2">2. Typography</a>
 <ul>
-<li><a href="#org7b11764">2.1. Headings</a></li>
-<li><a href="#org62ffdac">2.2. Body</a></li>
-<li><a href="#orga824a05">2.3. Bold</a></li>
-<li><a href="#org7e21c55">2.4. Blockquotes</a></li>
-<li><a href="#org821ea2a">2.5. Lists</a></li>
+<li><a href="#sec-2-1">2.1. Headings</a></li>
+<li><a href="#sec-2-2">2.2. Body</a></li>
+<li><a href="#sec-2-3">2.3. Bold</a></li>
+<li><a href="#sec-2-4">2.4. Blockquotes</a></li>
+<li><a href="#sec-2-5">2.5. Lists</a></li>
 </ul>
 </li>
-<li><a href="#org82abe54">3. Media queries</a></li>
-<li><a href="#org519bc45">4. Code</a>
+<li><a href="#sec-3">3. Media queries</a></li>
+<li><a href="#sec-4">4. Code</a>
 <ul>
-<li><a href="#org9106a66">4.1. Inline</a></li>
-<li><a href="#org98b8cb0">4.2. Basic block</a></li>
-<li><a href="#org35a4da7">4.3. Sample output</a></li>
+<li><a href="#sec-4-1">4.1. Inline</a></li>
+<li><a href="#sec-4-2">4.2. Basic block</a></li>
+<li><a href="#sec-4-3">4.3. Sample output</a></li>
 </ul>
 </li>
-<li><a href="#orge94094f">5. Tables</a>
+<li><a href="#sec-5">5. Tables</a>
 <ul>
-<li><a href="#orgd5f8793">5.1. Basic example</a></li>
-<li><a href="#orgf510ab3">5.2. Optional table caption</a></li>
-<li><a href="#orge41c32a">5.3. Striped rows</a></li>
+<li><a href="#sec-5-1">5.1. Basic example</a></li>
+<li><a href="#sec-5-2">5.2. Optional table caption</a></li>
+<li><a href="#sec-5-3">5.3. Striped rows</a></li>
 </ul>
 </li>
-<li><a href="#orge0bd642">6. Images</a>
+<li><a href="#sec-6">6. Images</a>
 <ul>
-<li><a href="#orga06f1a8">6.1. Optional image caption</a></li>
+<li><a href="#sec-6-1">6.1. Optional image caption</a></li>
 </ul>
 </li>
-<li><a href="#org01e6fe5">7. Helper classes</a></li>
-<li><a href="#org62ca27c">8. Responsive utilities</a></li>
-<li><a href="#orgdb56f81">9. CSS</a></li>
-<li><a href="#org833e0ff">10. Htmlize</a></li>
-<li><a href="#org0def225">11. JS</a></li>
+<li><a href="#sec-7">7. Helper classes</a></li>
+<li><a href="#sec-8">8. Responsive utilities</a></li>
+<li><a href="#sec-9">9. CSS</a></li>
+<li><a href="#sec-10">10. Htmlize</a></li>
+<li><a href="#sec-11">11. JS</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org54d910b" class="outline-2">
-<h2 id="org54d910b"><span class="section-number-2">1</span> Overview</h2>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Overview</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Get the lowdown on the key pieces of ReadTheOrg's infrastructure, including our
@@ -283,21 +191,24 @@ approach to better HTML export.
 </div>
 </div>
 
-<div id="outline-container-org7ec1d6f" class="outline-2">
-<h2 id="org7ec1d6f"><span class="section-number-2">2</span> Typography</h2>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Typography</h2>
 <div class="outline-text-2" id="text-2">
+
 <div class="org-src-container">
-<pre><code class="src src-css"><span style="color: #00ffff;">@import</span> url(https://fonts<span style="color: #7fffd4;">.googleapis.com</span>/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700);
+
+<pre class="src src-css"><span style="color: #00ffff;">@import</span> url(https://fonts<span style="color: #7fffd4;">.googleapis.com</span>/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700);
 <span style="color: #00ffff;">@import</span> url(https://maxcdn<span style="color: #7fffd4;">.bootstrapcdn.com</span>/font-awesome/4.3.0/css/font-awesome<span style="color: #7fffd4;">.min.css</span>);
-</code></pre>
+</pre>
 </div>
 </div>
 
-<div id="outline-container-org7b11764" class="outline-3">
-<h3 id="org7b11764"><span class="section-number-3">2.1</span> Headings</h3>
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Headings</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
-<pre><code class="src src-css">h1,h2,h3,h4,h5,h6,legend{
+
+<pre class="src src-css">h1,h2,h3,h4,h5,h6,legend{
     <span style="color: #00ffff;">font-family:</span><span style="color: #ffc1c1;">"Roboto Slab"</span>,<span style="color: #ffc1c1;">"ff-tisa-web-pro"</span>,<span style="color: #ffc1c1;">"Georgia"</span>,Arial,sans-serif;
     <span style="color: #00ffff;">font-weight:</span>700;
     <span style="color: #00ffff;">margin-top:</span>0;
@@ -335,16 +246,17 @@ h4,h5,h6{
     <span style="color: #00ffff;">color:</span><span style="color: #8470ff; font-weight: bold;">#2980B9</span>;
     <span style="color: #00ffff;">font-weight:</span>300;
 }
-</code></pre>
+</pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org62ffdac" class="outline-3">
-<h3 id="org62ffdac"><span class="section-number-3">2.2</span> Body</h3>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Body</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
-<pre><code class="src src-css">html{
+
+<pre class="src src-css">html{
     -ms-text-size-adjust:100%;
     -webkit-text-size-adjust:100%;
     <span style="color: #00ffff;">font-size:</span>100%;
@@ -377,27 +289,29 @@ p{
     <span style="color: #00ffff;">line-height:</span>24px;
     <span style="color: #00ffff;">margin:</span>0px 0px 24px 0px;
 }
-</code></pre>
+</pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orga824a05" class="outline-3">
-<h3 id="orga824a05"><span class="section-number-3">2.3</span> Bold</h3>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Bold</h3>
 <div class="outline-text-3" id="text-2-3">
 <div class="org-src-container">
-<pre><code class="src src-css">b,strong{
+
+<pre class="src src-css">b,strong{
     <span style="color: #00ffff;">font-weight:</span>bold}
-</code></pre>
+</pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org7e21c55" class="outline-3">
-<h3 id="org7e21c55"><span class="section-number-3">2.4</span> Blockquotes</h3>
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Blockquotes</h3>
 <div class="outline-text-3" id="text-2-4">
 <div class="org-src-container">
-<pre><code class="src src-css">blockquote{
+
+<pre class="src src-css">blockquote{
     <span style="color: #00ffff;">background-color:</span> <span style="color: #8470ff; font-weight: bold;">#F0F0F0</span>;
     <span style="color: #00ffff;">border-left:</span>5px solid <span style="color: #8470ff; font-weight: bold;">#CCCCCC</span>;
     <span style="color: #00ffff;">font-style:</span>italic;
@@ -406,38 +320,41 @@ p{
     <span style="color: #fa8072;">/* </span><span style="color: #ff7f24; font-style: italic;">margin-left:24px; </span><span style="color: #fa8072;">*/</span>
     <span style="color: #00ffff;">padding:</span> 6px 20px;
 }
-</code></pre>
+</pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org821ea2a" class="outline-3">
-<h3 id="org821ea2a"><span class="section-number-3">2.5</span> Lists</h3>
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Lists</h3>
 <div class="outline-text-3" id="text-2-5">
 <div class="org-src-container">
-<pre><code class="src src-css">ul,ol,dl{
+
+<pre class="src src-css">ul,ol,dl{
     <span style="color: #00ffff;">line-height:</span>24px;
     <span style="color: #00ffff;">list-style-image:</span>none;
     <span style="color: #fa8072;">/* </span><span style="color: #ff7f24; font-style: italic;">list-style:none; </span><span style="color: #fa8072;">*/</span>
     <span style="color: #00ffff;">margin:</span>0px 0px 24px 0px;
     <span style="color: #00ffff;">padding:</span>0;
 }
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css">li{
+
+<pre class="src src-css">li{
     <span style="color: #00ffff;">margin-left:</span> 24px;
 }
 
 dd{
     <span style="color: #00ffff;">margin:</span>0;
 }
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css"><span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.section</span> ul,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.toctree-wrapper</span> ul,article ul{
+
+<pre class="src src-css"><span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.section</span> ul,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.toctree-wrapper</span> ul,article ul{
     <span style="color: #00ffff;">list-style:</span>disc;
     <span style="color: #00ffff;">line-height:</span>24px;
     <span style="color: #00ffff;">margin-bottom:</span>24px}
@@ -478,27 +395,28 @@ dd{
 
 <span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.section</span> ol li ul li,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> ol li ul li,article ol li ul li{
     <span style="color: #00ffff;">list-style:</span>disc}
-</code></pre>
+</pre>
 </div>
 </div>
 
-<div id="outline-container-org23a90d6" class="outline-4">
-<h4 id="org23a90d6"><span class="section-number-4">2.5.1</span> Unordered</h4>
-</div>
-
-
-
-<div id="outline-container-org16277f0" class="outline-4">
-<h4 id="org16277f0"><span class="section-number-4">2.5.2</span> Ordered</h4>
+<div id="outline-container-sec-2-5-1" class="outline-4">
+<h4 id="sec-2-5-1"><span class="section-number-4">2.5.1</span> Unordered</h4>
 </div>
 
 
 
-<div id="outline-container-org0e438e3" class="outline-4">
-<h4 id="org0e438e3"><span class="section-number-4">2.5.3</span> Description</h4>
+<div id="outline-container-sec-2-5-2" class="outline-4">
+<h4 id="sec-2-5-2"><span class="section-number-4">2.5.2</span> Ordered</h4>
+</div>
+
+
+
+<div id="outline-container-sec-2-5-3" class="outline-4">
+<h4 id="sec-2-5-3"><span class="section-number-4">2.5.3</span> Description</h4>
 <div class="outline-text-4" id="text-2-5-3">
 <div class="org-src-container">
-<pre><code class="src src-css">dl dt{
+
+<pre class="src src-css">dl dt{
     <span style="color: #00ffff;">font-weight:</span>bold;
 }
 
@@ -509,18 +427,20 @@ dl p,dl table,dl ul,dl ol{
 dl dd{
     <span style="color: #00ffff;">margin:</span>0 0 12px 24px;
 }
-</code></pre>
+</pre>
 </div>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org82abe54" class="outline-2">
-<h2 id="org82abe54"><span class="section-number-2">3</span> Media queries</h2>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Media queries</h2>
 <div class="outline-text-2" id="text-3">
+
 <div class="org-src-container">
-<pre><code class="src src-css"><span style="color: #00ffff;">@media</span> print{
+
+<pre class="src src-css"><span style="color: #00ffff;">@media</span> print{
     <span style="color: #7fffd4;">.codeblock</span>,pre<span style="color: #7fffd4;">.src</span>{
         <span style="color: #00ffff;">white-space:</span>pre<span style="color: #7fffd4;">.src-wrap</span>}
 }
@@ -580,17 +500,19 @@ dl dd{
     body {
         <span style="color: #00ffff;">margin:</span> 0px;}
 }
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css"><span style="color: #00ffff;">@media</span> screen and (<span style="color: #00ffff;">max-width:</span> 768px){
+
+<pre class="src src-css"><span style="color: #00ffff;">@media</span> screen and (<span style="color: #00ffff;">max-width:</span> 768px){
 }
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css"><span style="color: #00ffff;">@media</span> only screen and (<span style="color: #00ffff;">max-width:</span> 480px){
+
+<pre class="src src-css"><span style="color: #00ffff;">@media</span> only screen and (<span style="color: #00ffff;">max-width:</span> 480px){
 }
 
 <span style="color: #00ffff;">@media</span> screen and (<span style="color: #00ffff;">max-width:</span> 768px){
@@ -602,17 +524,19 @@ dl dd{
     <span style="color: #7fffd4;">.mobile-hide</span>{
         <span style="color: #00ffff;">display:</span>none}
 }
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css"><span style="color: #00ffff;">@media</span> screen and (<span style="color: #00ffff;">max-width:</span> 480px){
+
+<pre class="src src-css"><span style="color: #00ffff;">@media</span> screen and (<span style="color: #00ffff;">max-width:</span> 480px){
 }
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css"><span style="color: #00ffff;">@media</span> screen and (<span style="color: #00ffff;">max-width:</span> 768px){
+
+<pre class="src src-css"><span style="color: #00ffff;">@media</span> screen and (<span style="color: #00ffff;">max-width:</span> 768px){
     <span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span>{
         <span style="color: #00ffff;">margin-left:</span>0}
 
@@ -635,11 +559,12 @@ dl dd{
     <span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span>{
         <span style="color: #00ffff;">background:</span><span style="color: #8470ff; font-weight: bold;">#fcfcfc</span>}
 }
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css"><span style="color: #00ffff;">@media</span> screen and (<span style="color: #00ffff;">max-width:</span> 768px){
+
+<pre class="src src-css"><span style="color: #00ffff;">@media</span> screen and (<span style="color: #00ffff;">max-width:</span> 768px){
     <span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#copyright</span>{
         <span style="color: #00ffff;">width:</span>85%;
         <span style="color: #00ffff;">display:</span>none}
@@ -651,29 +576,31 @@ dl dd{
         <span style="color: #00ffff;">width:</span>100%;
         <span style="color: #00ffff;">height:</span>auto}
 }
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css"><span style="color: #00ffff;">@media</span> screen and (<span style="color: #00ffff;">max-width:</span> 480px){
+
+<pre class="src src-css"><span style="color: #00ffff;">@media</span> screen and (<span style="color: #00ffff;">max-width:</span> 480px){
     <span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.sidebar</span>{
         <span style="color: #00ffff;">width:</span>100%}
 }
-</code></pre>
+</pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org519bc45" class="outline-2">
-<h2 id="org519bc45"><span class="section-number-2">4</span> Code</h2>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Code</h2>
 <div class="outline-text-2" id="text-4">
 </div>
 
-<div id="outline-container-org9106a66" class="outline-3">
-<h3 id="org9106a66"><span class="section-number-3">4.1</span> Inline</h3>
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Inline</h3>
 <div class="outline-text-3" id="text-4-1">
 <div class="org-src-container">
-<pre><code class="src src-css">code{
+
+<pre class="src src-css">code{
     <span style="color: #00ffff;">background:</span><span style="color: #8470ff; font-weight: bold;">#fff</span>;
     <span style="color: #00ffff;">border:</span>solid 1px <span style="color: #8470ff; font-weight: bold;">#e1e4e5</span>;
     <span style="color: #fa8072;">/* </span><span style="color: #ff7f24; font-style: italic;">color:#000;  for clickable code </span><span style="color: #fa8072;">*/</span>
@@ -684,16 +611,17 @@ dl dd{
     <span style="color: #00ffff;">padding:</span>0 5px;
     <span style="color: #00ffff;">white-space:</span>nowrap;
 }
-</code></pre>
+</pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org98b8cb0" class="outline-3">
-<h3 id="org98b8cb0"><span class="section-number-3">4.2</span> Basic block</h3>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Basic block</h3>
 <div class="outline-text-3" id="text-4-2">
 <div class="org-src-container">
-<pre><code class="src src-css"><span style="color: #7fffd4;">.codeblock-example</span>{
+
+<pre class="src src-css"><span style="color: #7fffd4;">.codeblock-example</span>{
     <span style="color: #00ffff;">border:</span>1px solid <span style="color: #8470ff; font-weight: bold;">#e1e4e5</span>;
     <span style="color: #00ffff;">border-bottom:</span>none;
     <span style="color: #00ffff;">padding:</span>24px;
@@ -733,16 +661,17 @@ pre<span style="color: #7fffd4;">.src</span>{
     <span style="color: #00ffff;">padding:</span>12px;
     <span style="color: #00ffff;">white-space:</span>pre;
 }
-</code></pre>
+</pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org35a4da7" class="outline-3">
-<h3 id="org35a4da7"><span class="section-number-3">4.3</span> Sample output</h3>
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> Sample output</h3>
 <div class="outline-text-3" id="text-4-3">
 <div class="org-src-container">
-<pre><code class="src src-css"><span style="color: #7fffd4;">.example</span>{
+
+<pre class="src src-css"><span style="color: #7fffd4;">.example</span>{
     <span style="color: #00ffff;">background:</span><span style="color: #8470ff; font-weight: bold;">#f3f6f6</span>;
     <span style="color: #00ffff;">border:</span>1px solid <span style="color: #8470ff; font-weight: bold;">#e1e4e5</span>;
     <span style="color: #00ffff;">color:</span><span style="color: #8470ff; font-weight: bold;">#404040</span>;
@@ -751,22 +680,23 @@ pre<span style="color: #7fffd4;">.src</span>{
     <span style="color: #00ffff;">margin-bottom:</span>24px;
     <span style="color: #00ffff;">padding:</span>12px;
 }
-</code></pre>
+</pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge94094f" class="outline-2">
-<h2 id="orge94094f"><span class="section-number-2">5</span> Tables</h2>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Tables</h2>
 <div class="outline-text-2" id="text-5">
 </div>
 
-<div id="outline-container-orgd5f8793" class="outline-3">
-<h3 id="orgd5f8793"><span class="section-number-3">5.1</span> Basic example</h3>
+<div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Basic example</h3>
 <div class="outline-text-3" id="text-5-1">
 <div class="org-src-container">
-<pre><code class="src src-css">table{
+
+<pre class="src src-css">table{
     <span style="color: #00ffff;">border-collapse:</span>collapse;
     border-spacing:0;
     empty-cells:show;
@@ -791,67 +721,72 @@ table thead th{
     <span style="color: #00ffff;">border-top:</span>3px solid <span style="color: #8470ff; font-weight: bold;">#e1e4e5</span>;
     <span style="color: #00ffff;">border-bottom:</span>1px solid <span style="color: #8470ff; font-weight: bold;">#e1e4e5</span>;
 }
-</code></pre>
+</pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgf510ab3" class="outline-3">
-<h3 id="orgf510ab3"><span class="section-number-3">5.2</span> Optional table caption</h3>
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> Optional table caption</h3>
 <div class="outline-text-3" id="text-5-2">
 <div class="org-src-container">
-<pre><code class="src src-css">table caption{
+
+<pre class="src src-css">table caption{
     <span style="color: #00ffff;">color:</span><span style="color: #8470ff; font-weight: bold;">#000</span>;
     <span style="color: #00ffff;">font:</span>italic 85%/1 arial,sans-serif;
     <span style="color: #00ffff;">padding:</span>1em 0;
 }
-</code></pre>
+</pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge41c32a" class="outline-3">
-<h3 id="orge41c32a"><span class="section-number-3">5.3</span> Striped rows</h3>
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> Striped rows</h3>
 <div class="outline-text-3" id="text-5-3">
 <div class="org-src-container">
-<pre><code class="src src-css">table tr:nth-child(2n-1) td{
+
+<pre class="src src-css">table tr:nth-child(2n-1) td{
     <span style="color: #00ffff;">background-color:</span><span style="color: #8470ff; font-weight: bold;">#f3f6f6</span>;
 }
 
 table tr:nth-child(2n) td{
     <span style="color: #00ffff;">background-color:</span>white;
 }
-</code></pre>
+</pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge0bd642" class="outline-2">
-<h2 id="orge0bd642"><span class="section-number-2">6</span> Images</h2>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Images</h2>
 <div class="outline-text-2" id="text-6">
 </div>
 
-<div id="outline-container-orga06f1a8" class="outline-3">
-<h3 id="orga06f1a8"><span class="section-number-3">6.1</span> Optional image caption</h3>
+<div id="outline-container-sec-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Optional image caption</h3>
 <div class="outline-text-3" id="text-6-1">
 <div class="org-src-container">
-<pre><code class="src src-css"><span style="color: #7fffd4;">.figure</span> p{
+
+<pre class="src src-css"><span style="color: #7fffd4;">.figure</span> p{
     <span style="color: #00ffff;">color:</span><span style="color: #8470ff; font-weight: bold;">#000</span>;
     <span style="color: #00ffff;">font:</span>italic 85%/1 arial,sans-serif;
     <span style="color: #00ffff;">padding:</span>1em 0;
 }
-</code></pre>
+</pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org01e6fe5" class="outline-2">
-<h2 id="org01e6fe5"><span class="section-number-2">7</span> Helper classes</h2>
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Helper classes</h2>
 <div class="outline-text-2" id="text-7">
+
 <div class="org-src-container">
-<pre><code class="src src-css"><span style="color: #7fffd4;">.rotate-90</span>{
+
+<pre class="src src-css"><span style="color: #7fffd4;">.rotate-90</span>{
     -webkit-transform:rotate(90deg);
     -moz-transform:rotate(90deg);
     -ms-transform:rotate(90deg);
@@ -866,20 +801,22 @@ table tr:nth-child(2n) td{
     -o-transform:rotate(270deg);
     transform:rotate(270deg);
 }
-</code></pre>
+</pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org62ca27c" class="outline-2">
-<h2 id="org62ca27c"><span class="section-number-2">8</span> Responsive utilities</h2>
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Responsive utilities</h2>
 <div class="outline-text-2" id="text-8">
+
 <p>
 Responsive for sidebar:
 </p>
 
 <div class="org-src-container">
-<pre><code class="src src-css"><span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#toggle-sidebar</span>,
+
+<pre class="src src-css"><span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#toggle-sidebar</span>,
 <span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#table-of-contents</span> <span style="color: #7fffd4;">.close-sidebar</span> {
     <span style="color: #00ffff;">display:</span> none;
 }
@@ -925,16 +862,18 @@ Responsive for sidebar:
        <span style="color: #00ffff;">padding:</span> 10px;
     }
 }
-</code></pre>
+</pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgdb56f81" class="outline-2">
-<h2 id="orgdb56f81"><span class="section-number-2">9</span> CSS</h2>
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> CSS</h2>
 <div class="outline-text-2" id="text-9">
+
 <div class="org-src-container">
-<pre><code class="src src-css">*{
+
+<pre class="src src-css">*{
     -webkit-box-sizing:border-box;
     -moz-box-sizing:border-box;
     box-sizing:border-box;
@@ -942,11 +881,12 @@ Responsive for sidebar:
 
 figcaption,figure,footer,header,hgroup,nav{
     <span style="color: #00ffff;">display:</span>block}
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css">ins{
+
+<pre class="src src-css">ins{
     <span style="color: #00ffff;">background:</span><span style="color: #8470ff; font-weight: bold;">#ff9</span>;
     <span style="color: #00ffff;">color:</span><span style="color: #8470ff; font-weight: bold;">#000</span>;
     <span style="color: #00ffff;">text-decoration:</span>none}
@@ -956,11 +896,12 @@ mark{
     <span style="color: #00ffff;">color:</span><span style="color: #8470ff; font-weight: bold;">#000</span>;
     <span style="color: #00ffff;">font-style:</span>italic;
     <span style="color: #00ffff;">font-weight:</span>bold}
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css">small{
+
+<pre class="src src-css">small{
     <span style="color: #00ffff;">font-size:</span>85%}
 
 sub,sup{
@@ -974,11 +915,12 @@ sup{
 
 sub{
     bottom:-0.25em}
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css">img{
+
+<pre class="src src-css">img{
     -ms-interpolation-mode:bicubic;
     <span style="color: #00ffff;">vertical-align:</span>middle;
     <span style="color: #00ffff;">max-width:</span>100%}
@@ -997,11 +939,12 @@ legend{
     <span style="color: #00ffff;">margin-left:</span>-7px;
     <span style="color: #00ffff;">padding:</span>0;
     <span style="color: #00ffff;">white-space:</span>normal}
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css"><span style="color: #7fffd4;">.fa:before</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.admonition-title:before</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> h1 <span style="color: #7fffd4;">.headerlink:before</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> h2 <span style="color: #7fffd4;">.headerlink:before</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> h3 <span style="color: #7fffd4;">.headerlink:before</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> h4 <span style="color: #7fffd4;">.headerlink:before</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> h5 <span style="color: #7fffd4;">.headerlink:before</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> h6 <span style="color: #7fffd4;">.headerlink:before</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> dl dt <span style="color: #7fffd4;">.headerlink:before</span>,<span style="color: #7fffd4;">.icon:before</span>,<span style="color: #7fffd4;">.wy-dropdown</span> <span style="color: #7fffd4;">.caret:before</span>,<span style="color: #7fffd4;">.wy-inline-validate.wy-inline-validate-success</span> <span style="color: #7fffd4;">.wy-input-context:before</span>,<span style="color: #7fffd4;">.wy-inline-validate.wy-inline-validate-danger</span> <span style="color: #7fffd4;">.wy-input-context:before</span>,<span style="color: #7fffd4;">.wy-inline-validate.wy-inline-validate-warning</span> <span style="color: #7fffd4;">.wy-input-context:before</span>,<span style="color: #7fffd4;">.wy-inline-validate.wy-inline-validate-info</span> <span style="color: #7fffd4;">.wy-input-context:before</span>,<span style="color: #7fffd4;">.wy-alert</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.note</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.attention</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.caution</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.danger</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.error</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.hint</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.important</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.tip</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.warning</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.seealso</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.admonitiontodo</span>,<span style="color: #7fffd4;">.btn</span>,input[type=<span style="color: #ffc1c1;">"text"</span>],input[type=<span style="color: #ffc1c1;">"password"</span>],input[type=<span style="color: #ffc1c1;">"email"</span>],input[type=<span style="color: #ffc1c1;">"url"</span>],input[type=<span style="color: #ffc1c1;">"date"</span>],input[type=<span style="color: #ffc1c1;">"month"</span>],input[type=<span style="color: #ffc1c1;">"time"</span>],input[type=<span style="color: #ffc1c1;">"datetime"</span>],input[type=<span style="color: #ffc1c1;">"datetime-local"</span>],input[type=<span style="color: #ffc1c1;">"week"</span>],input[type=<span style="color: #ffc1c1;">"number"</span>],input[type=<span style="color: #ffc1c1;">"search"</span>],input[type=<span style="color: #ffc1c1;">"tel"</span>],input[type=<span style="color: #ffc1c1;">"color"</span>],select,textarea,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#table-of-contents</span> li<span style="color: #7fffd4;">.on</span> a,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#table-of-contents</span> li<span style="color: #7fffd4;">.current</span>&gt;a,<span style="color: #7fffd4;">.wy-side-nav-search</span>&gt;a,<span style="color: #7fffd4;">.wy-side-nav-search</span> <span style="color: #7fffd4;">.wy-dropdown</span>&gt;a,<span style="color: #7fffd4;">.wy-nav-top</span> a{
+
+<pre class="src src-css"><span style="color: #7fffd4;">.fa:before</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.admonition-title:before</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> h1 <span style="color: #7fffd4;">.headerlink:before</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> h2 <span style="color: #7fffd4;">.headerlink:before</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> h3 <span style="color: #7fffd4;">.headerlink:before</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> h4 <span style="color: #7fffd4;">.headerlink:before</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> h5 <span style="color: #7fffd4;">.headerlink:before</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> h6 <span style="color: #7fffd4;">.headerlink:before</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> dl dt <span style="color: #7fffd4;">.headerlink:before</span>,<span style="color: #7fffd4;">.icon:before</span>,<span style="color: #7fffd4;">.wy-dropdown</span> <span style="color: #7fffd4;">.caret:before</span>,<span style="color: #7fffd4;">.wy-inline-validate.wy-inline-validate-success</span> <span style="color: #7fffd4;">.wy-input-context:before</span>,<span style="color: #7fffd4;">.wy-inline-validate.wy-inline-validate-danger</span> <span style="color: #7fffd4;">.wy-input-context:before</span>,<span style="color: #7fffd4;">.wy-inline-validate.wy-inline-validate-warning</span> <span style="color: #7fffd4;">.wy-input-context:before</span>,<span style="color: #7fffd4;">.wy-inline-validate.wy-inline-validate-info</span> <span style="color: #7fffd4;">.wy-input-context:before</span>,<span style="color: #7fffd4;">.wy-alert</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.note</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.attention</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.caution</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.danger</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.error</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.hint</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.important</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.tip</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.warning</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.seealso</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.admonitiontodo</span>,<span style="color: #7fffd4;">.btn</span>,input[type=<span style="color: #ffc1c1;">"text"</span>],input[type=<span style="color: #ffc1c1;">"password"</span>],input[type=<span style="color: #ffc1c1;">"email"</span>],input[type=<span style="color: #ffc1c1;">"url"</span>],input[type=<span style="color: #ffc1c1;">"date"</span>],input[type=<span style="color: #ffc1c1;">"month"</span>],input[type=<span style="color: #ffc1c1;">"time"</span>],input[type=<span style="color: #ffc1c1;">"datetime"</span>],input[type=<span style="color: #ffc1c1;">"datetime-local"</span>],input[type=<span style="color: #ffc1c1;">"week"</span>],input[type=<span style="color: #ffc1c1;">"number"</span>],input[type=<span style="color: #ffc1c1;">"search"</span>],input[type=<span style="color: #ffc1c1;">"tel"</span>],input[type=<span style="color: #ffc1c1;">"color"</span>],select,textarea,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#table-of-contents</span> li<span style="color: #7fffd4;">.on</span> a,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#table-of-contents</span> li<span style="color: #7fffd4;">.current</span>&gt;a,<span style="color: #7fffd4;">.wy-side-nav-search</span>&gt;a,<span style="color: #7fffd4;">.wy-side-nav-search</span> <span style="color: #7fffd4;">.wy-dropdown</span>&gt;a,<span style="color: #7fffd4;">.wy-nav-top</span> a{
     -webkit-font-smoothing:antialiased}
 
 <span style="color: #ff7f24; font-style: italic;">/*!</span>
@@ -1120,11 +1063,12 @@ a <span style="color: #7fffd4;">.fa</span>,a <span style="color: #00fa9a; font-s
 <span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.admonition-title.error</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.admonition-title.danger</span>{
     <span style="color: #00ffff;">line-height:</span> 1;
     <span style="color: #00ffff;">background:</span><span style="color: #8470ff; font-weight: bold;">#f29f97</span>}
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css">legend{
+
+<pre class="src src-css">legend{
     <span style="color: #00ffff;">display:</span>block;
     <span style="color: #00ffff;">width:</span>100%;
     <span style="color: #00ffff;">border:</span>0;
@@ -1139,11 +1083,12 @@ label{
     <span style="color: #00ffff;">margin:</span>0 0 0.3125em 0;
     <span style="color: #00ffff;">color:</span><span style="color: #8470ff; font-weight: bold;">#333</span>;
     <span style="color: #00ffff;">font-size:</span>90%}
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css">a{
+
+<pre class="src src-css">a{
     <span style="color: #00ffff;">color:</span><span style="color: #8470ff; font-weight: bold;">#2980B9</span>;
     <span style="color: #00ffff;">text-decoration:</span>none;
     <span style="color: #00ffff;">cursor:</span>pointer}
@@ -1158,11 +1103,12 @@ a<span style="color: #7fffd4;">:hover</span>{
 
 a<span style="color: #7fffd4;">:visited</span>{
     <span style="color: #00ffff;">color:</span><span style="color: #8470ff; font-weight: bold;">#9B59B6</span>}
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css"><span style="color: #7fffd4;">.left</span>{
+
+<pre class="src src-css"><span style="color: #7fffd4;">.left</span>{
     <span style="color: #00ffff;">text-align:</span>left}
 
 <span style="color: #7fffd4;">.center</span>{
@@ -1170,22 +1116,24 @@ a<span style="color: #7fffd4;">:visited</span>{
 
 <span style="color: #7fffd4;">.right</span>{
     <span style="color: #00ffff;">text-align:</span>right}
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css">hr{
+
+<pre class="src src-css">hr{
     <span style="color: #00ffff;">display:</span>block;
     <span style="color: #00ffff;">height:</span>1px;
     <span style="color: #00ffff;">border:</span>0;
     <span style="color: #00ffff;">border-top:</span>1px solid <span style="color: #8470ff; font-weight: bold;">#e1e4e5</span>;
     <span style="color: #00ffff;">margin:</span>24px 0;
     <span style="color: #00ffff;">padding:</span>0}
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css"><span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#table-of-contents</span> li{
+
+<pre class="src src-css"><span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#table-of-contents</span> li{
     <span style="color: #00ffff;">list-style:</span>none;
     <span style="color: #00ffff;">margin-left:</span> 0px;
 }
@@ -1301,11 +1249,12 @@ a<span style="color: #7fffd4;">:visited</span>{
     <span style="color: #00ffff;">color:</span><span style="color: #8470ff; font-weight: bold;">#fcfcfc</span>;
     <span style="color: #00ffff;">font-size:</span> 100%;
     <span style="color: #00ffff;">margin-bottom:</span>0.809em}
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css">ul<span style="color: #7fffd4;">.nav</span> li ul li {
+
+<pre class="src src-css">ul<span style="color: #7fffd4;">.nav</span> li ul li {
     <span style="color: #00ffff;">display:</span> none;
 }
 
@@ -1374,20 +1323,22 @@ ul<span style="color: #7fffd4;">.nav</span> li<span style="color: #7fffd4;">.act
 ul<span style="color: #7fffd4;">.nav</span> &gt; li<span style="color: #7fffd4;">.active</span> &gt; a {
     <span style="color: #00ffff;">color:</span> black <span style="color: #00ffff;">!important</span>;
 }
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css">footer{
+
+<pre class="src src-css">footer{
     <span style="color: #00ffff;">color:</span><span style="color: #8470ff; font-weight: bold;">#999</span>}
 
 footer p{
     <span style="color: #00ffff;">margin-bottom:</span>12px}
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css"><span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#copyright</span>, <span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#postamble</span>{
+
+<pre class="src src-css"><span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#copyright</span>, <span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#postamble</span>{
     <span style="color: #00ffff;">position:</span>fixed;
     bottom:0;
     <span style="color: #00ffff;">left:</span>0;
@@ -1429,11 +1380,12 @@ footer p{
     <span style="color: #00ffff;">cursor:</span>pointer;
     <span style="color: #00ffff;">color:</span><span style="color: #8470ff; font-weight: bold;">#27AE60</span>;
     *zoom:1}
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css"><span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> img{
+
+<pre class="src src-css"><span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> img{
     <span style="color: #00ffff;">max-width:</span>100%;
 }
 
@@ -1510,11 +1462,12 @@ footer p{
 <span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.footnote-reference</span>,<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">#content</span> <span style="color: #7fffd4;">.citation-reference</span>{
     <span style="color: #00ffff;">vertical-align:</span>super;
     <span style="color: #00ffff;">font-size:</span>90%}
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css">span<span style="color: #7fffd4;">[id*='MathJax-Span']</span>{
+
+<pre class="src src-css">span<span style="color: #7fffd4;">[id*='MathJax-Span']</span>{
     <span style="color: #00ffff;">color:</span><span style="color: #8470ff; font-weight: bold;">#404040</span>}
 
 <span style="color: #7fffd4;">.math</span>{
@@ -1554,11 +1507,12 @@ h2<span style="color: #7fffd4;">.footnotes</span>{
     <span style="color: #00ffff;">line-height:</span> 1.25em;
     <span style="color: #fa8072;">/* </span><span style="color: #ff7f24; font-style: italic;">display: inline; </span><span style="color: #fa8072;">*/</span>
 }
-</code></pre>
+</pre>
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-css"><span style="color: #7fffd4;">.todo</span>{
+
+<pre class="src src-css"><span style="color: #7fffd4;">.todo</span>{
     <span style="color: #00ffff;">background-color:</span> <span style="color: #8470ff; font-weight: bold;">#f29f97</span>;
     <span style="color: #00ffff;">padding:</span> 0px 4px;
     <span style="color: #00ffff;">color:</span> <span style="color: #8470ff; font-weight: bold;">#fff</span>;
@@ -1600,7 +1554,7 @@ h2<span style="color: #7fffd4;">.footnotes</span>{
     <span style="color: #00ffff;">font-size:</span> 90%;
     <span style="color: #00ffff;">color:</span> navy;
 }
-</code></pre>
+</pre>
 </div>
 
 <p>
@@ -1610,7 +1564,8 @@ for nice yellow or orange boxes.
 </p>
 
 <div class="org-src-container">
-<pre><code class="src src-css"><span style="color: #7fffd4;">.inlinetask</span> {
+
+<pre class="src src-css"><span style="color: #7fffd4;">.inlinetask</span> {
     <span style="color: #00ffff;">background:</span> <span style="color: #8470ff; font-weight: bold;">#FFF9E3</span>;  <span style="color: #fa8072;">/* </span><span style="color: #ff7f24; font-style: italic;">url(dialog-todo.png) no-repeat 10px 8px; </span><span style="color: #fa8072;">*/</span>
     <span style="color: #00ffff;">border:</span> 3px solid <span style="color: #8470ff; font-weight: bold;">#FFEB8E</span>;
     <span style="color: #fa8072;">/* </span><span style="color: #ff7f24; font-style: italic;">border-right-style: none; </span><span style="color: #fa8072;">*/</span>
@@ -1619,16 +1574,18 @@ for nice yellow or orange boxes.
     <span style="color: #00ffff;">padding:</span> 9px 12px;
     <span style="color: #00ffff;">margin-bottom:</span> 24px;
     <span style="color: #00ffff;">font-family:</span><span style="color: #ffc1c1;">"Roboto Slab"</span>,<span style="color: #ffc1c1;">"ff-tisa-web-pro"</span>,<span style="color: #ffc1c1;">"Georgia"</span>,Arial,sans-serif}
-</code></pre>
+</pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org833e0ff" class="outline-2">
-<h2 id="org833e0ff"><span class="section-number-2">10</span> Htmlize</h2>
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> Htmlize</h2>
 <div class="outline-text-2" id="text-10">
+
 <div class="org-src-container">
-<pre><code class="src src-css"><span style="color: #7fffd4;">.org-bold</span> { <span style="color: #fa8072;">/* </span><span style="color: #ff7f24; font-style: italic;">bold </span><span style="color: #fa8072;">*/</span> <span style="color: #00ffff;">font-weight:</span> bold; }
+
+<pre class="src src-css"><span style="color: #7fffd4;">.org-bold</span> { <span style="color: #fa8072;">/* </span><span style="color: #ff7f24; font-style: italic;">bold </span><span style="color: #fa8072;">*/</span> <span style="color: #00ffff;">font-weight:</span> bold; }
 <span style="color: #7fffd4;">.org-bold-italic</span> { <span style="color: #fa8072;">/* </span><span style="color: #ff7f24; font-style: italic;">bold-italic </span><span style="color: #fa8072;">*/</span> <span style="color: #00ffff;">font-weight:</span> bold; <span style="color: #00ffff;">font-style:</span> italic; }
 <span style="color: #7fffd4;">.org-buffer-menu-buffer</span> { <span style="color: #fa8072;">/* </span><span style="color: #ff7f24; font-style: italic;">buffer-menu-buffer </span><span style="color: #fa8072;">*/</span> <span style="color: #00ffff;">font-weight:</span> bold; }
 <span style="color: #7fffd4;">.org-builtin</span> { <span style="color: #fa8072;">/* </span><span style="color: #ff7f24; font-style: italic;">font-lock-builtin-face </span><span style="color: #fa8072;">*/</span> <span style="color: #00ffff;">color:</span> <span style="color: #8470ff; font-weight: bold;">#7a378b</span>; }
@@ -1773,16 +1730,18 @@ for nice yellow or orange boxes.
 <span style="color: #7fffd4;">.org-widget-field</span> { <span style="color: #fa8072;">/* </span><span style="color: #ff7f24; font-style: italic;">widget-field </span><span style="color: #fa8072;">*/</span> <span style="color: #00ffff;">background-color:</span> <span style="color: #8470ff; font-weight: bold;">#d9d9d9</span>; }
 <span style="color: #7fffd4;">.org-widget-inactive</span> { <span style="color: #fa8072;">/* </span><span style="color: #ff7f24; font-style: italic;">widget-inactive </span><span style="color: #fa8072;">*/</span> <span style="color: #00ffff;">color:</span> <span style="color: #8470ff; font-weight: bold;">#7f7f7f</span>; }
 <span style="color: #7fffd4;">.org-widget-single-line-field</span> { <span style="color: #fa8072;">/* </span><span style="color: #ff7f24; font-style: italic;">widget-single-line-field </span><span style="color: #fa8072;">*/</span> <span style="color: #00ffff;">background-color:</span> <span style="color: #8470ff; font-weight: bold;">#d9d9d9</span>; }
-</code></pre>
+</pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org0def225" class="outline-2">
-<h2 id="org0def225"><span class="section-number-2">11</span> JS</h2>
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> JS</h2>
 <div class="outline-text-2" id="text-11">
+
 <div class="org-src-container">
-<pre><code class="src src-js">$(<span style="color: #00ffff;">function</span>() {
+
+<pre class="src src-js">$(<span style="color: #00ffff;">function</span>() {
     $(<span style="color: #ffc1c1;">'.note'</span>).before(<span style="color: #ffc1c1;">"&lt;p class='admonition-title note'&gt;Note&lt;/p&gt;"</span>);
     $(<span style="color: #ffc1c1;">'.seealso'</span>).before(<span style="color: #ffc1c1;">"&lt;p class='admonition-title seealso'&gt;See also&lt;/p&gt;"</span>);
     $(<span style="color: #ffc1c1;">'.warning'</span>).before(<span style="color: #ffc1c1;">"&lt;p class='admonition-title warning'&gt;Warning&lt;/p&gt;"</span>);
@@ -1867,7 +1826,7 @@ window.SphinxRtdTheme = (<span style="color: #00ffff;">function</span> (<span st
         StickyNav : stickyNav
     };
 }($));
-</code></pre>
+</pre>
 </div>
 </div>
 </div>
