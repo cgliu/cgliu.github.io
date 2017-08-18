@@ -309,34 +309,34 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org5ed46ed">1. Installation Emacs from source</a></li>
-<li><a href="#orgd1cf13d">2. Automatically install missing package</a></li>
-<li><a href="#org0cbc882">3. helm mode settings</a></li>
-<li><a href="#org160adb4">4. Programming in Emacs</a></li>
-<li><a href="#org1a6c74d">5. Useful commands</a></li>
-<li><a href="#org1e24f83">6. rtags c++ indexer</a></li>
-<li><a href="#orgafdfee1">7. Terminal in Emacs</a></li>
-<li><a href="#org838e6c2">8. terminal color theme settings</a></li>
-<li><a href="#org299f44b">9. set fill-paragraph width</a></li>
-<li><a href="#orgd0c00c5">10. MobileOrg setting</a></li>
-<li><a href="#orgaf4fb47">11. Common key bindings</a></li>
-<li><a href="#orgb9fc77e">12. color theme</a></li>
-<li><a href="#org21c6f68">13. Column View in org-mode</a></li>
-<li><a href="#org52d97c6">14. Search in Emacs</a></li>
-<li><a href="#org74c2713">15. How to get rid of ^M</a></li>
-<li><a href="#org8507253">16. org-mode</a></li>
-<li><a href="#orgc00081a">17. Emacs org clocking</a></li>
-<li><a href="#orgdfd9b40">18. Spreadsheet</a></li>
-<li><a href="#org0164a50">19. UI settings</a></li>
-<li><a href="#org408cfc1">20. Switch between input method</a></li>
-<li><a href="#org963ccee">21. Make presentation / slides</a></li>
-<li><a href="#orgfaeadbf">22. How to create a beautiful homepage with Emacs org-mode and Bootstrap</a></li>
+<li><a href="#org515d1dd">1. Installation Emacs from source</a></li>
+<li><a href="#orgf7e5180">2. Automatically install missing package</a></li>
+<li><a href="#orgbe1bf38">3. helm mode settings</a></li>
+<li><a href="#orga04651d">4. Programming in Emacs</a></li>
+<li><a href="#org4728be8">5. Useful commands</a></li>
+<li><a href="#org9d98ed1">6. rtags c++ indexer</a></li>
+<li><a href="#org0f0fd20">7. Terminal in Emacs</a></li>
+<li><a href="#orgfa086da">8. terminal color theme settings</a></li>
+<li><a href="#orgcc7eec3">9. set fill-paragraph width</a></li>
+<li><a href="#org5f02723">10. MobileOrg setting</a></li>
+<li><a href="#org024b393">11. Common key bindings</a></li>
+<li><a href="#org3b2ecf7">12. color theme</a></li>
+<li><a href="#org7402fe5">13. Column View in org-mode</a></li>
+<li><a href="#orga09e5b7">14. Search in Emacs</a></li>
+<li><a href="#org93d2438">15. How to get rid of ^M</a></li>
+<li><a href="#org15e7d2b">16. org-mode</a></li>
+<li><a href="#orge56ab1b">17. Emacs org clocking</a></li>
+<li><a href="#org4163f01">18. Spreadsheet</a></li>
+<li><a href="#org7f70dff">19. UI settings</a></li>
+<li><a href="#org53504c3">20. Switch between input method</a></li>
+<li><a href="#orga48446d">21. Make presentation / slides</a></li>
+<li><a href="#org288de87">22. How to create a beautiful homepage with Emacs org-mode and Bootstrap</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org5ed46ed" class="outline-2">
-<h2 id="org5ed46ed"><span class="section-number-2">1</span> Installation Emacs from source</h2>
+<div id="outline-container-org515d1dd" class="outline-2">
+<h2 id="org515d1dd"><span class="section-number-2">1</span> Installation Emacs from source</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li>install all dependencies</li>
@@ -359,26 +359,26 @@ sudo make install
 </div>
 </div>
 
-<div id="outline-container-orgd1cf13d" class="outline-2">
-<h2 id="orgd1cf13d"><span class="section-number-2">2</span> Automatically install missing package</h2>
+<div id="outline-container-orgf7e5180" class="outline-2">
+<h2 id="orgf7e5180"><span class="section-number-2">2</span> Automatically install missing package</h2>
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp">(package-initialize)
-(<span style="color: #fff59d;">require</span> '<span style="color: #8bc34a;">package</span>)
-(add-to-list 'package-archives '(<span style="color: #9ccc65;">"melpa"</span> . <span style="color: #9ccc65;">"http://melpa.org/packages/"</span>))
-<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">Install use-package</span>
-(<span style="color: #fff59d;">setq</span> package-list '(<span style="color: #fff59d;">use-package</span>))
-(<span style="color: #fff59d;">dolist</span> (package package-list)
-(<span style="color: #fff59d;">unless</span> (package-installed-p package)
+(<span style="color: #00ffff;">require</span> '<span style="color: #8470ff; font-weight: bold;">package</span>)
+(add-to-list 'package-archives '(<span style="color: #ffc1c1;">"melpa"</span> . <span style="color: #ffc1c1;">"http://melpa.org/packages/"</span>))
+<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">Install use-package</span>
+(<span style="color: #00ffff;">setq</span> package-list '(<span style="color: #00ffff;">use-package</span>))
+(<span style="color: #00ffff;">dolist</span> (package package-list)
+(<span style="color: #00ffff;">unless</span> (package-installed-p package)
  (package-install package)))
-<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">Let use-package to ensure a package is installed.</span>
-(<span style="color: #fff59d;">use-package</span> <span style="color: #8bc34a;">THE-PACKAGE-YOU-WANT-TO-INSTALL</span> <span style="color: #ff8A65;">:ensure</span> t)
+<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">Let use-package to ensure a package is installed.</span>
+(<span style="color: #00ffff;">use-package</span> <span style="color: #8470ff; font-weight: bold;">THE-PACKAGE-YOU-WANT-TO-INSTALL</span> <span style="color: #b0c4de;">:ensure</span> t)
 </code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org0cbc882" class="outline-2">
-<h2 id="org0cbc882"><span class="section-number-2">3</span> helm mode settings</h2>
+<div id="outline-container-orgbe1bf38" class="outline-2">
+<h2 id="orgbe1bf38"><span class="section-number-2">3</span> helm mode settings</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 helm is a must-have package, it can Emacs run like a magic.
@@ -386,78 +386,78 @@ helm is a must-have package, it can Emacs run like a magic.
 My settings:
 </p>
 <div class="org-src-container">
-<pre><code class="src src-emacs-lisp">(<span style="color: #fff59d;">use-package</span> <span style="color: #8bc34a;">helm</span> <span style="color: #ff8A65;">:ensure</span> t)
-(<span style="color: #fff59d;">use-package</span> <span style="color: #8bc34a;">helm-swoop</span> <span style="color: #ff8A65;">:ensure</span> t)
-(<span style="color: #fff59d;">use-package</span> <span style="color: #8bc34a;">helm-projectile</span> <span style="color: #ff8A65;">:ensure</span> t)
+<pre><code class="src src-emacs-lisp">(<span style="color: #00ffff;">use-package</span> <span style="color: #8470ff; font-weight: bold;">helm</span> <span style="color: #b0c4de;">:ensure</span> t)
+(<span style="color: #00ffff;">use-package</span> <span style="color: #8470ff; font-weight: bold;">helm-swoop</span> <span style="color: #b0c4de;">:ensure</span> t)
+(<span style="color: #00ffff;">use-package</span> <span style="color: #8470ff; font-weight: bold;">helm-projectile</span> <span style="color: #b0c4de;">:ensure</span> t)
 
-(<span style="color: #fff59d;">require</span> '<span style="color: #8bc34a;">helm-config</span>)
+(<span style="color: #00ffff;">require</span> '<span style="color: #8470ff; font-weight: bold;">helm-config</span>)
 (helm-mode 1)
 
-(define-key helm-map (kbd <span style="color: #9ccc65;">"&lt;tab&gt;"</span>) 'helm-execute-persistent-action) <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">rebind tab to run persistent action</span>
-(define-key helm-map (kbd <span style="color: #9ccc65;">"C-i"</span>) 'helm-execute-persistent-action) <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">make TAB work in terminal</span>
-(define-key helm-map (kbd <span style="color: #9ccc65;">"C-z"</span>)  'helm-select-action) <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">list actions using C-z</span>
+(define-key helm-map (kbd <span style="color: #ffc1c1;">"&lt;tab&gt;"</span>) 'helm-execute-persistent-action) <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">rebind tab to run persistent action</span>
+(define-key helm-map (kbd <span style="color: #ffc1c1;">"C-i"</span>) 'helm-execute-persistent-action) <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">make TAB work in terminal</span>
+(define-key helm-map (kbd <span style="color: #ffc1c1;">"C-z"</span>)  'helm-select-action) <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">list actions using C-z</span>
 
 
-(<span style="color: #fff59d;">setq</span> helm-buffers-fuzzy-matching t
+(<span style="color: #00ffff;">setq</span> helm-buffers-fuzzy-matching t
 helm-recentf-fuzzy-match    t)
 
-<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">=== projectile ===</span>
+<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">=== projectile ===</span>
 (projectile-global-mode)
-(<span style="color: #fff59d;">setq</span> projectile-completion-system 'helm)
+(<span style="color: #00ffff;">setq</span> projectile-completion-system 'helm)
 (helm-projectile-on)
-(<span style="color: #fff59d;">setq</span> projectile-switch-project-action 'helm-projectile)
-<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">C-c p p switch projects</span>
-<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">C-c p f find files in a project</span>
-<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">C-c p F find files in projects</span>
+(<span style="color: #00ffff;">setq</span> projectile-switch-project-action 'helm-projectile)
+<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">C-c p p switch projects</span>
+<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">C-c p f find files in a project</span>
+<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">C-c p F find files in projects</span>
 
-<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">helm semantic</span>
-<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">(semantic-mode 1)</span>
-<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">(setq helm-semantic-fuzzy-match t</span>
-<span style="color: #b0bec5;">;;       </span><span style="color: #b0bec5;">helm-imenu-fuzzy-match    t)</span>
+<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">helm semantic</span>
+<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">(semantic-mode 1)</span>
+<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">(setq helm-semantic-fuzzy-match t</span>
+<span style="color: #fa8072;">;;       </span><span style="color: #ff7f24; font-style: italic;">helm-imenu-fuzzy-match    t)</span>
 
-<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">hem-man-woman</span>
+<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">hem-man-woman</span>
 (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
-(<span style="color: #fff59d;">setq</span> helm-locate-fuzzy-match t)
+(<span style="color: #00ffff;">setq</span> helm-locate-fuzzy-match t)
 </code></pre>
 </div>
 <p>
 My key bindings:
 </p>
 <div class="org-src-container">
-<pre><code class="src src-emacs-lisp"><span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">keybinding for helm</span>
-(global-set-key (kbd <span style="color: #9ccc65;">"C-x i"</span>) `helm-complete-file-name-at-point)
-(global-set-key (kbd <span style="color: #9ccc65;">"C-x b"</span>) `helm-mini)
-(global-set-key (kbd <span style="color: #9ccc65;">"C-x C-b"</span>) `helm-buffers-list)
-(global-set-key (kbd <span style="color: #9ccc65;">"C-x C-f"</span>) `helm-find-files)
-(global-set-key (kbd <span style="color: #9ccc65;">"C-x C-r"</span>) `helm-recentf)
-(global-set-key (kbd <span style="color: #9ccc65;">"C-x r b"</span>) `helm-bookmarks)
-(global-set-key (kbd <span style="color: #9ccc65;">"M-x"</span>) `helm-M-x)
-(global-set-key (kbd <span style="color: #9ccc65;">"M-y"</span>) `helm-show-kill-ring)
+<pre><code class="src src-emacs-lisp"><span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">keybinding for helm</span>
+(global-set-key (kbd <span style="color: #ffc1c1;">"C-x i"</span>) `helm-complete-file-name-at-point)
+(global-set-key (kbd <span style="color: #ffc1c1;">"C-x b"</span>) `helm-mini)
+(global-set-key (kbd <span style="color: #ffc1c1;">"C-x C-b"</span>) `helm-buffers-list)
+(global-set-key (kbd <span style="color: #ffc1c1;">"C-x C-f"</span>) `helm-find-files)
+(global-set-key (kbd <span style="color: #ffc1c1;">"C-x C-r"</span>) `helm-recentf)
+(global-set-key (kbd <span style="color: #ffc1c1;">"C-x r b"</span>) `helm-bookmarks)
+(global-set-key (kbd <span style="color: #ffc1c1;">"M-x"</span>) `helm-M-x)
+(global-set-key (kbd <span style="color: #ffc1c1;">"M-y"</span>) `helm-show-kill-ring)
 
-(global-set-key (kbd <span style="color: #9ccc65;">"C-c i"</span>) 'helm-semantic-or-imenu)
+(global-set-key (kbd <span style="color: #ffc1c1;">"C-c i"</span>) 'helm-semantic-or-imenu)
 
 
-(global-set-key (kbd <span style="color: #9ccc65;">"C-x c o"</span>) 'helm-occur)
-(global-set-key (kbd <span style="color: #9ccc65;">"C-h SPC"</span>) 'helm-all-mark-rings)
-(global-set-key (kbd <span style="color: #9ccc65;">"C-c C-g"</span>) 'helm-google-suggest)
-(global-set-key (kbd <span style="color: #9ccc65;">"C-p"</span>) 'helm-projectile-find-file)
+(global-set-key (kbd <span style="color: #ffc1c1;">"C-x c o"</span>) 'helm-occur)
+(global-set-key (kbd <span style="color: #ffc1c1;">"C-h SPC"</span>) 'helm-all-mark-rings)
+(global-set-key (kbd <span style="color: #ffc1c1;">"C-c C-g"</span>) 'helm-google-suggest)
+(global-set-key (kbd <span style="color: #ffc1c1;">"C-p"</span>) 'helm-projectile-find-file)
 </code></pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org160adb4" class="outline-2">
-<h2 id="org160adb4"><span class="section-number-2">4</span> Programming in Emacs</h2>
+<div id="outline-container-orga04651d" class="outline-2">
+<h2 id="orga04651d"><span class="section-number-2">4</span> Programming in Emacs</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-org0c08788" class="outline-3">
-<h3 id="org0c08788"><span class="section-number-3">4.1</span> Find things at fingertip</h3>
+<div id="outline-container-org7553f4a" class="outline-3">
+<h3 id="org7553f4a"><span class="section-number-3">4.1</span> Find things at fingertip</h3>
 <div class="outline-text-3" id="text-4-1">
 <ul class="org-ul">
 <li>Find files in a project
 helm projectile</li>
 <li>Indexing (find function, variable definitions and references)
-If your project is not big, a good solution is <a href="#org1e24f83">rtags c++ indexer</a>.
+If your project is not big, a good solution is <a href="#org9d98ed1">rtags c++ indexer</a>.
 But if your project is large, I recommend using global with ctags.
 It works really well and it is super fast
 <ul class="org-ul">
@@ -478,10 +478,10 @@ sudo make install
 A script to generate index files
 </p>
 <div class="org-src-container">
-<pre><code class="src src-shell"><span style="color: #b0bec5;">#</span><span style="color: #b0bec5;">!/bin/</span><span style="color: #fff59d;">bash</span>
-find . -type d <span style="color: #9ccc65;">\(</span> -name <span style="color: #9ccc65;">"skip_foler1"</span> <span style="color: #9ccc65;">\</span>
--o -name <span style="color: #9ccc65;">"skip_folder2"</span> <span style="color: #9ccc65;">\)</span> -prune -o <span style="color: #9ccc65;">\</span>
--type f <span style="color: #9ccc65;">\(</span> -name <span style="color: #9ccc65;">"*.cc"</span> -o -name <span style="color: #9ccc65;">"*.hh"</span> -o -name <span style="color: #9ccc65;">"*.py"</span> -o -name <span style="color: #9ccc65;">"*.c"</span> -o -name <span style="color: #9ccc65;">"*.h"</span> -o -name <span style="color: #9ccc65;">"*.hidl"</span> <span style="color: #9ccc65;">\)</span>  <span style="color: #9ccc65;">\</span>
+<pre><code class="src src-shell"><span style="color: #fa8072;">#</span><span style="color: #ff7f24; font-style: italic;">!/bin/</span><span style="color: #00ffff;">bash</span>
+find . -type d <span style="color: #ffc1c1;">\(</span> -name <span style="color: #ffc1c1;">"skip_foler1"</span> <span style="color: #ffc1c1;">\</span>
+-o -name <span style="color: #ffc1c1;">"skip_folder2"</span> <span style="color: #ffc1c1;">\)</span> -prune -o <span style="color: #ffc1c1;">\</span>
+-type f <span style="color: #ffc1c1;">\(</span> -name <span style="color: #ffc1c1;">"*.cc"</span> -o -name <span style="color: #ffc1c1;">"*.hh"</span> -o -name <span style="color: #ffc1c1;">"*.py"</span> -o -name <span style="color: #ffc1c1;">"*.c"</span> -o -name <span style="color: #ffc1c1;">"*.h"</span> -o -name <span style="color: #ffc1c1;">"*.hidl"</span> <span style="color: #ffc1c1;">\)</span>  <span style="color: #ffc1c1;">\</span>
 -print &gt; file_list
 gtags -i -v -f file_list
 </code></pre>
@@ -490,19 +490,19 @@ gtags -i -v -f file_list
 Emacs settings
 </p>
 <div class="org-src-container">
-<pre><code class="src src-emacs-lisp"><span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">--------------------------------------------------</span>
-(<span style="color: #fff59d;">use-package</span> <span style="color: #8bc34a;">helm-gtags</span> <span style="color: #ff8A65;">:ensure</span> t)
-(<span style="color: #fff59d;">require</span> '<span style="color: #8bc34a;">helm-gtags</span>)
-(<span style="color: #fff59d;">setq</span>
+<pre><code class="src src-emacs-lisp"><span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">--------------------------------------------------</span>
+(<span style="color: #00ffff;">use-package</span> <span style="color: #8470ff; font-weight: bold;">helm-gtags</span> <span style="color: #b0c4de;">:ensure</span> t)
+(<span style="color: #00ffff;">require</span> '<span style="color: #8470ff; font-weight: bold;">helm-gtags</span>)
+(<span style="color: #00ffff;">setq</span>
  helm-gtags-ignore-case t
  helm-gtags-auto-update t
  helm-gtags-use-input-at-cursor t
  helm-gtags-pulse-at-cursor t
- helm-gtags-prefix-key <span style="color: #9ccc65;">"\C-cg"</span>
+ helm-gtags-prefix-key <span style="color: #ffc1c1;">"\C-cg"</span>
  helm-gtags-suggested-key-mapping nil
  )
 
-<span style="color: #b0bec5;">;;; </span><span style="color: #b0bec5;">Enable helm-gtags-mode</span>
+<span style="color: #fa8072;">;;; </span><span style="color: #ff7f24; font-style: italic;">Enable helm-gtags-mode</span>
 (add-hook 'dired-mode-hook 'helm-gtags-mode)
 (add-hook 'eshell-mode-hook 'helm-gtags-mode)
 (add-hook 'c-mode-hook 'helm-gtags-mode)
@@ -510,19 +510,19 @@ Emacs settings
 (add-hook 'asm-mode-hook 'helm-gtags-mode)
 (add-hook 'python-mode-hook 'helm-gtags-mode)
 
-<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">(define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)</span>
-(define-key helm-gtags-mode-map (kbd <span style="color: #9ccc65;">"C-j"</span>) 'helm-gtags-select)
-(define-key helm-gtags-mode-map (kbd <span style="color: #9ccc65;">"M-."</span>) 'helm-gtags-dwim)
-(define-key helm-gtags-mode-map (kbd <span style="color: #9ccc65;">"M-r"</span>) 'helm-gtags-find-rtag)
-(define-key helm-gtags-mode-map (kbd <span style="color: #9ccc65;">"M-t"</span>) 'helm-gtags-find-tag)
-(define-key helm-gtags-mode-map (kbd <span style="color: #9ccc65;">"M-s"</span>) 'helm-gtags-find-symbol)
-<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">(define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)</span>
-(define-key helm-gtags-mode-map (kbd <span style="color: #9ccc65;">"M-*"</span>) 'helm-gtags-resume)
-<span style="color: #b0bec5;">;;</span>
-(define-key helm-gtags-mode-map (kbd <span style="color: #9ccc65;">"C-c &lt;left&gt;"</span>) 'helm-gtags-previous-history)
-(define-key helm-gtags-mode-map (kbd <span style="color: #9ccc65;">"C-c &lt;right&gt;"</span>) 'helm-gtags-next-history)
-<span style="color: #b0bec5;">;;</span>
-<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">(define-key helm-gtags-mode-map (kbd "C-c g") 'vc-git-grep)</span>
+<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">(define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)</span>
+(define-key helm-gtags-mode-map (kbd <span style="color: #ffc1c1;">"C-j"</span>) 'helm-gtags-select)
+(define-key helm-gtags-mode-map (kbd <span style="color: #ffc1c1;">"M-."</span>) 'helm-gtags-dwim)
+(define-key helm-gtags-mode-map (kbd <span style="color: #ffc1c1;">"M-r"</span>) 'helm-gtags-find-rtag)
+(define-key helm-gtags-mode-map (kbd <span style="color: #ffc1c1;">"M-t"</span>) 'helm-gtags-find-tag)
+(define-key helm-gtags-mode-map (kbd <span style="color: #ffc1c1;">"M-s"</span>) 'helm-gtags-find-symbol)
+<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">(define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)</span>
+(define-key helm-gtags-mode-map (kbd <span style="color: #ffc1c1;">"M-*"</span>) 'helm-gtags-resume)
+<span style="color: #fa8072;">;;</span>
+(define-key helm-gtags-mode-map (kbd <span style="color: #ffc1c1;">"C-c &lt;left&gt;"</span>) 'helm-gtags-previous-history)
+(define-key helm-gtags-mode-map (kbd <span style="color: #ffc1c1;">"C-c &lt;right&gt;"</span>) 'helm-gtags-next-history)
+<span style="color: #fa8072;">;;</span>
+<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">(define-key helm-gtags-mode-map (kbd "C-c g") 'vc-git-grep)</span>
 
 </code></pre>
 </div></li>
@@ -536,8 +536,8 @@ Emacs settings
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc91da69" class="outline-3">
-<h3 id="orgc91da69"><span class="section-number-3">4.2</span> Index special file format (for example, .hidl files)</h3>
+<div id="outline-container-org8a1d5d6" class="outline-3">
+<h3 id="org8a1d5d6"><span class="section-number-3">4.2</span> Index special file format (for example, .hidl files)</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 To use a specific parser to index a specific file types, you can change the field of ':langmap' in your local .globalrc file.
@@ -548,8 +548,8 @@ For example, if you want to index .hidl as c++, you can map it to c++ type.
 </pre>
 </div>
 </div>
-<div id="outline-container-org3cdadba" class="outline-3">
-<h3 id="org3cdadba"><span class="section-number-3">4.3</span> Git integration</h3>
+<div id="outline-container-org1ff341f" class="outline-3">
+<h3 id="org1ff341f"><span class="section-number-3">4.3</span> Git integration</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 matgit
@@ -557,8 +557,8 @@ matgit
 </div>
 </div>
 
-<div id="outline-container-org040c818" class="outline-3">
-<h3 id="org040c818"><span class="section-number-3">4.4</span> elpy usage</h3>
+<div id="outline-container-org86b7228" class="outline-3">
+<h3 id="org86b7228"><span class="section-number-3">4.4</span> elpy usage</h3>
 <div class="outline-text-3" id="text-4-4">
 <ul class="org-ul">
 <li>elpy-goto-definition M-.</li>
@@ -566,8 +566,8 @@ matgit
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc9065a8" class="outline-3">
-<h3 id="orgc9065a8"><span class="section-number-3">4.5</span> Other convenient things</h3>
+<div id="outline-container-org8ac1f0f" class="outline-3">
+<h3 id="org8ac1f0f"><span class="section-number-3">4.5</span> Other convenient things</h3>
 <div class="outline-text-3" id="text-4-5">
 <ul class="org-ul">
 <li>minimap mode</li>
@@ -582,12 +582,12 @@ matgit
 </div>
 </div>
 
-<div id="outline-container-org1a6c74d" class="outline-2">
-<h2 id="org1a6c74d"><span class="section-number-2">5</span> Useful commands</h2>
+<div id="outline-container-org4728be8" class="outline-2">
+<h2 id="org4728be8"><span class="section-number-2">5</span> Useful commands</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-org9236b2a" class="outline-3">
-<h3 id="org9236b2a"><span class="section-number-3">5.1</span> Multiple line edit (rectangle edit)</h3>
+<div id="outline-container-org3f84ea4" class="outline-3">
+<h3 id="org3f84ea4"><span class="section-number-3">5.1</span> Multiple line edit (rectangle edit)</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 C+x r t  (string-rectangle)
@@ -596,8 +596,8 @@ M-x xxx-rectange
 </p>
 </div>
 </div>
-<div id="outline-container-orgd664755" class="outline-3">
-<h3 id="orgd664755"><span class="section-number-3">5.2</span> How to decide whether to save (diff buffer with original file)</h3>
+<div id="outline-container-orgab0ec3f" class="outline-3">
+<h3 id="orgab0ec3f"><span class="section-number-3">5.2</span> How to decide whether to save (diff buffer with original file)</h3>
 <div class="outline-text-3" id="text-5-2">
 <ul class="org-ul">
 <li>M-x diff-buffer-with-file</li>
@@ -610,8 +610,8 @@ or
 </ul>
 </div>
 </div>
-<div id="outline-container-org7ba2936" class="outline-3">
-<h3 id="org7ba2936"><span class="section-number-3">5.3</span> How to split into 3 even windows</h3>
+<div id="outline-container-org040dd0e" class="outline-3">
+<h3 id="org040dd0e"><span class="section-number-3">5.3</span> How to split into 3 even windows</h3>
 <div class="outline-text-3" id="text-5-3">
 <ul class="org-ul">
 <li>C-x 3 to add one more frame</li>
@@ -619,8 +619,8 @@ or
 </ul>
 </div>
 </div>
-<div id="outline-container-orgbffd8a4" class="outline-3">
-<h3 id="orgbffd8a4"><span class="section-number-3">5.4</span> change font size</h3>
+<div id="outline-container-orgd31e830" class="outline-3">
+<h3 id="orgd31e830"><span class="section-number-3">5.4</span> change font size</h3>
 <div class="outline-text-3" id="text-5-4">
 <ul class="org-ul">
 <li>C-x C-+ increase font size</li>
@@ -628,8 +628,8 @@ or
 </ul>
 </div>
 </div>
-<div id="outline-container-org978851f" class="outline-3">
-<h3 id="org978851f"><span class="section-number-3">5.5</span> run shell command in Emacs</h3>
+<div id="outline-container-org54e6c43" class="outline-3">
+<h3 id="org54e6c43"><span class="section-number-3">5.5</span> run shell command in Emacs</h3>
 <div class="outline-text-3" id="text-5-5">
 <p>
 M-! run shell command in Emacs
@@ -637,8 +637,8 @@ M-! run shell command in Emacs
 </div>
 </div>
 
-<div id="outline-container-orgdc2af11" class="outline-3">
-<h3 id="orgdc2af11"><span class="section-number-3">5.6</span> Show all key bindings</h3>
+<div id="outline-container-orgd77b18a" class="outline-3">
+<h3 id="orgd77b18a"><span class="section-number-3">5.6</span> Show all key bindings</h3>
 <div class="outline-text-3" id="text-5-6">
 <p>
 C+h b    (describe-bindings)
@@ -654,12 +654,12 @@ C+h k    (describe-key)
 </div>
 </div>
 
-<div id="outline-container-org1e24f83" class="outline-2">
-<h2 id="org1e24f83"><span class="section-number-2">6</span> rtags c++ indexer</h2>
+<div id="outline-container-org9d98ed1" class="outline-2">
+<h2 id="org9d98ed1"><span class="section-number-2">6</span> rtags c++ indexer</h2>
 <div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-orgbc18e02" class="outline-3">
-<h3 id="orgbc18e02"><span class="section-number-3">6.1</span> General</h3>
+<div id="outline-container-orgf5aa8cd" class="outline-3">
+<h3 id="orgf5aa8cd"><span class="section-number-3">6.1</span> General</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 I have tried rtags with Emacs. It works well after index. It takes a pretty long time to index a large project.
@@ -667,8 +667,8 @@ Since gtags is much faster and works for me, I don't use it.
 </p>
 </div>
 </div>
-<div id="outline-container-org3b6b438" class="outline-3">
-<h3 id="org3b6b438"><span class="section-number-3">6.2</span> install</h3>
+<div id="outline-container-orga74672e" class="outline-3">
+<h3 id="orga74672e"><span class="section-number-3">6.2</span> install</h3>
 <div class="outline-text-3" id="text-6-2">
 <pre class="example">
 sudo apt-get install libclang-dev llvm
@@ -682,8 +682,8 @@ sudo make install
 </pre>
 </div>
 </div>
-<div id="outline-container-org97ad26b" class="outline-3">
-<h3 id="org97ad26b"><span class="section-number-3">6.3</span> usage</h3>
+<div id="outline-container-org3caeeed" class="outline-3">
+<h3 id="org3caeeed"><span class="section-number-3">6.3</span> usage</h3>
 <div class="outline-text-3" id="text-6-3">
 <ul class="org-ul">
 <li>start
@@ -702,21 +702,21 @@ $ rc -J ./av/build/compile<sub>commands.json</sub>
 </div>
 </div>
 
-<div id="outline-container-org20bebe2" class="outline-3">
-<h3 id="org20bebe2"><span class="section-number-3">6.4</span> help</h3>
+<div id="outline-container-orgdad4d76" class="outline-3">
+<h3 id="orgdad4d76"><span class="section-number-3">6.4</span> help</h3>
 <div class="outline-text-3" id="text-6-4">
 <p>
 rc &#x2013;help
 </p>
 </div>
 </div>
-<div id="outline-container-orgc03ea06" class="outline-3">
-<h3 id="orgc03ea06"><span class="section-number-3">6.5</span> Emacs setting for rtags</h3>
+<div id="outline-container-org2ec3213" class="outline-3">
+<h3 id="org2ec3213"><span class="section-number-3">6.5</span> Emacs setting for rtags</h3>
 </div>
 </div>
 
-<div id="outline-container-orgafdfee1" class="outline-2">
-<h2 id="orgafdfee1"><span class="section-number-2">7</span> Terminal in Emacs</h2>
+<div id="outline-container-org0f0fd20" class="outline-2">
+<h2 id="org0f0fd20"><span class="section-number-2">7</span> Terminal in Emacs</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li>ansi-term</li>
@@ -738,8 +738,8 @@ emacs settings
 </div>
 </div>
 
-<div id="outline-container-org838e6c2" class="outline-2">
-<h2 id="org838e6c2"><span class="section-number-2">8</span> terminal color theme settings</h2>
+<div id="outline-container-orgfa086da" class="outline-2">
+<h2 id="orgfa086da"><span class="section-number-2">8</span> terminal color theme settings</h2>
 <div class="outline-text-2" id="text-8">
 <ol class="org-ol">
 <li>put the following into .bashrc or .profile
@@ -752,8 +752,8 @@ M-x color-theme-xx</li>
 </div>
 </div>
 
-<div id="outline-container-org299f44b" class="outline-2">
-<h2 id="org299f44b"><span class="section-number-2">9</span> set fill-paragraph width</h2>
+<div id="outline-container-orgcc7eec3" class="outline-2">
+<h2 id="orgcc7eec3"><span class="section-number-2">9</span> set fill-paragraph width</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 C-x f set-fill-column
@@ -761,16 +761,16 @@ default is 70
 </p>
 </div>
 </div>
-<div id="outline-container-orgd0c00c5" class="outline-2">
-<h2 id="orgd0c00c5"><span class="section-number-2">10</span> MobileOrg setting</h2>
+<div id="outline-container-org5f02723" class="outline-2">
+<h2 id="org5f02723"><span class="section-number-2">10</span> MobileOrg setting</h2>
 <div class="outline-text-2" id="text-10">
 <p>
 <a href="http://jonathanchu.is/posts/org-mode-and-mobileorg-installation-and-config/">http://jonathanchu.is/posts/org-mode-and-mobileorg-installation-and-config/</a>
 </p>
 </div>
 </div>
-<div id="outline-container-orgaf4fb47" class="outline-2">
-<h2 id="orgaf4fb47"><span class="section-number-2">11</span> Common key bindings</h2>
+<div id="outline-container-org024b393" class="outline-2">
+<h2 id="org024b393"><span class="section-number-2">11</span> Common key bindings</h2>
 <div class="outline-text-2" id="text-11">
 <dl class="org-dl">
 <dt>alt-x</dt><dd>same as M-x</dd>
@@ -787,12 +787,12 @@ C-x e :: execute</dd>
 </div>
 </div>
 
-<div id="outline-container-orgb9fc77e" class="outline-2">
-<h2 id="orgb9fc77e"><span class="section-number-2">12</span> color theme</h2>
+<div id="outline-container-org3b2ecf7" class="outline-2">
+<h2 id="org3b2ecf7"><span class="section-number-2">12</span> color theme</h2>
 <div class="outline-text-2" id="text-12">
 </div>
-<div id="outline-container-org3e42438" class="outline-3">
-<h3 id="org3e42438"><span class="section-number-3">12.1</span> Cool website that can generate color theme online:</h3>
+<div id="outline-container-org24e3717" class="outline-3">
+<h3 id="org24e3717"><span class="section-number-3">12.1</span> Cool website that can generate color theme online:</h3>
 <div class="outline-text-3" id="text-12-1">
 <p>
 <a href="http://jasonm23.github.io/emacs-theme-editor/">http://jasonm23.github.io/emacs-theme-editor/</a>#
@@ -800,8 +800,8 @@ C-x e :: execute</dd>
 </div>
 </div>
 
-<div id="outline-container-orgf9015b8" class="outline-3">
-<h3 id="orgf9015b8"><span class="section-number-3">12.2</span> Using Emacs native color theme (maybe only for V24 or later)</h3>
+<div id="outline-container-org1810750" class="outline-3">
+<h3 id="org1810750"><span class="section-number-3">12.2</span> Using Emacs native color theme (maybe only for V24 or later)</h3>
 <div class="outline-text-3" id="text-12-2">
 <ul class="org-ul">
 <li>try ESC-x color-theme
@@ -816,8 +816,8 @@ TAB to show all available themes.</li>
 </div>
 </div>
 
-<div id="outline-container-org21c6f68" class="outline-2">
-<h2 id="org21c6f68"><span class="section-number-2">13</span> Column View in org-mode</h2>
+<div id="outline-container-org7402fe5" class="outline-2">
+<h2 id="org7402fe5"><span class="section-number-2">13</span> Column View in org-mode</h2>
 <div class="outline-text-2" id="text-13">
 <ul class="org-ul">
 <li>setting what to show</li>
@@ -833,8 +833,8 @@ TAB to show all available themes.</li>
 </div>
 </div>
 
-<div id="outline-container-org52d97c6" class="outline-2">
-<h2 id="org52d97c6"><span class="section-number-2">14</span> Search in Emacs</h2>
+<div id="outline-container-orga09e5b7" class="outline-2">
+<h2 id="orga09e5b7"><span class="section-number-2">14</span> Search in Emacs</h2>
 <div class="outline-text-2" id="text-14">
 <ul class="org-ul">
 <li>find a file with its name</li>
@@ -866,8 +866,8 @@ M-x rgrep
 </div>
 </div>
 
-<div id="outline-container-org74c2713" class="outline-2">
-<h2 id="org74c2713"><span class="section-number-2">15</span> How to get rid of ^M</h2>
+<div id="outline-container-org93d2438" class="outline-2">
+<h2 id="org93d2438"><span class="section-number-2">15</span> How to get rid of ^M</h2>
 <div class="outline-text-2" id="text-15">
 <pre class="example">
 M-x replace-string C-q C-m RET
@@ -878,8 +878,8 @@ or run dos2unix
 </div>
 </div>
 
-<div id="outline-container-org8507253" class="outline-2">
-<h2 id="org8507253"><span class="section-number-2">16</span> org-mode</h2>
+<div id="outline-container-org15e7d2b" class="outline-2">
+<h2 id="org15e7d2b"><span class="section-number-2">16</span> org-mode</h2>
 <div class="outline-text-2" id="text-16">
 <dl class="org-dl">
 <dt>C-c C-&lt;       </dt><dd>outline-promote</dd>
@@ -900,8 +900,8 @@ keys to find your destination</dd>
 </dl>
 </div>
 
-<div id="outline-container-orga1b4e32" class="outline-3">
-<h3 id="orga1b4e32"><span class="section-number-3">16.1</span> demote and promote</h3>
+<div id="outline-container-orgb0f879b" class="outline-3">
+<h3 id="orgb0f879b"><span class="section-number-3">16.1</span> demote and promote</h3>
 <div class="outline-text-3" id="text-16-1">
 <ul class="org-ul">
 <li>M-x outline-demote</li>
@@ -911,8 +911,8 @@ keys to find your destination</dd>
 </div>
 </div>
 
-<div id="outline-container-orgc00081a" class="outline-2">
-<h2 id="orgc00081a"><span class="section-number-2">17</span> Emacs org clocking</h2>
+<div id="outline-container-orge56ab1b" class="outline-2">
+<h2 id="orge56ab1b"><span class="section-number-2">17</span> Emacs org clocking</h2>
 <div class="outline-text-2" id="text-17">
 <dl class="org-dl">
 <dt>C-c C-x C-i</dt><dd>clock in</dd>
@@ -926,8 +926,8 @@ keys to find your destination</dd>
 </div>
 </div>
 
-<div id="outline-container-orgdfd9b40" class="outline-2">
-<h2 id="orgdfd9b40"><span class="section-number-2">18</span> Spreadsheet</h2>
+<div id="outline-container-org4163f01" class="outline-2">
+<h2 id="org4163f01"><span class="section-number-2">18</span> Spreadsheet</h2>
 <div class="outline-text-2" id="text-18">
 <ul class="org-ul">
 <li>C-c } you can always turn on the reference visualization grid with</li>
@@ -944,8 +944,8 @@ items can be separated by s whitespace, comma, or tab.</li>
 </pre>
 </div>
 </div>
-<div id="outline-container-org0164a50" class="outline-2">
-<h2 id="org0164a50"><span class="section-number-2">19</span> UI settings</h2>
+<div id="outline-container-org7f70dff" class="outline-2">
+<h2 id="org7f70dff"><span class="section-number-2">19</span> UI settings</h2>
 <div class="outline-text-2" id="text-19">
 <ul class="org-ul">
 <li>How to show line numbers? <br />
@@ -959,20 +959,20 @@ Pull the menu ?Options ? Line Wrapping in this Buffer?, or call visual-line-mode
 </ul>
 </div>
 </div>
-<div id="outline-container-org408cfc1" class="outline-2">
-<h2 id="org408cfc1"><span class="section-number-2">20</span> Switch between input method</h2>
+<div id="outline-container-org53504c3" class="outline-2">
+<h2 id="org53504c3"><span class="section-number-2">20</span> Switch between input method</h2>
 <div class="outline-text-2" id="text-20">
 <ul class="org-ul">
 <li>C-\</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org963ccee" class="outline-2">
-<h2 id="org963ccee"><span class="section-number-2">21</span> Make presentation / slides</h2>
+<div id="outline-container-orga48446d" class="outline-2">
+<h2 id="orga48446d"><span class="section-number-2">21</span> Make presentation / slides</h2>
 <div class="outline-text-2" id="text-21">
 </div>
-<div id="outline-container-orgae75c11" class="outline-3">
-<h3 id="orgae75c11"><span class="section-number-3">21.1</span> for 8.2.3b</h3>
+<div id="outline-container-org4e8da44" class="outline-3">
+<h3 id="org4e8da44"><span class="section-number-3">21.1</span> for 8.2.3b</h3>
 <div class="outline-text-3" id="text-21-1">
 <ul class="org-ul">
 <li>add the following at the beginning of an org file</li>
@@ -996,21 +996,21 @@ Pull the menu ?Options ? Line Wrapping in this Buffer?, or call visual-line-mode
 </div>
 </div>
 
-<div id="outline-container-org723109a" class="outline-3">
-<h3 id="org723109a"><span class="section-number-3">21.2</span> S5 solution (A Simple Standards-Based Slide Show System)</h3>
+<div id="outline-container-org2b235ec" class="outline-3">
+<h3 id="org2b235ec"><span class="section-number-3">21.2</span> S5 solution (A Simple Standards-Based Slide Show System)</h3>
 <div class="outline-text-3" id="text-21-2">
 <ul class="org-ul">
 <li>add the following to .emacs</li>
 </ul>
 <div class="org-src-container">
-<pre><code class="src src-emacs-lisp"><span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">export slides in org mode</span>
-<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">remember to copy folder "ui" to your pub folder</span>
-(add-to-list 'load-path <span style="color: #9ccc65;">"~/site-lisp/org-s5-master"</span>)
-(<span style="color: #fff59d;">require</span> '<span style="color: #8bc34a;">org-export-as-s5</span>)
-<span style="color: #b0bec5;">;;</span><span style="color: #b0bec5;">(setq org-s5-theme "railscast")   ; based off `</span><span style="color: #b0bec5;">color-theme-railscasts</span><span style="color: #b0bec5;">'</span>
-(<span style="color: #fff59d;">setq</span> org-s5-theme <span style="color: #9ccc65;">"default"</span>)     <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">the default S5 theme</span>
-<span style="color: #b0bec5;">;;</span><span style="color: #b0bec5;">(setq org-s5-theme "i18n")        ; the i18n theme by the author of S5</span>
-<span style="color: #b0bec5;">;;</span><span style="color: #b0bec5;">(setq org-s5-theme "advanced_gfx")</span>
+<pre><code class="src src-emacs-lisp"><span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">export slides in org mode</span>
+<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">remember to copy folder "ui" to your pub folder</span>
+(add-to-list 'load-path <span style="color: #ffc1c1;">"~/site-lisp/org-s5-master"</span>)
+(<span style="color: #00ffff;">require</span> '<span style="color: #8470ff; font-weight: bold;">org-export-as-s5</span>)
+<span style="color: #fa8072;">;;</span><span style="color: #ff7f24; font-style: italic;">(setq org-s5-theme "railscast")   ; based off `</span><span style="color: #ff7f24; font-weight: bold; font-style: italic;">color-theme-railscasts</span><span style="color: #ff7f24; font-style: italic;">'</span>
+(<span style="color: #00ffff;">setq</span> org-s5-theme <span style="color: #ffc1c1;">"default"</span>)     <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">the default S5 theme</span>
+<span style="color: #fa8072;">;;</span><span style="color: #ff7f24; font-style: italic;">(setq org-s5-theme "i18n")        ; the i18n theme by the author of S5</span>
+<span style="color: #fa8072;">;;</span><span style="color: #ff7f24; font-style: italic;">(setq org-s5-theme "advanced_gfx")</span>
 </code></pre>
 </div>
 <ul class="org-ul">
@@ -1020,8 +1020,8 @@ org-export-as-s5</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org12659d0" class="outline-3">
-<h3 id="org12659d0"><span class="section-number-3">21.3</span> reveal</h3>
+<div id="outline-container-org7f20a68" class="outline-3">
+<h3 id="org7f20a68"><span class="section-number-3">21.3</span> reveal</h3>
 <div class="outline-text-3" id="text-21-3">
 <ol class="org-ol">
 <li>copy ~/site-lisp/org-reveal-master to DIR1</li>
@@ -1029,54 +1029,54 @@ org-export-as-s5</li>
 <li>setting emacs</li>
 </ol>
 <div class="org-src-container">
-<pre><code class="src src-emacs-lisp"><span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">org reveal export</span>
-(add-to-list 'load-path <span style="color: #9ccc65;">"~/site-lisp/org-reveal-master/"</span>)
-(<span style="color: #fff59d;">require</span> '<span style="color: #8bc34a;">ox-reveal</span>)
-(<span style="color: #fff59d;">setq</span> org-reveal-root <span style="color: #9ccc65;">"file:///D:/cgliu/emacs-24.2/site-lisp/reveal-master/"</span>)
+<pre><code class="src src-emacs-lisp"><span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">org reveal export</span>
+(add-to-list 'load-path <span style="color: #ffc1c1;">"~/site-lisp/org-reveal-master/"</span>)
+(<span style="color: #00ffff;">require</span> '<span style="color: #8470ff; font-weight: bold;">ox-reveal</span>)
+(<span style="color: #00ffff;">setq</span> org-reveal-root <span style="color: #ffc1c1;">"file:///D:/cgliu/emacs-24.2/site-lisp/reveal-master/"</span>)
 </code></pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgfaeadbf" class="outline-2">
-<h2 id="orgfaeadbf"><span class="section-number-2">22</span> How to create a beautiful homepage with Emacs org-mode and Bootstrap</h2>
+<div id="outline-container-org288de87" class="outline-2">
+<h2 id="org288de87"><span class="section-number-2">22</span> How to create a beautiful homepage with Emacs org-mode and Bootstrap</h2>
 <div class="outline-text-2" id="text-22">
 <ul class="org-ul">
 <li><p>
 Configure org-mode html export project
 </p>
 <div class="org-src-container">
-<pre><code class="src src-emacs-lisp">(<span style="color: #fff59d;">setq</span> org-publish-project-alist
+<pre><code class="src src-emacs-lisp">(<span style="color: #00ffff;">setq</span> org-publish-project-alist
       '(
-        (<span style="color: #9ccc65;">"org-notes"</span>               <span style="color: #b0bec5;">;</span><span style="color: #b0bec5;">Used to export .org file</span>
-         <span style="color: #ff8A65;">:base-directory</span> <span style="color: #9ccc65;">"~/www/"</span>  <span style="color: #b0bec5;">;</span><span style="color: #b0bec5;">directory holds .org files</span>
-         <span style="color: #ff8A65;">:base-extension</span> <span style="color: #9ccc65;">"org"</span>     <span style="color: #b0bec5;">;</span><span style="color: #b0bec5;">process .org file only</span>
-         <span style="color: #ff8A65;">:publishing-directory</span> <span style="color: #9ccc65;">"~/public_html/"</span>    <span style="color: #b0bec5;">;</span><span style="color: #b0bec5;">export destination</span>
-         <span style="color: #ff8A65;">:recursive</span> t
-         <span style="color: #ff8A65;">:publishing-function</span> org-html-publish-to-html
-         <span style="color: #ff8A65;">:headline-levels</span> 4               <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">Just the default for this project.</span>
-         <span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">:auto-preamble t</span>
-         <span style="color: #ff8A65;">:auto-sitemap</span> t                  <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">Generate sitemap.org automagically...</span>
-         <span style="color: #ff8A65;">:sitemap-filename</span> <span style="color: #9ccc65;">"sitemap.org"</span>  <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">... call it sitemap.org (it's the default)...</span>
-         <span style="color: #ff8A65;">:sitemap-title</span> <span style="color: #9ccc65;">"Sitemap"</span>         <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">... with title 'Sitemap'.</span>
-         <span style="color: #ff8A65;">:export-creator-info</span> nil    <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">Disable the inclusion of "Created by Org" in the postamble.</span>
-         <span style="color: #ff8A65;">:export-author-info</span> nil     <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">Disable the inclusion of "Author: Your Name" in the postamble.</span>
-         <span style="color: #ff8A65;">:auto-postamble</span> nil         <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">Disable auto postamble</span>
-         <span style="color: #ff8A65;">:table-of-contents</span> t        <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">Set this to "t" if you want a table of contents, set to "nil" disables TOC.</span>
-         <span style="color: #ff8A65;">:section-numbers</span> nil        <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">Set this to "t" if you want headings to have numbers.</span>
-         <span style="color: #ff8A65;">:style-include-default</span> nil  <span style="color: #b0bec5;">;</span><span style="color: #b0bec5;">Disable the default css style</span>
-         <span style="color: #ff8A65;">:html-preamble</span> nil
-         <span style="color: #ff8A65;">:html-postamble</span> nil
+        (<span style="color: #ffc1c1;">"org-notes"</span>               <span style="color: #fa8072;">;</span><span style="color: #ff7f24; font-style: italic;">Used to export .org file</span>
+         <span style="color: #b0c4de;">:base-directory</span> <span style="color: #ffc1c1;">"~/www/"</span>  <span style="color: #fa8072;">;</span><span style="color: #ff7f24; font-style: italic;">directory holds .org files</span>
+         <span style="color: #b0c4de;">:base-extension</span> <span style="color: #ffc1c1;">"org"</span>     <span style="color: #fa8072;">;</span><span style="color: #ff7f24; font-style: italic;">process .org file only</span>
+         <span style="color: #b0c4de;">:publishing-directory</span> <span style="color: #ffc1c1;">"~/public_html/"</span>    <span style="color: #fa8072;">;</span><span style="color: #ff7f24; font-style: italic;">export destination</span>
+         <span style="color: #b0c4de;">:recursive</span> t
+         <span style="color: #b0c4de;">:publishing-function</span> org-html-publish-to-html
+         <span style="color: #b0c4de;">:headline-levels</span> 4               <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">Just the default for this project.</span>
+         <span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">:auto-preamble t</span>
+         <span style="color: #b0c4de;">:auto-sitemap</span> t                  <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">Generate sitemap.org automagically...</span>
+         <span style="color: #b0c4de;">:sitemap-filename</span> <span style="color: #ffc1c1;">"sitemap.org"</span>  <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">... call it sitemap.org (it's the default)...</span>
+         <span style="color: #b0c4de;">:sitemap-title</span> <span style="color: #ffc1c1;">"Sitemap"</span>         <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">... with title 'Sitemap'.</span>
+         <span style="color: #b0c4de;">:export-creator-info</span> nil    <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">Disable the inclusion of "Created by Org" in the postamble.</span>
+         <span style="color: #b0c4de;">:export-author-info</span> nil     <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">Disable the inclusion of "Author: Your Name" in the postamble.</span>
+         <span style="color: #b0c4de;">:auto-postamble</span> nil         <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">Disable auto postamble</span>
+         <span style="color: #b0c4de;">:table-of-contents</span> t        <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">Set this to "t" if you want a table of contents, set to "nil" disables TOC.</span>
+         <span style="color: #b0c4de;">:section-numbers</span> nil        <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">Set this to "t" if you want headings to have numbers.</span>
+         <span style="color: #b0c4de;">:style-include-default</span> nil  <span style="color: #fa8072;">;</span><span style="color: #ff7f24; font-style: italic;">Disable the default css style</span>
+         <span style="color: #b0c4de;">:html-preamble</span> nil
+         <span style="color: #b0c4de;">:html-postamble</span> nil
         )
-        (<span style="color: #9ccc65;">"org-static"</span>                <span style="color: #b0bec5;">;</span><span style="color: #b0bec5;">Used to publish static files</span>
-         <span style="color: #ff8A65;">:base-directory</span> <span style="color: #9ccc65;">"~/www/"</span>
-         <span style="color: #ff8A65;">:base-extension</span> <span style="color: #9ccc65;">"css</span><span style="color: #9ccc65;">\\</span><span style="color: #9ccc65;">|</span><span style="color: #9ccc65;">js</span><span style="color: #9ccc65;">\\</span><span style="color: #9ccc65;">|</span><span style="color: #9ccc65;">png</span><span style="color: #9ccc65;">\\</span><span style="color: #9ccc65;">|</span><span style="color: #9ccc65;">JPG</span><span style="color: #9ccc65;">\\</span><span style="color: #9ccc65;">|</span><span style="color: #9ccc65;">jpg</span><span style="color: #9ccc65;">\\</span><span style="color: #9ccc65;">|</span><span style="color: #9ccc65;">gif</span><span style="color: #9ccc65;">\\</span><span style="color: #9ccc65;">|</span><span style="color: #9ccc65;">pdf</span><span style="color: #9ccc65;">\\</span><span style="color: #9ccc65;">|</span><span style="color: #9ccc65;">mp3</span><span style="color: #9ccc65;">\\</span><span style="color: #9ccc65;">|</span><span style="color: #9ccc65;">ogg</span><span style="color: #9ccc65;">\\</span><span style="color: #9ccc65;">|</span><span style="color: #9ccc65;">swf"</span>
-         <span style="color: #ff8A65;">:publishing-directory</span> <span style="color: #9ccc65;">"~/public_html/"</span>    <span style="color: #b0bec5;">;</span><span style="color: #b0bec5;">export destination</span>
-         <span style="color: #ff8A65;">:recursive</span> t
-         <span style="color: #ff8A65;">:publishing-function</span> org-publish-attachment
+        (<span style="color: #ffc1c1;">"org-static"</span>                <span style="color: #fa8072;">;</span><span style="color: #ff7f24; font-style: italic;">Used to publish static files</span>
+         <span style="color: #b0c4de;">:base-directory</span> <span style="color: #ffc1c1;">"~/www/"</span>
+         <span style="color: #b0c4de;">:base-extension</span> <span style="color: #ffc1c1;">"css</span><span style="color: #ffc1c1; font-weight: bold;">\\</span><span style="color: #ffc1c1; font-weight: bold;">|</span><span style="color: #ffc1c1;">js</span><span style="color: #ffc1c1; font-weight: bold;">\\</span><span style="color: #ffc1c1; font-weight: bold;">|</span><span style="color: #ffc1c1;">png</span><span style="color: #ffc1c1; font-weight: bold;">\\</span><span style="color: #ffc1c1; font-weight: bold;">|</span><span style="color: #ffc1c1;">JPG</span><span style="color: #ffc1c1; font-weight: bold;">\\</span><span style="color: #ffc1c1; font-weight: bold;">|</span><span style="color: #ffc1c1;">jpg</span><span style="color: #ffc1c1; font-weight: bold;">\\</span><span style="color: #ffc1c1; font-weight: bold;">|</span><span style="color: #ffc1c1;">gif</span><span style="color: #ffc1c1; font-weight: bold;">\\</span><span style="color: #ffc1c1; font-weight: bold;">|</span><span style="color: #ffc1c1;">pdf</span><span style="color: #ffc1c1; font-weight: bold;">\\</span><span style="color: #ffc1c1; font-weight: bold;">|</span><span style="color: #ffc1c1;">mp3</span><span style="color: #ffc1c1; font-weight: bold;">\\</span><span style="color: #ffc1c1; font-weight: bold;">|</span><span style="color: #ffc1c1;">ogg</span><span style="color: #ffc1c1; font-weight: bold;">\\</span><span style="color: #ffc1c1; font-weight: bold;">|</span><span style="color: #ffc1c1;">swf"</span>
+         <span style="color: #b0c4de;">:publishing-directory</span> <span style="color: #ffc1c1;">"~/public_html/"</span>    <span style="color: #fa8072;">;</span><span style="color: #ff7f24; font-style: italic;">export destination</span>
+         <span style="color: #b0c4de;">:recursive</span> t
+         <span style="color: #b0c4de;">:publishing-function</span> org-publish-attachment
          )
-        (<span style="color: #9ccc65;">"org"</span> <span style="color: #ff8A65;">:components</span> (<span style="color: #9ccc65;">"org-notes"</span> <span style="color: #9ccc65;">"org-static"</span>)) <span style="color: #b0bec5;">;</span><span style="color: #b0bec5;">combine "org-notes" and "org-static" into one function call</span>
+        (<span style="color: #ffc1c1;">"org"</span> <span style="color: #b0c4de;">:components</span> (<span style="color: #ffc1c1;">"org-notes"</span> <span style="color: #ffc1c1;">"org-static"</span>)) <span style="color: #fa8072;">;</span><span style="color: #ff7f24; font-style: italic;">combine "org-notes" and "org-static" into one function call</span>
         ))
 
 </code></pre>
@@ -1092,56 +1092,56 @@ Create level-0.include as following and save it to YOUR<sub>INC</sub><sub>PATH</
 #+options: h:0 toc:nil title:nil
 #+options: html-style:t
 
-#+HTML_HEAD:        &lt;<span style="color: #84ffff;">meta</span> <span style="color: #ffcc80;">http-equiv</span>=<span style="color: #9ccc65;">"Content-Type"</span> <span style="color: #ffcc80;">content</span>=<span style="color: #9ccc65;">"text/html; charset=UTF-8"</span> /&gt;
-#+HTML_HEAD:        &lt;<span style="color: #84ffff;">title</span>&gt;<span style="font-weight: bold; text-decoration: underline;">Chenggang Liu's Homepage</span>&lt;/<span style="color: #84ffff;">title</span>&gt;
-#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./fonts/Serif/cmun-serif.css"</span> /&gt;
-#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./fonts/Serif-Slanted/cmun-serif-slanted.css"</span> /&gt;
-#+HTML_HEAD:        <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">BOOTSTRAP</span><span style="color: #b0bec5;">--&gt;</span>
-#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./bootstrap/css/bootstrap.min.css"</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span>&gt;
-#+HTML_HEAD:        <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">mobile first</span><span style="color: #b0bec5;">--&gt;</span>
-#+HTML_HEAD:        &lt;<span style="color: #84ffff;">meta</span> <span style="color: #ffcc80;">name</span>=<span style="color: #9ccc65;">"viewport"</span> <span style="color: #ffcc80;">content</span>=<span style="color: #9ccc65;">"width=device-width, initial-scale=1.0"</span>&gt;
+#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">meta</span> <span style="color: #7fffd4;">http-equiv</span>=<span style="color: #ffc1c1;">"Content-Type"</span> <span style="color: #7fffd4;">content</span>=<span style="color: #ffc1c1;">"text/html; charset=UTF-8"</span> /&gt;
+#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">title</span>&gt;<span style="font-weight: bold; text-decoration: underline;">Chenggang Liu's Homepage</span>&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">title</span>&gt;
+#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">link</span> <span style="color: #7fffd4;">rel</span>=<span style="color: #ffc1c1;">"stylesheet"</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./fonts/Serif/cmun-serif.css"</span> /&gt;
+#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">link</span> <span style="color: #7fffd4;">rel</span>=<span style="color: #ffc1c1;">"stylesheet"</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./fonts/Serif-Slanted/cmun-serif-slanted.css"</span> /&gt;
+#+HTML_HEAD:        <span style="color: #fa8072;">&lt;!--</span><span style="color: #ff7f24; font-style: italic;">BOOTSTRAP</span><span style="color: #fa8072;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">link</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./bootstrap/css/bootstrap.min.css"</span> <span style="color: #7fffd4;">rel</span>=<span style="color: #ffc1c1;">"stylesheet"</span>&gt;
+#+HTML_HEAD:        <span style="color: #fa8072;">&lt;!--</span><span style="color: #ff7f24; font-style: italic;">mobile first</span><span style="color: #fa8072;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">meta</span> <span style="color: #7fffd4;">name</span>=<span style="color: #ffc1c1;">"viewport"</span> <span style="color: #7fffd4;">content</span>=<span style="color: #ffc1c1;">"width=device-width, initial-scale=1.0"</span>&gt;
 #+HTML_HEAD:
-#+HTML_HEAD:        <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">removed html from url but still is html</span><span style="color: #b0bec5;">--&gt;</span>
-#+HTML_HEAD:        &lt;<span style="color: #84ffff;">meta</span> <span style="color: #ffcc80;">http-equiv</span>=<span style="color: #9ccc65;">"Content-Type"</span> <span style="color: #ffcc80;">content</span>=<span style="color: #9ccc65;">"text/html; charset=UTF-8"</span> /&gt;
+#+HTML_HEAD:        <span style="color: #fa8072;">&lt;!--</span><span style="color: #ff7f24; font-style: italic;">removed html from url but still is html</span><span style="color: #fa8072;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">meta</span> <span style="color: #7fffd4;">http-equiv</span>=<span style="color: #ffc1c1;">"Content-Type"</span> <span style="color: #7fffd4;">content</span>=<span style="color: #ffc1c1;">"text/html; charset=UTF-8"</span> /&gt;
 #+HTML_HEAD:
-#+HTML_HEAD:        <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">font awesome</span><span style="color: #b0bec5;">--&gt;</span>
-#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span>&gt;
+#+HTML_HEAD:        <span style="color: #fa8072;">&lt;!--</span><span style="color: #ff7f24; font-style: italic;">font awesome</span><span style="color: #fa8072;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">link</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"</span> <span style="color: #7fffd4;">rel</span>=<span style="color: #ffc1c1;">"stylesheet"</span>&gt;
 #+HTML_HEAD:
-#+HTML_HEAD:        <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">fonts: allan &amp; cardo</span><span style="color: #b0bec5;">--&gt;</span>
-#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"http://fonts.googleapis.com/css?family=Droid+Serif"</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span> <span style="color: #ffcc80;">type</span>=<span style="color: #9ccc65;">"text/css"</span>&gt;
-#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"http://fonts.googleapis.com/css?family=Droid+Sans"</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span> <span style="color: #ffcc80;">type</span>=<span style="color: #9ccc65;">"text/css"</span>&gt;
-#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./css/sticky-footer-navbar.css"</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span>&gt;
+#+HTML_HEAD:        <span style="color: #fa8072;">&lt;!--</span><span style="color: #ff7f24; font-style: italic;">fonts: allan &amp; cardo</span><span style="color: #fa8072;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">link</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"http://fonts.googleapis.com/css?family=Droid+Serif"</span> <span style="color: #7fffd4;">rel</span>=<span style="color: #ffc1c1;">"stylesheet"</span> <span style="color: #7fffd4;">type</span>=<span style="color: #ffc1c1;">"text/css"</span>&gt;
+#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">link</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"http://fonts.googleapis.com/css?family=Droid+Sans"</span> <span style="color: #7fffd4;">rel</span>=<span style="color: #ffc1c1;">"stylesheet"</span> <span style="color: #7fffd4;">type</span>=<span style="color: #ffc1c1;">"text/css"</span>&gt;
+#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">link</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./css/sticky-footer-navbar.css"</span> <span style="color: #7fffd4;">rel</span>=<span style="color: #ffc1c1;">"stylesheet"</span>&gt;
 #+HTML_HEAD:
-#+HTML_HEAD:        <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">Highlight</span><span style="color: #b0bec5;">--&gt;</span>
-#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./highlight/styles/github.css"</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span>&gt;
-#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./favicon.ico"</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"shortcut icon"</span> /&gt;
-#+HTML_HEAD:        &lt;<span style="color: #84ffff;">script</span> <span style="color: #ffcc80;">type</span>=<span style="color: #9ccc65;">"text/javascript"</span> <span style="color: #ffcc80;">src</span>=<span style="color: #9ccc65;">"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"</span>&gt;&lt;/<span style="color: #84ffff;">script</span>&gt;
+#+HTML_HEAD:        <span style="color: #fa8072;">&lt;!--</span><span style="color: #ff7f24; font-style: italic;">Highlight</span><span style="color: #fa8072;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">link</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./highlight/styles/github.css"</span> <span style="color: #7fffd4;">rel</span>=<span style="color: #ffc1c1;">"stylesheet"</span>&gt;
+#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">link</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./favicon.ico"</span> <span style="color: #7fffd4;">rel</span>=<span style="color: #ffc1c1;">"shortcut icon"</span> /&gt;
+#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">script</span> <span style="color: #7fffd4;">type</span>=<span style="color: #ffc1c1;">"text/javascript"</span> <span style="color: #7fffd4;">src</span>=<span style="color: #ffc1c1;">"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">script</span>&gt;
 
 #+BEGIN_EXPORT html
-&lt;<span style="color: #84ffff;">nav</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"navbar navbar-inverse navbar-static-top"</span> <span style="color: #ffcc80;">role</span>=<span style="color: #9ccc65;">"navigation"</span>&gt;
-  &lt;<span style="color: #84ffff;">div</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"container"</span>&gt;
-    <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">Toggle header for mobile</span><span style="color: #b0bec5;">--&gt;</span>
-    &lt;<span style="color: #84ffff;">div</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"navbar-header"</span>&gt;
-      &lt;<span style="color: #84ffff;">button</span> <span style="color: #ffcc80;">type</span>=<span style="color: #9ccc65;">"button"</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"navbar-toggle"</span> <span style="color: #ffcc80;">data-toggle</span>=<span style="color: #9ccc65;">"collapse"</span> <span style="color: #ffcc80;">data-target</span>=<span style="color: #9ccc65;">".navbar-collapse"</span>&gt;
-        &lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"sr-only"</span>&gt;Toggle navigation&lt;/<span style="color: #84ffff;">span</span>&gt;
-        &lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"icon-bar"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;
-        &lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"icon-bar"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;
-        &lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"icon-bar"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;
-      &lt;/<span style="color: #84ffff;">button</span>&gt;
-      &lt;<span style="color: #84ffff;">a</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"navbar-brand active"</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./index.html"</span> <span style="color: #ffcc80;">id</span>=<span style="color: #9ccc65;">"home"</span>&gt;Chenggang Liu's Homepage&lt;/<span style="color: #84ffff;">a</span>&gt;
-    &lt;/<span style="color: #84ffff;">div</span>&gt;
-    <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">normal header</span><span style="color: #b0bec5;">--&gt;</span>
-    &lt;<span style="color: #84ffff;">div</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"navbar-collapse collapse"</span>&gt;
-      &lt;<span style="color: #84ffff;">ul</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"nav navbar-nav navbar-right"</span>&gt;
-        &lt;<span style="color: #84ffff;">li</span>&gt;&lt;<span style="color: #84ffff;">a</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./index.html"</span>&gt;&lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"glyphicon glyphicon-home"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;  Home&lt;/<span style="color: #84ffff;">a</span>&gt;&lt;/<span style="color: #84ffff;">a</span>&gt;&lt;/<span style="color: #84ffff;">li</span>&gt;
-        &lt;<span style="color: #84ffff;">li</span>&gt;&lt;<span style="color: #84ffff;">a</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./blog.html"</span>&gt;&lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"glyphicon glyphicon-pencil"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;  Blog&lt;/<span style="color: #84ffff;">a</span>&gt;&lt;/<span style="color: #84ffff;">li</span>&gt;
-        &lt;<span style="color: #84ffff;">li</span>&gt;&lt;<span style="color: #84ffff;">a</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./projects.html"</span>&gt;&lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"glyphicon glyphicon-tags"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;  Projects&lt;/<span style="color: #84ffff;">a</span>&gt;&lt;/<span style="color: #84ffff;">li</span>&gt;
-        &lt;<span style="color: #84ffff;">li</span>&gt;&lt;<span style="color: #84ffff;">a</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./about.html"</span>&gt;&lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"glyphicon glyphicon-user"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;  About&lt;/<span style="color: #84ffff;">a</span>&gt;&lt;/<span style="color: #84ffff;">li</span>&gt;
-        &lt;<span style="color: #84ffff;">li</span>&gt;&lt;<span style="color: #84ffff;">a</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./contact.html"</span>&gt;&lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"glyphicon glyphicon-envelope"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;  Contact&lt;/<span style="color: #84ffff;">a</span>&gt;&lt;/<span style="color: #84ffff;">li</span>&gt;
-      &lt;/<span style="color: #84ffff;">ul</span>&gt;
-    &lt;/<span style="color: #84ffff;">div</span>&gt;<span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">/.nav-collapse </span><span style="color: #b0bec5;">--&gt;</span>
-  &lt;/<span style="color: #84ffff;">div</span>&gt;
-&lt;/<span style="color: #84ffff;">nav</span>&gt;
+&lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">nav</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"navbar navbar-inverse navbar-static-top"</span> <span style="color: #7fffd4;">role</span>=<span style="color: #ffc1c1;">"navigation"</span>&gt;
+  &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">div</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"container"</span>&gt;
+    <span style="color: #fa8072;">&lt;!--</span><span style="color: #ff7f24; font-style: italic;">Toggle header for mobile</span><span style="color: #fa8072;">--&gt;</span>
+    &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">div</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"navbar-header"</span>&gt;
+      &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">button</span> <span style="color: #7fffd4;">type</span>=<span style="color: #ffc1c1;">"button"</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"navbar-toggle"</span> <span style="color: #7fffd4;">data-toggle</span>=<span style="color: #ffc1c1;">"collapse"</span> <span style="color: #7fffd4;">data-target</span>=<span style="color: #ffc1c1;">".navbar-collapse"</span>&gt;
+        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"sr-only"</span>&gt;Toggle navigation&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span>&gt;
+        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"icon-bar"</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span>&gt;
+        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"icon-bar"</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span>&gt;
+        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"icon-bar"</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span>&gt;
+      &lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">button</span>&gt;
+      &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"navbar-brand active"</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./index.html"</span> <span style="color: #7fffd4;">id</span>=<span style="color: #ffc1c1;">"home"</span>&gt;Chenggang Liu's Homepage&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span>&gt;
+    &lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">div</span>&gt;
+    <span style="color: #fa8072;">&lt;!--</span><span style="color: #ff7f24; font-style: italic;">normal header</span><span style="color: #fa8072;">--&gt;</span>
+    &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">div</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"navbar-collapse collapse"</span>&gt;
+      &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">ul</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"nav navbar-nav navbar-right"</span>&gt;
+        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">li</span>&gt;&lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./index.html"</span>&gt;&lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"glyphicon glyphicon-home"</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span>&gt;  Home&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">li</span>&gt;
+        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">li</span>&gt;&lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./blog.html"</span>&gt;&lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"glyphicon glyphicon-pencil"</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span>&gt;  Blog&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">li</span>&gt;
+        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">li</span>&gt;&lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./projects.html"</span>&gt;&lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"glyphicon glyphicon-tags"</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span>&gt;  Projects&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">li</span>&gt;
+        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">li</span>&gt;&lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./about.html"</span>&gt;&lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"glyphicon glyphicon-user"</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span>&gt;  About&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">li</span>&gt;
+        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">li</span>&gt;&lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./contact.html"</span>&gt;&lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"glyphicon glyphicon-envelope"</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span>&gt;  Contact&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">li</span>&gt;
+      &lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">ul</span>&gt;
+    &lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">div</span>&gt;<span style="color: #fa8072;">&lt;!--</span><span style="color: #ff7f24; font-style: italic;">/.nav-collapse </span><span style="color: #fa8072;">--&gt;</span>
+  &lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">div</span>&gt;
+&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">nav</span>&gt;
 #+END_EXPORT
 
 </code></pre>
