@@ -3,28 +3,21 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Optimal Control and Reinforcement Learning</title>
-<meta name="generator" content="Org mode" />
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
+  .title  { text-align: center; }
   .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
+  .done   { color: green; }
   .tag    { background-color: #eee; font-family: monospace;
             padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
   .underline { text-decoration: underline; }
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
@@ -51,111 +44,27 @@
     border: 1px solid black;
   }
   pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
   pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
 
   table { border-collapse:collapse; }
   caption.t-above { caption-side: top; }
   caption.t-bottom { caption-side: bottom; }
   td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
   dt { font-weight: bold; }
-  .footpara { display: inline; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
@@ -175,7 +84,6 @@
     { font-size: 10px; font-weight: bold; white-space: nowrap; }
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
 <!-- Latest compiled and minified CSS -->
@@ -196,7 +104,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -237,28 +145,48 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script type="text/x-mathjax-config">
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
     MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
         displayAlign: "center",
-        displayIndent: "0em",
+        displayIndent: "2em",
 
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
              }
-});
+        }
+    });
+/*]]>*///-->
 </script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="org-div-home-and-up">
@@ -271,70 +199,70 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd007fc8">Preface</a></li>
-<li><a href="#orga73dd03">Introduction</a></li>
-<li><a href="#org9af469e">Problem formulation (continuous time)</a>
+<li><a href="#sec-1">Preface</a></li>
+<li><a href="#sec-2">Introduction</a></li>
+<li><a href="#sec-3">Problem formulation (continuous time)</a>
 <ul>
-<li><a href="#orga02d397">Bolza Formulation</a></li>
-<li><a href="#org497f2ff">Mayer Formulation</a></li>
-<li><a href="#org4649744">Hamilton-Jacobi-Bellman equation (HJB) and Pontryagin Maximum Principle</a></li>
-<li><a href="#org1ffe8d5">Euler-Lagrange Equation</a>
+<li><a href="#sec-3-1">Bolza Formulation</a></li>
+<li><a href="#sec-3-2">Mayer Formulation</a></li>
+<li><a href="#sec-3-3">Hamilton-Jacobi-Bellman equation (HJB) and Pontryagin Maximum Principle</a></li>
+<li><a href="#sec-3-4">Euler-Lagrange Equation</a>
 <ul>
-<li><a href="#org0b5fd40">Short proof:</a></li>
+<li><a href="#sec-3-4-1">Short proof:</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org84db1d8">Lagrange Equations</a></li>
-<li><a href="#org6c2583f">Hamilton Equations</a></li>
-<li><a href="#org408315e">Introduction</a></li>
-<li><a href="#org98b6c25">Dynamic Programming</a></li>
-<li><a href="#org4126e9d">Direct Method</a>
+<li><a href="#sec-4">Lagrange Equations</a></li>
+<li><a href="#sec-5">Hamilton Equations</a></li>
+<li><a href="#sec-6">Introduction</a></li>
+<li><a href="#sec-7">Dynamic Programming</a></li>
+<li><a href="#sec-8">Direct Method</a>
 <ul>
-<li><a href="#org3a4a6d9">Direct (Multiple) Shooting Method</a></li>
-<li><a href="#orgf70e806">Direct Collocation Method</a></li>
-<li><a href="#org3f68043">Illustration: One Pendulum Swing-up</a></li>
+<li><a href="#sec-8-1">Direct (Multiple) Shooting Method</a></li>
+<li><a href="#sec-8-2">Direct Collocation Method</a></li>
+<li><a href="#sec-8-3">Illustration: One Pendulum Swing-up</a></li>
 </ul>
 </li>
-<li><a href="#org0958cf4">Indirect Method</a>
+<li><a href="#sec-9">Indirect Method</a>
 <ul>
-<li><a href="#org6016f0e">The Gradient Method</a></li>
-<li><a href="#orgf22a8ba">The Newton-Raphson Method</a></li>
-<li><a href="#orgb7945cc">Steady-state Local Models</a></li>
-<li><a href="#orgd71c3e2">One-link Pendulum Swingup Example Problem</a></li>
+<li><a href="#sec-9-1">The Gradient Method</a></li>
+<li><a href="#sec-9-2">The Newton-Raphson Method</a></li>
+<li><a href="#sec-9-3">Steady-state Local Models</a></li>
+<li><a href="#sec-9-4">One-link Pendulum Swingup Example Problem</a></li>
 </ul>
 </li>
-<li><a href="#orgd779ec9">Introduction of Optimal Control</a>
+<li><a href="#sec-10">Introduction of Optimal Control</a>
 <ul>
-<li><a href="#org0427c37">Infinite Time Horizon Optimal Control</a></li>
-<li><a href="#org16c0f27">Solution via Dynamic Programming</a></li>
+<li><a href="#sec-10-1">Infinite Time Horizon Optimal Control</a></li>
+<li><a href="#sec-10-2">Solution via Dynamic Programming</a></li>
 </ul>
 </li>
-<li><a href="#org74aa5a7">Introduction of Model Predictive Control</a>
+<li><a href="#sec-11">Introduction of Model Predictive Control</a>
 <ul>
-<li><a href="#org78034a2">Model Predictive Control (MPC)</a></li>
-<li><a href="#orge7ad4e2">Variation on MPC</a></li>
-<li><a href="#orgdc2f897">Variation on MPC (Continuation)</a></li>
+<li><a href="#sec-11-1">Model Predictive Control (MPC)</a></li>
+<li><a href="#sec-11-2">Variation on MPC</a></li>
+<li><a href="#sec-11-3">Variation on MPC (Continuation)</a></li>
 </ul>
 </li>
-<li><a href="#org4d57b19">CHOMP (Co-variant Hamiltonian Optimization for Motion Planning)</a>
+<li><a href="#sec-12">CHOMP (Co-variant Hamiltonian Optimization for Motion Planning)</a>
 <ul>
-<li><a href="#orgbb984bb">Remarks</a></li>
-<li><a href="#org6ba2343">Problem formulation</a></li>
-<li><a href="#org5158624">Functional gradient</a></li>
-<li><a href="#org9760b29">Functional gradient</a></li>
-<li><a href="#org54f3a29">Functionals and Co-variant Gradients for Trajectory Optimization</a></li>
-<li><a href="#orga36400f">Waypoint Trajectory Parameterization</a></li>
-<li><a href="#orgc95d3e1">Update rule:</a></li>
-<li><a href="#org2f06655">Hamiltonian Monte Carlo</a></li>
+<li><a href="#sec-12-1">Remarks</a></li>
+<li><a href="#sec-12-2">Problem formulation</a></li>
+<li><a href="#sec-12-3">Functional gradient</a></li>
+<li><a href="#sec-12-4">Functional gradient</a></li>
+<li><a href="#sec-12-5">Functionals and Co-variant Gradients for Trajectory Optimization</a></li>
+<li><a href="#sec-12-6">Waypoint Trajectory Parameterization</a></li>
+<li><a href="#sec-12-7">Update rule:</a></li>
+<li><a href="#sec-12-8">Hamiltonian Monte Carlo</a></li>
 </ul>
 </li>
-<li><a href="#org16d54f6">Optimal Smoothing and Its Application</a>
+<li><a href="#sec-13">Optimal Smoothing and Its Application</a>
 <ul>
-<li><a href="#orga709b15">Optimal Smoothing Background</a>
+<li><a href="#sec-13-1">Optimal Smoothing Background</a>
 <ul>
-<li><a href="#orgd5e00db">Optimal smoothing</a></li>
-<li><a href="#orgdcfccbb">Optimal linear quadratic smoother</a></li>
+<li><a href="#sec-13-1-1">Optimal smoothing</a></li>
+<li><a href="#sec-13-1-2">Optimal linear quadratic smoother</a></li>
 </ul>
 </li>
 </ul>
@@ -343,9 +271,9 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgd007fc8" class="outline-2">
-<h2 id="orgd007fc8">Preface</h2>
-<div class="outline-text-2" id="text-orgd007fc8">
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Preface</h2>
+<div class="outline-text-2" id="text-1">
 <p>
 This notes is about optimal control and trajectory optimization. Most of it's content are cited from books and
 websites, I put them together in a more readable manner for myself and for all who are passionate about it..
@@ -355,23 +283,29 @@ websites, I put them together in a more readable manner for myself and for all w
 I will use the following notations unless specified otherwise:
 </p>
 <ul class="org-ul">
-<li>\(\mathbf{x} \in \mathbb{R}^n\): the vector of state variables</li>
-<li>\(\mathbf{u} \in \mathbb{R}^m\): the vector of control variables</li>
+<li>\(\mathbf{x} \in \mathbb{R}^n\): the vector of state variables
+</li>
+<li>\(\mathbf{u} \in \mathbb{R}^m\): the vector of control variables
+</li>
 <li>\(J(\mathbf{x},\mathbf{u},t_f)\): the objective function or performance
-index</li>
+index
+</li>
 <li>\(L(\mathbf{x},\mathbf{u})\): for discrete-time system, called one step cost
-function; for continuous-time system, called Lagrangian.</li>
+function; for continuous-time system, called Lagrangian.
+</li>
 <li>\(V(\mathbf{x}) \in \mathbb{R}\): the value function or the optimal
 cost function, or the optimal return function.
-\(V(\mathbf{x},t) = \min_{\mathbf{u}(\cdot)}J(\mathbf{x},\mathbf{u},t)\)</li>
-<li>\(R(\mathbf{x},\mathbf{u})\): the reward function</li>
+\(V(\mathbf{x},t) = \min_{\mathbf{u}(\cdot)}J(\mathbf{x},\mathbf{u},t)\)
+</li>
+<li>\(R(\mathbf{x},\mathbf{u})\): the reward function
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orga73dd03" class="outline-2">
-<h2 id="orga73dd03">Introduction</h2>
-<div class="outline-text-2" id="text-orga73dd03">
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Introduction</h2>
+<div class="outline-text-2" id="text-2">
 <p>
 Optimal control theory, an extension of the calculus of variations, is a mathematical optimization method for deriving
 control policies. The method is largely due to the work of Lev Pontryagin and his collaborators in the Soviet Union
@@ -389,9 +323,12 @@ functional or discrete cost summation.
 Three important elements:
 </p>
 <ol class="org-ol">
-<li>dynamics model</li>
-<li>cost (reward) function</li>
-<li>policy or control law</li>
+<li>dynamics model
+</li>
+<li>cost (reward) function
+</li>
+<li>policy or control law
+</li>
 </ol>
 
 <p>
@@ -402,13 +339,12 @@ is the same, to find the optimal 3).
 </div>
 </div>
 
-<div id="outline-container-org9af469e" class="outline-2">
-<h2 id="org9af469e">Problem formulation (continuous time)</h2>
-<div class="outline-text-2" id="text-org9af469e">
-</div>
-<div id="outline-container-orga02d397" class="outline-3">
-<h3 id="orga02d397">Bolza Formulation</h3>
-<div class="outline-text-3" id="text-orga02d397">
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Problem formulation (continuous time)</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1">Bolza Formulation</h3>
+<div class="outline-text-3" id="text-3-1">
 \begin{equation}
   \label{eq:b1}
   J(u(\cdot),t_f) = \phi(\mathbf{x}(t_f),t_f) + \int_{t_0}^{t_f}L(\mathbf{x},\mathbf{u},t)dt
@@ -435,9 +371,9 @@ are called the terminal penalty term and Lagrangian, respectively.
 </div>
 </div>
 
-<div id="outline-container-org497f2ff" class="outline-3">
-<h3 id="org497f2ff">Mayer Formulation</h3>
-<div class="outline-text-3" id="text-org497f2ff">
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2">Mayer Formulation</h3>
+<div class="outline-text-3" id="text-3-2">
 <p>
 In the Mayer formulation, the sate vector is extended by one state
 \(x_{n+1}(t)\).
@@ -496,9 +432,9 @@ Hamilton-Jacobi-Bellman equation (a sufficient condition).
 </div>
 </div>
 
-<div id="outline-container-org4649744" class="outline-3">
-<h3 id="org4649744">Hamilton-Jacobi-Bellman equation (HJB) and Pontryagin Maximum Principle</h3>
-<div class="outline-text-3" id="text-org4649744">
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3">Hamilton-Jacobi-Bellman equation (HJB) and Pontryagin Maximum Principle</h3>
+<div class="outline-text-3" id="text-3-3">
 <p>
 The Hamilton-Jacobi-Bellman (HJB) equation is a partial differential equation which is central to optimal control
 theory. The solution of the HJB equation is the <i>value function</i>, which gives the optimal cost-to-go for a given
@@ -566,9 +502,9 @@ the field of extremals.
 </div>
 </div>
 
-<div id="outline-container-org1ffe8d5" class="outline-3">
-<h3 id="org1ffe8d5">Euler-Lagrange Equation</h3>
-<div class="outline-text-3" id="text-org1ffe8d5">
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4">Euler-Lagrange Equation</h3>
+<div class="outline-text-3" id="text-3-4">
 <p>
 The <i>Euler-Lagrange equation</i> was developed in the 1750s by Euler and Lagrange in connection with their studies of the
 \emph{tautochrone} problem. This is the problem of determining a curve on which a weighted particle will fall to a fixed
@@ -602,15 +538,14 @@ The <i>Euler-Lagrange equation</i>, then, is the ordinary differential equation
   \frac{\partial L}{\partial q}-\frac{d}{dt}\frac{\partial L}{\partial
   \dot{q}} = 0
 \end{equation}
-
 <p>
 The solution of this eq. \ref{eq:28} is the stationary solution of eq. \ref{eq:26}[fn:prove].
 </p>
 </div>
 
-<div id="outline-container-org0b5fd40" class="outline-4">
-<h4 id="org0b5fd40">Short proof:</h4>
-<div class="outline-text-4" id="text-org0b5fd40">
+<div id="outline-container-sec-3-4-1" class="outline-4">
+<h4 id="sec-3-4-1">Short proof:</h4>
+<div class="outline-text-4" id="text-3-4-1">
 \begin{equation}
   \label{eq:11}
   \frac{\delta S}{\delta q} = 0
@@ -641,11 +576,12 @@ extremum of the action functional
 \end{equation}
 <p>
 where \(L(t,q,\dot{q}):= K-V\) is the Lagrangian function for the
-system. <br />
-A good tutorial can be found at: <br />
+system. <br  />
+A good tutorial can be found at: <br  />
 </p>
 <ul class="org-ul">
-<li><a href="http://www.eftaylor.com/software/ActionApplets/LeastAction.html">http://www.eftaylor.com/software/ActionApplets/LeastAction.html</a></li>
+<li><a href="http://www.eftaylor.com/software/ActionApplets/LeastAction.html">http://www.eftaylor.com/software/ActionApplets/LeastAction.html</a>
+</li>
 </ul>
 
 <p>
@@ -686,9 +622,9 @@ backward. The state and costate are coordinated through the above equations.
 </div>
 </div>
 
-<div id="outline-container-org84db1d8" class="outline-2">
-<h2 id="org84db1d8">Lagrange Equations</h2>
-<div class="outline-text-2" id="text-org84db1d8">
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Lagrange Equations</h2>
+<div class="outline-text-2" id="text-4">
 <p>
 Lagrangian mechanics is a re-formulation of classical mechanics that
 combines conservation of momentum with conservation of energy. It was
@@ -724,7 +660,7 @@ generalized coordinate. Lagrange equations are often written as
 \end{equation}
 
 <p>
-Intuitive example: <br />
+Intuitive example: <br  />
 </p>
 \begin{equation}
   \label{eq:23}
@@ -752,9 +688,9 @@ According to Newton's second law, \(m\ddot{q}-(0,0,mg) = 0\).
 </div>
 </div>
 
-<div id="outline-container-org6c2583f" class="outline-2">
-<h2 id="org6c2583f">Hamilton Equations</h2>
-<div class="outline-text-2" id="text-org6c2583f">
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5">Hamilton Equations</h2>
+<div class="outline-text-2" id="text-5">
 <p>
 Hamiltonian mechanics is a reformulation of classical mechanics that
 was introduced in 1833 by Irish mathematician William Rowan Hamilton.
@@ -778,7 +714,7 @@ phase space.
 where \(p(t)\) is generalized momenta, \(q(t)\) is generalized
 coordinates, \(H\) is the Hamilton function, or Hamiltonian.
 It is simply the total energy of the material point.
-Intuitive Example: <br />
+Intuitive Example: <br  />
 </p>
 \begin{equation}
   \label{eq:25}
@@ -789,9 +725,12 @@ with the variable defined as:
 </p>
 
 <ul class="org-ul">
-<li>\(p = m\dot{q}\): the momentum of the material point</li>
-<li>\(q=(x,y,z)'\): the location of the material point</li>
-<li>\(V(q)\): the potential energy</li>
+<li>\(p = m\dot{q}\): the momentum of the material point
+</li>
+<li>\(q=(x,y,z)'\): the location of the material point
+</li>
+<li>\(V(q)\): the potential energy
+</li>
 </ul>
 
 <p>
@@ -804,19 +743,22 @@ Recall that \(F=\dot{p}=-\frac{\partial V}{\partial q}\), then Eq.
 </p>
 
 <ul class="org-ul">
-<li>Write out the Lagrangian \(L=T - V\). Express \(T\) and \(V\) as though you were going to use Lagrange's equation.</li>
+<li>Write out the Lagrangian \(L=T - V\). Express \(T\) and \(V\) as though you were going to use Lagrange's equation.
+</li>
 <li>Calculate the momenta by differentiating the Lagrangian with
-respect to velocity, as \(p=\frac{\partial{L}}{\partial{\dot{q}}}\)</li>
-<li>\(H=p\dot{q}-L\).</li>
+respect to velocity, as \(p=\frac{\partial{L}}{\partial{\dot{q}}}\)
+</li>
+<li>\(H=p\dot{q}-L\).
+</li>
 </ul>
 </div>
 </div>
 
 
 
-<div id="outline-container-org408315e" class="outline-2">
-<h2 id="org408315e">Introduction</h2>
-<div class="outline-text-2" id="text-org408315e">
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6">Introduction</h2>
+<div class="outline-text-2" id="text-6">
 <p>
 Generally speaking, optimal control problems are nonlinear and, thus do not have analytic solutions (e.g., like the
 linear-quadratic optimal control problem). As a result, it is necessary to employ numerical methods to solve optimal
@@ -872,9 +814,9 @@ combination methods were proposed in \cite{VonStryk1992,Hardt1999}.
 </div>
 </div>
 
-<div id="outline-container-org98b6c25" class="outline-2">
-<h2 id="org98b6c25">Dynamic Programming</h2>
-<div class="outline-text-2" id="text-org98b6c25">
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7">Dynamic Programming</h2>
+<div class="outline-text-2" id="text-7">
 <p>
 A typical algorithm, such as Dynamic Programming (DP), often discretizes the states and controls into cells, refines a
 candidate optimal cost function and/or a corresponding control policy function iteratively \cite{Larson1968}.
@@ -897,9 +839,9 @@ optimized trajectories are shown starting from the random states.}
 </div>
 
 
-<div id="outline-container-org4126e9d" class="outline-2">
-<h2 id="org4126e9d">Direct Method</h2>
-<div class="outline-text-2" id="text-org4126e9d">
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8">Direct Method</h2>
+<div class="outline-text-2" id="text-8">
 <p>
 The approach that has risen to prominence in numerical
 optimal control over the past two decades (i.e., from the
@@ -914,9 +856,9 @@ nonlinear optimization problem.
 </p>
 </div>
 
-<div id="outline-container-org3a4a6d9" class="outline-3">
-<h3 id="org3a4a6d9">Direct (Multiple) Shooting Method</h3>
-<div class="outline-text-3" id="text-org3a4a6d9">
+<div id="outline-container-sec-8-1" class="outline-3">
+<h3 id="sec-8-1">Direct (Multiple) Shooting Method</h3>
+<div class="outline-text-3" id="text-8-1">
 <p>
 In numerical analysis, direct shooting method is the method
 for solving a boundary value problem by reducing it to the
@@ -961,21 +903,24 @@ Advantages and disadvantages:
 
 
 <ul class="org-ul">
-<li>The strong sensitivity of initial value problems, and the small convergence</li>
+<li>The strong sensitivity of initial value problems, and the small convergence
+</li>
 </ul>
 <p>
 region for the Newton's method make solving these problems via simple shooting
 very difficult.
 </p>
 <ul class="org-ul">
-<li>Shooting methods require forward simulation of the dynamics to compute</li>
+<li>Shooting methods require forward simulation of the dynamics to compute
+</li>
 </ul>
 <p>
 the cost function ( and its gradients), and therefore can be fairly
 expensive to evaluation.
 </p>
 <ul class="org-ul">
-<li>Additionally, they do not make very effective</li>
+<li>Additionally, they do not make very effective
+</li>
 </ul>
 <p>
 use of the capabilities of modern nonlinear optimization routine (like
@@ -992,9 +937,9 @@ SNOPT) to enforce constrains.
 </div>
 </div>
 
-<div id="outline-container-orgf70e806" class="outline-3">
-<h3 id="orgf70e806">Direct Collocation Method</h3>
-<div class="outline-text-3" id="text-orgf70e806">
+<div id="outline-container-sec-8-2" class="outline-3">
+<h3 id="sec-8-2">Direct Collocation Method</h3>
+<div class="outline-text-3" id="text-8-2">
 <p>
 In direct collocation \cite{Hargraves1987,VonStryk1993},
 the state and/or control variables are approximated using an appropriate function approximation
@@ -1019,7 +964,7 @@ Another disadvantage is local minima \cite{VonStryk1992}.
 </p>
 
 <p>
-<b>Midpoint Discretization Method</b>: <br />
+<b>Midpoint Discretization Method</b>: <br  />
 The system dynamics in state space is
 </p>
 
@@ -1082,6 +1027,7 @@ Parameters to be optimized  are
 \([p(0),p(1),\ldots,p(N),u(1),u(1),\ldots,u(N-1)]\).
 </p>
 
+<p>
 \begin{figure}%[htp]
   \centering
   \subfigure[Ringing]
@@ -1096,6 +1042,7 @@ Parameters to be optimized  are
   \caption{Results of Midpoint Discretization Method.}
   \label{fig:one-link-exp}
 \end{figure}
+</p>
 
 <p>
 <b>Piece-wise Constant Integration Method</b>:
@@ -1134,14 +1081,14 @@ desired minima. The most commonly stated limitation of these methods is their ac
 </div>
 </div>
 
-<div id="outline-container-org3f68043" class="outline-3">
-<h3 id="org3f68043">Illustration: One Pendulum Swing-up</h3>
-<div class="outline-text-3" id="text-org3f68043">
+<div id="outline-container-sec-8-3" class="outline-3">
+<h3 id="sec-8-3">Illustration: One Pendulum Swing-up</h3>
+<div class="outline-text-3" id="text-8-3">
 \begin{figure}
   \centering
   \includegraphics[width=3.5in]{fig/swingup}
   \caption{One-link pendulum swing-up problem.
-  The frames are taken in intervals of $0.5$ second.}
+  The frames are taken in intervals of \(0.5\) second.}
   \label{fig:pendulum-swing-up}
 \end{figure}
 
@@ -1165,6 +1112,7 @@ discretization time.
 The optimization results are shown in \ref{fig:one-link-opt}.
 </p>
 
+<p>
 \begin{figure}%[htp]
   \centering
   \subfigure[Local minimum results]
@@ -1189,6 +1137,7 @@ The optimization results are shown in \ref{fig:one-link-opt}.
     problem.}
   \label{fig:one-link-opt}
 \end{figure}
+</p>
 
 
 <p>
@@ -1203,15 +1152,15 @@ Some explain goes here &#x2026;
 
 \begin{algorithm}
 \caption{Trajectory optimization algorithm}
-  \For{$level=0$ to $MaxCost$, $step$}{
+  \For{\(level=0\) to \(MaxCost\), $step$}{
     \If{$level <= Cost(T(i,j)) < level+step$}{
       Mark $(i,j)$\;
       $N++$\;
     }
     \While{$N > 0$}{
-      \ForAll{$(i,j)$'s neighbors $(i',j')$}{
-        Re-optimize trajectory $T(i',j')$ by using trajectory $T(i,j)$ as initial guess\;
-        \If{ $Cost(T(i',j'))$ is reduced}{
+      \ForAll{\((i,j)\)'s neighbors $(i',j')$}{
+        Re-optimize trajectory \(T(i',j')\) by using trajectory \(T(i,j)\) as initial guess\;
+        \If{ \(Cost(T(i',j'))\) is reduced}{
           Mark $(i',j')$\;
           $N++$\;
         }
@@ -1225,19 +1174,23 @@ Some explain goes here &#x2026;
 </div>
 </div>
 
-<div id="outline-container-org0958cf4" class="outline-2">
-<h2 id="org0958cf4">Indirect Method</h2>
-<div class="outline-text-2" id="text-org0958cf4">
-</div>
-<div id="outline-container-org6016f0e" class="outline-3">
-<h3 id="org6016f0e">The Gradient Method</h3>
-<div class="outline-text-3" id="text-org6016f0e">
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9">Indirect Method</h2>
+<div class="outline-text-2" id="text-9">
+</div><div id="outline-container-sec-9-1" class="outline-3">
+<h3 id="sec-9-1">The Gradient Method</h3>
+<div class="outline-text-3" id="text-9-1">
 <ul class="org-ul">
-<li>Newton's method</li>
-<li>gradient descent method</li>
-<li>conjugate method</li>
-<li>steep descent</li>
-<li>multiple shooting method</li>
+<li>Newton's method
+</li>
+<li>gradient descent method
+</li>
+<li>conjugate method
+</li>
+<li>steep descent
+</li>
+<li>multiple shooting method
+</li>
 </ul>
 
 <p>
@@ -1258,14 +1211,20 @@ a solution.
 
 
 <ul class="org-ul">
-<li>For a given \(\mathbf{x}_0\), pick a control history \(\mathbf{u}(t)\).</li>
-<li>Propagate \(\dot{\mathbf{x}} = f(\mathbf{x}, \mathbf{u}, t)\) forward in time to create a state trajectory.</li>
+<li>For a given \(\mathbf{x}_0\), pick a control history \(\mathbf{u}(t)\).
+</li>
+<li>Propagate \(\dot{\mathbf{x}} = f(\mathbf{x}, \mathbf{u}, t)\) forward in time to create a state trajectory.
+</li>
 <li>Evaluate \(\phi(\mathbf{x}(tf))\), and the propagate costate
-\(\lambda\) backward in time from \(t_f\) to \(t_0\), using Eq. \ref{eq:el-costate}.</li>
+\(\lambda\) backward in time from \(t_f\) to \(t_0\), using Eq. \ref{eq:el-costate}.
+</li>
 <li>At each time step, choose \(\mathbf{u} = -K(L_u + \lambda^Tf_u)\),
-where \(K\) is a positive scalar or a positive definite matrix in the case of multiple input channels.</li>
-<li>Let \(\mathbf{u} = \mathbf{u} + \delta \mathbf{u}\).</li>
-<li>Go back to step 2 and repeat loop until solution has converged.</li>
+where \(K\) is a positive scalar or a positive definite matrix in the case of multiple input channels.
+</li>
+<li>Let \(\mathbf{u} = \mathbf{u} + \delta \mathbf{u}\).
+</li>
+<li>Go back to step 2 and repeat loop until solution has converged.
+</li>
 </ul>
 
 
@@ -1276,9 +1235,9 @@ trajectory to begin.
 </div>
 </div>
 
-<div id="outline-container-orgf22a8ba" class="outline-3">
-<h3 id="orgf22a8ba">The Newton-Raphson Method</h3>
-<div class="outline-text-3" id="text-orgf22a8ba">
+<div id="outline-container-sec-9-2" class="outline-3">
+<h3 id="sec-9-2">The Newton-Raphson Method</h3>
+<div class="outline-text-3" id="text-9-2">
 <p>
 The indirect method we use is called Difference Dynamic
 Programming (DDP), which is
@@ -1388,9 +1347,9 @@ adding soft penalty to the one step cost function.
 </div>
 
 
-<div id="outline-container-orgb7945cc" class="outline-3">
-<h3 id="orgb7945cc">Steady-state Local Models</h3>
-<div class="outline-text-3" id="text-orgb7945cc">
+<div id="outline-container-sec-9-3" class="outline-3">
+<h3 id="sec-9-3">Steady-state Local Models</h3>
+<div class="outline-text-3" id="text-9-3">
 <p>
 A by-product of DDP is local models of optimal control law in the
 neighborhood of the optimal trajectory,
@@ -1520,9 +1479,10 @@ for all \(j \ne i\) and \(D\) is distance matrix.
 </div>
 
 
-<div id="outline-container-orgd71c3e2" class="outline-3">
-<h3 id="orgd71c3e2">One-link Pendulum Swingup Example Problem</h3>
-<div class="outline-text-3" id="text-orgd71c3e2">
+<div id="outline-container-sec-9-4" class="outline-3">
+<h3 id="sec-9-4">One-link Pendulum Swingup Example Problem</h3>
+<div class="outline-text-3" id="text-9-4">
+<p>
 \begin{figure}%[htp]
   \centering
   \subfigure[The optimal cost function.]
@@ -1540,9 +1500,11 @@ for all \(j \ne i\) and \(D\) is distance matrix.
     are states used to construct local models of the optimal cost function in the left
     plot and of the control policy in the right plot.
     The optimal cost function is cut
-    off above 20. The goal is at the state ($\pi$, 0)}
+    off above 20. The goal is at the state (\(\pi\), 0)}
   \label{fig:one-link-exp}
 \end{figure}
+</p>
+<p>
 \begin{figure}%[htp]
   \centering
   \subfigure[Control policy using local models.]
@@ -1554,27 +1516,32 @@ for all \(j \ne i\) and \(D\) is distance matrix.
   {
     \label{fig:optimal-cost-tube}
     \includegraphics[width=1.5in]{fig/NOC_value}}
+</p>
 
-  \subfigure[Optimal control policy]
-  {
-    \label{fig:optimal-cost-tube}
-    \includegraphics[width=1.5in]{fig/optimal_control_policy}}
-  \hspace{.1in}
-  \subfigure[Value function of the optimal control policy]
-  {
-    \label{fig:optimal-cost-tube}
-    \includegraphics[width=1.5in]{fig/optimal_control_value}}
+<p>
+\subfigure[Optimal control policy]
+{
+  \label{fig:optimal-cost-tube}
+  \includegraphics[width=1.5in]{fig/optimal_control_policy}}
+\hspace{.1in}
+\subfigure[Value function of the optimal control policy]
+{
+  \label{fig:optimal-cost-tube}
+  \includegraphics[width=1.5in]{fig/optimal_control_value}}
+</p>
 
-  \caption{}
-  \label{fig:one-link-exp}
+<p>
+\caption{}
+\label{fig:one-link-exp}
 \end{figure}
+</p>
 
 <p>
 Fig. \ref{fig:one-link-exp} shows the optimal cost function, which
 indicates the minimum total cost starting from each state, and
 the optimal control policy, which indicates the optimal control for each state.
 Dynamic Programming requires storing the optimal control over an
-$n$-dimensional grid of the entire state space or in the neighborhood
+\(n\)-dimensional grid of the entire state space or in the neighborhood
 of the nominal path.
 The computation and even the storage of the optimal control becomes
 difficult when the dimension is high, which called ``the curse of dimensionality''.
@@ -1588,13 +1555,12 @@ then we can get approximations to the optimal control in its neighborhood.
 
 
 
-<div id="outline-container-orgd779ec9" class="outline-2">
-<h2 id="orgd779ec9">Introduction of Optimal Control</h2>
-<div class="outline-text-2" id="text-orgd779ec9">
-</div>
-<div id="outline-container-org0427c37" class="outline-3">
-<h3 id="org0427c37">Infinite Time Horizon Optimal Control</h3>
-<div class="outline-text-3" id="text-org0427c37">
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10">Introduction of Optimal Control</h2>
+<div class="outline-text-2" id="text-10">
+</div><div id="outline-container-sec-10-1" class="outline-3">
+<h3 id="sec-10-1">Infinite Time Horizon Optimal Control</h3>
+<div class="outline-text-3" id="text-10-1">
 <p>
 \[
    \min J  = \sum_{k=0}^{\infty} L(x_k, u_k)
@@ -1610,42 +1576,46 @@ subject to
 
 
 <ul class="org-ul">
-<li>variables: state and control trajectories \(x_0, x_1, \ldots \in \mathrm{R}^N\), \(u_0, u_1, \ldots \in \mathbf{R}^M\)</li>
+<li>variables: state and control trajectories \(x_0, x_1, \ldots \in \mathrm{R}^N\), \(u_0, u_1, \ldots \in \mathbf{R}^M\)
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org16c0f27" class="outline-3">
-<h3 id="org16c0f27">Solution via Dynamic Programming</h3>
-<div class="outline-text-3" id="text-org16c0f27">
+<div id="outline-container-sec-10-2" class="outline-3">
+<h3 id="sec-10-2">Solution via Dynamic Programming</h3>
+<div class="outline-text-3" id="text-10-2">
 <ul class="org-ul">
 <li>(Bellman)  value function \(V(x)\) is optimal value of control problem as a function of state x.
 \[
      V(x_0) = \min \sum_{k=0}^{\infty} L(x_k, u_k)
-     \]</li>
+     \]
+</li>
 <li>\(V\) satisfies Bellman or dynamic programming equation
 \[
      V(x_k) = \min_{u_k} \{L(x_k, u_k) + V(x_{k+1})\}
-     \]</li>
+     \]
+</li>
 <li>Optimal control variable is given by
 \[
      u^* = arg \min_{u_k} \{L(x, u) + V(F(x, u))\}
      \]
-NOTE: the optimal control has 'state feedback form' that \(u_k = \pi(x_k)\)</li>
+NOTE: the optimal control has 'state feedback form' that \(u_k = \pi(x_k)\)
+</li>
 
-<li>For a time-invariant linear system, there is analytical solution for \(V(x)\) (solution of Algebraic Riccati Equation)</li>
+<li>For a time-invariant linear system, there is analytical solution for \(V(x)\) (solution of Algebraic Riccati Equation)
+</li>
 </ul>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org74aa5a7" class="outline-2">
-<h2 id="org74aa5a7">Introduction of Model Predictive Control</h2>
-<div class="outline-text-2" id="text-org74aa5a7">
-</div>
-<div id="outline-container-org78034a2" class="outline-3">
-<h3 id="org78034a2">Model Predictive Control (MPC)</h3>
-<div class="outline-text-3" id="text-org78034a2">
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11">Introduction of Model Predictive Control</h2>
+<div class="outline-text-2" id="text-11">
+</div><div id="outline-container-sec-11-1" class="outline-3">
+<h3 id="sec-11-1">Model Predictive Control (MPC)</h3>
+<div class="outline-text-3" id="text-11-1">
 <p>
 \[
     \min J = \sum_{k=0}^{k=N} L(x_k, u_k)
@@ -1663,26 +1633,28 @@ with variables \(x_1, \ldots, x_N, u_0, \ldots, u_{N-1}\)
 </p>
 
 <ul class="org-ul">
-<li>we take \(u = u_0\)</li>
-<li>this also gives a state feedback control \(u_k = \pi_{mpc}(x_k)\)</li>
+<li>we take \(u = u_0\)
+</li>
+<li>this also gives a state feedback control \(u_k = \pi_{mpc}(x_k)\)
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orge7ad4e2" class="outline-3">
-<h3 id="orge7ad4e2">Variation on MPC</h3>
-<div class="outline-text-3" id="text-orge7ad4e2">
+<div id="outline-container-sec-11-2" class="outline-3">
+<h3 id="sec-11-2">Variation on MPC</h3>
+<div class="outline-text-3" id="text-11-2">
 <ul class="org-ul">
 <li>Add final state cost \(\hat{V}(x_f)\) such that
 \[
     \min \{ \sum_{k=0}^{k=N} L(x_k, u_k) + \hat{V}(x_{N+1}) \}
-    \]</li>
+    \]
+</li>
 
-<li>if \(\hat{V} = V\), MPC gives optimal control</li>
+<li>if \(\hat{V} = V\), MPC gives optimal control
+</li>
 
-<li><p>
-Why?
-</p>
+<li>Why?
 
 <p>
 Recall Bellman's Principle of Optimality,
@@ -1690,65 +1662,70 @@ Recall Bellman's Principle of Optimality,
 then we have
 \[ \min \sum_{k=0}^{\infty} L(x_k, u_k) = \min \{ \sum_{k=0}^{N}L(x_k, u_k) + V(x_f) \} \]
 where \(x_f = x_{N+1}\)
-</p></li>
+</p>
+</li>
 </ul>
 </div>
 </div>
 
 
-<div id="outline-container-orgdc2f897" class="outline-3">
-<h3 id="orgdc2f897">Variation on MPC (Continuation)</h3>
-<div class="outline-text-3" id="text-orgdc2f897">
+<div id="outline-container-sec-11-3" class="outline-3">
+<h3 id="sec-11-3">Variation on MPC (Continuation)</h3>
+<div class="outline-text-3" id="text-11-3">
 <ul class="org-ul">
 <li>what's the benefit?
 <ul class="org-ul">
-<li><p>
-\color{red} If we have a good approximation to \(V\), MPC's time horizon can be reduced by a lot.
-</p>
+<li>\color{red} If we have a good approximation to \(V\), MPC's time horizon can be reduced by a lot.
 
 <p>
 NOTE: the computation benefit is at the cost of ignoring future dynamic changes.
-</p></li>
-</ul></li>
+</p>
+</li>
+</ul>
+</li>
 
 <li>A MPC with a short time horizon can give almost the same result as a MPC with a long time horizon,
-which means we can save a lot of computation!</li>
+which means we can save a lot of computation!
+</li>
 </ul>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org4d57b19" class="outline-2">
-<h2 id="org4d57b19">CHOMP (Co-variant Hamiltonian Optimization for Motion Planning)</h2>
-<div class="outline-text-2" id="text-org4d57b19">
-</div>
-<div id="outline-container-orgbb984bb" class="outline-3">
-<h3 id="orgbb984bb">Remarks</h3>
-<div class="outline-text-3" id="text-orgbb984bb">
+<div id="outline-container-sec-12" class="outline-2">
+<h2 id="sec-12">CHOMP (Co-variant Hamiltonian Optimization for Motion Planning)</h2>
+<div class="outline-text-2" id="text-12">
+</div><div id="outline-container-sec-12-1" class="outline-3">
+<h3 id="sec-12-1">Remarks</h3>
+<div class="outline-text-3" id="text-12-1">
 <ul class="org-ul">
-<li>Suited for gradient-cheap application, where gradient can be computed inexpensively</li>
+<li>Suited for gradient-cheap application, where gradient can be computed inexpensively
+</li>
 <li>Trajectory optimization is invariant to parameterization
 <ul class="org-ul">
-<li>trajectory: a mapping from time t to configuration q</li>
-<li>objective function: a function of trajectory (functional)</li>
-</ul></li>
-<li>Compared with sampling-based method, optimal control, and trajectory optimization (DDP and iLQR)</li>
-<li><p>
-The meaning of the name: Co-variant gradient and Hamiltonian Monte Carlo
-</p>
+<li>trajectory: a mapping from time t to configuration q
+</li>
+<li>objective function: a function of trajectory (functional)
+</li>
+</ul>
+</li>
+<li>Compared with sampling-based method, optimal control, and trajectory optimization (DDP and iLQR)
+</li>
+<li>The meaning of the name: Co-variant gradient and Hamiltonian Monte Carlo
 
 <p>
 <a href="https://personalrobotics.ri.cmu.edu/files/courses/papers/CHOMP12-ijrr.pdf">https://personalrobotics.ri.cmu.edu/files/courses/papers/CHOMP12-ijrr.pdf</a>
-</p></li>
+</p>
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org6ba2343" class="outline-3">
-<h3 id="org6ba2343">Problem formulation</h3>
-<div class="outline-text-3" id="text-org6ba2343">
+<div id="outline-container-sec-12-2" class="outline-3">
+<h3 id="sec-12-2">Problem formulation</h3>
+<div class="outline-text-3" id="text-12-2">
 <p>
-\[ \xi(t)^* = \arg \min_{\xi} U(\xi(t)) \]
+$$ \xi(t)^* = \arg \min_{\xi} U(\xi(t)) $$
 where  \(U (\xi(t)) = F_{smooth}(\xi(t)) + \lambda F_{obs}(\xi(t))\), and
 </p>
 
@@ -1768,17 +1745,18 @@ The obstacle objective:
 </div>
 </div>
 
-<div id="outline-container-org5158624" class="outline-3">
-<h3 id="org5158624">Functional gradient</h3>
-<div class="outline-text-3" id="text-org5158624">
+<div id="outline-container-sec-12-3" class="outline-3">
+<h3 id="sec-12-3">Functional gradient</h3>
+<div class="outline-text-3" id="text-12-3">
 <ul class="org-ul">
 <li>The functional gradient \(\nabla U\) is the perturbation \(\phi\)
 that maximizes \(U[\xi + \epsilon \phi]\) as \(\epsilon \to 0\).
 Choosing a traditional Euclidean norm \(||\xi||^2 = \int \xi(t)^2
      dt\), for any differential objective of form \(F(\xi) = \int L(t,
-     \xi, \xi') dt\), the Euclidean functional gradient: \[ \nabla
+     \xi, \xi') dt\), the Euclidean functional gradient: $$ \nabla
      F(\xi) = \frac{\partial L}{\partial \xi} - \frac{d}{dt}
-     \frac{\partial L}{\partial \dot{\xi}} \]</li>
+     \frac{\partial L}{\partial \dot{\xi}} $$
+</li>
 
 <li>Euler-Lagrange equation
 \[
@@ -1787,16 +1765,18 @@ Choosing a traditional Euclidean norm \(||\xi||^2 = \int \xi(t)^2
 Euler-Lagrange equation is the stationary condition for:
 \[
      \min_{q(t)} S(q) = \int_{a}^{b} L(t, q, \dot{q}) dt
-     \]</li>
+     \]
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org9760b29" class="outline-3">
-<h3 id="org9760b29">Functional gradient</h3>
-<div class="outline-text-3" id="text-org9760b29">
+<div id="outline-container-sec-12-4" class="outline-3">
+<h3 id="sec-12-4">Functional gradient</h3>
+<div class="outline-text-3" id="text-12-4">
 <ul class="org-ul">
-<li>The functional gradient of the smoothness objective:</li>
+<li>The functional gradient of the smoothness objective:
+</li>
 </ul>
 <p>
 \[
@@ -1805,7 +1785,8 @@ Euler-Lagrange equation is the stationary condition for:
 </p>
 
 <ul class="org-ul">
-<li>The functional gradient of the obstacle objective</li>
+<li>The functional gradient of the obstacle objective
+</li>
 </ul>
 <p>
 \[
@@ -1820,15 +1801,16 @@ The matrix \((I - \hat{x}'\hat{x}'^T)\) is a projection matrix that projects wor
 </div>
 </div>
 
-<div id="outline-container-org54f3a29" class="outline-3">
-<h3 id="org54f3a29">Functionals and Co-variant Gradients for Trajectory Optimization</h3>
-<div class="outline-text-3" id="text-org54f3a29">
+<div id="outline-container-sec-12-5" class="outline-3">
+<h3 id="sec-12-5">Functionals and Co-variant Gradients for Trajectory Optimization</h3>
+<div class="outline-text-3" id="text-12-5">
 <ul class="org-ul">
 <li>To removing the dependence on the parametrization (finite difference),
 defining a norm on trajectory perturbations to depend solely on the
 dynamical quantities of the trajectory:
-\[ ||\xi||_A := \int \sum_{n=1}^{k} \alpha_n (D^n \xi(t))^2 dt \]
-where \(D\) is differential operator, \(A = D^T D\).</li>
+$$ ||\xi||_A := \int \sum_{n=1}^{k} \alpha_n (D^n \xi(t))^2 dt $$
+where \(D\) is differential operator, \(A = D^T D\).
+</li>
 </ul>
 
 
@@ -1838,25 +1820,26 @@ Invariant norm \(||\xi(t)||_{A} := <\xi, A\xi> = \int (D\xi(t))^2 dt\)
 
 <ul class="org-ul">
 <li>Functional gradients based on the invariant norm:
-\[ \bar{\nabla}_{A} U(\xi) := A^{-1} \bar{\nabla} U(\xi) \]</li>
+$$ \bar{\nabla}_{A} U(\xi) := A^{-1} \bar{\nabla} U(\xi) $$
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orga36400f" class="outline-3">
-<h3 id="orga36400f">Waypoint Trajectory Parameterization</h3>
-<div class="outline-text-3" id="text-orga36400f">
+<div id="outline-container-sec-12-6" class="outline-3">
+<h3 id="sec-12-6">Waypoint Trajectory Parameterization</h3>
+<div class="outline-text-3" id="text-12-6">
 <p>
 refer to the paper
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgc95d3e1" class="outline-3">
-<h3 id="orgc95d3e1">Update rule:</h3>
-<div class="outline-text-3" id="text-orgc95d3e1">
+<div id="outline-container-sec-12-7" class="outline-3">
+<h3 id="sec-12-7">Update rule:</h3>
+<div class="outline-text-3" id="text-12-7">
 <p>
-\[ \xi_{i+1} = \arg \min_{\xi} U(\xi_i) + (\xi - \xi_i)^T \nabla U(\xi_i) + \frac{\eta}{2} || \xi - \xi_i||_M \]
+$$ \xi_{i+1} = \arg \min_{\xi} U(\xi_i) + (\xi - \xi_i)^T \nabla U(\xi_i) + \frac{\eta}{2} || \xi - \xi_i||_M $$
 </p>
 
 <p>
@@ -1868,57 +1851,55 @@ based), at least in the limit of small step size and fine discretization.
 <p>
 The overall CHOMP objective function is strongly convex – that is, it can be
 lower-bounded over the entire region by a quadratic with curvature A
-\[ \xi_{i+1} = \xi_{i} - \eta A^{-1} \nabla U(\xi_{i}) \]
+$$ \xi_{i+1} = \xi_{i} - \eta A^{-1} \nabla U(\xi_{i}) $$
 </p>
 </div>
 </div>
 
-<div id="outline-container-org2f06655" class="outline-3">
-<h3 id="org2f06655">Hamiltonian Monte Carlo</h3>
-<div class="outline-text-3" id="text-org2f06655">
+<div id="outline-container-sec-12-8" class="outline-3">
+<h3 id="sec-12-8">Hamiltonian Monte Carlo</h3>
+<div class="outline-text-3" id="text-12-8">
 <p>
 refer: <a href="http://arogozhnikov.github.io/2016/12/19/markov_chain_monte_carlo.html">http://arogozhnikov.github.io/2016/12/19/markov_chain_monte_carlo.html</a>
 </p>
 
 <ul class="org-ul">
 <li>Intuition
-\[ p(\xi, \alpha) \propto exp(-\alpha U(\xi)) \]</li>
+$$ p(\xi, \alpha) \propto exp(-\alpha U(\xi)) $$
+</li>
 
-<li><p>
-define a Hamilton function as
-\[ H(\xi, \gamma) := U(\xi) + K(\gamma)  \]
+<li>define a Hamilton function as
+$$ H(\xi, \gamma) := U(\xi) + K(\gamma)  $$
 where \(K(\gamma) = \frac{1}{2} \gamma'\gamma\).
-</p>
 
 <p>
-\[ p(\xi, \gamma) \propto exp(-H(\xi, \gamma)) \]
+$$ p(\xi, \gamma) \propto exp(-H(\xi, \gamma)) $$
 </p>
 
 <p>
 The system dynamics (Hamilton equation):
-\[ \frac{d\xi}{dt} = \gamma \]
-\[ \frac{\gamma}{dt} = -\nabla U(\xi) \]
+$$ \frac{d\xi}{dt} = \gamma $$
+$$ \frac{\gamma}{dt} = -\nabla U(\xi) $$
 </p>
 
 <p>
 The full numerically robust Hamiltonian Monte Carlo. refer to the paper
-</p></li>
+</p>
+</li>
 </ul>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org16d54f6" class="outline-2">
-<h2 id="org16d54f6">Optimal Smoothing and Its Application</h2>
-<div class="outline-text-2" id="text-org16d54f6">
-</div>
-<div id="outline-container-orga709b15" class="outline-3">
-<h3 id="orga709b15">Optimal Smoothing Background</h3>
-<div class="outline-text-3" id="text-orga709b15">
-</div>
-<div id="outline-container-orgd5e00db" class="outline-4">
-<h4 id="orgd5e00db">Optimal smoothing</h4>
-<div class="outline-text-4" id="text-orgd5e00db">
+<div id="outline-container-sec-13" class="outline-2">
+<h2 id="sec-13">Optimal Smoothing and Its Application</h2>
+<div class="outline-text-2" id="text-13">
+</div><div id="outline-container-sec-13-1" class="outline-3">
+<h3 id="sec-13-1">Optimal Smoothing Background</h3>
+<div class="outline-text-3" id="text-13-1">
+</div><div id="outline-container-sec-13-1-1" class="outline-4">
+<h4 id="sec-13-1-1">Optimal smoothing</h4>
+<div class="outline-text-4" id="text-13-1-1">
 <p>
 To quantify the uncertainty associated with an unobserved variable, \(X\), given some information pertaining to that
 variable, \(Y\). In a sequential context, this relates to the calculation of the posterior density, \(p(x_{1:T}|
@@ -1973,9 +1954,9 @@ subjective to
 </p>
 </div>
 </div>
-<div id="outline-container-orgdcfccbb" class="outline-4">
-<h4 id="orgdcfccbb">Optimal linear quadratic smoother</h4>
-<div class="outline-text-4" id="text-orgdcfccbb">
+<div id="outline-container-sec-13-1-2" class="outline-4">
+<h4 id="sec-13-1-2">Optimal linear quadratic smoother</h4>
+<div class="outline-text-4" id="text-13-1-2">
 <p>
 The process model:
 \[ x_{k} = A_k x_{k-1}  + w_{k-1}  \]
