@@ -3,23 +3,30 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>publications</title>
-<!-- 2017-09-10 Sun 19:19 -->
-<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta  name="generator" content="Org-mode" />
-<meta  name="author" content="Chenggang Liu" />
+<!-- 2017-10-08 Sun 11:41 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title></title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Chenggang Liu" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
   .todo   { font-family: monospace; color: red; }
-  .done   { color: green; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
             padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
-  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
   .underline { text-decoration: underline; }
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
@@ -46,27 +53,111 @@
     border: 1px solid black;
   }
   pre.src:hover:before { display: inline;}
-  pre.src-sh:before    { content: 'sh'; }
-  pre.src-bash:before  { content: 'sh'; }
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
   pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-R:before     { content: 'R'; }
-  pre.src-perl:before  { content: 'Perl'; }
-  pre.src-java:before  { content: 'Java'; }
-  pre.src-sql:before   { content: 'SQL'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
 
   table { border-collapse:collapse; }
   caption.t-above { caption-side: top; }
   caption.t-bottom { caption-side: bottom; }
   td, th { vertical-align:top;  }
-  th.right  { text-align: center;  }
-  th.left   { text-align: center;   }
-  th.center { text-align: center; }
-  td.right  { text-align: right;  }
-  td.left   { text-align: left;   }
-  td.center { text-align: center; }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
   dt { font-weight: bold; }
-  .footpara:nth-child(2) { display: inline; }
-  .footpara { display: block; }
+  .footpara { display: inline; }
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
@@ -86,6 +177,7 @@
     { font-size: 10px; font-weight: bold; white-space: nowrap; }
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
 <script type="text/javascript">
@@ -93,7 +185,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2013 Free Software Foundation, Inc.
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -137,43 +229,40 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">publications</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">Book Chapter</a></li>
-<li><a href="#sec-2">Journal papers</a></li>
-<li><a href="#sec-3">Conference papers</a></li>
-<li><a href="#sec-4">PhD Thesis</a></li>
-<li><a href="#sec-5">Patents</a></li>
+<li><a href="#org9d66162">Book Chapter</a></li>
+<li><a href="#org50c7099">Journal papers</a></li>
+<li><a href="#orgfac5fe9">Conference papers</a></li>
+<li><a href="#orgad03ac9">PhD Thesis</a></li>
+<li><a href="#org24362b5">Patents</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1">Book Chapter</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-org9d66162" class="outline-2">
+<h2 id="org9d66162">Book Chapter</h2>
+<div class="outline-text-2" id="text-org9d66162">
 <ul class="org-ul">
 <li>Chapter 1: Trajectory-based dynamic programming, Christopher G. Atkeson and Chenggang LIU, Modeling,
 Simulation and Optimization of Bipedal Walking Cognitive Systems Monographs Volume 18, 2013, pp 1-15
-<a href="[[https://link.springer.com/chapter/10.1007%2F978-3-642-36368-9_1][10.1007/978-3-642-36368-91">[[https://link.springer.com/chapter/10.1007%2F978-3-642-36368-9_1][10.1007/978-3-642-36368-91</a>]]
-<a href="publications/Trajectory-based%20Dynamic%20Programming%20Chapter%201.pdf">pdf</a>
-</li>
+DOI:<a href="https://link.springer.com/chapter/10.1007/978-3-642-36368-9_1">10.1007/978-3-642-36368-91</a>
+<a href="publications/Trajectory-based%20Dynamic%20Programming%20Chapter%201.pdf">pdf</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2">Journal papers</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-org50c7099" class="outline-2">
+<h2 id="org50c7099">Journal papers</h2>
+<div class="outline-text-2" id="text-org50c7099">
 <ul class="org-ul">
 <li>Team WPI-CMU: Achieving Reliable Humanoid Behavior in the DARPA Robotics Challenge
 Mathew DeDonato, Felipe Polido, Kevin Knoedler, Benzun PW Babu, Nandan Banerjee, Christoper P Bove,
 Xiongyi Cui, Ruixiang Du, Perry Franklin, Joshua P Graff, Peng He, Aaron Jaeger, Lening Li,
 Dmitry Berenson, Michael A Gennert, Siyuan Feng, Chenggang Liu, X Xinjilefu, Joohyung Kim,
 Christopher G Atkeson, Xianchao Long, Taskin Padir
-<i>Journal of Field Robotics</i> <b>34 (2)</b>, 381-399
-</li>
+<i>Journal of Field Robotics</i> <b>34 (2)</b>, 381-399</li>
 </ul>
 
 
@@ -183,8 +272,7 @@ C. G. Atkeso, B. P. W. Babu, N. Banerjee, D.
 Berenson, C. P. Bove, X. Cui, M. DeDonato, R. Du, S. Feng, P. Franklin, M. Gennert, J. P. Graff, P. He, A. Jaeger, J.
 Kim, K. Knoedler, L. Li, C. Liu, X. Long, T. Padir, F. Polido, G. G. Tighe, X. Xinjilefu, submitted to Journal of
 <i>Field Robotics</i>
-<a href="publications/jfr-what.pdf">pdf</a>
-</li>
+<a href="publications/jfr-what.pdf">pdf</a></li>
 </ul>
 
 
@@ -192,8 +280,7 @@ Kim, K. Knoedler, L. Li, C. Liu, X. Long, T. Padir, F. Polido, G. G. Tighe, X. X
 <li>Team WPI-CMU's Report from the DARPA Robotics Challenge Finals, Christopher G. Atkeson, Christoper P. Bov,
 Perry Franklin, Benzun P.W. Babu, Mathew DeDonato, Nandan Banerjee, Xiongyi Cui, Michael A. Gennert, Kevin Knoedler,
 Lening Li, Joshua P. Graff, Chenggang Liu, Ruixiang Du, Peng He, Xianchao Long, Dmitry Berenson, Siyuan Feng, Aaron
-Jaeger, Taskin Padir, Felipe Polido, X Xinjilefu, submitted to <i>Journal of Field Robotics</i>
-</li>
+Jaeger, Taskin Padir, Felipe Polido, X Xinjilefu, submitted to <i>Journal of Field Robotics</i></li>
 </ul>
 
 
@@ -201,8 +288,7 @@ Jaeger, Taskin Padir, Felipe Polido, X Xinjilefu, submitted to <i>Journal of Fie
 <li>Biped walking control using a trajectory library Chenggang LIU, Christopher G. Atkeson, and Jianbo SU,
 <i>Robotica</i>, Volume 31 Issue 2, March 2013, Pages 311-322 Cambridge University Press New York, NY, USA DOI:
 10.1017/S0263574712000203
-<a href="publications/Biped%20Walking%20Control%20Using%20a%20Trajectory%20Library%20-%20Robotica.pdf">pdf</a>
-</li>
+<a href="publications/Biped%20Walking%20Control%20Using%20a%20Trajectory%20Library%20-%20Robotica.pdf">pdf</a></li>
 </ul>
 
 
@@ -210,49 +296,43 @@ Jaeger, Taskin Padir, Felipe Polido, X Xinjilefu, submitted to <i>Journal of Fie
 <li>Neighboring optimal control for periodic tasks for systems with discontinuous dynamics Chenggang LIU,
 Christopher G. Atkeson, and Jianbo SU, <i>SCIENCE CHINA Information Sciences</i>, 2011, 54 (3): 653-663. DOI:
 10.1007/s11432-011-4185-z
-<a href="publications/Neighboring%20optimal%20control%20for%20periodic%20tasks%20for%20systems%20with%20discontinuous%20dynamics.pdf">pdf</a>
-</li>
+<a href="publications/Neighboring%20optimal%20control%20for%20periodic%20tasks%20for%20systems%20with%20discontinuous%20dynamics.pdf">pdf</a></li>
 </ul>
 
 
 <ul class="org-ul">
 <li>Basic Behavior Acquisition with Multisensor Integration for a Robot System Chenggang LIU and Jianbo SU,
 <i>Advanced Robotics</i>, 2009, 23 (12-13), 1561-1578. DOI: 10.1163/016918609X12496339824450
-<a href="publications/AR2705.pdf">pdf</a>
-</li>
+<a href="publications/AR2705.pdf">pdf</a></li>
 </ul>
 
 
 <ul class="org-ul">
 <li>Design and Implementation of Motor Control System for Small Humanoid Robot (in Chinese) ZHANG Yi, LIU
-Cheng-gang, XING Deng-peng COMPUTER ENGINEERING, 2009, 35(24)<a href="10.3969/j.issn.1000-3428.2009.24.082">10.3969/j.issn.1000-3428.2009.24.082</a>
-</li>
+Cheng-gang, XING Deng-peng COMPUTER ENGINEERING, 2009, 35(24)<a href="10.3969/j.issn.1000-3428.2009.24.082">10.3969/j.issn.1000-3428.2009.24.082</a></li>
 </ul>
 
 
 <ul class="org-ul">
 <li>Step Motor Control Strategy in High Speed Pan/Tilt/Zoom Camera System (in Chinese) Chenggang LIU, Jianbo SU
-<i>Electric Automation</i>, 2002
-</li>
+<i>Electric Automation</i>, 2002</li>
 </ul>
 
 
 <ul class="org-ul">
 <li>Calibration-Free Hand-Eye Coordination based on Coupled Auto-Disturbance Rejection Controller,
-<i>Systems Engineering and Electronics</i>, Vol.25(11), 2003, pp. 1385-1388 (In Chinese)
-</li>
+<i>Systems Engineering and Electronics</i>, Vol.25(11), 2003, pp. 1385-1388 (In Chinese)</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3">Conference papers</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-orgfac5fe9" class="outline-2">
+<h2 id="orgfac5fe9">Conference papers</h2>
+<div class="outline-text-2" id="text-orgfac5fe9">
 <ul class="org-ul">
 <li>Full-body motion planning and control for the car egress task of the DARPA robotics challenge, Chenggang LIU, C.G.
 Atkeson, Siyuan Feng, and Xinjilefu, <i>Humanoids 2015</i>, 3-5 Nov. 2015. DOI: 10.1109/HUMANOIDS.2015.7363583
-<a href="publications/ICHR15_0211_FI.pdf">pdf</a>
-</li>
+<a href="publications/ICHR15_0211_FI.pdf">pdf</a></li>
 </ul>
 
 
@@ -261,8 +341,7 @@ Atkeson, Siyuan Feng, and Xinjilefu, <i>Humanoids 2015</i>, 3-5 Nov. 2015. DOI: 
 Banerjee, N., Berenson, D., Bove, C.P., Cui, X., DeDonato, M., Du, R., Feng, S., Franklin, P., Gennert, M., Graff,
 J.P., He, P., Jaeger, A., Kim, J., Knoedler, K., Li, L., Liu, C., Long, X., Padir, T., Polido, F., Tighe, G.G., and
 Xinjilefu, <i>Humanoids 2015</i>, 3-5 Nov. 2015. DOI: 10.1109/HUMANOIDS.2015.7363436
-<a href="publications/ICHR15_0131_FI.pdf">pdf</a>
-</li>
+<a href="publications/ICHR15_0131_FI.pdf">pdf</a></li>
 </ul>
 
 
@@ -270,31 +349,27 @@ Xinjilefu, <i>Humanoids 2015</i>, 3-5 Nov. 2015. DOI: 10.1109/HUMANOIDS.2015.736
 <li>Implementation of a trajectory library approach to controlling humanoid standing balance Chenggang LIU
 and Jianbo SU (2011), <i>Systems, Man, and Cybernetics (SMC), 2011 IEEE International Conference on</i> DOI:
 10.1109/ICSMC.2011.6083884
-<a href="publications/smc2011.pdf">pdf</a>
-</li>
+<a href="publications/smc2011.pdf">pdf</a></li>
 </ul>
 
 
 <ul class="org-ul">
 <li>Biped walking control using offline and online optimization Chenggang LIU and Jianbo SU,
 <i>China Control Conference (CCC)</i>, 2011 30th Chinese, 22-24 July 2011
-<a href="publications/walk_ccc2011.pdf">pdf</a>
-</li>
+<a href="publications/walk_ccc2011.pdf">pdf</a></li>
 </ul>
 
 
 <ul class="org-ul">
 <li>Standing Balance Control of a Humanoid Robot In the Presence of Continous Perturbations (in Chinese)
 Chenggang LIU and Jianbo SU, <i>China Control Conference (CCC)</i>, 2011 30th Chinese, 22-24 July 2011
-<a href="publications/balance_ccc2011.pdf">pdf</a>
-</li>
+<a href="publications/balance_ccc2011.pdf">pdf</a></li>
 </ul>
 
 
 <ul class="org-ul">
 <li>Standing balance control using a trajectory library Chenggang LIU and Christopher G. Atkeson, Dynamic
-Walking, 2009.
-</li>
+Walking, 2009.</li>
 </ul>
 
 
@@ -302,23 +377,21 @@ Walking, 2009.
 <li>Standing balance control using a trajectory library Chenggang LIU and Christopher G. Atkeson(2009),
 <i>IEEE/RSJ International Conference on Intelligent Robots and Systems, 2009</i>, 3031-3036.
 <a href="10.1109/IROS.2009.5354018">10.1109/IROS.2009.5354018</a>
-<a href="publications/IROS09_1511_FI.pdf">pdf</a>
-</li>
+<a href="publications/IROS09_1511_FI.pdf">pdf</a></li>
 </ul>
 
 
 <ul class="org-ul">
 <li>Basic behavior acquisition based on multisensor integration of a robot head Chenggang LIU and Jianbo
 SU, <i>IEEE International Conference on Robotics and Automation</i>, 2008, 3094-3099. DOI:
-10.1109/ROBOT.2008.4543681
-</li>
+10.1109/ROBOT.2008.4543681</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4">PhD Thesis</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-orgad03ac9" class="outline-2">
+<h2 id="orgad03ac9">PhD Thesis</h2>
+<div class="outline-text-2" id="text-orgad03ac9">
 <p>
 Control of Standing Balance and Walking of a Humanoid Robot Using a Trajectory Library (Chinese) <a href="publications/thesis.pdf">pdf</a>
 </p>
@@ -355,8 +428,7 @@ is more robust in term of finding solutions and can generate more accurate traje
 laws at the same time. Problems with trajectory optimization, such as handling constraints, ringing phenomenon,
 steady-state value function approximation, and local optima, are addressed and solutions to them are given. For
 control law construction, methods based on trajectory tracking, online optimization, and function approximation,
-are studied.
-</li>
+are studied.</li>
 
 <li>Optimization-based standing balance control is studied. For the control of a real robot, physical parameter
 identification using nonlinear least square method and online state estimation based on the extended Kalman filter
@@ -373,8 +445,7 @@ Simulation and experiment results demonstrate the effectiveness and performance 
 humanoid robot has many joints and body parts, the desired state for standing balance control is not unique in the
 presence of continuous external forces. To further improve the robustness of standing balance control, a method to
 determine the desired state is proposed. Simulation and experiment results demonstrate the effectiveness of the
-proposed method.
-</li>
+proposed method.</li>
 
 <li>Optimization-based biped walking control is studied. First, the biped walking control problem is formulated as an
 optimal control problem of a periodic task for systems with discontinuous dynamics. Therefore, a neighboring
@@ -387,45 +458,34 @@ using a trajectory library is proposed. Simulation results demonstrate the effec
 proposed method. The proposed method is also compared with a trajectory tracking controller. Comparison results
 demonstrate the advantages of the proposed method in terms of robustness and performance. Finally, the control of
 a 3-D seven-link biped walking with double-support phase is studied and the steady-state trajectory optimization
-result is given.
-</li>
+result is given.</li>
 </ol>
 </div>
 </div>
 
-<div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5">Patents</h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-org24362b5" class="outline-2">
+<h2 id="org24362b5">Patents</h2>
+<div class="outline-text-2" id="text-org24362b5">
 <ul class="org-ul">
-<li>A general learning framework for event detection and classification for self-driving cars, Uber ATG, 2017
-</li>
+<li>A general learning framework for event detection and classification for self-driving cars, Uber ATG, 2017</li>
 
-<li>Vehicle signaling device for self-driving cars, Uber ATG, 2016
-</li>
+<li>Vehicle signaling device for self-driving cars, Uber ATG, 2016</li>
 
-<li>Camera System for Auto-detecting and Tracking Suspicious Subjects, ZL03116154.5 (Issued)
-</li>
+<li>Camera System for Auto-detecting and Tracking Suspicious Subjects, ZL03116154.5 (Issued)</li>
 
-<li>Electric Wire Driven Actuator for Artificial Joint, ZL200710038296.6 (Issued)
-</li>
+<li>Electric Wire Driven Actuator for Artificial Joint, ZL200710038296.6 (Issued)</li>
 
-<li>General Distributed Control System for Humanoid Robots, ZL200910054322.3 (Issued)
-</li>
+<li>General Distributed Control System for Humanoid Robots, ZL200910054322.3 (Issued)</li>
 
-<li>Method and System for Multiple GPU Support, ZL200610128006.2 (Issued)
-</li>
+<li>Method and System for Multiple GPU Support, ZL200610128006.2 (Issued)</li>
 
-<li>Method and System for Multiple GPU Support, ZL200610110751.4 (Issued)
-</li>
+<li>Method and System for Multiple GPU Support, ZL200610110751.4 (Issued)</li>
 
-<li>Distributed Dual-bus Motion Control System for Humanoid Robots, 200810038844.X  (Published)
-</li>
+<li>Distributed Dual-bus Motion Control System for Humanoid Robots, 200810038844.X  (Published)</li>
 
-<li>Method and System for Multiple GPU Support, US7325086 B2 (Issued)
-</li>
+<li>Method and System for Multiple GPU Support, US7325086 B2 (Issued)</li>
 
-<li>Switching Method and System for Multiple GPU Support, US7340557 B2 (Issued)
-</li>
+<li>Switching Method and System for Multiple GPU Support, US7340557 B2 (Issued)</li>
 </ul>
 </div>
 </div>

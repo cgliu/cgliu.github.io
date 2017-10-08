@@ -364,15 +364,15 @@ sudo make install
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp">(package-initialize)
-(<span style="color: #00ffff;">require</span> '<span style="color: #8470ff; font-weight: bold;">package</span>)
-(add-to-list 'package-archives '(<span style="color: #ffc1c1;">"melpa"</span> . <span style="color: #ffc1c1;">"http://melpa.org/packages/"</span>))
-<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">Install use-package</span>
-(<span style="color: #00ffff;">setq</span> package-list '(<span style="color: #00ffff;">use-package</span>))
-(<span style="color: #00ffff;">dolist</span> (package package-list)
-(<span style="color: #00ffff;">unless</span> (package-installed-p package)
+(<span style="color: #fff59d;">require</span> '<span style="color: #8bc34a;">package</span>)
+(add-to-list 'package-archives '(<span style="color: #9ccc65;">"melpa"</span> . <span style="color: #9ccc65;">"http://melpa.org/packages/"</span>))
+<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">Install use-package</span>
+(<span style="color: #fff59d;">setq</span> package-list '(<span style="color: #fff59d;">use-package</span>))
+(<span style="color: #fff59d;">dolist</span> (package package-list)
+(<span style="color: #fff59d;">unless</span> (package-installed-p package)
  (package-install package)))
-<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">Let use-package to ensure a package is installed.</span>
-(<span style="color: #00ffff;">use-package</span> <span style="color: #8470ff; font-weight: bold;">THE-PACKAGE-YOU-WANT-TO-INSTALL</span> <span style="color: #b0c4de;">:ensure</span> t)
+<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">Let use-package to ensure a package is installed.</span>
+(<span style="color: #fff59d;">use-package</span> <span style="color: #8bc34a;">THE-PACKAGE-YOU-WANT-TO-INSTALL</span> <span style="color: #ff8A65;">:ensure</span> t)
 </code></pre>
 </div>
 </div>
@@ -386,61 +386,61 @@ helm is a must-have package, it can Emacs run like a magic.
 My settings:
 </p>
 <div class="org-src-container">
-<pre><code class="src src-emacs-lisp">(<span style="color: #00ffff;">use-package</span> <span style="color: #8470ff; font-weight: bold;">helm</span> <span style="color: #b0c4de;">:ensure</span> t)
-(<span style="color: #00ffff;">use-package</span> <span style="color: #8470ff; font-weight: bold;">helm-swoop</span> <span style="color: #b0c4de;">:ensure</span> t)
-(<span style="color: #00ffff;">use-package</span> <span style="color: #8470ff; font-weight: bold;">helm-projectile</span> <span style="color: #b0c4de;">:ensure</span> t)
+<pre><code class="src src-emacs-lisp">(<span style="color: #fff59d;">use-package</span> <span style="color: #8bc34a;">helm</span> <span style="color: #ff8A65;">:ensure</span> t)
+(<span style="color: #fff59d;">use-package</span> <span style="color: #8bc34a;">helm-swoop</span> <span style="color: #ff8A65;">:ensure</span> t)
+(<span style="color: #fff59d;">use-package</span> <span style="color: #8bc34a;">helm-projectile</span> <span style="color: #ff8A65;">:ensure</span> t)
 
-(<span style="color: #00ffff;">require</span> '<span style="color: #8470ff; font-weight: bold;">helm-config</span>)
+(<span style="color: #fff59d;">require</span> '<span style="color: #8bc34a;">helm-config</span>)
 (helm-mode 1)
 
-(define-key helm-map (kbd <span style="color: #ffc1c1;">"&lt;tab&gt;"</span>) 'helm-execute-persistent-action) <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">rebind tab to run persistent action</span>
-(define-key helm-map (kbd <span style="color: #ffc1c1;">"C-i"</span>) 'helm-execute-persistent-action) <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">make TAB work in terminal</span>
-(define-key helm-map (kbd <span style="color: #ffc1c1;">"C-z"</span>)  'helm-select-action) <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">list actions using C-z</span>
+(define-key helm-map (kbd <span style="color: #9ccc65;">"&lt;tab&gt;"</span>) 'helm-execute-persistent-action) <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">rebind tab to run persistent action</span>
+(define-key helm-map (kbd <span style="color: #9ccc65;">"C-i"</span>) 'helm-execute-persistent-action) <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">make TAB work in terminal</span>
+(define-key helm-map (kbd <span style="color: #9ccc65;">"C-z"</span>)  'helm-select-action) <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">list actions using C-z</span>
 
 
-(<span style="color: #00ffff;">setq</span> helm-buffers-fuzzy-matching t
+(<span style="color: #fff59d;">setq</span> helm-buffers-fuzzy-matching t
 helm-recentf-fuzzy-match    t)
 
-<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">=== projectile ===</span>
+<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">=== projectile ===</span>
 (projectile-global-mode)
-(<span style="color: #00ffff;">setq</span> projectile-completion-system 'helm)
+(<span style="color: #fff59d;">setq</span> projectile-completion-system 'helm)
 (helm-projectile-on)
-(<span style="color: #00ffff;">setq</span> projectile-switch-project-action 'helm-projectile)
-<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">C-c p p switch projects</span>
-<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">C-c p f find files in a project</span>
-<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">C-c p F find files in projects</span>
+(<span style="color: #fff59d;">setq</span> projectile-switch-project-action 'helm-projectile)
+<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">C-c p p switch projects</span>
+<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">C-c p f find files in a project</span>
+<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">C-c p F find files in projects</span>
 
-<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">helm semantic</span>
-<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">(semantic-mode 1)</span>
-<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">(setq helm-semantic-fuzzy-match t</span>
-<span style="color: #fa8072;">;;       </span><span style="color: #ff7f24; font-style: italic;">helm-imenu-fuzzy-match    t)</span>
+<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">helm semantic</span>
+<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">(semantic-mode 1)</span>
+<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">(setq helm-semantic-fuzzy-match t</span>
+<span style="color: #b0bec5;">;;       </span><span style="color: #b0bec5;">helm-imenu-fuzzy-match    t)</span>
 
-<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">hem-man-woman</span>
+<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">hem-man-woman</span>
 (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
-(<span style="color: #00ffff;">setq</span> helm-locate-fuzzy-match t)
+(<span style="color: #fff59d;">setq</span> helm-locate-fuzzy-match t)
 </code></pre>
 </div>
 <p>
 My key bindings:
 </p>
 <div class="org-src-container">
-<pre><code class="src src-emacs-lisp"><span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">keybinding for helm</span>
-(global-set-key (kbd <span style="color: #ffc1c1;">"C-x i"</span>) `helm-complete-file-name-at-point)
-(global-set-key (kbd <span style="color: #ffc1c1;">"C-x b"</span>) `helm-mini)
-(global-set-key (kbd <span style="color: #ffc1c1;">"C-x C-b"</span>) `helm-buffers-list)
-(global-set-key (kbd <span style="color: #ffc1c1;">"C-x C-f"</span>) `helm-find-files)
-(global-set-key (kbd <span style="color: #ffc1c1;">"C-x C-r"</span>) `helm-recentf)
-(global-set-key (kbd <span style="color: #ffc1c1;">"C-x r b"</span>) `helm-bookmarks)
-(global-set-key (kbd <span style="color: #ffc1c1;">"M-x"</span>) `helm-M-x)
-(global-set-key (kbd <span style="color: #ffc1c1;">"M-y"</span>) `helm-show-kill-ring)
+<pre><code class="src src-emacs-lisp"><span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">keybinding for helm</span>
+(global-set-key (kbd <span style="color: #9ccc65;">"C-x i"</span>) `helm-complete-file-name-at-point)
+(global-set-key (kbd <span style="color: #9ccc65;">"C-x b"</span>) `helm-mini)
+(global-set-key (kbd <span style="color: #9ccc65;">"C-x C-b"</span>) `helm-buffers-list)
+(global-set-key (kbd <span style="color: #9ccc65;">"C-x C-f"</span>) `helm-find-files)
+(global-set-key (kbd <span style="color: #9ccc65;">"C-x C-r"</span>) `helm-recentf)
+(global-set-key (kbd <span style="color: #9ccc65;">"C-x r b"</span>) `helm-bookmarks)
+(global-set-key (kbd <span style="color: #9ccc65;">"M-x"</span>) `helm-M-x)
+(global-set-key (kbd <span style="color: #9ccc65;">"M-y"</span>) `helm-show-kill-ring)
 
-(global-set-key (kbd <span style="color: #ffc1c1;">"C-c i"</span>) 'helm-semantic-or-imenu)
+(global-set-key (kbd <span style="color: #9ccc65;">"C-c i"</span>) 'helm-semantic-or-imenu)
 
 
-(global-set-key (kbd <span style="color: #ffc1c1;">"C-x c o"</span>) 'helm-occur)
-(global-set-key (kbd <span style="color: #ffc1c1;">"C-h SPC"</span>) 'helm-all-mark-rings)
-(global-set-key (kbd <span style="color: #ffc1c1;">"C-c C-g"</span>) 'helm-google-suggest)
-(global-set-key (kbd <span style="color: #ffc1c1;">"C-p"</span>) 'helm-projectile-find-file)
+(global-set-key (kbd <span style="color: #9ccc65;">"C-x c o"</span>) 'helm-occur)
+(global-set-key (kbd <span style="color: #9ccc65;">"C-h SPC"</span>) 'helm-all-mark-rings)
+(global-set-key (kbd <span style="color: #9ccc65;">"C-c C-g"</span>) 'helm-google-suggest)
+(global-set-key (kbd <span style="color: #9ccc65;">"C-p"</span>) 'helm-projectile-find-file)
 </code></pre>
 </div>
 </div>
@@ -478,10 +478,10 @@ sudo make install
 A script to generate index files
 </p>
 <div class="org-src-container">
-<pre><code class="src src-shell"><span style="color: #fa8072;">#</span><span style="color: #ff7f24; font-style: italic;">!/bin/</span><span style="color: #00ffff;">bash</span>
-find . -type d <span style="color: #ffc1c1;">\(</span> -name <span style="color: #ffc1c1;">"skip_foler1"</span> <span style="color: #ffc1c1;">\</span>
--o -name <span style="color: #ffc1c1;">"skip_folder2"</span> <span style="color: #ffc1c1;">\)</span> -prune -o <span style="color: #ffc1c1;">\</span>
--type f <span style="color: #ffc1c1;">\(</span> -name <span style="color: #ffc1c1;">"*.cc"</span> -o -name <span style="color: #ffc1c1;">"*.hh"</span> -o -name <span style="color: #ffc1c1;">"*.py"</span> -o -name <span style="color: #ffc1c1;">"*.c"</span> -o -name <span style="color: #ffc1c1;">"*.h"</span> -o -name <span style="color: #ffc1c1;">"*.hidl"</span> <span style="color: #ffc1c1;">\)</span>  <span style="color: #ffc1c1;">\</span>
+<pre><code class="src src-shell"><span style="color: #b0bec5;">#</span><span style="color: #b0bec5;">!/bin/</span><span style="color: #fff59d;">bash</span>
+find . -type d <span style="color: #9ccc65;">\(</span> -name <span style="color: #9ccc65;">"skip_foler1"</span> <span style="color: #9ccc65;">\</span>
+-o -name <span style="color: #9ccc65;">"skip_folder2"</span> <span style="color: #9ccc65;">\)</span> -prune -o <span style="color: #9ccc65;">\</span>
+-type f <span style="color: #9ccc65;">\(</span> -name <span style="color: #9ccc65;">"*.cc"</span> -o -name <span style="color: #9ccc65;">"*.hh"</span> -o -name <span style="color: #9ccc65;">"*.py"</span> -o -name <span style="color: #9ccc65;">"*.c"</span> -o -name <span style="color: #9ccc65;">"*.h"</span> -o -name <span style="color: #9ccc65;">"*.hidl"</span> <span style="color: #9ccc65;">\)</span>  <span style="color: #9ccc65;">\</span>
 -print &gt; file_list
 gtags -i -v -f file_list
 </code></pre>
@@ -490,19 +490,19 @@ gtags -i -v -f file_list
 Emacs settings
 </p>
 <div class="org-src-container">
-<pre><code class="src src-emacs-lisp"><span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">--------------------------------------------------</span>
-(<span style="color: #00ffff;">use-package</span> <span style="color: #8470ff; font-weight: bold;">helm-gtags</span> <span style="color: #b0c4de;">:ensure</span> t)
-(<span style="color: #00ffff;">require</span> '<span style="color: #8470ff; font-weight: bold;">helm-gtags</span>)
-(<span style="color: #00ffff;">setq</span>
+<pre><code class="src src-emacs-lisp"><span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">--------------------------------------------------</span>
+(<span style="color: #fff59d;">use-package</span> <span style="color: #8bc34a;">helm-gtags</span> <span style="color: #ff8A65;">:ensure</span> t)
+(<span style="color: #fff59d;">require</span> '<span style="color: #8bc34a;">helm-gtags</span>)
+(<span style="color: #fff59d;">setq</span>
  helm-gtags-ignore-case t
  helm-gtags-auto-update t
  helm-gtags-use-input-at-cursor t
  helm-gtags-pulse-at-cursor t
- helm-gtags-prefix-key <span style="color: #ffc1c1;">"\C-cg"</span>
+ helm-gtags-prefix-key <span style="color: #9ccc65;">"\C-cg"</span>
  helm-gtags-suggested-key-mapping nil
  )
 
-<span style="color: #fa8072;">;;; </span><span style="color: #ff7f24; font-style: italic;">Enable helm-gtags-mode</span>
+<span style="color: #b0bec5;">;;; </span><span style="color: #b0bec5;">Enable helm-gtags-mode</span>
 (add-hook 'dired-mode-hook 'helm-gtags-mode)
 (add-hook 'eshell-mode-hook 'helm-gtags-mode)
 (add-hook 'c-mode-hook 'helm-gtags-mode)
@@ -510,19 +510,19 @@ Emacs settings
 (add-hook 'asm-mode-hook 'helm-gtags-mode)
 (add-hook 'python-mode-hook 'helm-gtags-mode)
 
-<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">(define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)</span>
-(define-key helm-gtags-mode-map (kbd <span style="color: #ffc1c1;">"C-j"</span>) 'helm-gtags-select)
-(define-key helm-gtags-mode-map (kbd <span style="color: #ffc1c1;">"M-."</span>) 'helm-gtags-dwim)
-(define-key helm-gtags-mode-map (kbd <span style="color: #ffc1c1;">"M-r"</span>) 'helm-gtags-find-rtag)
-(define-key helm-gtags-mode-map (kbd <span style="color: #ffc1c1;">"M-t"</span>) 'helm-gtags-find-tag)
-(define-key helm-gtags-mode-map (kbd <span style="color: #ffc1c1;">"M-s"</span>) 'helm-gtags-find-symbol)
-<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">(define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)</span>
-(define-key helm-gtags-mode-map (kbd <span style="color: #ffc1c1;">"M-*"</span>) 'helm-gtags-resume)
-<span style="color: #fa8072;">;;</span>
-(define-key helm-gtags-mode-map (kbd <span style="color: #ffc1c1;">"C-c &lt;left&gt;"</span>) 'helm-gtags-previous-history)
-(define-key helm-gtags-mode-map (kbd <span style="color: #ffc1c1;">"C-c &lt;right&gt;"</span>) 'helm-gtags-next-history)
-<span style="color: #fa8072;">;;</span>
-<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">(define-key helm-gtags-mode-map (kbd "C-c g") 'vc-git-grep)</span>
+<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">(define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)</span>
+(define-key helm-gtags-mode-map (kbd <span style="color: #9ccc65;">"C-j"</span>) 'helm-gtags-select)
+(define-key helm-gtags-mode-map (kbd <span style="color: #9ccc65;">"M-."</span>) 'helm-gtags-dwim)
+(define-key helm-gtags-mode-map (kbd <span style="color: #9ccc65;">"M-r"</span>) 'helm-gtags-find-rtag)
+(define-key helm-gtags-mode-map (kbd <span style="color: #9ccc65;">"M-t"</span>) 'helm-gtags-find-tag)
+(define-key helm-gtags-mode-map (kbd <span style="color: #9ccc65;">"M-s"</span>) 'helm-gtags-find-symbol)
+<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">(define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)</span>
+(define-key helm-gtags-mode-map (kbd <span style="color: #9ccc65;">"M-*"</span>) 'helm-gtags-resume)
+<span style="color: #b0bec5;">;;</span>
+(define-key helm-gtags-mode-map (kbd <span style="color: #9ccc65;">"C-c &lt;left&gt;"</span>) 'helm-gtags-previous-history)
+(define-key helm-gtags-mode-map (kbd <span style="color: #9ccc65;">"C-c &lt;right&gt;"</span>) 'helm-gtags-next-history)
+<span style="color: #b0bec5;">;;</span>
+<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">(define-key helm-gtags-mode-map (kbd "C-c g") 'vc-git-grep)</span>
 
 </code></pre>
 </div></li>
@@ -1003,14 +1003,14 @@ Pull the menu ?Options ? Line Wrapping in this Buffer?, or call visual-line-mode
 <li>add the following to .emacs</li>
 </ul>
 <div class="org-src-container">
-<pre><code class="src src-emacs-lisp"><span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">export slides in org mode</span>
-<span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">remember to copy folder "ui" to your pub folder</span>
-(add-to-list 'load-path <span style="color: #ffc1c1;">"~/site-lisp/org-s5-master"</span>)
-(<span style="color: #00ffff;">require</span> '<span style="color: #8470ff; font-weight: bold;">org-export-as-s5</span>)
-<span style="color: #fa8072;">;;</span><span style="color: #ff7f24; font-style: italic;">(setq org-s5-theme "railscast")   ; based off `</span><span style="color: #ff7f24; font-weight: bold; font-style: italic;">color-theme-railscasts</span><span style="color: #ff7f24; font-style: italic;">'</span>
-(<span style="color: #00ffff;">setq</span> org-s5-theme <span style="color: #ffc1c1;">"default"</span>)     <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">the default S5 theme</span>
-<span style="color: #fa8072;">;;</span><span style="color: #ff7f24; font-style: italic;">(setq org-s5-theme "i18n")        ; the i18n theme by the author of S5</span>
-<span style="color: #fa8072;">;;</span><span style="color: #ff7f24; font-style: italic;">(setq org-s5-theme "advanced_gfx")</span>
+<pre><code class="src src-emacs-lisp"><span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">export slides in org mode</span>
+<span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">remember to copy folder "ui" to your pub folder</span>
+(add-to-list 'load-path <span style="color: #9ccc65;">"~/site-lisp/org-s5-master"</span>)
+(<span style="color: #fff59d;">require</span> '<span style="color: #8bc34a;">org-export-as-s5</span>)
+<span style="color: #b0bec5;">;;</span><span style="color: #b0bec5;">(setq org-s5-theme "railscast")   ; based off `</span><span style="color: #b0bec5;">color-theme-railscasts</span><span style="color: #b0bec5;">'</span>
+(<span style="color: #fff59d;">setq</span> org-s5-theme <span style="color: #9ccc65;">"default"</span>)     <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">the default S5 theme</span>
+<span style="color: #b0bec5;">;;</span><span style="color: #b0bec5;">(setq org-s5-theme "i18n")        ; the i18n theme by the author of S5</span>
+<span style="color: #b0bec5;">;;</span><span style="color: #b0bec5;">(setq org-s5-theme "advanced_gfx")</span>
 </code></pre>
 </div>
 <ul class="org-ul">
@@ -1029,10 +1029,10 @@ org-export-as-s5</li>
 <li>setting emacs</li>
 </ol>
 <div class="org-src-container">
-<pre><code class="src src-emacs-lisp"><span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">org reveal export</span>
-(add-to-list 'load-path <span style="color: #ffc1c1;">"~/site-lisp/org-reveal-master/"</span>)
-(<span style="color: #00ffff;">require</span> '<span style="color: #8470ff; font-weight: bold;">ox-reveal</span>)
-(<span style="color: #00ffff;">setq</span> org-reveal-root <span style="color: #ffc1c1;">"file:///D:/cgliu/emacs-24.2/site-lisp/reveal-master/"</span>)
+<pre><code class="src src-emacs-lisp"><span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">org reveal export</span>
+(add-to-list 'load-path <span style="color: #9ccc65;">"~/site-lisp/org-reveal-master/"</span>)
+(<span style="color: #fff59d;">require</span> '<span style="color: #8bc34a;">ox-reveal</span>)
+(<span style="color: #fff59d;">setq</span> org-reveal-root <span style="color: #9ccc65;">"file:///D:/cgliu/emacs-24.2/site-lisp/reveal-master/"</span>)
 </code></pre>
 </div>
 </div>
@@ -1047,36 +1047,36 @@ org-export-as-s5</li>
 Configure org-mode html export project
 </p>
 <div class="org-src-container">
-<pre><code class="src src-emacs-lisp">(<span style="color: #00ffff;">setq</span> org-publish-project-alist
+<pre><code class="src src-emacs-lisp">(<span style="color: #fff59d;">setq</span> org-publish-project-alist
       '(
-        (<span style="color: #ffc1c1;">"org-notes"</span>               <span style="color: #fa8072;">;</span><span style="color: #ff7f24; font-style: italic;">Used to export .org file</span>
-         <span style="color: #b0c4de;">:base-directory</span> <span style="color: #ffc1c1;">"~/www/"</span>  <span style="color: #fa8072;">;</span><span style="color: #ff7f24; font-style: italic;">directory holds .org files</span>
-         <span style="color: #b0c4de;">:base-extension</span> <span style="color: #ffc1c1;">"org"</span>     <span style="color: #fa8072;">;</span><span style="color: #ff7f24; font-style: italic;">process .org file only</span>
-         <span style="color: #b0c4de;">:publishing-directory</span> <span style="color: #ffc1c1;">"~/public_html/"</span>    <span style="color: #fa8072;">;</span><span style="color: #ff7f24; font-style: italic;">export destination</span>
-         <span style="color: #b0c4de;">:recursive</span> t
-         <span style="color: #b0c4de;">:publishing-function</span> org-html-publish-to-html
-         <span style="color: #b0c4de;">:headline-levels</span> 4               <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">Just the default for this project.</span>
-         <span style="color: #fa8072;">;; </span><span style="color: #ff7f24; font-style: italic;">:auto-preamble t</span>
-         <span style="color: #b0c4de;">:auto-sitemap</span> t                  <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">Generate sitemap.org automagically...</span>
-         <span style="color: #b0c4de;">:sitemap-filename</span> <span style="color: #ffc1c1;">"sitemap.org"</span>  <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">... call it sitemap.org (it's the default)...</span>
-         <span style="color: #b0c4de;">:sitemap-title</span> <span style="color: #ffc1c1;">"Sitemap"</span>         <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">... with title 'Sitemap'.</span>
-         <span style="color: #b0c4de;">:export-creator-info</span> nil    <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">Disable the inclusion of "Created by Org" in the postamble.</span>
-         <span style="color: #b0c4de;">:export-author-info</span> nil     <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">Disable the inclusion of "Author: Your Name" in the postamble.</span>
-         <span style="color: #b0c4de;">:auto-postamble</span> nil         <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">Disable auto postamble</span>
-         <span style="color: #b0c4de;">:table-of-contents</span> t        <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">Set this to "t" if you want a table of contents, set to "nil" disables TOC.</span>
-         <span style="color: #b0c4de;">:section-numbers</span> nil        <span style="color: #fa8072;">; </span><span style="color: #ff7f24; font-style: italic;">Set this to "t" if you want headings to have numbers.</span>
-         <span style="color: #b0c4de;">:style-include-default</span> nil  <span style="color: #fa8072;">;</span><span style="color: #ff7f24; font-style: italic;">Disable the default css style</span>
-         <span style="color: #b0c4de;">:html-preamble</span> nil
-         <span style="color: #b0c4de;">:html-postamble</span> nil
+        (<span style="color: #9ccc65;">"org-notes"</span>               <span style="color: #b0bec5;">;</span><span style="color: #b0bec5;">Used to export .org file</span>
+         <span style="color: #ff8A65;">:base-directory</span> <span style="color: #9ccc65;">"~/www/"</span>  <span style="color: #b0bec5;">;</span><span style="color: #b0bec5;">directory holds .org files</span>
+         <span style="color: #ff8A65;">:base-extension</span> <span style="color: #9ccc65;">"org"</span>     <span style="color: #b0bec5;">;</span><span style="color: #b0bec5;">process .org file only</span>
+         <span style="color: #ff8A65;">:publishing-directory</span> <span style="color: #9ccc65;">"~/public_html/"</span>    <span style="color: #b0bec5;">;</span><span style="color: #b0bec5;">export destination</span>
+         <span style="color: #ff8A65;">:recursive</span> t
+         <span style="color: #ff8A65;">:publishing-function</span> org-html-publish-to-html
+         <span style="color: #ff8A65;">:headline-levels</span> 4               <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">Just the default for this project.</span>
+         <span style="color: #b0bec5;">;; </span><span style="color: #b0bec5;">:auto-preamble t</span>
+         <span style="color: #ff8A65;">:auto-sitemap</span> t                  <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">Generate sitemap.org automagically...</span>
+         <span style="color: #ff8A65;">:sitemap-filename</span> <span style="color: #9ccc65;">"sitemap.org"</span>  <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">... call it sitemap.org (it's the default)...</span>
+         <span style="color: #ff8A65;">:sitemap-title</span> <span style="color: #9ccc65;">"Sitemap"</span>         <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">... with title 'Sitemap'.</span>
+         <span style="color: #ff8A65;">:export-creator-info</span> nil    <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">Disable the inclusion of "Created by Org" in the postamble.</span>
+         <span style="color: #ff8A65;">:export-author-info</span> nil     <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">Disable the inclusion of "Author: Your Name" in the postamble.</span>
+         <span style="color: #ff8A65;">:auto-postamble</span> nil         <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">Disable auto postamble</span>
+         <span style="color: #ff8A65;">:table-of-contents</span> t        <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">Set this to "t" if you want a table of contents, set to "nil" disables TOC.</span>
+         <span style="color: #ff8A65;">:section-numbers</span> nil        <span style="color: #b0bec5;">; </span><span style="color: #b0bec5;">Set this to "t" if you want headings to have numbers.</span>
+         <span style="color: #ff8A65;">:style-include-default</span> nil  <span style="color: #b0bec5;">;</span><span style="color: #b0bec5;">Disable the default css style</span>
+         <span style="color: #ff8A65;">:html-preamble</span> nil
+         <span style="color: #ff8A65;">:html-postamble</span> nil
         )
-        (<span style="color: #ffc1c1;">"org-static"</span>                <span style="color: #fa8072;">;</span><span style="color: #ff7f24; font-style: italic;">Used to publish static files</span>
-         <span style="color: #b0c4de;">:base-directory</span> <span style="color: #ffc1c1;">"~/www/"</span>
-         <span style="color: #b0c4de;">:base-extension</span> <span style="color: #ffc1c1;">"css</span><span style="color: #ffc1c1; font-weight: bold;">\\</span><span style="color: #ffc1c1; font-weight: bold;">|</span><span style="color: #ffc1c1;">js</span><span style="color: #ffc1c1; font-weight: bold;">\\</span><span style="color: #ffc1c1; font-weight: bold;">|</span><span style="color: #ffc1c1;">png</span><span style="color: #ffc1c1; font-weight: bold;">\\</span><span style="color: #ffc1c1; font-weight: bold;">|</span><span style="color: #ffc1c1;">JPG</span><span style="color: #ffc1c1; font-weight: bold;">\\</span><span style="color: #ffc1c1; font-weight: bold;">|</span><span style="color: #ffc1c1;">jpg</span><span style="color: #ffc1c1; font-weight: bold;">\\</span><span style="color: #ffc1c1; font-weight: bold;">|</span><span style="color: #ffc1c1;">gif</span><span style="color: #ffc1c1; font-weight: bold;">\\</span><span style="color: #ffc1c1; font-weight: bold;">|</span><span style="color: #ffc1c1;">pdf</span><span style="color: #ffc1c1; font-weight: bold;">\\</span><span style="color: #ffc1c1; font-weight: bold;">|</span><span style="color: #ffc1c1;">mp3</span><span style="color: #ffc1c1; font-weight: bold;">\\</span><span style="color: #ffc1c1; font-weight: bold;">|</span><span style="color: #ffc1c1;">ogg</span><span style="color: #ffc1c1; font-weight: bold;">\\</span><span style="color: #ffc1c1; font-weight: bold;">|</span><span style="color: #ffc1c1;">swf"</span>
-         <span style="color: #b0c4de;">:publishing-directory</span> <span style="color: #ffc1c1;">"~/public_html/"</span>    <span style="color: #fa8072;">;</span><span style="color: #ff7f24; font-style: italic;">export destination</span>
-         <span style="color: #b0c4de;">:recursive</span> t
-         <span style="color: #b0c4de;">:publishing-function</span> org-publish-attachment
+        (<span style="color: #9ccc65;">"org-static"</span>                <span style="color: #b0bec5;">;</span><span style="color: #b0bec5;">Used to publish static files</span>
+         <span style="color: #ff8A65;">:base-directory</span> <span style="color: #9ccc65;">"~/www/"</span>
+         <span style="color: #ff8A65;">:base-extension</span> <span style="color: #9ccc65;">"css</span><span style="color: #9ccc65;">\\</span><span style="color: #9ccc65;">|</span><span style="color: #9ccc65;">js</span><span style="color: #9ccc65;">\\</span><span style="color: #9ccc65;">|</span><span style="color: #9ccc65;">png</span><span style="color: #9ccc65;">\\</span><span style="color: #9ccc65;">|</span><span style="color: #9ccc65;">JPG</span><span style="color: #9ccc65;">\\</span><span style="color: #9ccc65;">|</span><span style="color: #9ccc65;">jpg</span><span style="color: #9ccc65;">\\</span><span style="color: #9ccc65;">|</span><span style="color: #9ccc65;">gif</span><span style="color: #9ccc65;">\\</span><span style="color: #9ccc65;">|</span><span style="color: #9ccc65;">pdf</span><span style="color: #9ccc65;">\\</span><span style="color: #9ccc65;">|</span><span style="color: #9ccc65;">mp3</span><span style="color: #9ccc65;">\\</span><span style="color: #9ccc65;">|</span><span style="color: #9ccc65;">ogg</span><span style="color: #9ccc65;">\\</span><span style="color: #9ccc65;">|</span><span style="color: #9ccc65;">swf"</span>
+         <span style="color: #ff8A65;">:publishing-directory</span> <span style="color: #9ccc65;">"~/public_html/"</span>    <span style="color: #b0bec5;">;</span><span style="color: #b0bec5;">export destination</span>
+         <span style="color: #ff8A65;">:recursive</span> t
+         <span style="color: #ff8A65;">:publishing-function</span> org-publish-attachment
          )
-        (<span style="color: #ffc1c1;">"org"</span> <span style="color: #b0c4de;">:components</span> (<span style="color: #ffc1c1;">"org-notes"</span> <span style="color: #ffc1c1;">"org-static"</span>)) <span style="color: #fa8072;">;</span><span style="color: #ff7f24; font-style: italic;">combine "org-notes" and "org-static" into one function call</span>
+        (<span style="color: #9ccc65;">"org"</span> <span style="color: #ff8A65;">:components</span> (<span style="color: #9ccc65;">"org-notes"</span> <span style="color: #9ccc65;">"org-static"</span>)) <span style="color: #b0bec5;">;</span><span style="color: #b0bec5;">combine "org-notes" and "org-static" into one function call</span>
         ))
 
 </code></pre>
@@ -1092,56 +1092,56 @@ Create level-0.include as following and save it to YOUR<sub>INC</sub><sub>PATH</
 #+options: h:0 toc:nil title:nil
 #+options: html-style:t
 
-#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">meta</span> <span style="color: #7fffd4;">http-equiv</span>=<span style="color: #ffc1c1;">"Content-Type"</span> <span style="color: #7fffd4;">content</span>=<span style="color: #ffc1c1;">"text/html; charset=UTF-8"</span> /&gt;
-#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">title</span>&gt;<span style="font-weight: bold; text-decoration: underline;">Chenggang Liu's Homepage</span>&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">title</span>&gt;
-#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">link</span> <span style="color: #7fffd4;">rel</span>=<span style="color: #ffc1c1;">"stylesheet"</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./fonts/Serif/cmun-serif.css"</span> /&gt;
-#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">link</span> <span style="color: #7fffd4;">rel</span>=<span style="color: #ffc1c1;">"stylesheet"</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./fonts/Serif-Slanted/cmun-serif-slanted.css"</span> /&gt;
-#+HTML_HEAD:        <span style="color: #fa8072;">&lt;!--</span><span style="color: #ff7f24; font-style: italic;">BOOTSTRAP</span><span style="color: #fa8072;">--&gt;</span>
-#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">link</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./bootstrap/css/bootstrap.min.css"</span> <span style="color: #7fffd4;">rel</span>=<span style="color: #ffc1c1;">"stylesheet"</span>&gt;
-#+HTML_HEAD:        <span style="color: #fa8072;">&lt;!--</span><span style="color: #ff7f24; font-style: italic;">mobile first</span><span style="color: #fa8072;">--&gt;</span>
-#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">meta</span> <span style="color: #7fffd4;">name</span>=<span style="color: #ffc1c1;">"viewport"</span> <span style="color: #7fffd4;">content</span>=<span style="color: #ffc1c1;">"width=device-width, initial-scale=1.0"</span>&gt;
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">meta</span> <span style="color: #ffcc80;">http-equiv</span>=<span style="color: #9ccc65;">"Content-Type"</span> <span style="color: #ffcc80;">content</span>=<span style="color: #9ccc65;">"text/html; charset=UTF-8"</span> /&gt;
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">title</span>&gt;<span style="font-weight: bold; text-decoration: underline;">Chenggang Liu's Homepage</span>&lt;/<span style="color: #84ffff;">title</span>&gt;
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./fonts/Serif/cmun-serif.css"</span> /&gt;
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./fonts/Serif-Slanted/cmun-serif-slanted.css"</span> /&gt;
+#+HTML_HEAD:        <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">BOOTSTRAP</span><span style="color: #b0bec5;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./bootstrap/css/bootstrap.min.css"</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span>&gt;
+#+HTML_HEAD:        <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">mobile first</span><span style="color: #b0bec5;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">meta</span> <span style="color: #ffcc80;">name</span>=<span style="color: #9ccc65;">"viewport"</span> <span style="color: #ffcc80;">content</span>=<span style="color: #9ccc65;">"width=device-width, initial-scale=1.0"</span>&gt;
 #+HTML_HEAD:
-#+HTML_HEAD:        <span style="color: #fa8072;">&lt;!--</span><span style="color: #ff7f24; font-style: italic;">removed html from url but still is html</span><span style="color: #fa8072;">--&gt;</span>
-#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">meta</span> <span style="color: #7fffd4;">http-equiv</span>=<span style="color: #ffc1c1;">"Content-Type"</span> <span style="color: #7fffd4;">content</span>=<span style="color: #ffc1c1;">"text/html; charset=UTF-8"</span> /&gt;
+#+HTML_HEAD:        <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">removed html from url but still is html</span><span style="color: #b0bec5;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">meta</span> <span style="color: #ffcc80;">http-equiv</span>=<span style="color: #9ccc65;">"Content-Type"</span> <span style="color: #ffcc80;">content</span>=<span style="color: #9ccc65;">"text/html; charset=UTF-8"</span> /&gt;
 #+HTML_HEAD:
-#+HTML_HEAD:        <span style="color: #fa8072;">&lt;!--</span><span style="color: #ff7f24; font-style: italic;">font awesome</span><span style="color: #fa8072;">--&gt;</span>
-#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">link</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"</span> <span style="color: #7fffd4;">rel</span>=<span style="color: #ffc1c1;">"stylesheet"</span>&gt;
+#+HTML_HEAD:        <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">font awesome</span><span style="color: #b0bec5;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span>&gt;
 #+HTML_HEAD:
-#+HTML_HEAD:        <span style="color: #fa8072;">&lt;!--</span><span style="color: #ff7f24; font-style: italic;">fonts: allan &amp; cardo</span><span style="color: #fa8072;">--&gt;</span>
-#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">link</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"http://fonts.googleapis.com/css?family=Droid+Serif"</span> <span style="color: #7fffd4;">rel</span>=<span style="color: #ffc1c1;">"stylesheet"</span> <span style="color: #7fffd4;">type</span>=<span style="color: #ffc1c1;">"text/css"</span>&gt;
-#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">link</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"http://fonts.googleapis.com/css?family=Droid+Sans"</span> <span style="color: #7fffd4;">rel</span>=<span style="color: #ffc1c1;">"stylesheet"</span> <span style="color: #7fffd4;">type</span>=<span style="color: #ffc1c1;">"text/css"</span>&gt;
-#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">link</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./css/sticky-footer-navbar.css"</span> <span style="color: #7fffd4;">rel</span>=<span style="color: #ffc1c1;">"stylesheet"</span>&gt;
+#+HTML_HEAD:        <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">fonts: allan &amp; cardo</span><span style="color: #b0bec5;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"http://fonts.googleapis.com/css?family=Droid+Serif"</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span> <span style="color: #ffcc80;">type</span>=<span style="color: #9ccc65;">"text/css"</span>&gt;
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"http://fonts.googleapis.com/css?family=Droid+Sans"</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span> <span style="color: #ffcc80;">type</span>=<span style="color: #9ccc65;">"text/css"</span>&gt;
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./css/sticky-footer-navbar.css"</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span>&gt;
 #+HTML_HEAD:
-#+HTML_HEAD:        <span style="color: #fa8072;">&lt;!--</span><span style="color: #ff7f24; font-style: italic;">Highlight</span><span style="color: #fa8072;">--&gt;</span>
-#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">link</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./highlight/styles/github.css"</span> <span style="color: #7fffd4;">rel</span>=<span style="color: #ffc1c1;">"stylesheet"</span>&gt;
-#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">link</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./favicon.ico"</span> <span style="color: #7fffd4;">rel</span>=<span style="color: #ffc1c1;">"shortcut icon"</span> /&gt;
-#+HTML_HEAD:        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">script</span> <span style="color: #7fffd4;">type</span>=<span style="color: #ffc1c1;">"text/javascript"</span> <span style="color: #7fffd4;">src</span>=<span style="color: #ffc1c1;">"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">script</span>&gt;
+#+HTML_HEAD:        <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">Highlight</span><span style="color: #b0bec5;">--&gt;</span>
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./highlight/styles/github.css"</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"stylesheet"</span>&gt;
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">link</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./favicon.ico"</span> <span style="color: #ffcc80;">rel</span>=<span style="color: #9ccc65;">"shortcut icon"</span> /&gt;
+#+HTML_HEAD:        &lt;<span style="color: #84ffff;">script</span> <span style="color: #ffcc80;">type</span>=<span style="color: #9ccc65;">"text/javascript"</span> <span style="color: #ffcc80;">src</span>=<span style="color: #9ccc65;">"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"</span>&gt;&lt;/<span style="color: #84ffff;">script</span>&gt;
 
 #+BEGIN_EXPORT html
-&lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">nav</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"navbar navbar-inverse navbar-static-top"</span> <span style="color: #7fffd4;">role</span>=<span style="color: #ffc1c1;">"navigation"</span>&gt;
-  &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">div</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"container"</span>&gt;
-    <span style="color: #fa8072;">&lt;!--</span><span style="color: #ff7f24; font-style: italic;">Toggle header for mobile</span><span style="color: #fa8072;">--&gt;</span>
-    &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">div</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"navbar-header"</span>&gt;
-      &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">button</span> <span style="color: #7fffd4;">type</span>=<span style="color: #ffc1c1;">"button"</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"navbar-toggle"</span> <span style="color: #7fffd4;">data-toggle</span>=<span style="color: #ffc1c1;">"collapse"</span> <span style="color: #7fffd4;">data-target</span>=<span style="color: #ffc1c1;">".navbar-collapse"</span>&gt;
-        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"sr-only"</span>&gt;Toggle navigation&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span>&gt;
-        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"icon-bar"</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span>&gt;
-        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"icon-bar"</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span>&gt;
-        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"icon-bar"</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span>&gt;
-      &lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">button</span>&gt;
-      &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"navbar-brand active"</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./index.html"</span> <span style="color: #7fffd4;">id</span>=<span style="color: #ffc1c1;">"home"</span>&gt;Chenggang Liu's Homepage&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span>&gt;
-    &lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">div</span>&gt;
-    <span style="color: #fa8072;">&lt;!--</span><span style="color: #ff7f24; font-style: italic;">normal header</span><span style="color: #fa8072;">--&gt;</span>
-    &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">div</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"navbar-collapse collapse"</span>&gt;
-      &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">ul</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"nav navbar-nav navbar-right"</span>&gt;
-        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">li</span>&gt;&lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./index.html"</span>&gt;&lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"glyphicon glyphicon-home"</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span>&gt;  Home&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">li</span>&gt;
-        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">li</span>&gt;&lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./blog.html"</span>&gt;&lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"glyphicon glyphicon-pencil"</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span>&gt;  Blog&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">li</span>&gt;
-        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">li</span>&gt;&lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./projects.html"</span>&gt;&lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"glyphicon glyphicon-tags"</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span>&gt;  Projects&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">li</span>&gt;
-        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">li</span>&gt;&lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./about.html"</span>&gt;&lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"glyphicon glyphicon-user"</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span>&gt;  About&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">li</span>&gt;
-        &lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">li</span>&gt;&lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span> <span style="color: #7fffd4;">href</span>=<span style="color: #ffc1c1;">"./contact.html"</span>&gt;&lt;<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span> <span style="color: #7fffd4;">class</span>=<span style="color: #ffc1c1;">"glyphicon glyphicon-envelope"</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">span</span>&gt;  Contact&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">a</span>&gt;&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">li</span>&gt;
-      &lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">ul</span>&gt;
-    &lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">div</span>&gt;<span style="color: #fa8072;">&lt;!--</span><span style="color: #ff7f24; font-style: italic;">/.nav-collapse </span><span style="color: #fa8072;">--&gt;</span>
-  &lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">div</span>&gt;
-&lt;/<span style="color: #00fa9a; font-size: 110%; font-weight: bold;">nav</span>&gt;
+&lt;<span style="color: #84ffff;">nav</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"navbar navbar-inverse navbar-static-top"</span> <span style="color: #ffcc80;">role</span>=<span style="color: #9ccc65;">"navigation"</span>&gt;
+  &lt;<span style="color: #84ffff;">div</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"container"</span>&gt;
+    <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">Toggle header for mobile</span><span style="color: #b0bec5;">--&gt;</span>
+    &lt;<span style="color: #84ffff;">div</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"navbar-header"</span>&gt;
+      &lt;<span style="color: #84ffff;">button</span> <span style="color: #ffcc80;">type</span>=<span style="color: #9ccc65;">"button"</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"navbar-toggle"</span> <span style="color: #ffcc80;">data-toggle</span>=<span style="color: #9ccc65;">"collapse"</span> <span style="color: #ffcc80;">data-target</span>=<span style="color: #9ccc65;">".navbar-collapse"</span>&gt;
+        &lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"sr-only"</span>&gt;Toggle navigation&lt;/<span style="color: #84ffff;">span</span>&gt;
+        &lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"icon-bar"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;
+        &lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"icon-bar"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;
+        &lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"icon-bar"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;
+      &lt;/<span style="color: #84ffff;">button</span>&gt;
+      &lt;<span style="color: #84ffff;">a</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"navbar-brand active"</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./index.html"</span> <span style="color: #ffcc80;">id</span>=<span style="color: #9ccc65;">"home"</span>&gt;Chenggang Liu's Homepage&lt;/<span style="color: #84ffff;">a</span>&gt;
+    &lt;/<span style="color: #84ffff;">div</span>&gt;
+    <span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">normal header</span><span style="color: #b0bec5;">--&gt;</span>
+    &lt;<span style="color: #84ffff;">div</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"navbar-collapse collapse"</span>&gt;
+      &lt;<span style="color: #84ffff;">ul</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"nav navbar-nav navbar-right"</span>&gt;
+        &lt;<span style="color: #84ffff;">li</span>&gt;&lt;<span style="color: #84ffff;">a</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./index.html"</span>&gt;&lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"glyphicon glyphicon-home"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;  Home&lt;/<span style="color: #84ffff;">a</span>&gt;&lt;/<span style="color: #84ffff;">a</span>&gt;&lt;/<span style="color: #84ffff;">li</span>&gt;
+        &lt;<span style="color: #84ffff;">li</span>&gt;&lt;<span style="color: #84ffff;">a</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./blog.html"</span>&gt;&lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"glyphicon glyphicon-pencil"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;  Blog&lt;/<span style="color: #84ffff;">a</span>&gt;&lt;/<span style="color: #84ffff;">li</span>&gt;
+        &lt;<span style="color: #84ffff;">li</span>&gt;&lt;<span style="color: #84ffff;">a</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./projects.html"</span>&gt;&lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"glyphicon glyphicon-tags"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;  Projects&lt;/<span style="color: #84ffff;">a</span>&gt;&lt;/<span style="color: #84ffff;">li</span>&gt;
+        &lt;<span style="color: #84ffff;">li</span>&gt;&lt;<span style="color: #84ffff;">a</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./about.html"</span>&gt;&lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"glyphicon glyphicon-user"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;  About&lt;/<span style="color: #84ffff;">a</span>&gt;&lt;/<span style="color: #84ffff;">li</span>&gt;
+        &lt;<span style="color: #84ffff;">li</span>&gt;&lt;<span style="color: #84ffff;">a</span> <span style="color: #ffcc80;">href</span>=<span style="color: #9ccc65;">"./contact.html"</span>&gt;&lt;<span style="color: #84ffff;">span</span> <span style="color: #ffcc80;">class</span>=<span style="color: #9ccc65;">"glyphicon glyphicon-envelope"</span>&gt;&lt;/<span style="color: #84ffff;">span</span>&gt;  Contact&lt;/<span style="color: #84ffff;">a</span>&gt;&lt;/<span style="color: #84ffff;">li</span>&gt;
+      &lt;/<span style="color: #84ffff;">ul</span>&gt;
+    &lt;/<span style="color: #84ffff;">div</span>&gt;<span style="color: #b0bec5;">&lt;!--</span><span style="color: #b0bec5;">/.nav-collapse </span><span style="color: #b0bec5;">--&gt;</span>
+  &lt;/<span style="color: #84ffff;">div</span>&gt;
+&lt;/<span style="color: #84ffff;">nav</span>&gt;
 #+END_EXPORT
 
 </code></pre>

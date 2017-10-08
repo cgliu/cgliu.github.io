@@ -3,23 +3,30 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>projects</title>
-<!-- 2017-09-10 Sun 19:19 -->
-<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta  name="generator" content="Org-mode" />
-<meta  name="author" content="Chenggang Liu" />
+<!-- 2017-10-08 Sun 11:41 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title></title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Chenggang Liu" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
   .todo   { font-family: monospace; color: red; }
-  .done   { color: green; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
             padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
-  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
   .underline { text-decoration: underline; }
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
@@ -46,27 +53,111 @@
     border: 1px solid black;
   }
   pre.src:hover:before { display: inline;}
-  pre.src-sh:before    { content: 'sh'; }
-  pre.src-bash:before  { content: 'sh'; }
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
   pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-R:before     { content: 'R'; }
-  pre.src-perl:before  { content: 'Perl'; }
-  pre.src-java:before  { content: 'Java'; }
-  pre.src-sql:before   { content: 'SQL'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
 
   table { border-collapse:collapse; }
   caption.t-above { caption-side: top; }
   caption.t-bottom { caption-side: bottom; }
   td, th { vertical-align:top;  }
-  th.right  { text-align: center;  }
-  th.left   { text-align: center;   }
-  th.center { text-align: center; }
-  td.right  { text-align: right;  }
-  td.left   { text-align: left;   }
-  td.center { text-align: center; }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
   dt { font-weight: bold; }
-  .footpara:nth-child(2) { display: inline; }
-  .footpara { display: block; }
+  .footpara { display: inline; }
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
@@ -86,6 +177,7 @@
     { font-size: 10px; font-weight: bold; white-space: nowrap; }
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
 <script type="text/javascript">
@@ -93,7 +185,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2013 Free Software Foundation, Inc.
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -137,31 +229,30 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">projects</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">Self-driving car</a></li>
-<li><a href="#sec-2">DARPA Robotics Challenge Egress Control</a></li>
-<li><a href="#sec-3">Integrated Modular Avionics System</a></li>
-<li><a href="#sec-4">Biped Walking Control using an Optimal Trajectory Library</a></li>
-<li><a href="#sec-5">Standing Balance Control using an Optimal Trajectory Library</a></li>
-<li><a href="#sec-6">Roboray Humanoid Robot System Design</a></li>
-<li><a href="#sec-7">Biped Walking Control</a></li>
-<li><a href="#sec-8">Biped Skating Control</a></li>
-<li><a href="#sec-9">Small Humanoid Robot System Development</a></li>
-<li><a href="#sec-10">Motor Control System Development</a></li>
-<li><a href="#sec-11">Sensorimotor Coordination Research</a></li>
-<li><a href="#sec-12">GPU Design</a></li>
-<li><a href="#sec-13">Embedded Active Vision System Development</a></li>
-<li><a href="#sec-14">Short-term Ship Motion Prediction</a></li>
+<li><a href="#org3498499">Self-driving car</a></li>
+<li><a href="#org85cb7b3">DARPA Robotics Challenge Egress Control</a></li>
+<li><a href="#org45934d3">Integrated Modular Avionics System</a></li>
+<li><a href="#org56480a0">Biped Walking Control using an Optimal Trajectory Library</a></li>
+<li><a href="#org84a32b7">Standing Balance Control using an Optimal Trajectory Library</a></li>
+<li><a href="#org392ac5c">Roboray Humanoid Robot System Design</a></li>
+<li><a href="#orga269665">Biped Walking Control</a></li>
+<li><a href="#orge72f994">Biped Skating Control</a></li>
+<li><a href="#org6e03f32">Small Humanoid Robot System Development</a></li>
+<li><a href="#orgcb0034f">Motor Control System Development</a></li>
+<li><a href="#orgabfa897">Sensorimotor Coordination Research</a></li>
+<li><a href="#orgf5de1be">GPU Design</a></li>
+<li><a href="#orgab2538f">Embedded Active Vision System Development</a></li>
+<li><a href="#orgc17af18">Short-term Ship Motion Prediction</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1">Self-driving car</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-org3498499" class="outline-2">
+<h2 id="org3498499">Self-driving car</h2>
+<div class="outline-text-2" id="text-org3498499">
 <div class="row">
 <div class="col-md-6">
 
@@ -175,21 +266,18 @@ for the JavaScript code in this tag.
 Self-driving car, Uber ATG, Pittsburgh, 2015-present
 </p>
 <ul class="org-ul">
-<li>System architecture and performance analysis
-</li>
-<li>Optimization-based motion planning and control
-</li>
-<li>Learning from imitation
-</li>
+<li>System architecture and performance analysis</li>
+<li>Optimization-based motion planning and control</li>
+<li>Learning from imitation</li>
 </ul>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2">DARPA Robotics Challenge Egress Control</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-org85cb7b3" class="outline-2">
+<h2 id="org85cb7b3">DARPA Robotics Challenge Egress Control</h2>
+<div class="outline-text-2" id="text-org85cb7b3">
 <div class="row">
 <div class="col-md-6">
 
@@ -203,10 +291,8 @@ Self-driving car, Uber ATG, Pittsburgh, 2015-present
 The DARPA Robotics Challenge, Carnegie Mellon University, Pittsburgh, 2013-2015
 </p>
 <ul class="org-ul">
-<li>Full-body motion planning and control
-</li>
-<li>The egress task
-</li>
+<li>Full-body motion planning and control</li>
+<li>The egress task</li>
 </ul>
 <p class="lead">
 <a class="btn btn-default" href="./projects/drc.html" role="button">Learn more</a>
@@ -216,9 +302,9 @@ The DARPA Robotics Challenge, Carnegie Mellon University, Pittsburgh, 2013-2015
 </div>
 </div>
 
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3">Integrated Modular Avionics System</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-org45934d3" class="outline-2">
+<h2 id="org45934d3">Integrated Modular Avionics System</h2>
+<div class="outline-text-2" id="text-org45934d3">
 <div class="row">
 <div class="col-md-6">
 
@@ -232,21 +318,18 @@ The DARPA Robotics Challenge, Carnegie Mellon University, Pittsburgh, 2013-2015
 China's C919 project, GE Aviation and Aviage Systems, Ltd., 2011-2013
 </p>
 <ul class="org-ul">
-<li>Integrated Modular Avionics (IMA) system design
-</li>
-<li>High integrity ADN (Advanced Data Networks) design
-</li>
-<li>ADN switch configuration tool and analysis tool design
-</li>
+<li>Integrated Modular Avionics (IMA) system design</li>
+<li>High integrity ADN (Advanced Data Networks) design</li>
+<li>ADN switch configuration tool and analysis tool design</li>
 </ul>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4">Biped Walking Control using an Optimal Trajectory Library</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-org56480a0" class="outline-2">
+<h2 id="org56480a0">Biped Walking Control using an Optimal Trajectory Library</h2>
+<div class="outline-text-2" id="text-org56480a0">
 <div class="row">
 <div class="col-md-6">
 
@@ -260,16 +343,12 @@ China's C919 project, GE Aviation and Aviage Systems, Ltd., 2011-2013
 Control using an optimal trajectory library, PhD Thesis, SJTU, 2006-2011
 </p>
 <ul class="org-ul">
-<li>Trajectory-based dynamic programming
-</li>
+<li>Trajectory-based dynamic programming</li>
 <li>Trajectory optimization and policy optimization
 <ul class="org-ul">
-<li>Application to tasks with an equilibrium state (standing balance control)
-</li>
-<li>Application to tasks with a limit cycles (walking control)
-</li>
-</ul>
-</li>
+<li>Application to tasks with an equilibrium state (standing balance control)</li>
+<li>Application to tasks with a limit cycles (walking control)</li>
+</ul></li>
 </ul>
 <p class="lead">
 <a class="btn btn-default" href="./projects/walking.html" role="button">Learn more</a>
@@ -279,9 +358,9 @@ Control using an optimal trajectory library, PhD Thesis, SJTU, 2006-2011
 </div>
 </div>
 
-<div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5">Standing Balance Control using an Optimal Trajectory Library</h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-org84a32b7" class="outline-2">
+<h2 id="org84a32b7">Standing Balance Control using an Optimal Trajectory Library</h2>
+<div class="outline-text-2" id="text-org84a32b7">
 <div class="row">
 <div class="col-md-6">
 
@@ -302,9 +381,9 @@ Standing Balance Control Using an Optimal Trajectory Library
 </div>
 </div>
 
-<div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6">Roboray Humanoid Robot System Design</h2>
-<div class="outline-text-2" id="text-6">
+<div id="outline-container-org392ac5c" class="outline-2">
+<h2 id="org392ac5c">Roboray Humanoid Robot System Design</h2>
+<div class="outline-text-2" id="text-org392ac5c">
 <div class="row">
 <div class="col-md-6">
 
@@ -318,21 +397,18 @@ Standing Balance Control Using an Optimal Trajectory Library
 Roboray humanoid robot system development, Carnegie Mellon University, Samsung, Ltd. and SeeGrid, ltd.
 </p>
 <ul class="org-ul">
-<li>Sensor calibration
-</li>
-<li>Filter design
-</li>
-<li>Balance controller development
-</li>
+<li>Sensor calibration</li>
+<li>Filter design</li>
+<li>Balance controller development</li>
 </ul>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-7" class="outline-2">
-<h2 id="sec-7">Biped Walking Control</h2>
-<div class="outline-text-2" id="text-7">
+<div id="outline-container-orga269665" class="outline-2">
+<h2 id="orga269665">Biped Walking Control</h2>
+<div class="outline-text-2" id="text-orga269665">
 <div class="row">
 <div class="col-md-6">
 
@@ -346,10 +422,8 @@ Roboray humanoid robot system development, Carnegie Mellon University, Samsung, 
 Biped walking control, Shanghai Jiao Tong University, 2007
 </p>
 <ul class="org-ul">
-<li>ZMP-based walking control
-</li>
-<li>LIMP-based walking control
-</li>
+<li>ZMP-based walking control</li>
+<li>LIMP-based walking control</li>
 </ul>
 <p class="lead">
 <a class="btn btn-default" href="./projects/walking.html" role="button">Learn more</a>
@@ -359,9 +433,9 @@ Biped walking control, Shanghai Jiao Tong University, 2007
 </div>
 </div>
 
-<div id="outline-container-sec-8" class="outline-2">
-<h2 id="sec-8">Biped Skating Control</h2>
-<div class="outline-text-2" id="text-8">
+<div id="outline-container-orge72f994" class="outline-2">
+<h2 id="orge72f994">Biped Skating Control</h2>
+<div class="outline-text-2" id="text-orge72f994">
 <div class="row">
 <div class="col-md-6">
 
@@ -382,9 +456,9 @@ Biped skating control, Shanghai Jiao Tong University, 2007
 </div>
 </div>
 
-<div id="outline-container-sec-9" class="outline-2">
-<h2 id="sec-9">Small Humanoid Robot System Development</h2>
-<div class="outline-text-2" id="text-9">
+<div id="outline-container-org6e03f32" class="outline-2">
+<h2 id="org6e03f32">Small Humanoid Robot System Development</h2>
+<div class="outline-text-2" id="text-org6e03f32">
 <div class="row">
 <div class="col-md-6">
 
@@ -398,10 +472,8 @@ Biped skating control, Shanghai Jiao Tong University, 2007
 Small humanoid robot system development, Shanghai Jiao Tong University, 2006-2008
 </p>
 <ul class="org-ul">
-<li>Motion control system (HW/SW) design and implement
-</li>
-<li>ZMP-based walking control implement
-</li>
+<li>Motion control system (HW/SW) design and implement</li>
+<li>ZMP-based walking control implement</li>
 </ul>
 <p class="lead">
 <a class="btn btn-default" href="./projects/ihr.html" role="button">Learn more</a>
@@ -411,9 +483,9 @@ Small humanoid robot system development, Shanghai Jiao Tong University, 2006-200
 </div>
 </div>
 
-<div id="outline-container-sec-10" class="outline-2">
-<h2 id="sec-10">Motor Control System Development</h2>
-<div class="outline-text-2" id="text-10">
+<div id="outline-container-orgcb0034f" class="outline-2">
+<h2 id="orgcb0034f">Motor Control System Development</h2>
+<div class="outline-text-2" id="text-orgcb0034f">
 <div class="row">
 <div class="col-md-6">
 
@@ -427,12 +499,9 @@ Small humanoid robot system development, Shanghai Jiao Tong University, 2006-200
 Motor control system development, Shanghai Jiao Tong University, 2007-2008
 </p>
 <ul class="org-ul">
-<li>6 DoFs control (more DoFs than off-the-shelf products of  the same size)
-</li>
-<li>High precision speed/position control
-</li>
-<li>6 DoFs coupling control
-</li>
+<li>6 DoFs control (more DoFs than off-the-shelf products of  the same size)</li>
+<li>High precision speed/position control</li>
+<li>6 DoFs coupling control</li>
 </ul>
 <p class="lead">
 <a class="btn btn-default" href="./projects/ihr.html" role="button">Learn more</a>
@@ -442,9 +511,9 @@ Motor control system development, Shanghai Jiao Tong University, 2007-2008
 </div>
 </div>
 
-<div id="outline-container-sec-11" class="outline-2">
-<h2 id="sec-11">Sensorimotor Coordination Research</h2>
-<div class="outline-text-2" id="text-11">
+<div id="outline-container-orgabfa897" class="outline-2">
+<h2 id="orgabfa897">Sensorimotor Coordination Research</h2>
+<div class="outline-text-2" id="text-orgabfa897">
 <div class="row">
 <div class="col-md-6">
 
@@ -458,10 +527,8 @@ Motor control system development, Shanghai Jiao Tong University, 2007-2008
 Sensory-motor coordination research, Shanghai Jiao Tong University, 2006-2007
 </p>
 <ul class="org-ul">
-<li>Basic behavior acquisition with multisensor integration.
-</li>
-<li>This research enables a robot to emerge a behavior controller based on its interaction with the environment without specific programming.
-</li>
+<li>Basic behavior acquisition with multisensor integration.</li>
+<li>This research enables a robot to emerge a behavior controller based on its interaction with the environment without specific programming.</li>
 </ul>
 <p class="lead">
 <a class="btn btn-default" href="./projects/smc.html" role="button">Learn more</a>
@@ -471,9 +538,9 @@ Sensory-motor coordination research, Shanghai Jiao Tong University, 2006-2007
 </div>
 </div>
 
-<div id="outline-container-sec-12" class="outline-2">
-<h2 id="sec-12">GPU Design</h2>
-<div class="outline-text-2" id="text-12">
+<div id="outline-container-orgf5de1be" class="outline-2">
+<h2 id="orgf5de1be">GPU Design</h2>
+<div class="outline-text-2" id="text-orgf5de1be">
 <div class="row">
 <div class="col-md-6">
 
@@ -487,21 +554,18 @@ Sensory-motor coordination research, Shanghai Jiao Tong University, 2006-2007
 Graphic Processing Unit logic design, S3 graphics, Inc., 2003-2006
 </p>
 <ul class="org-ul">
-<li>H.264 Video Decoder Development
-</li>
-<li>Multiple Graphic Processing Unit Support Techniques Development
-</li>
-<li>Bus Interface Development
-</li>
+<li>H.264 Video Decoder Development</li>
+<li>Multiple Graphic Processing Unit Support Techniques Development</li>
+<li>Bus Interface Development</li>
 </ul>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-13" class="outline-2">
-<h2 id="sec-13">Embedded Active Vision System Development</h2>
-<div class="outline-text-2" id="text-13">
+<div id="outline-container-orgab2538f" class="outline-2">
+<h2 id="orgab2538f">Embedded Active Vision System Development</h2>
+<div class="outline-text-2" id="text-orgab2538f">
 <div class="row">
 <div class="col-md-6">
 
@@ -517,14 +581,10 @@ Active vision system development, Shanghai Jiao Tong University, 2001-2003
 <ul class="org-ul">
 <li>Fast moving object tracking @ 50 Hz:
 <ul class="org-ul">
-<li>Real-time image processing with TI C6000 floating point DSP
-</li>
-<li>Real-time display
-</li>
-<li>Real-time 2-DoFs pan-tilt camera system control
-</li>
-</ul>
-</li>
+<li>Real-time image processing with TI C6000 floating point DSP</li>
+<li>Real-time display</li>
+<li>Real-time 2-DoFs pan-tilt camera system control</li>
+</ul></li>
 </ul>
 
 <p class="lead">
@@ -535,9 +595,9 @@ Active vision system development, Shanghai Jiao Tong University, 2001-2003
 </div>
 </div>
 
-<div id="outline-container-sec-14" class="outline-2">
-<h2 id="sec-14">Short-term Ship Motion Prediction</h2>
-<div class="outline-text-2" id="text-14">
+<div id="outline-container-orgc17af18" class="outline-2">
+<h2 id="orgc17af18">Short-term Ship Motion Prediction</h2>
+<div class="outline-text-2" id="text-orgc17af18">
 <div class="row">
 <div class="col-md-6">
 
