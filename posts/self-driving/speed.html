@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-01-13 Sat 23:26 -->
+<!-- 2018-01-13 Sat 23:42 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Safe Driving Speed for Self-driving Car</title>
@@ -256,17 +256,17 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org722d69f">1. Introduction</a></li>
-<li><a href="#org592a80d">2. Questions</a></li>
-<li><a href="#org6d6bfdf">3. A simple deterministic case study</a></li>
-<li><a href="#org1e64b32">4. Probabilistic Collision</a></li>
-<li><a href="#orgf5d13d8">5. A simple probabilistic case study</a></li>
+<li><a href="#orga0f3ae1">1. Introduction</a></li>
+<li><a href="#org2d4dc36">2. Questions</a></li>
+<li><a href="#orgf057e84">3. A simple deterministic case study</a></li>
+<li><a href="#org2a5aed4">4. Probabilistic Collision</a></li>
+<li><a href="#org16d8f90">5. A simple probabilistic case study</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org722d69f" class="outline-2">
-<h2 id="org722d69f"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-orga0f3ae1" class="outline-2">
+<h2 id="orga0f3ae1"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 For self-driving car, I think safety is not something luxury, but something we need to consider at the beginning of
@@ -277,8 +277,8 @@ design.
 </div>
 </div>
 
-<div id="outline-container-org592a80d" class="outline-2">
-<h2 id="org592a80d"><span class="section-number-2">2</span> Questions</h2>
+<div id="outline-container-org2d4dc36" class="outline-2">
+<h2 id="org2d4dc36"><span class="section-number-2">2</span> Questions</h2>
 <div class="outline-text-2" id="text-2">
 <ul class="org-ul">
 <li>How can we evaluate how safe is the current design?</li>
@@ -292,8 +292,8 @@ How does the perception-reaction delay impact on the safety of the whole system?
 </div>
 </div>
 
-<div id="outline-container-org6d6bfdf" class="outline-2">
-<h2 id="org6d6bfdf"><span class="section-number-2">3</span> A simple deterministic case study</h2>
+<div id="outline-container-orgf057e84" class="outline-2">
+<h2 id="orgf057e84"><span class="section-number-2">3</span> A simple deterministic case study</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Assuming the vehicle's initial speed is \(v_0\), its maximum deceleration is \(a\), the perception-reaction delay is \(\tau\),
@@ -331,24 +331,8 @@ We have assumed the pedestrian doesn't move before the vehicle is stooped. What 
 
 <p>
 As we can see, there is a minimal clearance distance for moving obstacle, which is \(\tau v_p\), which \(v_p\) is the
-worst-case approaching speed. It means as long as the vehicle moves, it is possible to have collision.
-If we want to avoid collision, the vehicle has to stop.
+worst-case approaching speed. 
 </p>
-
-<p>
-What's wrong with our analysis? Do we have to take risk in order to drive?
-</p>
-
-<p>
-One missing part is we don't have to stop before collision. The severity level of a collision in urban drive is
-proportional to the speed upon collision.
-If the acceptable speed upon collision is \(v_f\), then
-\[
-  \mathrm{clearnace} = \frac{v_0^2}{2 a} + (\tau + \frac{v_p}{a}) v_0 + \tau v_p
-  \]
-</p>
-
-
 
 <p>
 The equation above gives us the relation between the reaction time, the clearance distance, and the driving speed based on
@@ -359,9 +343,8 @@ account so we can derive more practical performance requirements.
 </div>
 </div>
 
-
-<div id="outline-container-org1e64b32" class="outline-2">
-<h2 id="org1e64b32"><span class="section-number-2">4</span> Probabilistic Collision</h2>
+<div id="outline-container-org2a5aed4" class="outline-2">
+<h2 id="org2a5aed4"><span class="section-number-2">4</span> Probabilistic Collision</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 The collision probability for the AV with its environment at a particular moment of time:
@@ -375,8 +358,8 @@ where \(p_{av}(s)\) is the probability of the av at location \(s\),
 </div>
 </div>
 
-<div id="outline-container-orgf5d13d8" class="outline-2">
-<h2 id="orgf5d13d8"><span class="section-number-2">5</span> A simple probabilistic case study</h2>
+<div id="outline-container-org16d8f90" class="outline-2">
+<h2 id="org16d8f90"><span class="section-number-2">5</span> A simple probabilistic case study</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Assuming the vehicle's initial position and velocity satisfy:
@@ -506,7 +489,7 @@ To be continued &#x2026;
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2018-01-13 Sat 23:26</p>
+<p class="date">Created: 2018-01-13 Sat 23:42</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
