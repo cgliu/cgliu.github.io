@@ -3,11 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-01-14 Sun 09:17 -->
+<!-- 2018-01-14 Sun 12:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Safe Driving Speed for Self-driving Car</title>
+<title>Self-driving technologies</title>
 <meta name="generator" content="Org mode" />
+<meta name="author" content="Frank Liu" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -179,7 +180,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="../css/layout.css" />
+<link rel="stylesheet" type="text/css" href="./css/layout.css" />
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -226,267 +227,23 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
-
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
-});
-</script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
-<h1 class="title">Safe Driving Speed for Self-driving Car</h1>
+<h1 class="title">Self-driving technologies</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org52f3352">1. Introduction</a></li>
-<li><a href="#org599b632">2. Questions</a></li>
-<li><a href="#orgd4f8821">3. A simple deterministic case study</a></li>
-<li><a href="#orga023ab8">4. Probabilistic Collision</a></li>
-<li><a href="#orgac370de">5. A simple probabilistic case study</a></li>
+<li><a href="#org33045f2">Safe driving speed for self-driving car</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org52f3352" class="outline-2">
-<h2 id="org52f3352"><span class="section-number-2">1</span> Introduction</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-For self-driving car, I think safety is not something luxury, but something we need to consider at the beginning of
-design. It won't happen automatically and we need to build safety in the design. Safety comes from design, not from
-test. To achieve the desired safety assurance level, we need to figure out the critical performance parameters in the
-design.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org599b632" class="outline-2">
-<h2 id="org599b632"><span class="section-number-2">2</span> Questions</h2>
-<div class="outline-text-2" id="text-2">
-<ul class="org-ul">
-<li>How can we evaluate how safe is the current design?</li>
-<li>We want the perception system to be perfect, but it is not practical.
-Then what's the required precision of the perception system?</li>
-<li>We can't know the extract location of the vehicle, then what's
-the required precision of the localization system?</li>
-<li>The software can't run infinite fast and the vehicle platform has intrinsic delay.
-How does the perception-reaction delay impact on the safety of the whole system? What's a reasonable target maximum reaction delay?</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-orgd4f8821" class="outline-2">
-<h2 id="orgd4f8821"><span class="section-number-2">3</span> A simple deterministic case study</h2>
-<div class="outline-text-2" id="text-3">
-<p>
-Assuming the vehicle's initial speed is \(v_0\), its maximum deceleration is \(a\), the perception-reaction delay is \(\tau\),
-then the minimum stop distance is
-\[
-  d = v_0 \tau + \frac{v_0^2}{2 a}
-  \]
-</p>
-
-<p>
-If there is any obstacle within this distance, a collision will occur.
-To avoid collision, the vehicle needs to ensure a clearance distance as a function of current speed \(v_0\).
-</p>
-
-\begin{equation}
-\label{eq:1}
-\mathrm{clearnace} = v_0 \tau + \frac{v_0^2}{2 a}
-\end{equation}
 
 
-<p>
-Discussion:
-</p>
-<ul class="org-ul">
-<li>the required clearance distance increases with the reaction delay, \(\tau\),
-and the rate is the initial speed.</li>
-<li>The required clearance distance quadratically increases with the initial speed.</li>
-</ul>
-
-<p>
-We have assumed the pedestrian doesn't move before the vehicle is stooped. What if he is moving towards us at speed, \(v_p\)?
-\[
-  \mathrm{clearnace} = \frac{v_0^2}{2 a} + (\tau + \frac{v_p}{a}) v_0 + \tau v_p
-  \]
-</p>
-
-<p>
-As we can see, there is a minimal clearance distance for moving obstacle, which is \(\tau v_p\), which \(v_p\) is the
-worst-case approaching speed. 
-</p>
-
-<p>
-The equation above gives us the relation between the reaction time, the clearance distance, and the driving speed based on
-perfect perception and localization.
-But the world is not perfect, we can't know our and others' exact location. We need take uncertainties into
-account so we can derive more practical performance requirements.
-</p>
-</div>
-</div>
-
-<div id="outline-container-orga023ab8" class="outline-2">
-<h2 id="orga023ab8"><span class="section-number-2">4</span> Probabilistic Collision</h2>
-<div class="outline-text-2" id="text-4">
-<p>
-The collision probability for the AV with its environment at a particular moment of time:
-\[
-  p = \int_{\mathcal{S}} p_{av}(s) p_{env}(s) ds
-  \]
-where \(p_{av}(s)\) is the probability of the av at location \(s\),
-\(p_{env}(s)\) is the probability that location \(s\) is occupied by its environment,
-\(s \in \mathcal{S}\) and \(S\) the operational area.
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgac370de" class="outline-2">
-<h2 id="orgac370de"><span class="section-number-2">5</span> A simple probabilistic case study</h2>
-<div class="outline-text-2" id="text-5">
-<p>
-Assuming the vehicle's initial position and velocity satisfy:
-\[
-  x_{av}(0) \sim \mathcal{N}(\mu_{av}(0), \Sigma_{av(0)})
-  \]
-where \(\Sigma_{av}(0)\) is the localization co-variance matrix at time 0.
-</p>
-
-<p>
-Assuming the pedestrian's initial position and velocity satisfy:
-\[
-  x_{ped} \sim \mathcal{N}(\mu_{ped}(0), \Sigma_{ped}(0))
-  \]
-where \(\Sigma_{ped}(0)\) is the perception co-variance matrix at time 0.
-</p>
-
-
-<div class="figure">
-<p><img src="probabilistic_collision.png" alt="probabilistic_collision.png" width="500" />
-</p>
-</div>
-
-<p>
-For shake of simplicity, let's consider a simple linear system for the vehicle and the pedestrian:
-\[
-  x(k+1) = A x(k) + B u(k)
-  \]
-where
-\(x := [\mathrm{position} \ \mathrm{velocity}]^\top\), \(u := \mathrm{acceleration}\),
-</p>
-\begin{equation}
-A = \begin{bmatrix}
-1 & dt \\
-0 & 1
-\end{bmatrix}
-\end{equation}
-<p>
-and \(B = [0.5 dt^2, dt ]^\top\)
-</p>
-
-<p>
-If we ignore the process noise and only consider the measurement noise, then we have
-</p>
-\begin{equation}
-P(t) = \begin{bmatrix}
-\sigma_p^2 + t^2 \sigma_v^2 & t \sigma_v^2 \\
-t \sigma_v^2 & \sigma_v^2
-\end{bmatrix}
-\end{equation}
-<p>
-where \(\sigma_p\) is the position variance and \(\sigma_v\) is the velocity variance.
-Notice that the position variance at time t is \(\sigma_p(t)^2 = \sigma_p(0)^2 + t^2 \sigma_v^2(0)\).
-</p>
-
-
-<p>
-Let's denote the distance between the vehicle and the pedestrian as \(z=s_{ped} -s_{av}\).
-Since \(z\) is a linear combination of two normal distributions, we have
-\[
-  p(z|t) \sim \mathcal{N}(s_{ped}(t) - s_{av}(t), \sigma_{p_{av}}(t)^2 + \sigma_{p_{ped}}(t)^2)
-  \]
-Let's denote \(\sigma_{p_{av}}^2 + \sigma_{p_{ped}}^2\) as \(\sigma_{p}^2\),
-\(\sigma_{v_{av}}^2 + \sigma_{v_{ped}}^2\) as \(\sigma_{v}^2\).
-</p>
-
-
-<p>
-Finally, we can get the collision probability at time t:
-\[
-  P(z \le 0 | t) = \int_{-\infty}^{0} p(z|t) dz
-  \]
-</p>
-
-
-<div class="figure">
-<p><img src="collision_probability.png" alt="collision_probability.png" width="500" />
-</p>
-</div>
-
-<p>
-If we want the collision probability at time t, \(P(z|t) \le  2.5\%\), the clearance distance must satisfy:
-\[
-  z \ge  2 \sigma_{p}
-  \]
-</p>
-
-<p>
-So far, we know the relationship between a clearance distance and uncertainties.
-If we take the controllability into account, the clearance distance becomes:
-\[
-  \mathrm{clearance} = v_0 \tau + \frac{v_0^2}{2 a} + 2 \sigma_{p}(T)
-  \]
-where \(T\) is the time to stop and \(T = \tau + v_0/a\).
-</p>
-
-<p>
-Then,
-\[
-  \mathrm{clearance} = v_0 \tau + \frac{v_0^2}{2 a} + 2 \sqrt{\sigma_{p}^2(0) + T^2 \sigma_v^2(0)}
-  \]
-</p>
-
-<p>
-In general, \(\sigma_v >> \sigma_p\), this equation can be further simplified as:
-\[
-  \mathrm{clearance} = \frac{v_0^2}{2a} + \big ( \tau + \frac{2\sigma_v}{a}\big ) v_0 + 2 \sigma_v \tau
-  \]
-</p>
-
-<p>
-Notice that there is a minimum clearance distance cause by the reaction delay: \(\mathrm{clearance}_{min} = 2 \sigma_v \tau\).
-</p>
-
-<p>
-For the first time, we get the connection between the safe drive speed,
-the localization precision, the perception precision, and the system reaction delay.
-When we design a safe self-driving system, we need to consider the perception, localization,
-motion planning and control system as a whole. I hope this equation can guide us to find such a
-safe harmonious system.
-</p>
-
-<p>
-To be continued &#x2026;
-</p>
-</div>
+<div id="outline-container-org33045f2" class="outline-2">
+<h2 id="org33045f2"><a href="speed.html">Safe driving speed for self-driving car</a></h2>
 </div>
 </div>
 </body>
