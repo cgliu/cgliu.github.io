@@ -1,0 +1,589 @@
+#+title: Self-driving from An Engineering Perspective
+# DATE: 2018
+#+author: Chenggang Liu
+#+STARTUP: beamer
+#+LaTeX_CLASS: beamer
+# LATEX_HEADER: \usepackage[margin=0.5in]{geometry}
+#+BEAMER_FRAME_LEVEL: 2
+#+LaTeX_CLASS_OPTIONS: [bigger, t]
+
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org-info.css" />
+#+OPTIONS: ^:nil author:t creator:t num:nil toc:nil
+# INFOJS_OPT: view:info toc:nil
+
+# BEAMER_THEME: Darmstadt
+# BEAMER_THEME: CambridgeUS
+# BEAMER_THEME: Hannover
+# BEAMER_THEME: CMU
+# BEAMER_THEME: Madrid
+# BEAMER_THEME: Pittsburgh
+# BEAMER_THEME: Goettingen
+# BEAMER_THEME: Boadilla
+# BEAMER_COLOR_THEME: default
+# BEAMER_THEME: Boadilla
+#+STARTUP: hidestars
+
+# latex_header: \usepackage[boxed]{algorithm2e}
+#+latex_header: \newcommand{\ud}{\mathrm{d}}
+# latex_header: \newcommand{\mbf}{\mathbf}
+#+latex_header: \newcommand{\dt}{\mathrm{d}t}
+#+latex_header: \newcommand{\Lagr}{\mathcal{L}}
+
+#+REVEAL_HLEVEL: 1
+#+REVEAL_THEME: serif
+#+REVEAL_PLUGINS:  (notes) (highlight)
+# we can define our own style, which includes align to left rather than center.
+#+REVEAL_EXTRA_CSS: mystyle.css
+# REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
+
+#+OPTIONS: reveal_control:t reveal_height:-1
+#+OPTIONS: reveal_history:nil reveal_keyboard:t reveal_overview:t
+#+OPTIONS: reveal_progress:t reveal_rolling_links:nil
+#+OPTIONS: reveal_single_file:nil reveal_slide_number:"c"
+#+OPTIONS: reveal_title_slide:t reveal_width:-1
+#+OPTIONS: reveal_global_header:t reveal_global_footer:t
+#+REVEAL_MARGIN: -1
+#+REVEAL_MIN_SCALE: -1
+#+REVEAL_MAX_SCALE: -1
+
+* Introduction
+  #+BEGIN_EXAMPLE
+  These are my personal opinions, if you have comments, questions or ideas, 
+  please feel free to send me Emails at cgliu2008 AT gmail.com
+  #+END_EXAMPLE
+
+  People don't believe self-driving cars are achievable argue that:
+   - Computer system is not reliable and safe enough.
+   - Bugs in software are inevitable.
+   - Malicious attack can always cause trouble.
+   - Collision is inevitable.
+   - There are a lot of unsolved AI problems, for example, human intent prediction.
+
+  I believe we can achieve self-driving cars in a reasonable near future, here is why and how.
+
+* Safety - what we learn from aviation industry.
+** Safety Critical System
+   #+attr_html: :width 800
+   #+caption: Examples of sefety critical system
+   [[file:fly-by-wire-drive-by-wire.png]]
+
+** The $10^{-9}$ Challenge [fn:integrated-system]
+   Critical system services must be more reliable than any one of the
+   components: e.g., System Dependability 1 FIT--Component
+   dependability 1000 FIT (1 FIT: 1 failure in $10^9$ hours)
+   - Architecture must be distributed and support fault-tolerance to
+     mask component failures.
+   - System as a whole is not testable to the required level of
+     dependability.
+   - The safety argument is based on a combination of experimental
+     evidence about the expected failure modes and failures rates of
+     fault-containment regions (FCR) and a formal dependability
+     model that depicts the system structure from the point of view of
+     dependability.
+   - Independence of the FCRs is a critical issue
+
+     
+     
+[fn:integrated-system] From a federated to an integrated architecture for dependable embedded systems,
+H. Kopetz, TU Wien, September 2004
+
+** Independence of FCRs
+   There are two basic mechanisms that compromise the
+   independence of FCRs
+   - Missing fault isolation among the FCRs
+   - Error propagation--the consequences of a fault, the
+     ensuing error, propagates to a healthy FCR by an
+     erroneous message.
+** COMMENT Federated Architecture
+   In a federated architecture each Distributed Application Subsystem
+   (DAS) is implemented on its own stand-alone distributed hardware
+   base, consisting of nodes dedicated to jobs and physical
+   communication channels (a network) among the nodes.
+   - Heavy
+   - Hard to integrate multiple sensors
+** COMMENT Federated vs integrated Architecture
+   [[file:federated_to_integrated_arch_trend.pdf]]
+
+** Integrated Architecture
+     #+BEGIN_CENTER
+     #+attr_latex: :height 0.7\textheight :center
+     #+attr_html: :height 400
+     #+caption: The transition from federated architecture to integrated architecture 
+     [[file:federated-to-ima.png]]
+     #+END_CENTER
+
+** Safety Consideration for Integrated Architecture
+   A number of technical and economic advantages could be realized if the
+   different DASes were integrated into a single architecture
+   - Cost savings by the reduction of nodes, sensors and wiring points
+     (results also in an increase in hardware reliability).
+   - Better integration of functions--more flexibility
+   - Implementation of fault tolerance simplified
+
+     But
+   - Independence of individual DAS compromised--increased potential
+     of error propagation from one DAS to another DAS
+   - Integration increases complexity and diagnostics
+   - Allocation of responsibility more difficult
+
+** Platform Safety - Platform
+   - DO-297 Integrated Modular Avionics (IMA) Development Guidance and Certification Considerations
+
+     #+BEGIN_CENTER
+     #+attr_latex: :height 0.7\textheight :center
+     #+attr_html: :height 500
+     #+caption: A380 integrated modular avionics
+     [[file:a380-ima.png]]
+     #+END_CENTER
+
+
+** Platform Safety - OS
+   - Operating System ARINC 653 (Avionics Application Standard Software Interface) a software specification for space and
+     time partitioning in safety-critical avionics real-time operating systems (RTOS).
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+     #+attr_latex: :height 0.45\textheight :center
+     #+attr_html: :height 350
+     [[file:federated-system.png]]
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+     #+attr_latex: :height 0.45\textheight :center
+     #+attr_html: :height 350
+     [[file:IMA-arch.png]]
+#+REVEAL_HTML: </div>
+
+** Platform Safety - Network
+   - AFDX Avionics Full-Duplex Switched Ethernet (AFDX)
+   - ARINC 664
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+     #+attr_latex: :height 0.3\textheight :center
+     #+attr_html: :height 300
+     [[file:afdx-es.png]]
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+     #+attr_latex: :height 0.45\textheight :center
+     #+attr_html: :height 300
+     [[file:afdx-partition.png]]
+#+REVEAL_HTML: </div>
+
+** Platform Safety - Software
+   - Software DO-178B, Software Considerations in Airborne Systems and Equipment Certification
+     #+BEGIN_CENTER
+     #+attr_html: :height 500
+     #+attr_latex: :height 0.5\textheight :center
+     #+caption: DO-178B Software Development Processes Objectives
+     [[file:DO-178B-snapshot.png]]
+     #+END_CENTER
+
+** Platform Safety - Hardware
+   - DO-254, Design Assurance Guidance For Airborne Electronic Hardware
+     #+BEGIN_CENTER
+     #+attr_html: :height 500
+     #+attr_latex: :height 0.4\textheight :center
+     #+caption: DO-254 Hardware Control Category
+     [[file:do-254-table-a.png]]
+     #+END_CENTER
+
+
+** Integrated Architecture for Self-driving Cars
+   - Partitioning system, the performance of each system must be unaffected by any other
+     - To allow systems to be developed, tested and verified separately
+     - To allow system faults to be contained
+     - To allow new systems to be added post certification
+   - For self-driving platform, we need to have partitioned computing, communication and interface resources.
+     
+   - In short, the safety can not be achieved only by testing, but also by a careful plan, design, implementation, and
+     validation and verification process. For self-driving cars, it is impractical to follow the same process as what in
+     Aviavion for now. But a minimal system engineering effort is still required, which will *save money and time*.
+
+* Collision Is Inevitable
+** Collision is inevitable?
+
+   - Yes. According to [[https://cgliu.github.io/posts/self-driving/speed.html][safe drive speed]] analysis, there is always collision possibility as long as the vehicle moves.
+
+   - But 
+     - we are not responsible for all kind of collisions, for example, collisions by others' faults.
+     - the severity level is different for collisions  
+
+   - Therefore, we only need to show due care to inevitable collisions and collisions caused by others' faults.
+
+* Self-driving Is Not 'An AI Problem'
+** For self-driving, what are we trying to solve?
+   #+BEGIN_EXAMPLE
+   An autonomous car is a vehicle that is capable of navigating without human input.
+   #+END_EXAMPLE
+
+#+REVEAL: split
+   Driver-less has already been achieved during the DARPA Robotics Challenges!
+   #+BEGIN_CENTER
+   #+attr_html: :height 600
+   #+attr_latex: :height 0.7\textheight :center
+   #+caption: The driving task in the DARPA Robotics Challenge
+   [[file:drc-driving.jpg]]
+   #+END_CENTER
+
+#+REVEAL: split
+   #+BEGIN_CENTER
+  
+   #+attr_html: :height 600
+   #+attr_latex: :height 0.7\textheight :center
+   #+CAPTION: Behind the scene
+   [[file:drc-operators.jpg]]
+   #+END_CENTER
+  
+   
+#+REVEAL: split
+   # add a picture of operator in garage
+   - Autonomous $\ne$ Driver-less
+   - Driverless is not an 'AI' problem
+     - AI problems are problems that haven't been solved yet.
+
+     - AI is the distance metric to driver-less.
+       The more AI in the system, the further are we from achieving self-driving!
+
+#+REVEAL: split
+
+
+   #+BEGIN_CENTER
+   *The system design should minimize AI problems!*
+   #+END_CENTER
+
+** How to minimize AI problems?
+   - Limit scope by simplifying scenarios and operational conditions
+     # Limit the business scope: simplify scenarios and operational conditions.
+     # uncontrolled intersection, unprotected turn, 2-way stop, construction zones,
+     # parking lots, school zones, etc.
+     # bad weathers, rain, night, mist, and etc.
+
+   - Use as much prior knowledge in the maps as possible
+     # perception prior, localization prior, motion planning priors, such as which lane we should
+     # yield to, where is the speed bump, where to slow down, and etc.
+
+   - Minimize system perception-reaction latency and take advantage of feedback control.
+     The faster the system can response to the dynamic environment, the less challanging are the AI problems.
+
+   - Have humans in the loop to solve the most challenging AI problem
+     # Let the robot do what it is good at (locally optimization).
+
+   - Take uncertainties into account during motion planning (robust motion planning)
+     # Design based on perfect assumption sucks.
+
+   - Machine learning methods are good ways to improve performance, but they are not magic.
+     The non-interpretative issues with the black-box learning approaches may trap us before achieving acceptable performance.  
+     Pure data-driven approaches are expensive and hard to delever on time.
+
+     # such as human intent identification,
+
+
+* System Architecture and Development Consideration
+** Natural Evolution
+   #+BEGIN_CENTER
+   #+attr_html: :height 600
+   #+attr_latex: :height 0.8\textheight :center
+   [[file:nature-evolution.jpg]]
+   #+END_CENTER
+
+   #+BEGIN_CENTER
+   *Survive first and then win*
+   #+END_CENTER
+
+** Self-driving Architecture
+   #+BEGIN_CENTER
+   #+attr_html: :height 600
+   #+attr_latex: :width 1.0\textwidth :center
+
+   #+END_CENTER
+#+REVEAL: split
+
+   #+BEGIN_CENTER
+   #+attr_html: :height 300
+   #+attr_latex: :width 1.0\textwidth :center
+   [[file:av-evolution.png]]
+   #+END_CENTER
+
+   - Each module shall be self-contained and fully functioning.
+
+   - Each module shall be fully tested.
+
+   - The system shall be developed inside-out. The cost is high if doing the opposite.
+
+   - The response time shall decrease towards the kernel.
+
+   - The inner modules are critical to the system robustness.
+
+   - The outer modules are important to the system performance (e.g. higher drive speed) and capabilities (e.g. more scenarios).
+
+#+REVEAL: split
+
+#+attr_latex: :width 1.0\textwidth :center
+#+attr_html: :width 600
+[[file:harmonious-building.jpg]]
+
+
+
+   #+BEGIN_CENTER
+   The goal is to build a *harmonious* system!!!
+   #+END_CENTER
+
+** Lesson Learned from the DARPA Robotics Challenge
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+    #+attr_html: :width 400
+    #+attr_latex: :width 0.8\textwidth
+    [[file:schaft-robot.jpg]]
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+   - Nimble robots win!
+
+   - A hierarchical optimization architecture are widely accepted. 
+
+   - 'AI' methods are attractive, but be very careful when you decide to use them.
+
+   - High-speed feedback control is the most efficient way to
+     handle uncertainties and model errors. 
+
+#+REVEAL_HTML: </div>
+
+** Lesson learned from the egress task
+   - The car egress: get the robot outside of the car
+   - Challenges:
+     - Keep balance
+     - Maintain contacts
+     - Highly constrained space
+     - Many uncertainties
+
+#+ATTR_REVEAL: :frag (appear)
+*For egress, high-speed feedback control is critical to the success!*[fn:egress-control]
+
+** What causes a system fragile?
+   - 'Perfectness' assumption. The assumption that the perception and prediction system
+     are 'perfect' makes the system vulnerable to the dynamic world.
+   - Dead loop
+     - To improve the performance of the perception, it becomes heavy and slow.
+     - To achieve a perfect prediction system, it becomes heavy and slow.
+     - Since the system is slow, the motion planning requires even better perception and prediction.
+
+   - Handle failure cases separately.
+     the system thinks too much, react too less
+** Performance goals
+   
+   We need to consider the system as a whole and optimize its components all together, for example, the following formula
+   reveals the connects between perception, localization, prediction, planning and control: 
+   \[ \mathrm{clearance} = v_0
+   \tau + \frac{v_0^2}{2 a} + 2 \sqrt{\sigma_{p}^2(0) + T^2 \sigma_v^2(0)} \] 
+   Refer to another post of mine [[https://cgliu.github.io/posts/self-driving/speed.html][safe driving speed for self-driving cars]] for more details.
+   
+   #+BEGIN_CENTER
+   *Divide and conquer, but don't design separately and try to achieve unrealistic performance goals!*
+   #+END_CENTER
+
+* Motion Planning System Design Consideration
+** Motion planning system functionality
+ - Navigation: from A to B:
+
+ - Guidance: obey traffic law
+
+ - Control: collision avoidance
+
+** Optimization-based motion planning
+  - Rather than designing control policy or rules, the designers design cost functions.
+  - Let optimization algorithms to figure out the optimal policy
+    - Pros:
+      - More direct than designing policy
+      - Easy to get the system to work
+      - Make it possible to build a harmonious system, all components serve the same goal
+      - Compatible with Reinforcement Learning framework
+      - Better performance
+  
+    - Cons
+      - It is still challenging to find a good cost function 
+      - Convergence issue
+      - Real-time issue
+      - Robustness issueh
+
+** Driving problem formulation
+   The objectives:
+   - Minimize the time to the destination
+   - Minimize the risk of collision
+   - Maximize ride quality
+
+   Subject to:
+   - Dynamics constraints
+
+** How to model the risk
+   \[ \mathrm{risk} = \mathrm{severity} \times \mathrm{exposure} \times \mathrm{probability} \]
+
+   The expectation of collision rick:
+   \[ \mathrm{E}(\mathrm{risk}) = \int_0^t \mathrm{severity}(\tau) p(\tau) d\tau \]
+
+#+REVEAL: split
+
+   
+   #+BEGIN_CENTER
+   #+attr_html: :width 800
+   #+caption: Probabilistic collision
+   [[file:probabilistic_collision.png]]
+   #+END_CENTER
+
+   The collision probability:
+   \[ p(t) \approx \int_{S} p_{av}(x, y|t)p_{obs}(x, y|t) dxdy \]
+
+
+#+REVEAL: split
+
+   #+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+   #+attr_html: :height 300
+   #+attr_latex: :height 0.2\textwidth :center
+   [[file:severity-front-speed.png]]
+   #+REVEAL_HTML: </div>
+
+   #+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+   #+attr_html: :height 300
+   #+attr_latex: :height 0.2\textwidth :center
+   [[file:severity-side-speed.png]]
+   #+REVEAL_HTML: </div>
+
+
+   The severity level at urban drive speed (< 50 mph):
+   \[ \mathrm{severity} \propto v \]
+
+   Therefore,
+   \[ E(risk) \approx \int_{0}^t \int_{S} v(\tau) p_{av}(x, y|\tau)p_{obs}(x, y|\tau) dxdy d\tau \]
+
+
+** Optimal planning problem
+   \[
+   U = \arg \min_{u(\cdot)}  \big \{ \mathcal{L}_f(x, u, t_f) + \int_{t_0}^{t_f} \mathcal{L}(x, u, t) dt \big \}
+   \]
+
+   and subject to:
+   \[ x(0) = x_0 \]
+   \[ h(x,u) \le 0 \]
+   \[ \mathrm{E}(\mathrm{risk}) \le \mathrm{risk\_level} \]
+
+   The cost functions should take the collision risk, ride quality, lane boundary, road boundary,
+   the desired driving path into account.
+
+   *It is still challenging to design a good cost function.*
+
+** Optimization-based motion planning
+   - Navigation (long-range)
+     - Ignore dynamic obstacles
+     - Low resolution, such as at lane level
+     - spatial and temporal constraints, e.g. time-based lane
+     - Methods: A*, D*, PRM, and etc.
+
+   - Decision making (long-range and long-term)
+     - Simple model, low quality, long-term
+     - Method: Dynamic programming
+       
+   - Trajectory optimization (mid-range and mid-term)
+     - Full model, high quality, mid-term
+     - Methods: DDP, iLQR, Direct collocation, Pseudospcetral methods, or 
+       spline + differential fatness.
+       
+   - Control
+     - Full-model, high quality, short-term
+     - Method: Finite-horizon LQR, LQR gain scheduling, QP, ADRC and etc. 
+
+
+* Optimization-based motion planning
+ - Improve performance
+   - Cache cost and avoid duplicate computation
+   - hessian matrix approximation, 
+   - parallelism (e.g. multiple shooting)
+   - Hierarchical optimization architect
+
+ - Improve convergence and robustness
+   - Warm-start generation
+   - multiple shooting
+
+* From Excellent to Superb
+** Improve system performance
+   - Learning from imitation (Inverse Refinforcement Learning)
+     - Maximum Margin Planning
+     - Maximum Entropy Inverse Reinforcement Learning
+       
+   - Reinforcement Learning, e.g. trajectory-based Reinforcement Learning [fn:trajectory-based-dp].
+
+   - Take advantage of offline computation and past experiences [fn:standing-balance-control][fn:mpc-walking]
+
+[fn:standing-balance-control] Standing balance control using a trajectory library, Chenggang LIU and Christopher G. Atkeson(2009),
+*IROS 2009*, 3031-3036.      
+
+[fn:trajectory-based-dp] Trajectory-based dynamic programming, Christopher G. Atkeson and Chenggang LIU, 
+*Modeling, Simulation and Optimization of Bipedal Walking Cognitive Systems  Monographs*, Volume 18, 2013, pp 1-15
+[fn:mpc-walking] Biped walking control using offline and online optimization Chenggang LIU and Jianbo SU,
+*China Control Conference (CCC)*, 2011 30th Chinese, 22-24 July 2011
+
+** Improve system robustness
+   - Hierarchical optimization architecture [fn:drc-opt]
+     - Long-term optimization optimizes for highly-likely, slowly-changing things
+     - Short-term optimization optimizes for less-likely, fast-changing things
+   - Offline planning + online feedback control [fn:egress-control]
+   - Warm-start generation, e.g. using non-parametric optimizer to generate a warm-start for parametric optimizer[fn:walking-control].
+   - Plan for uncertainties, e.g. hindsight optimization 
+   - Belief space planning
+
+[fn:drc-opt] Optimization-based Full Body Control for the DARPA Robotics Challenge, S. Feng, E. Whitman, X Xinjilefu, and C. Atkeson, 
+*Journal of Field Robotics*, Volume 32, Issue 2, pages 293-312, March 2015.
+
+[fn:egress-control] Full-body motion planning and control for the car egress task of the DARPA robotics challenge, Chenggang LIU, C.G.
+Atkeson, Siyuan Feng, and Xinjilefu, *Humanoids 2015*, 3-5 Nov. 2015. DOI: 10.1109/HUMANOIDS.2015.7363583
+
+[fn:walking-control] Biped walking control using a trajectory library, Chenggang LIU, Christopher G. Atkeson, and Jianbo SU,
+*Robotica*, Volume 31 Issue 2, March 2013, Pages 311-322
+
+* Summary
+  - System design shall avoid or reduce AI problems
+  - System development should follow a similar path as natural evolution.
+  - Hierarchical optimization architecture
+  - Plan for uncertainties
+  - Evaluate system safety as a probability and design for it.
+  - Fast closed-loop control is the most efficient way to improve system robustness.
+
+#+REVEAL: split
+
+   #+BEGIN_CENTER
+   #+attr_html: :width 800
+   #+attr_latex: :width 0.9\textwidth :center
+   #+caption: A harmonious optimal system
+   [[file:optimization-based-planning-arch.png]]
+   #+END_CENTER
+
+
+* COMMENT References
+  1. From a federated to an integrated architecture for dependable embedded systems, H. Kopetz, TU Wien, September 2004
+  2. Full-body motion planning and control for the car egress task of the DARPA robotics challenge, Chenggang LIU, C.G. Atkeson, Siyuan Feng, and Xinjilefu
+  3. Trajectory-based dynamic programming, Christopher G. Atkeson and Chenggang LIU, Modeling, Simulation and Optimization of Bipedal Walking Cognitive Systems Monographs 
+  4. Standing balance control using a trajectory library, Chenggang LIU and Christopher G. Atkeson(2009)
+  5. Biped walking control using offline and online optimization Chenggang LIU and Jianbo SU
+  6. Optimization-based Full Body Control for the DARPA Robotics Challenge, S. Feng, E. Whitman, X Xinjilefu, and C. Atkeson
+  7. Biped walking control using a trajectory library, Chenggang LIU, Christopher G. Atkeson, and Jianbo SU
+* COMMENT Backlog
+* COMMENT How to handle uncertainty
+  - belief space
+
+  - hingsight
+
+* COMMENT Architecture Consideration
+** 'white-box' architecture for self-driving
+   - Mapping
+     - heavy map vs. lightweight map
+   - Localization
+     - continuous pose and map relative pose
+   - Perception
+     - segmentation, classification and tracking
+     - why do we need to do classification?
+   - Prediction
+     - why do we need a prediction system?
+     - what's hjorizon
+   - Motion planning
+     - navigation
+     - guidance
+   - Vehicle control
+     - stabilization
+     - kinematic vs. dynamics
+** 'black-box' architecture
+

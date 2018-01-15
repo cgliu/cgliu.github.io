@@ -1,0 +1,1046 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-01-15 Mon 14:40 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Self-driving from An Engineering Perspective</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Chenggang Liu" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="org-info.css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Self-driving from An Engineering Perspective</h1>
+
+<div id="outline-container-org72e20ee" class="outline-2">
+<h2 id="org72e20ee">Introduction</h2>
+<div class="outline-text-2" id="text-org72e20ee">
+<pre class="example">
+These are my personal opinions, if you have comments, questions or ideas, 
+please feel free to send me Emails at cgliu2008 AT gmail.com
+</pre>
+
+<p>
+People don't believe self-driving cars are achievable argue that:
+</p>
+<ul class="org-ul">
+<li>Computer system is not reliable and safe enough.</li>
+<li>Bugs in software are inevitable.</li>
+<li>Malicious attack can always cause trouble.</li>
+<li>Collision is inevitable.</li>
+<li>There are a lot of unsolved AI problems, for example, human intent prediction.</li>
+</ul>
+
+<p>
+I believe we can achieve self-driving cars in a reasonable near future, here is why and how.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2b2063c" class="outline-2">
+<h2 id="org2b2063c">Safety - what we learn from aviation industry.</h2>
+<div class="outline-text-2" id="text-org2b2063c">
+</div>
+<div id="outline-container-orgb340e5f" class="outline-3">
+<h3 id="orgb340e5f">Safety Critical System</h3>
+<div class="outline-text-3" id="text-orgb340e5f">
+
+<div class="figure">
+<p><img src="fly-by-wire-drive-by-wire.png" alt="fly-by-wire-drive-by-wire.png" width="800" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Examples of sefety critical system</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3931728" class="outline-3">
+<h3 id="org3931728">The \(10^{-9}\) Challenge <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h3>
+<div class="outline-text-3" id="text-org3931728">
+<p>
+Critical system services must be more reliable than any one of the
+components: e.g., System Dependability 1 FIT&#x2013;Component
+dependability 1000 FIT (1 FIT: 1 failure in \(10^9\) hours)
+</p>
+<ul class="org-ul">
+<li>Architecture must be distributed and support fault-tolerance to
+mask component failures.</li>
+<li>System as a whole is not testable to the required level of
+dependability.</li>
+<li>The safety argument is based on a combination of experimental
+evidence about the expected failure modes and failures rates of
+fault-containment regions (FCR) and a formal dependability
+model that depicts the system structure from the point of view of
+dependability.</li>
+<li>Independence of the FCRs is a critical issue</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org9f0d7c6" class="outline-3">
+<h3 id="org9f0d7c6">Independence of FCRs</h3>
+<div class="outline-text-3" id="text-org9f0d7c6">
+<p>
+There are two basic mechanisms that compromise the
+independence of FCRs
+</p>
+<ul class="org-ul">
+<li>Missing fault isolation among the FCRs</li>
+<li>Error propagation&#x2013;the consequences of a fault, the
+ensuing error, propagates to a healthy FCR by an
+erroneous message.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org0849ed0" class="outline-3">
+<h3 id="org0849ed0">Integrated Architecture</h3>
+<div class="outline-text-3" id="text-org0849ed0">
+<div class="org-center">
+
+<div class="figure">
+<p><img src="federated-to-ima.png" alt="federated-to-ima.png" height="400" />
+</p>
+<p><span class="figure-number">Figure 2: </span>The transition from federated architecture to integrated architecture</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2c395f9" class="outline-3">
+<h3 id="org2c395f9">Safety Consideration for Integrated Architecture</h3>
+<div class="outline-text-3" id="text-org2c395f9">
+<p>
+A number of technical and economic advantages could be realized if the
+different DASes were integrated into a single architecture
+</p>
+<ul class="org-ul">
+<li>Cost savings by the reduction of nodes, sensors and wiring points
+(results also in an increase in hardware reliability).</li>
+<li>Better integration of functions&#x2013;more flexibility</li>
+<li><p>
+Implementation of fault tolerance simplified
+</p>
+
+<p>
+But
+</p></li>
+<li>Independence of individual DAS compromised&#x2013;increased potential
+of error propagation from one DAS to another DAS</li>
+<li>Integration increases complexity and diagnostics</li>
+<li>Allocation of responsibility more difficult</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc37bee5" class="outline-3">
+<h3 id="orgc37bee5">Platform Safety - Platform</h3>
+<div class="outline-text-3" id="text-orgc37bee5">
+<ul class="org-ul">
+<li><p>
+DO-297 Integrated Modular Avionics (IMA) Development Guidance and Certification Considerations
+</p>
+
+<div class="org-center">
+
+<div class="figure">
+<p><img src="a380-ima.png" alt="a380-ima.png" height="500" />
+</p>
+<p><span class="figure-number">Figure 3: </span>A380 integrated modular avionics</p>
+</div>
+</div></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orga3445dd" class="outline-3">
+<h3 id="orga3445dd">Platform Safety - OS</h3>
+<div class="outline-text-3" id="text-orga3445dd">
+<ul class="org-ul">
+<li>Operating System ARINC 653 (Avionics Application Standard Software Interface) a software specification for space and
+time partitioning in safety-critical avionics real-time operating systems (RTOS).</li>
+</ul>
+
+<div class="figure">
+<p><img src="federated-system.png" alt="federated-system.png" height="350" />
+</p>
+</div>
+
+<div class="figure">
+<p><img src="IMA-arch.png" alt="IMA-arch.png" height="350" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5ffc431" class="outline-3">
+<h3 id="org5ffc431">Platform Safety - Network</h3>
+<div class="outline-text-3" id="text-org5ffc431">
+<ul class="org-ul">
+<li>AFDX Avionics Full-Duplex Switched Ethernet (AFDX)</li>
+<li>ARINC 664</li>
+</ul>
+
+<div class="figure">
+<p><img src="afdx-es.png" alt="afdx-es.png" height="300" />
+</p>
+</div>
+
+<div class="figure">
+<p><img src="afdx-partition.png" alt="afdx-partition.png" height="300" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org201fd0b" class="outline-3">
+<h3 id="org201fd0b">Platform Safety - Software</h3>
+<div class="outline-text-3" id="text-org201fd0b">
+<ul class="org-ul">
+<li><p>
+Software DO-178B, Software Considerations in Airborne Systems and Equipment Certification
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="DO-178B-snapshot.png" alt="DO-178B-snapshot.png" height="500" />
+</p>
+<p><span class="figure-number">Figure 8: </span>DO-178B Software Development Processes Objectives</p>
+</div>
+</div></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org7531770" class="outline-3">
+<h3 id="org7531770">Platform Safety - Hardware</h3>
+<div class="outline-text-3" id="text-org7531770">
+<ul class="org-ul">
+<li><p>
+DO-254, Design Assurance Guidance For Airborne Electronic Hardware
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="do-254-table-a.png" alt="do-254-table-a.png" height="500" />
+</p>
+<p><span class="figure-number">Figure 9: </span>DO-254 Hardware Control Category</p>
+</div>
+</div></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org1153ffd" class="outline-3">
+<h3 id="org1153ffd">Integrated Architecture for Self-driving Cars</h3>
+<div class="outline-text-3" id="text-org1153ffd">
+<ul class="org-ul">
+<li>Partitioning system, the performance of each system must be unaffected by any other
+<ul class="org-ul">
+<li>To allow systems to be developed, tested and verified separately</li>
+<li>To allow system faults to be contained</li>
+<li>To allow new systems to be added post certification</li>
+</ul></li>
+<li>For self-driving platform, we need to have partitioned computing, communication and interface resources.</li>
+
+<li>In short, the safety can not be achieved only by testing, but also by a careful plan, design, implementation, and
+validation and verification process. For self-driving cars, it is impractical to follow the same process as what in
+Aviavion for now. But a minimal system engineering effort is still required, which will <b>save money and time</b>.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb0e4c4d" class="outline-2">
+<h2 id="orgb0e4c4d">Collision Is Inevitable</h2>
+<div class="outline-text-2" id="text-orgb0e4c4d">
+</div>
+<div id="outline-container-org2612b03" class="outline-3">
+<h3 id="org2612b03">Collision is inevitable?</h3>
+<div class="outline-text-3" id="text-org2612b03">
+<ul class="org-ul">
+<li>Yes. According to <a href="https://cgliu.github.io/posts/self-driving/speed.html">safe drive speed</a> analysis, there is always collision possibility as long as the vehicle moves.</li>
+
+<li>But 
+<ul class="org-ul">
+<li>we are not responsible for all kind of collisions, for example, collisions by others' faults.</li>
+<li>the severity level is different for collisions</li>
+</ul></li>
+
+<li>Therefore, we only need to show due care to inevitable collisions and collisions caused by others' faults.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9541024" class="outline-2">
+<h2 id="org9541024">Self-driving Is Not 'An AI Problem'</h2>
+<div class="outline-text-2" id="text-org9541024">
+</div>
+<div id="outline-container-org7f63610" class="outline-3">
+<h3 id="org7f63610">For self-driving, what are we trying to solve?</h3>
+<div class="outline-text-3" id="text-org7f63610">
+<pre class="example">
+An autonomous car is a vehicle that is capable of navigating without human input.
+</pre>
+
+<p>
+Driver-less has already been achieved during the DARPA Robotics Challenges!
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="drc-driving.jpg" alt="drc-driving.jpg" height="600" />
+</p>
+<p><span class="figure-number">Figure 10: </span>The driving task in the DARPA Robotics Challenge</p>
+</div>
+</div>
+
+<div class="org-center">
+<p>
+  
+</p>
+
+<div class="figure">
+<p><img src="drc-operators.jpg" alt="drc-operators.jpg" height="600" />
+</p>
+<p><span class="figure-number">Figure 11: </span>Behind the scene</p>
+</div>
+</div>
+
+
+<ul class="org-ul">
+<li>Autonomous \(\ne\) Driver-less</li>
+<li>Driverless is not an 'AI' problem
+<ul class="org-ul">
+<li>AI problems are problems that haven't been solved yet.</li>
+
+<li>AI is the distance metric to driver-less.
+The more AI in the system, the further are we from achieving self-driving!</li>
+</ul></li>
+</ul>
+
+<div class="org-center">
+<p>
+<b>The system design should minimize AI problems!</b>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd586bfb" class="outline-3">
+<h3 id="orgd586bfb">How to minimize AI problems?</h3>
+<div class="outline-text-3" id="text-orgd586bfb">
+<ul class="org-ul">
+<li>Limit scope by simplifying scenarios and operational conditions</li>
+
+<li>Use as much prior knowledge in the maps as possible</li>
+
+<li>Minimize system perception-reaction latency and take advantage of feedback control.
+The faster the system can response to the dynamic environment, the less challanging are the AI problems.</li>
+
+<li>Have humans in the loop to solve the most challenging AI problem</li>
+
+<li>Take uncertainties into account during motion planning (robust motion planning)</li>
+
+<li>Machine learning methods are good ways to improve performance, but they are not magic.
+The non-interpretative issues with the black-box learning approaches may trap us before achieving acceptable performance.  
+Pure data-driven approaches are expensive and hard to delever on time.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgc0627c2" class="outline-2">
+<h2 id="orgc0627c2">System Architecture and Development Consideration</h2>
+<div class="outline-text-2" id="text-orgc0627c2">
+</div>
+<div id="outline-container-orgfe6c81b" class="outline-3">
+<h3 id="orgfe6c81b">Natural Evolution</h3>
+<div class="outline-text-3" id="text-orgfe6c81b">
+<div class="org-center">
+
+<div class="figure">
+<p><img src="nature-evolution.jpg" alt="nature-evolution.jpg" height="600" />
+</p>
+</div>
+</div>
+
+<div class="org-center">
+<p>
+<b>Survive first and then win</b>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org63306ff" class="outline-3">
+<h3 id="org63306ff">Self-driving Architecture</h3>
+<div class="outline-text-3" id="text-org63306ff">
+<div class="org-center">
+</div>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="av-evolution.png" alt="av-evolution.png" height="300" />
+</p>
+</div>
+</div>
+
+<ul class="org-ul">
+<li>Each module shall be self-contained and fully functioning.</li>
+
+<li>Each module shall be fully tested.</li>
+
+<li>The system shall be developed inside-out. The cost is high if doing the opposite.</li>
+
+<li>The response time shall decrease towards the kernel.</li>
+
+<li>The inner modules are critical to the system robustness.</li>
+
+<li>The outer modules are important to the system performance (e.g. higher drive speed) and capabilities (e.g. more scenarios).</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="harmonious-building.jpg" alt="harmonious-building.jpg" width="600" />
+</p>
+</div>
+
+
+
+<div class="org-center">
+<p>
+The goal is to build a <b>harmonious</b> system!!!
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb979196" class="outline-3">
+<h3 id="orgb979196">Lesson Learned from the DARPA Robotics Challenge</h3>
+<div class="outline-text-3" id="text-orgb979196">
+
+<div class="figure">
+<p><img src="schaft-robot.jpg" alt="schaft-robot.jpg" width="400" />
+</p>
+</div>
+<ul class="org-ul">
+<li>Nimble robots win!</li>
+
+<li>A hierarchical optimization architecture are widely accepted.</li>
+
+<li>'AI' methods are attractive, but be very careful when you decide to use them.</li>
+
+<li>High-speed feedback control is the most efficient way to
+handle uncertainties and model errors.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgf13612f" class="outline-3">
+<h3 id="orgf13612f">Lesson learned from the egress task</h3>
+<div class="outline-text-3" id="text-orgf13612f">
+<ul class="org-ul">
+<li>The car egress: get the robot outside of the car</li>
+<li>Challenges:
+<ul class="org-ul">
+<li>Keep balance</li>
+<li>Maintain contacts</li>
+<li>Highly constrained space</li>
+<li>Many uncertainties</li>
+</ul></li>
+</ul>
+
+<p>
+<b>For egress, high-speed feedback control is critical to the success!</b><sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf207570" class="outline-3">
+<h3 id="orgf207570">What causes a system fragile?</h3>
+<div class="outline-text-3" id="text-orgf207570">
+<ul class="org-ul">
+<li>'Perfectness' assumption. The assumption that the perception and prediction system
+are 'perfect' makes the system vulnerable to the dynamic world.</li>
+<li>Dead loop
+<ul class="org-ul">
+<li>To improve the performance of the perception, it becomes heavy and slow.</li>
+<li>To achieve a perfect prediction system, it becomes heavy and slow.</li>
+<li>Since the system is slow, the motion planning requires even better perception and prediction.</li>
+</ul></li>
+
+<li>Handle failure cases separately.
+the system thinks too much, react too less</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orge5966b4" class="outline-3">
+<h3 id="orge5966b4">Performance goals</h3>
+<div class="outline-text-3" id="text-orge5966b4">
+<p>
+We need to consider the system as a whole and optimize its components all together, for example, the following formula
+reveals the connects between perception, localization, prediction, planning and control: 
+\[ \mathrm{clearance} = v_0
+   \tau + \frac{v_0^2}{2 a} + 2 \sqrt{\sigma_{p}^2(0) + T^2 \sigma_v^2(0)} \] 
+Refer to another post of mine <a href="https://cgliu.github.io/posts/self-driving/speed.html">safe driving speed for self-driving cars</a> for more details.
+</p>
+
+<div class="org-center">
+<p>
+<b>Divide and conquer, but don't design separately and try to achieve unrealistic performance goals!</b>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org96ba731" class="outline-2">
+<h2 id="org96ba731">Motion Planning System Design Consideration</h2>
+<div class="outline-text-2" id="text-org96ba731">
+</div>
+<div id="outline-container-org52eb7d9" class="outline-3">
+<h3 id="org52eb7d9">Motion planning system functionality</h3>
+<div class="outline-text-3" id="text-org52eb7d9">
+<ul class="org-ul">
+<li>Navigation: from A to B:</li>
+
+<li>Guidance: obey traffic law</li>
+
+<li>Control: collision avoidance</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3e187e5" class="outline-3">
+<h3 id="org3e187e5">Optimization-based motion planning</h3>
+<div class="outline-text-3" id="text-org3e187e5">
+<ul class="org-ul">
+<li>Rather than designing control policy or rules, the designers design cost functions.</li>
+<li>Let optimization algorithms to figure out the optimal policy
+<ul class="org-ul">
+<li>Pros:
+<ul class="org-ul">
+<li>More direct than designing policy</li>
+<li>Easy to get the system to work</li>
+<li>Make it possible to build a harmonious system, all components serve the same goal</li>
+<li>Compatible with Reinforcement Learning framework</li>
+<li>Better performance</li>
+</ul></li>
+
+<li>Cons
+<ul class="org-ul">
+<li>It is still challenging to find a good cost function</li>
+<li>Convergence issue</li>
+<li>Real-time issue</li>
+<li>Robustness issueh</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6e48bbf" class="outline-3">
+<h3 id="org6e48bbf">Driving problem formulation</h3>
+<div class="outline-text-3" id="text-org6e48bbf">
+<p>
+The objectives:
+</p>
+<ul class="org-ul">
+<li>Minimize the time to the destination</li>
+<li>Minimize the risk of collision</li>
+<li>Maximize ride quality</li>
+</ul>
+
+<p>
+Subject to:
+</p>
+<ul class="org-ul">
+<li>Dynamics constraints</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org4736f19" class="outline-3">
+<h3 id="org4736f19">How to model the risk</h3>
+<div class="outline-text-3" id="text-org4736f19">
+<p>
+\[ \mathrm{risk} = \mathrm{severity} \times \mathrm{exposure} \times \mathrm{probability} \]
+</p>
+
+<p>
+The expectation of collision rick:
+\[ \mathrm{E}(\mathrm{risk}) = \int_0^t \mathrm{severity}(\tau) p(\tau) d\tau \]
+</p>
+
+<div class="org-center">
+
+<div class="figure">
+<p><img src="probabilistic_collision.png" alt="probabilistic_collision.png" width="800" />
+</p>
+<p><span class="figure-number">Figure 16: </span>Probabilistic collision</p>
+</div>
+</div>
+
+<p>
+The collision probability:
+\[ p(t) \approx \int_{S} p_{av}(x, y|t)p_{obs}(x, y|t) dxdy \]
+</p>
+
+
+
+<div class="figure">
+<p><img src="severity-front-speed.png" alt="severity-front-speed.png" height="300" />
+</p>
+</div>
+
+<div class="figure">
+<p><img src="severity-side-speed.png" alt="severity-side-speed.png" height="300" />
+</p>
+</div>
+<p>
+The severity level at urban drive speed (&lt; 50 mph):
+\[ \mathrm{severity} \propto v \]
+</p>
+
+<p>
+Therefore,
+\[ E(risk) \approx \int_{0}^t \int_{S} v(\tau) p_{av}(x, y|\tau)p_{obs}(x, y|\tau) dxdy d\tau \]
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org0deaad7" class="outline-3">
+<h3 id="org0deaad7">Optimal planning problem</h3>
+<div class="outline-text-3" id="text-org0deaad7">
+<p>
+\[
+   U = \arg \min_{u(\cdot)}  \big \{ \mathcal{L}_f(x, u, t_f) + \int_{t_0}^{t_f} \mathcal{L}(x, u, t) dt \big \}
+   \]
+</p>
+
+<p>
+and subject to:
+\[ x(0) = x_0 \]
+\[ h(x,u) \le 0 \]
+\[ \mathrm{E}(\mathrm{risk}) \le \mathrm{risk\_level} \]
+</p>
+
+<p>
+The cost functions should take the collision risk, ride quality, lane boundary, road boundary,
+the desired driving path into account.
+</p>
+
+<p>
+<b>It is still challenging to design a good cost function.</b>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3e12c89" class="outline-3">
+<h3 id="org3e12c89">Optimization-based motion planning</h3>
+<div class="outline-text-3" id="text-org3e12c89">
+<ul class="org-ul">
+<li>Navigation (long-range)
+<ul class="org-ul">
+<li>Ignore dynamic obstacles</li>
+<li>Low resolution, such as at lane level</li>
+<li>spatial and temporal constraints, e.g. time-based lane</li>
+<li>Methods: A*, D*, PRM, and etc.</li>
+</ul></li>
+
+<li>Decision making (long-range and long-term)
+<ul class="org-ul">
+<li>Simple model, low quality, long-term</li>
+<li>Method: Dynamic programming</li>
+</ul></li>
+
+<li>Trajectory optimization (mid-range and mid-term)
+<ul class="org-ul">
+<li>Full model, high quality, mid-term</li>
+<li>Methods: DDP, iLQR, Direct collocation, Pseudospcetral methods, or 
+spline + differential fatness.</li>
+</ul></li>
+
+<li>Control
+<ul class="org-ul">
+<li>Full-model, high quality, short-term</li>
+<li>Method: Finite-horizon LQR, LQR gain scheduling, QP, ADRC and etc.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orga9e0943" class="outline-2">
+<h2 id="orga9e0943">Optimization-based motion planning</h2>
+<div class="outline-text-2" id="text-orga9e0943">
+<ul class="org-ul">
+<li>Improve performance
+<ul class="org-ul">
+<li>Cache cost and avoid duplicate computation</li>
+<li>hessian matrix approximation,</li>
+<li>parallelism (e.g. multiple shooting)</li>
+<li>Hierarchical optimization architect</li>
+</ul></li>
+
+<li>Improve convergence and robustness
+<ul class="org-ul">
+<li>Warm-start generation</li>
+<li>multiple shooting</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3771f7d" class="outline-2">
+<h2 id="org3771f7d">From Excellent to Superb</h2>
+<div class="outline-text-2" id="text-org3771f7d">
+</div>
+<div id="outline-container-orgb006c91" class="outline-3">
+<h3 id="orgb006c91">Improve system performance</h3>
+<div class="outline-text-3" id="text-orgb006c91">
+<ul class="org-ul">
+<li>Learning from imitation (Inverse Refinforcement Learning)
+<ul class="org-ul">
+<li>Maximum Margin Planning</li>
+<li>Maximum Entropy Inverse Reinforcement Learning</li>
+</ul></li>
+
+<li>Reinforcement Learning, e.g. trajectory-based Reinforcement Learning <sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>.</li>
+
+<li>Take advantage of offline computation and past experiences <sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup><sup>, </sup><sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1935fa6" class="outline-3">
+<h3 id="org1935fa6">Improve system robustness</h3>
+<div class="outline-text-3" id="text-org1935fa6">
+<ul class="org-ul">
+<li>Hierarchical optimization architecture <sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup>
+<ul class="org-ul">
+<li>Long-term optimization optimizes for highly-likely, slowly-changing things</li>
+<li>Short-term optimization optimizes for less-likely, fast-changing things</li>
+</ul></li>
+<li>Offline planning + online feedback control <sup><a id="fnr.2.100" class="footref" href="#fn.2">2</a></sup></li>
+<li>Warm-start generation, e.g. using non-parametric optimizer to generate a warm-start for parametric optimizer<sup><a id="fnr.7" class="footref" href="#fn.7">7</a></sup>.</li>
+<li>Plan for uncertainties, e.g. hindsight optimization</li>
+<li>Belief space planning</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8aaf6e4" class="outline-2">
+<h2 id="org8aaf6e4">Summary</h2>
+<div class="outline-text-2" id="text-org8aaf6e4">
+<ul class="org-ul">
+<li>System design shall avoid or reduce AI problems</li>
+<li>System development should follow a similar path as natural evolution.</li>
+<li>Hierarchical optimization architecture</li>
+<li>Plan for uncertainties</li>
+<li>Evaluate system safety as a probability and design for it.</li>
+<li>Fast closed-loop control is the most efficient way to improve system robustness.</li>
+</ul>
+
+<div class="org-center">
+
+<div class="figure">
+<p><img src="optimization-based-planning-arch.png" alt="optimization-based-planning-arch.png" width="800" />
+</p>
+<p><span class="figure-number">Figure 19: </span>A harmonious optimal system</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+From a federated to an integrated architecture for dependable embedded systems,
+H. Kopetz, TU Wien, September 2004
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+Full-body motion planning and control for the car egress task of the DARPA robotics challenge, Chenggang LIU, C.G.
+Atkeson, Siyuan Feng, and Xinjilefu, <b>Humanoids 2015</b>, 3-5 Nov. 2015. DOI: 10.1109/HUMANOIDS.2015.7363583
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
+Trajectory-based dynamic programming, Christopher G. Atkeson and Chenggang LIU, 
+<b>Modeling, Simulation and Optimization of Bipedal Walking Cognitive Systems  Monographs</b>, Volume 18, 2013, pp 1-15
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><p class="footpara">
+Standing balance control using a trajectory library, Chenggang LIU and Christopher G. Atkeson(2009),
+<b>IROS 2009</b>, 3031-3036.      
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5">5</a></sup> <div class="footpara"><p class="footpara">
+Biped walking control using offline and online optimization Chenggang LIU and Jianbo SU,
+<b>China Control Conference (CCC)</b>, 2011 30th Chinese, 22-24 July 2011
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.6" class="footnum" href="#fnr.6">6</a></sup> <div class="footpara"><p class="footpara">
+Optimization-based Full Body Control for the DARPA Robotics Challenge, S. Feng, E. Whitman, X Xinjilefu, and C. Atkeson, 
+<b>Journal of Field Robotics</b>, Volume 32, Issue 2, pages 293-312, March 2015.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.7" class="footnum" href="#fnr.7">7</a></sup> <div class="footpara"><p class="footpara">
+Biped walking control using a trajectory library, Chenggang LIU, Christopher G. Atkeson, and Jianbo SU,
+<b>Robotica</b>, Volume 31 Issue 2, March 2013, Pages 311-322
+</p></div></div>
+
+
+</div>
+</div></div>
+</body>
+</html>
