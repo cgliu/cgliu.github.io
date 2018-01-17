@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-01-16 Tue 20:45 -->
+<!-- 2018-01-16 Tue 21:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Safe Driving Speed for Self-driving Car</title>
@@ -405,6 +405,7 @@ and \(B = [0.5 dt^2, dt ]^\top\)
 If we ignore the process noise and only consider the measurement noise, then we have
 </p>
 \begin{equation}
+\label{eq:prediction}      
 P(t) = \begin{bmatrix}
 \sigma_p^2 + t^2 \sigma_v^2 & t \sigma_v^2 \\
 t \sigma_v^2 & \sigma_v^2
@@ -449,15 +450,19 @@ If we want the collision probability at time t, \(P(z|t) \le  2.5\%\), the clear
 
 <p>
 So far, we know the relationship between a clearance distance and uncertainties.
-If we take the controllability into account, the clearance distance becomes:
-\[
-  \mathrm{clearance} = v_0 \tau + \frac{v_0^2}{2 a} + 2 \sigma_{p}(T)
-  \]
-where \(T\) is the time to stop and \(T = \tau + v_0/a\).
+If we take the controlability into account, the clearance distance becomes:
+</p>
+\begin{equation}
+\label{eq:final}
+\mathrm{clearance} = v_0 \tau + \frac{v_0^2}{2 a} + 2 \sigma_{p}(T)
+\end{equation}
+<p>
+where \(T\) is the time to stop and \(T = \tau + v_0/a\). Eq. \ref{eq:final} looks simple but has lot of information, for
+example, \(\sigma_p(T)\) depends on localization co-variance, prediction co-variance, and perception co-variance.
 </p>
 
 <p>
-Then,
+If using a prediction in Eq. \ref{eq:prediction}, we have
 \[
   \mathrm{clearance} = v_0 \tau + \frac{v_0^2}{2 a} + 2 \sqrt{\sigma_{p}^2(0) + T^2 \sigma_v^2(0)}
   \]
@@ -478,8 +483,8 @@ Notice that there is a minimum clearance distance cause by the reaction delay: \
 For the first time, we get the connection between the safe drive speed,
 the localization precision, the perception precision, and the system reaction delay.
 When we design a safe self-driving system, we need to consider the perception, localization,
-motion planning, and control system as a whole. I hope this equation can guide us to find such a
-safe harmonious system.
+motion planning, and control system as a whole. I hope this equation can help us find such a
+safe system.
 </p>
 
 <p>
