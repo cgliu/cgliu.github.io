@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-01-14 Sun 09:17 -->
+<!-- 2018-01-16 Tue 20:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Safe Driving Speed for Self-driving Car</title>
@@ -269,10 +269,9 @@ for the JavaScript code in this tag.
 <h2 id="org52f3352"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-For self-driving car, I think safety is not something luxury, but something we need to consider at the beginning of
-design. It won't happen automatically and we need to build safety in the design. Safety comes from design, not from
-test. To achieve the desired safety assurance level, we need to figure out the critical performance parameters in the
-design.
+I think safety is not something luxury, but something we need to consider at the beginning of design. It won't happen
+automatically and we need to build safety into the design. Safety comes from design, not from testing. To achieve the
+desired safety assurance level, we need to figure out the critical performance parameters in the design.
 </p>
 </div>
 </div>
@@ -286,7 +285,7 @@ design.
 Then what's the required precision of the perception system?</li>
 <li>We can't know the extract location of the vehicle, then what's
 the required precision of the localization system?</li>
-<li>The software can't run infinite fast and the vehicle platform has intrinsic delay.
+<li>The software can't run infinite fast and the vehicle platform has an intrinsic delay.
 How does the perception-reaction delay impact on the safety of the whole system? What's a reasonable target maximum reaction delay?</li>
 </ul>
 </div>
@@ -305,7 +304,7 @@ then the minimum stop distance is
 
 <p>
 If there is any obstacle within this distance, a collision will occur.
-To avoid collision, the vehicle needs to ensure a clearance distance as a function of current speed \(v_0\).
+To avoid collisions, the vehicle needs to ensure a clearance distance as a function of current speed \(v_0\).
 </p>
 
 \begin{equation}
@@ -324,7 +323,7 @@ and the rate is the initial speed.</li>
 </ul>
 
 <p>
-We have assumed the pedestrian doesn't move before the vehicle is stooped. What if he is moving towards us at speed, \(v_p\)?
+We have assumed the pedestrian doesn't move before the vehicle is stopped. What if he is moving towards us at speed, \(v_p\)?
 \[
   \mathrm{clearnace} = \frac{v_0^2}{2 a} + (\tau + \frac{v_p}{a}) v_0 + \tau v_p
   \]
@@ -479,7 +478,7 @@ Notice that there is a minimum clearance distance cause by the reaction delay: \
 For the first time, we get the connection between the safe drive speed,
 the localization precision, the perception precision, and the system reaction delay.
 When we design a safe self-driving system, we need to consider the perception, localization,
-motion planning and control system as a whole. I hope this equation can guide us to find such a
+motion planning, and control system as a whole. I hope this equation can guide us to find such a
 safe harmonious system.
 </p>
 

@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-01-15 Mon 14:47 -->
+<!-- 2018-01-16 Tue 20:42 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Self-driving from An Engineering Perspective</title>
+<title>Self-driving Technologies from An Engineering Perspective</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Chenggang Liu" />
 <style type="text/css">
@@ -252,36 +252,36 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">Self-driving from An Engineering Perspective</h1>
+<h1 class="title">Self-driving Technologies from An Engineering Perspective</h1>
 
 <div id="outline-container-org72e20ee" class="outline-2">
 <h2 id="org72e20ee">Introduction</h2>
 <div class="outline-text-2" id="text-org72e20ee">
 <pre class="example">
-These are my personal opinions, if you have comments, questions or ideas, 
+The following are my personal opinions, if you have comments, questions or ideas, 
 please feel free to send me Emails at cgliu2008 AT gmail.com
 </pre>
 
 <p>
-People don't believe self-driving cars are achievable argue that:
+People don't believe self-driving car is achievable argue that:
 </p>
 <ul class="org-ul">
-<li>Computer system is not reliable and safe enough.</li>
+<li>A computer system is not reliable and safe enough.</li>
 <li>Bugs in software are inevitable.</li>
-<li>Malicious attack can always cause trouble.</li>
-<li>Collision is inevitable.</li>
+<li>A malicious attack can always cause trouble.</li>
+<li>Collisions are inevitable.</li>
 <li>There are a lot of unsolved AI problems, for example, human intent prediction.</li>
 </ul>
 
 <p>
-I believe we can achieve self-driving cars in a reasonable near future, here is why and how.
+I believe self-driving car is an achievable goal in a reasonable near future, here is why and how.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org2b2063c" class="outline-2">
-<h2 id="org2b2063c">Safety - what we learn from aviation industry.</h2>
-<div class="outline-text-2" id="text-org2b2063c">
+<div id="outline-container-org82c085c" class="outline-2">
+<h2 id="org82c085c">Safety - what we learn from the aviation industry</h2>
+<div class="outline-text-2" id="text-org82c085c">
 </div>
 <div id="outline-container-orgb340e5f" class="outline-3">
 <h3 id="orgb340e5f">Safety Critical System</h3>
@@ -290,7 +290,7 @@ I believe we can achieve self-driving cars in a reasonable near future, here is 
 <div class="figure">
 <p><img src="fly-by-wire-drive-by-wire.png" alt="fly-by-wire-drive-by-wire.png" width="800" />
 </p>
-<p><span class="figure-number">Figure 1: </span>Examples of sefety critical system</p>
+<p><span class="figure-number">Figure 1: </span>Examples of safety critical systems</p>
 </div>
 </div>
 </div>
@@ -303,16 +303,19 @@ Critical system services must be more reliable than any one of the
 components: e.g., System Dependability 1 FIT&#x2013;Component
 dependability 1000 FIT (1 FIT: 1 failure in \(10^9\) hours)
 </p>
+
 <ul class="org-ul">
 <li>Architecture must be distributed and support fault-tolerance to
 mask component failures.</li>
-<li>System as a whole is not testable to the required level of
+<li>A system as a whole is not testable to the required level of
 dependability.</li>
+
 <li>The safety argument is based on a combination of experimental
 evidence about the expected failure modes and failures rates of
 fault-containment regions (FCR) and a formal dependability
 model that depicts the system structure from the point of view of
 dependability.</li>
+
 <li>Independence of the FCRs is a critical issue</li>
 </ul>
 </div>
@@ -327,6 +330,7 @@ independence of FCRs
 </p>
 <ul class="org-ul">
 <li>Missing fault isolation among the FCRs</li>
+
 <li>Error propagation&#x2013;the consequences of a fault, the
 ensuing error, propagates to a healthy FCR by an
 erroneous message.</li>
@@ -341,7 +345,7 @@ erroneous message.</li>
 <div class="figure">
 <p><img src="federated-to-ima.png" alt="federated-to-ima.png" height="400" />
 </p>
-<p><span class="figure-number">Figure 2: </span>The transition from federated architecture to integrated architecture</p>
+<p><span class="figure-number">Figure 2: </span>The transition from a federated architecture to an integrated architecture</p>
 </div>
 </div>
 </div>
@@ -357,7 +361,9 @@ different DASes were integrated into a single architecture
 <ul class="org-ul">
 <li>Cost savings by the reduction of nodes, sensors and wiring points
 (results also in an increase in hardware reliability).</li>
+
 <li>Better integration of functions&#x2013;more flexibility</li>
+
 <li><p>
 Implementation of fault tolerance simplified
 </p>
@@ -367,7 +373,9 @@ But
 </p></li>
 <li>Independence of individual DAS compromised&#x2013;increased potential
 of error propagation from one DAS to another DAS</li>
+
 <li>Integration increases complexity and diagnostics</li>
+
 <li>Allocation of responsibility more difficult</li>
 </ul>
 </div>
@@ -483,25 +491,25 @@ DO-254, Design Assurance Guidance For Airborne Electronic Hardware
 <li>To allow system faults to be contained</li>
 <li>To allow new systems to be added post certification</li>
 </ul></li>
-<li>For self-driving platform, we need to have partitioned computing, communication and interface resources.</li>
+<li>For self-driving platform, we need to have partitioned computing, communication, and interface resources.</li>
 
-<li>In short, the safety can not be achieved only by testing, but also by a careful plan, design, implementation, and
+<li>In short, safety can't be achieved only by testing, but also by a careful plan, design, implementation, and
 validation and verification process. For self-driving cars, it is impractical to follow the same process as what in
-Aviavion for now. But a minimal system engineering effort is still required, which will <b>save money and time</b>.</li>
+Aviation for now. But a minimal system engineering effort is still required, which will <b>save money and time</b>.</li>
 </ul>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgb0e4c4d" class="outline-2">
-<h2 id="orgb0e4c4d">Collision Is Inevitable</h2>
-<div class="outline-text-2" id="text-orgb0e4c4d">
+<div id="outline-container-orgf6ab58a" class="outline-2">
+<h2 id="orgf6ab58a">Collisions are Inevitable</h2>
+<div class="outline-text-2" id="text-orgf6ab58a">
 </div>
-<div id="outline-container-org2612b03" class="outline-3">
-<h3 id="org2612b03">Collision is inevitable?</h3>
-<div class="outline-text-3" id="text-org2612b03">
+<div id="outline-container-org0f3f625" class="outline-3">
+<h3 id="org0f3f625">Collisions are inevitable?</h3>
+<div class="outline-text-3" id="text-org0f3f625">
 <ul class="org-ul">
-<li>Yes. According to <a href="https://cgliu.github.io/posts/self-driving/speed.html">safe drive speed</a> analysis, there is always collision possibility as long as the vehicle moves.</li>
+<li>Yes. According to <a href="https://cgliu.github.io/posts/self-driving/speed.html">safe driving speed</a> analysis, there is always collision possibility as long as the vehicle moves.</li>
 
 <li>But 
 <ul class="org-ul">
@@ -579,7 +587,7 @@ The more AI in the system, the further are we from achieving self-driving!</li>
 <li>Use as much prior knowledge in the maps as possible</li>
 
 <li>Minimize system perception-reaction latency and take advantage of feedback control.
-The faster the system can response to the dynamic environment, the less challanging are the AI problems.</li>
+The faster the system can respond to the dynamic environment, the less challenging are the AI problems.</li>
 
 <li>Have humans in the loop to solve the most challenging AI problem</li>
 
@@ -587,7 +595,7 @@ The faster the system can response to the dynamic environment, the less challang
 
 <li>Machine learning methods are good ways to improve performance, but they are not magic.
 The non-interpretative issues with the black-box learning approaches may trap us before achieving acceptable performance.  
-Pure data-driven approaches are expensive and hard to delever on time.</li>
+Pure data-driven approaches are expensive and hard to deliver on time.</li>
 </ul>
 </div>
 </div>
@@ -631,7 +639,7 @@ Pure data-driven approaches are expensive and hard to delever on time.</li>
 </div>
 
 <ul class="org-ul">
-<li>Each module shall be self-contained and fully functioning.</li>
+<li>Each module shall be self-contained and fully functional.</li>
 
 <li>Each module shall be fully tested.</li>
 
@@ -671,7 +679,7 @@ The goal is to build a <b>harmonious</b> system!!!
 <ul class="org-ul">
 <li>Nimble robots win!</li>
 
-<li>A hierarchical optimization architecture are widely accepted.</li>
+<li>A hierarchical optimization architecture is widely accepted.</li>
 
 <li>'AI' methods are attractive, but be very careful when you decide to use them.</li>
 
@@ -723,7 +731,7 @@ the system thinks too much, react too less</li>
 <h3 id="orge5966b4">Performance goals</h3>
 <div class="outline-text-3" id="text-orge5966b4">
 <p>
-We need to consider the system as a whole and optimize its components all together, for example, the following formula
+We need to consider the system as a whole and optimize its components altogether, for example, the following formula
 reveals the connects between perception, localization, prediction, planning and control: 
 \[ \mathrm{clearance} = v_0
    \tau + \frac{v_0^2}{2 a} + 2 \sqrt{\sigma_{p}^2(0) + T^2 \sigma_v^2(0)} \] 
@@ -756,11 +764,11 @@ Refer to another post of mine <a href="https://cgliu.github.io/posts/self-drivin
 </div>
 </div>
 
-<div id="outline-container-orga9e0943" class="outline-3">
-<h3 id="orga9e0943">Optimization-based motion planning</h3>
-<div class="outline-text-3" id="text-orga9e0943">
+<div id="outline-container-orgdb93a22" class="outline-3">
+<h3 id="orgdb93a22">Optimization-based motion planning</h3>
+<div class="outline-text-3" id="text-orgdb93a22">
 <ul class="org-ul">
-<li>Rather than designing control policy or rules, the designers design cost functions.</li>
+<li>Rather than designing control policy or rules, the developers design cost functions.</li>
 <li>Let optimization algorithms to figure out the optimal policy
 <ul class="org-ul">
 <li>Pros:
@@ -777,7 +785,7 @@ Refer to another post of mine <a href="https://cgliu.github.io/posts/self-drivin
 <li>It is still challenging to find a good cost function</li>
 <li>Convergence issue</li>
 <li>Real-time issue</li>
-<li>Robustness issueh</li>
+<li>Robustness issue</li>
 </ul></li>
 </ul></li>
 </ul>
@@ -813,7 +821,7 @@ Subject to:
 </p>
 
 <p>
-The expectation of collision rick:
+The expectation of collision risk:
 \[ \mathrm{E}(\mathrm{risk}) = \int_0^t \mathrm{severity}(\tau) p(\tau) d\tau \]
 </p>
 
@@ -882,9 +890,9 @@ the desired driving path into account.
 </div>
 </div>
 
-<div id="outline-container-org0657f49" class="outline-3">
-<h3 id="org0657f49">Optimization-based motion planning</h3>
-<div class="outline-text-3" id="text-org0657f49">
+<div id="outline-container-org5df4dc4" class="outline-3">
+<h3 id="org5df4dc4">Optimization-based motion planning</h3>
+<div class="outline-text-3" id="text-org5df4dc4">
 <ul class="org-ul">
 <li>Navigation (long-range)
 <ul class="org-ul">
@@ -903,7 +911,7 @@ the desired driving path into account.
 <li>Trajectory optimization (mid-range and mid-term)
 <ul class="org-ul">
 <li>Full model, high quality, mid-term</li>
-<li>Methods: DDP, iLQR, Direct collocation, Pseudospcetral methods, or 
+<li>Methods: DDP, iLQR, Direct collocation, Pseudospectral methods, or 
 spline + differential fatness.</li>
 </ul></li>
 
@@ -918,22 +926,22 @@ spline + differential fatness.</li>
 </div>
 
 
-<div id="outline-container-orgc19aecd" class="outline-2">
-<h2 id="orgc19aecd">Optimization-based motion planning</h2>
-<div class="outline-text-2" id="text-orgc19aecd">
+<div id="outline-container-org42b1a65" class="outline-2">
+<h2 id="org42b1a65">Optimization-based motion planning</h2>
+<div class="outline-text-2" id="text-org42b1a65">
 <ul class="org-ul">
 <li>Improve performance
 <ul class="org-ul">
 <li>Cache cost and avoid duplicate computation</li>
 <li>hessian matrix approximation,</li>
 <li>parallelism (e.g. multiple shooting)</li>
-<li>Hierarchical optimization architect</li>
 </ul></li>
 
 <li>Improve convergence and robustness
 <ul class="org-ul">
 <li>Warm-start generation</li>
 <li>multiple shooting</li>
+<li>Hierarchical optimization architect</li>
 </ul></li>
 </ul>
 </div>
@@ -947,7 +955,7 @@ spline + differential fatness.</li>
 <h3 id="orgb006c91">Improve system performance</h3>
 <div class="outline-text-3" id="text-orgb006c91">
 <ul class="org-ul">
-<li>Learning from imitation (Inverse Refinforcement Learning)
+<li>Learning from imitation (Inverse Reinforcement Learning)
 <ul class="org-ul">
 <li>Maximum Margin Planning</li>
 <li>Maximum Entropy Inverse Reinforcement Learning</li>
@@ -970,7 +978,7 @@ spline + differential fatness.</li>
 <li>Short-term optimization optimizes for less-likely, fast-changing things</li>
 </ul></li>
 <li>Offline planning + online feedback control <sup><a id="fnr.2.100" class="footref" href="#fn.2">2</a></sup></li>
-<li>Warm-start generation, e.g. using non-parametric optimizer to generate a warm-start for parametric optimizer<sup><a id="fnr.7" class="footref" href="#fn.7">7</a></sup>.</li>
+<li>Warm-start generation, e.g. using a non-parametric optimizer to generate a warm-start for a parametric optimizer<sup><a id="fnr.7" class="footref" href="#fn.7">7</a></sup>.</li>
 <li>Plan for uncertainties, e.g. hindsight optimization</li>
 <li>Belief space planning</li>
 </ul>
@@ -983,7 +991,7 @@ spline + differential fatness.</li>
 <div class="outline-text-2" id="text-org8aaf6e4">
 <ul class="org-ul">
 <li>System design shall avoid or reduce AI problems</li>
-<li>System development should follow a similar path as natural evolution.</li>
+<li>System development should follow a similar path as the natural evolution.</li>
 <li>Hierarchical optimization architecture</li>
 <li>Plan for uncertainties</li>
 <li>Evaluate system safety as a probability and design for it.</li>
