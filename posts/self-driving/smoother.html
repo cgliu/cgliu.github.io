@@ -3,11 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-01-21 Sun 09:35 -->
+<!-- 2018-01-21 Sun 09:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Self-driving technologies</title>
+<title>Optimal Smoothing and Its Application to Self-driving Cars</title>
 <meta name="generator" content="Org mode" />
+<meta name="author" content="Chenggang Liu" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -179,7 +180,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="./css/layout.css" />
+<link rel="stylesheet" type="text/css" href="../css/layout.css" />
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -226,20 +227,236 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
-<h1 class="title">Self-driving technologies</h1>
+<h1 class="title">Optimal Smoothing and Its Application to Self-driving Cars</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgcd3aecc">Optimal Smoothing</a>
+<ul>
+<li><a href="#org1fb4373">Background</a></li>
+<li><a href="#org4f75511">Optimal linear quadratic smoother</a></li>
+</ul>
+</li>
+<li><a href="#org1dfc4fa">Its application to self-driving cars</a>
+<ul>
+<li><a href="#org83bd1ba">The problem</a></li>
+<li><a href="#orgf96d744">Approach</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgcd3aecc" class="outline-2">
+<h2 id="orgcd3aecc">Optimal Smoothing</h2>
+<div class="outline-text-2" id="text-orgcd3aecc">
+</div>
+<div id="outline-container-org1fb4373" class="outline-3">
+<h3 id="org1fb4373">Background</h3>
+<div class="outline-text-3" id="text-org1fb4373">
+<p>
+To quantify the uncertainty associated with an unobserved variable, \(X\), given some information pertaining to that
+variable, \(Y\). In a sequential context, this relates to the calculation of the posterior density, \(p(x_{1:T}|
+  y_{1:T})\), where \(x_{1:T} := {x_1, \ldots, x_T }\), \(y_{1:T} := {y_1, \ldots, y_T}\), are the state to estimate and the
+observation processes, and the discrete time index \(t\in \mathbb{N}^+\).
+</p>
+
+<p>
+To facilitate sequential estimation, a first order Markovian state space model is
+often assumed and defined by its initial probability \(X_1 \sim \mu(\cdot)\) and
+for \(t > 0\):
+</p>
+
+<p>
+\[ X_t| (X_{t-1} = x_{t-1}) \sim f(\cdot| x_{t-1});   \]
+</p>
+
+<p>
+Furthermore, the observations are conditional upon the state and are
+assumed to be statistically independent and distributed according to:
+</p>
+
+<p>
+\[ Y_t | (X_t=x_t) \sim g(\cdot| x_t), \]
+</p>
+
+<p>
+where we assume that \(\mu(\cdot)\), \(f(\cdot| x_{t-1})\) and \(g(\cdot| x_t)\) are
+probability densities with respect to some dominating measure.
+</p>
+
+<p>
+The joint posterior density \(p(x_{1:T}| y_{1:T})\) is simply given by:
+\[ p(x_{1:t}| y_{1:t}) \propto \mu(x_1)\prod_{k=2}^{t}f(x_k | x_{k-1}) \prod_{k=1}^{t} g(y_k | x_k) \]
+</p>
+
+<p>
+Given the empirical observations \(y_{1:T}\), the optimal fix-interval smoother
+tries to find a sequence of the state variables that gives the maximum a
+posterior probability (MAP):
+</p>
+
+\begin{equation}
+\label{eq:1}
+\max_{x_{1:T}} \mu(x_1)\prod_{k=2}^{t}f(x_k | x_{k-1}) \prod_{k=1}^{t} g(y_k | x_k)
+\end{equation}
+
+<p>
+subjective to
+\[ X_t| (X_{t-1} = x_{t-1}) \sim f(\cdot| x_{t-1});   \]
+\[ Y_t | (X_t=x_t) \sim g(\cdot| x_t), \]
+\[ X_1 \sim \mu(\cdot) \]
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4f75511" class="outline-3">
+<h3 id="org4f75511">Optimal linear quadratic smoother</h3>
+<div class="outline-text-3" id="text-org4f75511">
+<p>
+The process model:
+\[ x_{k} = A_k x_{k-1}  + w_{k-1}  \]
+The observation model:
+\[ y_k = H_k x_k + v_k\]
+</p>
+
+<p>
+where \(w_k\) is the process noise which is assumed to be drawn from a zero
+mean multivariate normal distribution, \(w_k \sim \mathcal{N}(0, Q_k)\), and
+\(v_k\) is the observation noise which is assumed to be zero mean Gaussian
+white noise with covariance \(R_k\), \(v_k \sim \mathcal{N}(0, R_k)\). The
+covariances of the two noise models are assumed stationary over time and are
+given by: \[ Q = E(w_k, w_k) \] \[ R = E(v_k, v_k) \]
+</p>
+
+<p>
+Recall Eq. \ref{eq:1}, for the linear process model and observation model, we have:
+\[ \mu(x_1) = |2 \pi P|^{-2} \exp(-(x_1 - \hat{x}_1)^{\top} P^{-1} (x_1 - \hat{x}_1)) \]
+\[ f(x_k| x_{k-1}) = |2 \pi Q|^{-2} \exp(-(x_k - A_{k-1} x_{k-1})^{\top} Q^{-1}  (x_k - A_{k-1} x_{k-1}) ) \]
+\[ g(y_k| x_k) = |2 \pi R|^{-2} \exp(-(y_k - H_k x_k)^{\top} R^{-1} (y_k - H_k x_k)) \]
+where \(\hat{x}_1\) and \(P\) are the initial state's prior estimation and covariance.
+</p>
+
+<p>
+Then, the fix-interval optimal smoother problem can be reformulated as:
+</p>
+\begin{equation}
+\label{eq:fix-interval-smoothing}
+\min_{x_{1:T}} \frac{1}{2} \sum_{k=1}^{N} v_k^{\top} R^{-1} v_k +
+\frac{1}{2} \sum_{k=2}^{T} w_k^{\top} Q^{-1} w_k +
+\frac{1}{2} (x_1 -\hat{x}_1)^{\top} P^{-1} (x_1 - \hat{x}_1)
+\end{equation}
+<p>
+where
+\[ v_k = y_k - H_k x_k \]
+\[w_k = x_k - A_{k-1} x_{k-1} \]
+</p>
+
+<p>
+In practice, Eq. \ref{eq:fix-interval-smoothing} is solved by batch least square (BLS) estimation methods (for
+example, trajectory optimization) or sequential recursive estimation methods, such as Fraser and Potter (1969),
+Rauch, Tung, and Striebel (1965), and etc.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1dfc4fa" class="outline-2">
+<h2 id="org1dfc4fa">Its application to self-driving cars</h2>
+<div class="outline-text-2" id="text-org1dfc4fa">
+</div>
+<div id="outline-container-org83bd1ba" class="outline-3">
+<h3 id="org83bd1ba">The problem</h3>
+<div class="outline-text-3" id="text-org83bd1ba">
+<p>
+The state we are interested in is \[ x := [ p_x, p_y, \theta, \delta, u, s, \dot{\delta}, \ddot{\delta}, \dot{u},
+   \ddot{u}]^{\top} \in \mathbb{R}^{10} \] and the observation is \[ y := [p_x, p_y, \theta, \delta, u ]^{\top} \in
+   \mathbb{R}^5, \]
+</p>
+
+<p>
+where \(p_x\) and \(p_y\) is the position, \(\theta\) is the heading of car, \(s\), \(u\), \(\dot{u}\), and \(\ddot{u}\) are the
+odometry, the speed, the acceleration and the jerk, \(\delta\), \(\dot{\delta}\), and \(\ddot{\delta}\) are the steering
+wheel angle, swirl and juke.
+</p>
+
+<p>
+The problem is to get a MAP estimate of the full state given noise measurements from manual drive data.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf96d744" class="outline-3">
+<h3 id="orgf96d744">Approach</h3>
+<div class="outline-text-3" id="text-orgf96d744">
+<p>
+We can use optimal linear quadratic smoother to solve this problem.
+</p>
+
+<p>
+The process model:
+</p>
+\begin{equation}
+x_i =
+\begin{bmatrix}
+A_{i-1} & B_{i-1}\\
+0 & 1
+\end{bmatrix}_{10\times 10}
+x_{i-1} + w
+\end{equation}
+
+<p>
+where \(A_i\) is the discrete-time state jacobian and \(B_i\) is the discrete-time control jacobain at time step \(i\),
+\(w\) is the process noise and \(w \sim \mathcal{N}(0, Q)\). 
+</p>
+
+<p>
+The observation model:
+</p>
+\begin{equation}
+y_i =
+\begin{bmatrix}
+I_{5 \times 5} & 0
+\end{bmatrix}_{5 \times 10}
+x_i + v
+\end{equation}
+<p>
+where \(v\) is the observation noise and \(v \sim \mathcal{N}(0, R)\). 
+</p>
 
 
-<div id="outline-container-org95b146d" class="outline-2">
-<h2 id="org95b146d"><a href="self-driving-from-engineering-perspective/index.html">Self-driving technologies from an engineering perspective</a></h2>
+<p>
+We also need to notice that the posterior covariance is relatively higher towards the beginning and the end than the
+middle. 
+</p>
 </div>
-<div id="outline-container-org33045f2" class="outline-2">
-<h2 id="org33045f2"><a href="speed.html">Safe driving speed for self-driving car</a></h2>
 </div>
-<div id="outline-container-org8de3019" class="outline-2">
-<h2 id="org8de3019"><a href="smoother.html">Optimal smoothing and its application to self-driving cars</a></h2>
 </div>
 </div>
 </body>
