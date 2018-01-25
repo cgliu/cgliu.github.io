@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-01-16 Tue 20:53 -->
+<!-- 2018-01-25 Thu 08:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Self-driving Technologies from An Engineering Perspective</title>
@@ -181,6 +181,78 @@
   /*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="layout.css" />
+
+<script type="text/javascript" src="http://orgmode.org/org-info.js">
+/**
+ *
+ * @source: http://orgmode.org/org-info.js
+ *
+ * @licstart  The following is the entire license notice for the
+ *  JavaScript code in http://orgmode.org/org-info.js.
+ *
+ * Copyright (C) 2012-2018 Free Software Foundation, Inc.
+ *
+ *
+ * The JavaScript code in this tag is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
+ * General Public License (GNU GPL) as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option)
+ * any later version.  The code is distributed WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+ *
+ * As additional permission under GNU GPL version 3 section 7, you
+ * may distribute non-source (e.g., minimized or compacted) forms of
+ * that code without the copy of the GNU GPL normally required by
+ * section 4, provided you include this license notice and a URL
+ * through which recipients can access the Corresponding Source.
+ *
+ * @licend  The above is the entire license notice
+ * for the JavaScript code in http://orgmode.org/org-info.js.
+ *
+ */
+</script>
+
+<script type="text/javascript">
+
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "4");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "underline");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "0");
+org_html_manager.set("VIEW", "info");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -253,12 +325,74 @@ for the JavaScript code in this tag.
 <body>
 <div id="content">
 <h1 class="title">Self-driving Technologies from An Engineering Perspective</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org72e20ee">Introduction</a></li>
+<li><a href="#org82c085c">Safety - what we learn from the aviation industry</a>
+<ul>
+<li><a href="#orgb340e5f">Safety Critical System</a></li>
+<li><a href="#org3931728">The \(10^{-9}\) Challenge </a></li>
+<li><a href="#org9f0d7c6">Independence of FCRs</a></li>
+<li><a href="#org0849ed0">Integrated Architecture</a></li>
+<li><a href="#org2c395f9">Safety Consideration for Integrated Architecture</a></li>
+<li><a href="#orgc37bee5">Platform Safety - Platform</a></li>
+<li><a href="#orga3445dd">Platform Safety - OS</a></li>
+<li><a href="#org5ffc431">Platform Safety - Network</a></li>
+<li><a href="#org201fd0b">Platform Safety - Software</a></li>
+<li><a href="#org7531770">Platform Safety - Hardware</a></li>
+<li><a href="#org1153ffd">Integrated Architecture for Self-driving Cars</a></li>
+</ul>
+</li>
+<li><a href="#orgf6ab58a">Collisions are Inevitable</a>
+<ul>
+<li><a href="#org0f3f625">Collisions are inevitable?</a></li>
+</ul>
+</li>
+<li><a href="#org9541024">Self-driving Is Not 'An AI Problem'</a>
+<ul>
+<li><a href="#org7f63610">For self-driving, what are we trying to solve?</a></li>
+<li><a href="#orgd586bfb">How to minimize AI problems?</a></li>
+</ul>
+</li>
+<li><a href="#orgc0627c2">System Architecture and Development Consideration</a>
+<ul>
+<li><a href="#orgfe6c81b">Natural Evolution</a></li>
+<li><a href="#org63306ff">Self-driving Architecture</a></li>
+<li><a href="#orgb979196">Lesson Learned from the DARPA Robotics Challenge</a></li>
+<li><a href="#orgf13612f">Lesson learned from the egress task</a></li>
+<li><a href="#orgf207570">What causes a system fragile?</a></li>
+<li><a href="#orge5966b4">Performance goals</a></li>
+</ul>
+</li>
+<li><a href="#org96ba731">Motion Planning System Design Consideration</a>
+<ul>
+<li><a href="#org52eb7d9">Motion planning system functionality</a></li>
+<li><a href="#org406e577">Optimization-based motion planning</a></li>
+<li><a href="#org6e48bbf">Driving problem formulation</a></li>
+<li><a href="#org4736f19">How to model the risk</a></li>
+<li><a href="#org0deaad7">Optimal planning problem</a></li>
+<li><a href="#org968e284">Optimization-based motion planning</a></li>
+</ul>
+</li>
+<li><a href="#org9578f6e">Optimization-based motion planning</a></li>
+<li><a href="#org3771f7d">From Excellent to Superb</a>
+<ul>
+<li><a href="#orgb006c91">Improve system performance</a></li>
+<li><a href="#org1935fa6">Improve system robustness</a></li>
+</ul>
+</li>
+<li><a href="#org8aaf6e4">Summary</a></li>
+</ul>
+</div>
+</div>
 
 <div id="outline-container-org72e20ee" class="outline-2">
 <h2 id="org72e20ee">Introduction</h2>
 <div class="outline-text-2" id="text-org72e20ee">
 <pre class="example">
-The following are my personal opinions, if you have comments, questions or ideas, 
+The following are my personal opinions, if you have comments, questions or ideas,
 please feel free to send me Emails at cgliu2008 AT gmail.com
 </pre>
 
@@ -511,7 +645,7 @@ Aviation for now. But a minimal system engineering effort is still required, whi
 <ul class="org-ul">
 <li>Yes. According to <a href="https://cgliu.github.io/posts/self-driving/speed.html">safe driving speed</a> analysis, there is always collision possibility as long as the vehicle moves.</li>
 
-<li>But 
+<li>But
 <ul class="org-ul">
 <li>we are not responsible for all kind of collisions, for example, collisions by others' faults.</li>
 <li>the severity level is different for collisions</li>
@@ -548,8 +682,9 @@ Driver-less has already been achieved during the DARPA Robotics Challenges!
 
 <div class="org-center">
 <p>
-  
+
 </p>
+
 
 <div class="figure">
 <p><img src="drc-operators.jpg" alt="drc-operators.jpg" height="600" />
@@ -594,7 +729,7 @@ The faster the system can respond to the dynamic environment, the less challengi
 <li>Take uncertainties into account during motion planning (robust motion planning)</li>
 
 <li>Machine learning methods are good ways to improve performance, but they are not magic.
-The non-interpretative issues with the black-box learning approaches may trap us before achieving acceptable performance.  
+The non-interpretative issues with the black-box learning approaches may trap us before achieving acceptable performance.
 Pure data-driven approaches are expensive and hard to deliver on time.</li>
 </ul>
 </div>
@@ -732,9 +867,9 @@ the system thinks too much, react too less</li>
 <div class="outline-text-3" id="text-orge5966b4">
 <p>
 We need to consider the system as a whole and optimize its components altogether, for example, the following formula
-reveals the connects between perception, localization, prediction, planning and control: 
+reveals the connects between perception, localization, prediction, planning and control:
 \[ \mathrm{clearance} = v_0
-   \tau + \frac{v_0^2}{2 a} + 2 \sqrt{\sigma_{p}^2(0) + T^2 \sigma_v^2(0)} \] 
+   \tau + \frac{v_0^2}{2 a} + 2 \sqrt{\sigma_{p}^2(0) + T^2 \sigma_v^2(0)} \]
 Refer to another post of mine <a href="https://cgliu.github.io/posts/self-driving/speed.html">safe driving speed for self-driving cars</a> for more details.
 </p>
 
@@ -764,9 +899,9 @@ Refer to another post of mine <a href="https://cgliu.github.io/posts/self-drivin
 </div>
 </div>
 
-<div id="outline-container-orgeed09c6" class="outline-3">
-<h3 id="orgeed09c6">Optimization-based motion planning</h3>
-<div class="outline-text-3" id="text-orgeed09c6">
+<div id="outline-container-org406e577" class="outline-3">
+<h3 id="org406e577">Optimization-based motion planning</h3>
+<div class="outline-text-3" id="text-org406e577">
 <ul class="org-ul">
 <li>Rather than designing control policy or rules, the developers design cost functions.</li>
 <li>Let optimization algorithms to figure out the optimal policy
@@ -890,9 +1025,9 @@ the desired driving path into account.
 </div>
 </div>
 
-<div id="outline-container-orgfa20150" class="outline-3">
-<h3 id="orgfa20150">Optimization-based motion planning</h3>
-<div class="outline-text-3" id="text-orgfa20150">
+<div id="outline-container-org968e284" class="outline-3">
+<h3 id="org968e284">Optimization-based motion planning</h3>
+<div class="outline-text-3" id="text-org968e284">
 <ul class="org-ul">
 <li>Navigation (long-range)
 <ul class="org-ul">
@@ -911,7 +1046,7 @@ the desired driving path into account.
 <li>Trajectory optimization (mid-range and mid-term)
 <ul class="org-ul">
 <li>Full model, high quality, mid-term</li>
-<li>Methods: DDP, iLQR, Direct collocation, Pseudospectral methods, or 
+<li>Methods: DDP, iLQR, Direct collocation, Pseudospectral methods, or
 spline + differential fatness.</li>
 </ul></li>
 
@@ -926,9 +1061,9 @@ spline + differential fatness.</li>
 </div>
 
 
-<div id="outline-container-org5088b2b" class="outline-2">
-<h2 id="org5088b2b">Optimization-based motion planning</h2>
-<div class="outline-text-2" id="text-org5088b2b">
+<div id="outline-container-org9578f6e" class="outline-2">
+<h2 id="org9578f6e">Optimization-based motion planning</h2>
+<div class="outline-text-2" id="text-org9578f6e">
 <ul class="org-ul">
 <li>Improve performance
 <ul class="org-ul">
@@ -1023,13 +1158,13 @@ Atkeson, Siyuan Feng, and Xinjilefu, <b>Humanoids 2015</b>, 3-5 Nov. 2015. DOI: 
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
-Trajectory-based dynamic programming, Christopher G. Atkeson and Chenggang LIU, 
+Trajectory-based dynamic programming, Christopher G. Atkeson and Chenggang LIU,
 <b>Modeling, Simulation and Optimization of Bipedal Walking Cognitive Systems  Monographs</b>, Volume 18, 2013, pp 1-15
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><p class="footpara">
 Standing balance control using a trajectory library, Chenggang LIU and Christopher G. Atkeson(2009),
-<b>IROS 2009</b>, 3031-3036.      
+<b>IROS 2009</b>, 3031-3036.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5">5</a></sup> <div class="footpara"><p class="footpara">
@@ -1038,7 +1173,7 @@ Biped walking control using offline and online optimization Chenggang LIU and Ji
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.6" class="footnum" href="#fnr.6">6</a></sup> <div class="footpara"><p class="footpara">
-Optimization-based Full Body Control for the DARPA Robotics Challenge, S. Feng, E. Whitman, X Xinjilefu, and C. Atkeson, 
+Optimization-based Full Body Control for the DARPA Robotics Challenge, S. Feng, E. Whitman, X Xinjilefu, and C. Atkeson,
 <b>Journal of Field Robotics</b>, Volume 32, Issue 2, pages 293-312, March 2015.
 </p></div></div>
 
