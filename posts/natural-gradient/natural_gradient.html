@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-01-03 Fri 14:08 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Natural Gradient</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../css/org.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Natural Gradient</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgfbe41ba">1. Why nature gradient</a></li>
+<li><a href="#org05805f7">2. The difference between nature gradient and Newton's method</a></li>
+<li><a href="#org364b2eb">3. Fisher Information matrix</a></li>
+</ul>
+</div>
+</div>
+<p>
+I want to answer the following questions:
+</p>
+<ul class="org-ul">
+<li>why nature gradient</li>
+<li>what's the difference between nature gradient and Newton's method</li>
+<li>The connection between nature gradient and Fisher information matrix</li>
+</ul>
+
+<p>
+Related topics:
+</p>
+<ul class="org-ul">
+<li>Gradient descent</li>
+<li>Newton's method</li>
+<li>ADAM</li>
+<li>Differential or Riemannian geometry</li>
+<li>KL divergence</li>
+<li>Fisher information</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="mind.png" alt="mind.png" />
+</p>
+</div>
+
+
+<div id="outline-container-orgfbe41ba" class="outline-2">
+<h2 id="orgfbe41ba"><span class="section-number-2">1</span> Why nature gradient</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This is based on the paper of "Why nature gradient" <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>
+</p>
+
+<p>
+Remarks:
+</p>
+<ul class="org-ul">
+<li>Nature gradient is based upon <b>Riemannian geometry</b></li>
+<li>Gradient descent method works well if:
+<ol class="org-ol">
+<li>single minimum</li>
+<li>gradients are <b>isotropic</b> in magnitude with respect to any direction
+away from this minimum.</li>
+</ol></li>
+<li>Natural gradient adaptation provides <b>isotropic</b> convergence properties about any local minimum</li>
+<li><p>
+Notion of distance
+</p>
+<ul class="org-ul">
+<li>Euclidean distance is defined as:
+\[
+      d_{E}(v, v + \delta v) = \sqrt{\delta v^{\top} \delta v} 
+      \]</li>
+<li><p>
+More general non-Euclidean distance
+</p>
+\begin{align*}
+d_{W}(w, w + \delta w) &= \sqrt{ \sum_{i=1}^{N} \sum_{j=1}^N \delta w_i \delta w_j g_{i, j}(w)} \\
+&= \sqrt{ \delta w^{\top} G(w) \delta w}
+\end{align*}
+<p>
+where \(G(w)\) is a Rienmannian metric tensor, is an \((N \times N)\) positive-definite matrix
+whose \((i,j)\) th entry is \(g_{i, j}(w)\).
+The Riemannian metric tensor characterizes the intrinsic curvature of a particular manifold in N-dimensional space.
+In the case of the Euclidean coordinate system, \(G ( v ) = I\) is the identity matrix.
+</p>
+
+<p>
+<b>Note:</b>
+</p>
+<ul class="org-ul">
+<li>a Rienmannian metric tensor is a function of \(w\) because it is not constant and
+changes with the vector \(w\).</li>
+<li>a Rienmannian metric tensor is always positive-definite, which is different from 
+a Hessian matrix, which can be non-positive definite.</li>
+</ul></li>
+</ul>
+
+<blockquote>
+<p>
+<b>Riemannian Metrics Definitions</b><sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>: 
+</p>
+
+<p>
+A Riemannian metric on a smooth manifold \(M\) is a 2-tensor field \(g \in T2(M)\) that is
+symmetric (i.e., \(g(X, Y ) = g(Y,X)\) ) and positive definite (i.e., \(g(X, X) > 0\) if \(X \ne 0\) ). A Riemannian metric thus
+determines an inner product on each tangent space \(T_p M\), which is typically written \(\langle X, Y \rangle := g(X, Y )\) for \(X, Y \in T_p M\) . A
+manifold together with a given Riemannian metric is called a Riemannian manifold. 
+</p>
+</blockquote></li>
+
+<li><p>
+Why we care about 'distance'
+The distance is related to the objective function or the loss function in optimization.
+For example, if the loss function is 
+\[
+    L(v) = || v - v_0||_2^2 = (v_1 - c_1)^2 + (v_2 - c_2)^2
+    \], 
+the distance is defined in the Euclidean space and vanilla gradient descent will work.  
+If 
+\[
+    L(w) = ||w - w_0||_2^2  = (w_1 \mathrm{cos}(w_2) - c_1)^2 + (w_1 \mathrm{sin}(w_2) - c_2)^2
+    \]
+the distance is defined in a polar coordinates and vanilla gradient descent may not work (check the paper for details). Instead, 
+the nature gradient descent will still work. 
+</p>
+
+<p>
+In machine learning, the loss function is often defined in term of KL-divergence, and therefore, Fisher information
+matrix is natural choice since it is the Riemannian metric tensor <sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>.
+</p></li>
+
+<li><p>
+how to determine \(G(w)\):  
+</p>
+<ul class="org-ul">
+<li>When the nature of the manifold can be described in terms of a
+transformation of Euclidean orthogonal space with coordinate vector \(v\) to
+\(w\) , then one can determine the form of \(G(w)\) through the relationship
+\[
+       d_{E}^2(v, v + \delta v) = d_{W}^2(w, w + \delta w)
+       \]
+where  \(v\) is small and \(w +  \delta w\) is the transformed value of
+\(v + \delta v\) . check out the example in this paper.</li>
+</ul>
+<ul class="org-ul">
+<li>when the transformation is unknown, we can do numerical approximation.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org05805f7" class="outline-2">
+<h2 id="org05805f7"><span class="section-number-2">2</span> The difference between nature gradient and Newton's method</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+When the objective \(J(w)\) is a quadratic function of \(w\) , the Hessian \(F(w)\) is equal to \(G(w)\) for the underlying
+parameter space, and thus Newton's method and natural gradient adaptation are identical. In more general contexts, the
+two techniques are different. In particular, \(G(w)\) is always positive definite by construction, whereas \(F(w)\) may
+not be for particular choices and values of \(J(w)\) and \(w\) , respectively.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org364b2eb" class="outline-2">
+<h2 id="org364b2eb"><span class="section-number-2">3</span> Fisher Information matrix</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Fisher information (sometimes simply called information) is a way of measuring the amount of information that an
+observable random variable X carries about an unknown parameter θ of a distribution that models X. 
+</p>
+
+<p>
+Formally, it is the variance of the "score", or the expected value of the observed information.
+</p>
+
+<p>
+It describes the probability that we observe a given outcome of X, given a known value of θ. If f is sharply peaked with
+respect to changes in θ, it is easy to indicate the “correct” value of θ from the data, or equivalently, that the data X
+provides a lot of information about the parameter θ. If the likelihood f is flat and spread-out, then it would take many
+samples of X to estimate the actual “true” value of θ that would be obtained using the entire population being sampled.
+</p>
+
+<p>
+注： 如果用概率参数模型预测观察值出现的频率越高，越尖，说明这个概率模型越准确；而反过来，说明测量值提供的关于参数的信
+息越多。
+</p>
+
+<p>
+Formally, the partial derivative with respect to θ of the natural logarithm of the likelihood function is
+called the “score”. Under certain regularity conditions, if θ is the true parameter (i.e. X is actually distributed as
+f(X; θ)), it can be shown that the expected value (the first moment) of the score is 0:
+</p>
+
+<p>
+The variance of the score is defined to be the Fisher information。
+</p>
+
+<blockquote>
+<p>
+<b>Fisher Information Matrix definition:</b>
+</p>
+
+<p>
+When there are N parameters, so that θ is an N × 1 vector 
+\[
+  \theta =\begin{bmatrix}
+  \theta_{1}, \theta _{2}, \dots ,\theta _{N} 
+  \end{bmatrix}^{\mathrm {T}} 
+  \]
+</p>
+
+<p>
+then the Fisher information takes the form of an N
+× N matrix. This matrix is called the Fisher information matrix (FIM) and has typical element
+</p>
+
+<p>
+\[
+  {{\bigl [}{\mathcal {I}}(\theta ){\bigr ]}}_{i,j} = \operatorname {E} \left[\left.\left({\frac {\partial
+  }{\partial \theta _{i}}}\log f(X;\theta )\right)\left({\frac {\partial }{\partial \theta _{j}}}\log f(X;\theta
+  )\right)\right|\theta \right]
+  \]
+</p>
+
+<p>
+The FIM is a N × N positive semidefinite matrix. If it is positive definite, then it defines a Riemannian metric on
+the N-dimensional parameter space. The information geometry uses this to connect Fisher information to differential
+geometry, and in that context, this metric is known as the Fisher information metric.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+Amari, Shun-ichi &amp; Douglas, S.C.. (1998). Why natural gradient?. ICASSP, IEEE International
+Conference on Acoustics, Speech and Signal Processing - Proceedings. 2. 1213 - 1216 vol.2. 10.1109/ICASSP.1998.675489.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://sites.math.washington.edu/~lee/Books/RM/">https://sites.math.washington.edu/~lee/Books/RM/</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
+An elementary introduction to information geometry, <a href="https://arxiv.org/pdf/1808.08271.pdf">https://arxiv.org/pdf/1808.08271.pdf</a>
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="date">Created: 2020-01-03 Fri 14:08</p>
+</div>
+</body>
+</html>
