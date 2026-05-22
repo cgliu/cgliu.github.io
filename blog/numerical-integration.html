@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2026-05-21 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Numerical Integration</title>
+<meta name="description" content="Numerical integration and quadrature methods" />
+<meta name="generator" content="Org Mode" />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<div class="scroll-progress"></div>
+<aside class="sidebar">
+  <div class="sidebar-inner">
+    <img src="/images/avatar.svg" alt="Chenggang Liu" class="sidebar-avatar"/>
+    <a href="/index.html" class="site-logo">Chenggang Liu</a>
+    <nav class="sidebar-nav">
+      <a href="/index.html">Home</a>
+      <a href="/blogs.html">Blogs</a>
+      <a href="/publications.html">Publications</a>
+      <a href="/about.html">About</a>
+    </nav>
+    <div class="sidebar-search">
+      <input type="text" class="sidebar-search-input" placeholder="Search..."/>
+      <div class="sidebar-search-results"></div>
+    </div>
+    <button class="theme-toggle" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div class="sidebar-social">
+      <a href="https://www.linkedin.com/in/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="https://github.com/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <a href="https://scholar.google.com/citations?user=omz_MCoAAAAJ&hl=en" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg></a>
+    </div>
+  </div>
+</aside>
+<button class="sidebar-toggle" aria-label="Toggle menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="top-bar">
+  <button class="top-bar-toggle" aria-label="Toggle menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+  <a href="/index.html" class="top-bar-title">Chenggang Liu</a>
+  <button class="top-bar-search" aria-label="Open search bar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+  </button>
+</div>
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" class="search-input" placeholder="Search..."/>
+    <button class="search-close" aria-label="Close search">&times;</button>
+  </div>
+  <div class="search-results"></div>
+</div>
+</div>
+<div id="content" class="content">
+<header>
+<h1 class="title">Numerical Integration</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgc53b032">Numerical Integration</a>
+<ul>
+<li><a href="#org9d11624">The model ODE</a></li>
+<li><a href="#org7827516">Euler method</a></li>
+<li><a href="#org7c40e82">Runge-Kutta methods</a></li>
+<li><a href="#orgedc3b5a">Quadrature</a></li>
+<li><a href="#org8c9bdec">Solve ODEs backwards in time</a></li>
+</ul>
+</li>
+<li><a href="#orgcc25749">Lagrange interpolation</a>
+<ul>
+<li><a href="#org2d6f7de">Spectral method for ODE and PDE</a></li>
+</ul>
+</li>
+<li><a href="#org1c1f372">Direct transcription</a>
+<ul>
+<li><a href="#org9dff310">Euler method</a></li>
+<li><a href="#org5c3e2f0">Runge-Kutta method</a></li>
+<li><a href="#orgc8f6b48">Lagrange Pseudospectral method</a></li>
+<li><a href="#orgfb7d44d">Gauss Pseudospectral method</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+<div id="outline-container-orgc53b032" class="outline-2">
+<h2 id="orgc53b032">Numerical Integration</h2>
+<div class="outline-text-2" id="text-orgc53b032">
+</div>
+<div id="outline-container-org9d11624" class="outline-3">
+<h3 id="org9d11624">The model ODE</h3>
+<div class="outline-text-3" id="text-org9d11624">
+<p>
+The first order ODE:
+\[ \frac{dy}{dt} = f(t, y) \]
+where \(y \in R^N\). It is interesting because high order ODEs can be written in form of
+a system of first order ODEs.
+</p>
+</div>
+</div>
+<div id="outline-container-org7827516" class="outline-3">
+<h3 id="org7827516">Euler method</h3>
+<div class="outline-text-3" id="text-org7827516">
+<ul class="org-ul">
+<li>forward Euler:
+\[ y_{k+1} =  y_{k} + \Delta T f(y(k)) \]</li>
+
+<li>backward Euler:
+\[ y_{k+1} = y_k + \Delta T f(y(k+1)) \]</li>
+</ul>
+
+<p>
+The forward Euler is also called explicit method because
+you can evaluate the next time step by an explicit equation.
+It is simple but less stable.
+</p>
+
+<p>
+The backward Euler is also called implicit method because
+you have to solve nonlinear equations to get the next step.
+It is more complicate by more stable <sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>.
+</p>
+</div>
+</div>
+<div id="outline-container-org7c40e82" class="outline-3">
+<h3 id="org7c40e82">Runge-Kutta methods</h3>
+<div class="outline-text-3" id="text-org7c40e82">
+<p>
+The Runge-Katta methods are the most popular methods of solving ODE numerically.
+They can be derived for any order of accuracy.
+The most popular method is the fourth order Runge-Kutta method, or RK4 method, which is given by
+</p>
+\begin{eqnarray}
+y_{k+1} &=& y_k + \frac{1}{6} (k_1 + 2K_2 + 2K_3 + k_4), \\
+k_1 &=& h f(t_k, y_k) \\
+k_2 &=& h f(t_k + \frac{h}{2}, y_k + \frac{1}{2} k_1) \\
+K_3 &=& h f(t_k + \frac{h}{2}, y_k + \frac{1}{2} k_2) \\
+k_4 &=& h f(t_k + h, y_k + k_3)
+\end{eqnarray}
+</div>
+</div>
+<div id="outline-container-orgedc3b5a" class="outline-3">
+<h3 id="orgedc3b5a">Quadrature</h3>
+<div class="outline-text-3" id="text-orgedc3b5a">
+<p>
+Quadrature is more or less a a synonym for numerical integration,
+especially as applied to one-dimensional integrals.
+Some authors refer to numerical integration over more than one dimension as cubature;
+others take quadrature to include higher-dimensional integration.
+</p>
+
+<p>
+\[ \int_a^b f(y) dt \approx \sum_{i=1}^N w_i f(t_i) \]
+where \(w_i\) are the quadrature weights and \(t_i\) are the quadrature points or nodes.
+</p>
+
+<p>
+An interpolatory quadrature formula can be created for arbitrary support points by
+approximating the integrand by Lagrange polynomials, so that
+\[ \int_a^b f(y) dt \approx \int_{a}^b \sum_{i=1}^N L_i(t) \cdot f(t_i) dt \]
+</p>
+
+<p>
+The quadrature weights can be easily determined as
+\[ w_i = \int_a^b L_i(t) dt \]
+</p>
+
+<p>
+The quadrature formula with the maximum degree of precision is the
+<b>Gauss quadrature</b> formula, which is exact for polynomials of degree \(2N - 1\) or less. The
+Gauss formula is found by choosing the weights \(w_i\) and points \(t_i\) which make the
+formula exact for the highest degree polynomial possible. The points and weights
+are determined so that
+\[ \int_{-1}^{1} f(t) dt = \sum_{i=1}^N w_i \cdot f(t_i) + E_N \]
+and the error \(E_N\) is zero for a polynomial of degree \(2N-1\). The Gauss
+points are determined as the zeros of the \(N^{th}\) degree Legendre polynomial and
+the weights are the integrals of the resulting Lagrange interpolating polynomials, so
+that
+\[ w_i = \int_{-1}^{1} \prod_{k=1, k \ne i}^{N} \frac{t-t_k}{t_i - t_k} dt,\  i =1, \ldots, N \]
+</p>
+
+<p>
+There are other types of quadrature formula, such LGL, which is similar to the Gauss formula,
+except the boundary points are fixed at -1 and 1.
+</p>
+
+<p>
+The error in the pesudospectral integration at the \(i^{th}\) point is bounded by
+\[
+   \|E_i\| \le \| \frac{d^N f(\xi)}{dt^N}\| \frac{2}{N!}, \ \xi \in [-1,1]
+   \]
+and the pseudospectral integral will converge for any \(f(t)\) whose derivatives are bounded,
+as the number of nodes used approaches infinity <sup><a id="fnr.gauss-pseudospectral-opt" class="footref" href="#fn.gauss-pseudospectral-opt" role="doc-backlink">2</a></sup>.
+</p>
+</div>
+</div>
+<div id="outline-container-org8c9bdec" class="outline-3">
+<h3 id="org8c9bdec">Solve ODEs backwards in time</h3>
+<div class="outline-text-3" id="text-org8c9bdec">
+<p>
+Having a dynamics equation, it seems normal to integrate forward to get the time history. Backward ODE sounds odd
+because how can you integrate a dynamic system backward in time. But actually, it is still normal in math. We can
+still use Runge-Kutta to integrate ODEs backward in time using a negative time step!
+</p>
+
+\begin{eqnarray}
+y_{k-1} &=& y_k + \frac{1}{6} (k_1 + 2K_2 + 2K_3 + k_4), \\
+k_1 &=& h f(t_k, y_k) \\
+k_2 &=& h f(t_k - \frac{h}{2}, y_k - \frac{1}{2} k_1) \\
+K_3 &=& h f(t_k - \frac{h}{2}, y_k - \frac{1}{2} k_2) \\
+k_4 &=& h f(t_k - h, y_k - k_3)
+\end{eqnarray}
+
+
+<figure id="org2a85e3b">
+<img src="forward_backward_sim.png" alt="forward_backward_sim.png" width="500">
+
+<figcaption><span class="figure-number">Figure 1: </span>Comparison between solving ODEs forwards and backwards in time</figcaption>
+</figure>
+
+<p>
+<a href="https://github.com/cgliu/optimal_control/blob/master/tests/ode_forwards_backwards.py">Code</a>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgcc25749" class="outline-2">
+<h2 id="orgcc25749">Lagrange interpolation</h2>
+<div class="outline-text-2" id="text-orgcc25749">
+<p>
+Given \(N\) arbitrary support points of the function \(f(t)\), on interval \(t \in [a,b]\),
+there exists a unique polynomial P(t), of degree N-1 so that
+\[
+  P(t_i) = f_i, i = 1, \ldots, N
+  \]
+</p>
+
+<p>
+The unique polynomial can be found using Lagrange interpolation formula so that
+\[
+  P(t) = \sum_{i=1}^{N} f_i L_i(t)
+  \]
+where \(L_i(t)\) are the Lagrange interpolation polynomials
+\[
+  L_i(t) = \prod_{k=1, k \ne i}^{N} \frac{t-t_k}{t_i - t_k} dt,\  i =1, \ldots, N 
+  \]
+</p>
+</div>
+<div id="outline-container-org2d6f7de" class="outline-3">
+<h3 id="org2d6f7de">Spectral method for ODE and PDE</h3>
+<div class="outline-text-3" id="text-org2d6f7de">
+<ul class="org-ul">
+<li>Galerkin, tau method</li>
+<li>Pseudospectral method, or collocation method
+satisfy boundary constraints and collocation points</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org1c1f372" class="outline-2">
+<h2 id="org1c1f372">Direct transcription</h2>
+<div class="outline-text-2" id="text-org1c1f372">
+<p>
+Take the state and the control at collocation points as optimization variables
+</p>
+</div>
+<div id="outline-container-org9dff310" class="outline-3">
+<h3 id="org9dff310">Euler method</h3>
+</div>
+<div id="outline-container-org5c3e2f0" class="outline-3">
+<h3 id="org5c3e2f0">Runge-Kutta method</h3>
+</div>
+<div id="outline-container-orgc8f6b48" class="outline-3">
+<h3 id="orgc8f6b48">Lagrange Pseudospectral method</h3>
+<div class="outline-text-3" id="text-orgc8f6b48">
+<p>
+it is outlined as:
+</p>
+<ul class="org-ul">
+<li><b>Lagrange interpolation + Gauss quadrature</b></li>
+<li>the state and control are interpolated using Lagrange interpolation
+at N LGL points</li>
+<li>the dynamics constraints are enforced at the LGL points</li>
+<li>boundary constraints are enforced using the boundary points of approximating polynomial</li>
+<li>the integration in the cost function is discretized using GL quadrature rule</li>
+</ul>
+
+<p>
+problems:
+</p>
+<ul class="org-ul">
+<li>the cost is evaluated only at the collocation points, which in general is sparse.
+It may miss some important details in the cost functions. <b>more details here</b></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgfb7d44d" class="outline-3">
+<h3 id="orgfb7d44d">Gauss Pseudospectral method</h3>
+<div class="outline-text-3" id="text-orgfb7d44d">
+<p>
+outlined as:
+</p>
+<ul class="org-ul">
+<li>convert to Bolza formulation
+use Lagrange interpolation + Gauss quadrature</li>
+<li>integration approximation matrix</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="https://web.stanford.edu/~fringer/teaching/numerical_methods_02/handouts/lecture7.pdf">https://web.stanford.edu/~fringer/teaching/numerical_methods_02/handouts/lecture7.pdf</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.gauss-pseudospectral-opt" class="footnum" href="#fnr.gauss-pseudospectral-opt" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+A Gauss Pseudospectral Transcription for Optimal Control
+by David Benson, MIT, 2005
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<script>
+// Sidebar toggle
+document.querySelector('.sidebar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  this.classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+document.querySelector('.top-bar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  document.querySelector('.sidebar-toggle').classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+
+// Search toggle
+(function() {
+  var overlay = document.querySelector('.search-overlay');
+  var input = document.querySelector('.search-input');
+  var results = document.querySelector('.search-results');
+  document.querySelector('.top-bar-search').addEventListener('click', function() {
+    overlay.classList.toggle('active');
+    if (overlay.classList.contains('active')) input.focus();
+  });
+  document.querySelector('.search-close').addEventListener('click', function() {
+    overlay.classList.remove('active');
+    input.value = '';
+    results.innerHTML = '';
+  });
+  var pages = [];
+  fetch('/search-index.json').then(function(r){return r.json();}).then(function(d){pages=d;});
+  input.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { results.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    results.innerHTML = html || '<p style="color:#64748b">No results</p>';
+  });
+
+  // Sidebar search
+  var sInput = document.querySelector('.sidebar-search-input');
+  var sResults = document.querySelector('.sidebar-search-results');
+  sInput.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { sResults.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    sResults.innerHTML = html || '<p style="color:rgba(255,255,255,0.4)">No results</p>';
+  });
+})();
+
+// Theme toggle
+(function() {
+  var stored = localStorage.getItem('theme');
+  if (stored) {
+    document.documentElement.setAttribute('data-theme', stored);
+  }
+  document.querySelector('.theme-toggle').addEventListener('click', function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+})();
+
+// Active nav highlight
+(function() {
+  var path = window.location.pathname;
+  document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (path === href || (href !== '/index.html' && path.indexOf(href.replace('.html','')) === 0)) {
+      link.classList.add('active');
+    }
+  });
+})();
+
+// Fade in / fade out on scroll
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    } else {
+      entry.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.intro p, .blog-card, .pub-entry, .timeline-item, .hero-image').forEach(function(el) {
+  el.classList.add('fade-item');
+  observer.observe(el);
+});
+
+// Scroll progress bar
+window.addEventListener('scroll', function() {
+  var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var progress = (scrollTop / scrollHeight) * 100;
+  document.querySelector('.scroll-progress').style.width = progress + String.fromCharCode(37);
+});
+
+// Tag filtering on blogs page
+(function() {
+  document.querySelectorAll('.card-tag').forEach(function(tag) {
+    tag.style.cursor = 'pointer';
+    tag.addEventListener('click', function(e) {
+      e.preventDefault();
+      var selected = this.textContent.trim();
+      var allCards = document.querySelectorAll('.blog-card');
+      var allItems = document.querySelectorAll('.timeline-item');
+      var isActive = this.classList.contains('tag-active');
+      document.querySelectorAll('.card-tag').forEach(function(t) { t.classList.remove('tag-active'); });
+      if (isActive) {
+        allCards.forEach(function(c) { c.style.display = ''; });
+        allItems.forEach(function(i) { i.style.display = ''; });
+      } else {
+        this.classList.add('tag-active');
+        allCards.forEach(function(c) {
+          var t = c.querySelector('.card-tag');
+          c.style.display = (t && t.textContent.trim() === selected) ? '' : 'none';
+        });
+        allItems.forEach(function(i) {
+          var visible = i.querySelectorAll('.blog-card[style=""], .blog-card:not([style])');
+          var hasVisible = Array.from(i.querySelectorAll('.blog-card')).some(function(c) { return c.style.display !== 'none'; });
+          i.style.display = hasVisible ? '' : 'none';
+        });
+      }
+    });
+  });
+})();
+</script>
+</div>
+</body>
+</html>

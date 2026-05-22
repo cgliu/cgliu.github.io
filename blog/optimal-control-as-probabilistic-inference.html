@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2026-05-21 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Optimal Control as Probabilistic Inference Review</title>
+<meta name="description" content="Bridging control theory and probabilistic reasoning" />
+<meta name="generator" content="Org Mode" />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<div class="scroll-progress"></div>
+<aside class="sidebar">
+  <div class="sidebar-inner">
+    <img src="/images/avatar.svg" alt="Chenggang Liu" class="sidebar-avatar"/>
+    <a href="/index.html" class="site-logo">Chenggang Liu</a>
+    <nav class="sidebar-nav">
+      <a href="/index.html">Home</a>
+      <a href="/blogs.html">Blogs</a>
+      <a href="/publications.html">Publications</a>
+      <a href="/about.html">About</a>
+    </nav>
+    <div class="sidebar-search">
+      <input type="text" class="sidebar-search-input" placeholder="Search..."/>
+      <div class="sidebar-search-results"></div>
+    </div>
+    <button class="theme-toggle" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div class="sidebar-social">
+      <a href="https://www.linkedin.com/in/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="https://github.com/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <a href="https://scholar.google.com/citations?user=omz_MCoAAAAJ&hl=en" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg></a>
+    </div>
+  </div>
+</aside>
+<button class="sidebar-toggle" aria-label="Toggle menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="top-bar">
+  <button class="top-bar-toggle" aria-label="Toggle menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+  <a href="/index.html" class="top-bar-title">Chenggang Liu</a>
+  <button class="top-bar-search" aria-label="Open search bar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+  </button>
+</div>
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" class="search-input" placeholder="Search..."/>
+    <button class="search-close" aria-label="Close search">&times;</button>
+  </div>
+  <div class="search-results"></div>
+</div>
+</div>
+<div id="content" class="content">
+<header>
+<h1 class="title">Optimal Control as Probabilistic Inference Review</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgdfed18c">Introduction</a></li>
+<li><a href="#orgf88f51a">Linear solvable Markov decision problems</a>
+<ul>
+<li><a href="#orgc7ac84d">Important conclusions</a></li>
+<li><a href="#orgefe1835">Experiments</a></li>
+</ul>
+</li>
+<li><a href="#org6d73ad1">Linear theory for control of non-linear stochastic systems</a></li>
+<li><a href="#orgf198dbb">Path Integral for robot control</a>
+<ul>
+<li><a href="#org88bf0f3">Special case:</a></li>
+</ul>
+</li>
+<li><a href="#orga2f6e7b">Cross entropy method</a></li>
+<li><a href="#orgb8259c1">Optimal control as a graphical model inference problem</a></li>
+<li><a href="#org1d6eb5d">Reinforcement learning and control as probabilistic inference</a></li>
+<li><a href="#org692ea3d">Appendix</a>
+<ul>
+<li><a href="#orge1fe33a">Appendix A</a></li>
+<li><a href="#org60f9e8d">Diffusion process</a></li>
+<li><a href="#org342b436">Laplace approximation</a></li>
+<li><a href="#orgf6b2462">Posterior mode</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+<div id="outline-container-orgdfed18c" class="outline-2">
+<h2 id="orgdfed18c">Introduction</h2>
+<div class="outline-text-2" id="text-orgdfed18c">
+<p>
+This note is intended to be a reference for personal learning and implementation.
+It covers literatures on path integral method, optimal control (reinforcement learning) as a probabilistic inference. 
+</p>
+</div>
+</div>
+<div id="outline-container-orgf88f51a" class="outline-2">
+<h2 id="orgf88f51a">Linear solvable Markov decision problems</h2>
+<div class="outline-text-2" id="text-orgf88f51a">
+<p>
+Todorov(2006) studies a special class of MDP problems, the control \(u\in
+   \mathbb{R}^{|\mathcal{S}|}\) is a real-valued vector with dimensionality equal to the number of discrete states. The
+elements \(u^j\) of \(u\) have the effect of directly modifying the transition probabilities of an uncontrolled Markov chain.
+</p>
+<ul class="org-ul">
+<li>The controlled transition probabilities
+\[
+  p_{ij}(u) = \bar{p}_{ij} {\color{red} \exp(u_j)} 
+  \]
+where \(\bar{p}_{ij}\) is the transition probabilities of an uncontrolled Markov chain, which can be modified directly
+by \(\exp(u_j)\).</li>
+
+<li><p>
+The one step cost
+</p>
+\begin{eqnarray*}
+l(i, u) &=& q(i) + r(i, u) \\
+&=& q(i) + {\color{red} \mathrm{KL}(p_i(u)||\bar{p}_i)}  
+\end{eqnarray*}
+
+<p>
+Note that The control cost is defined as the KL divergence between the controlled and uncontrolled transition
+probabilities.
+</p></li>
+
+<li>Bellman equation
+\[
+   v(i) = \min_{u \in \mathcal{U}} \{l(i, u) + \sum_j p_{ij} v(j) \}
+   \]</li>
+</ul>
+</div>
+<div id="outline-container-orgc7ac84d" class="outline-3">
+<h3 id="orgc7ac84d">Important conclusions</h3>
+<div class="outline-text-3" id="text-orgc7ac84d">
+<ul class="org-ul">
+<li>Optimally-controlled transition probabilities:  
+\[
+  p^*_{ij} = \frac{\bar{p}_{ij} z(j)}{\sum_{k}\bar{p}_{ik} z(k)}
+  \]
+where \(z := \exp(-v(i))\) is celled 'state desirability'.</li>
+
+<li>\(z\) can be obtained by solving a linear Eigenvalue problem:
+\[
+  \mathbf{z} = G \bar{P} \mathbf{z} 
+  \]</li>
+
+<li>Z-learning
+\[
+  \hat{z}(i_k) \leftarrow (1 - \alpha) \hat{z}(i_k) + \alpha_k e^{-q_k} \hat{z}(j_k) 
+  \]</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgefe1835" class="outline-3">
+<h3 id="orgefe1835">Experiments</h3>
+<div class="outline-text-3" id="text-orgefe1835">
+<ul class="org-ul">
+<li>Shortest-path problem  
+<a href="https://youtu.be/N0SQHOqbYLw">https://youtu.be/N0SQHOqbYLw</a></li>
+
+<li>Z-learning  
+<a href="https://youtu.be/KyqfCMNdO2s">https://youtu.be/KyqfCMNdO2s</a></li>
+
+<li>Source code
+<a href="https://github.com/cgliu/z-learning.git">https://github.com/cgliu/z-learning.git</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org6d73ad1" class="outline-2">
+<h2 id="org6d73ad1">Linear theory for control of non-linear stochastic systems</h2>
+<div class="outline-text-2" id="text-org6d73ad1">
+<p>
+How to solve optimal deterministic control problems in the absence of noise:
+</p>
+<ul class="org-ul">
+<li>PMP: Pontryagin Minimization Principle</li>
+<li>HJB: Hamilton-Jacobi-Bellman equation</li>
+</ul>
+<p>
+How to solve optimal stochastic control problems in the presence of noise:
+</p>
+<ul class="org-ul">
+<li>PMP: difficult to solve</li>
+<li>Stochastic HJB: the curse of dimensionality</li>
+</ul>
+
+
+<p>
+Kappen(2005) studied a restrict class of optimal stochastic control problem.
+</p>
+<ul class="org-ul">
+<li>Dynamics
+\[
+    dx = b(x, t) dt + u dt + dw
+    \]
+where \(dw\) is a Wiener process with \(<dw_i, dw_j>=\nu_{ij} dt\) and \(\nu_{ij}\) is independent of \(x\), \(u\), and \(t\).</li>
+
+<li>Minimize the following cost function:
+\[
+    C(x, u, t) = \mathbb{E}_{x}[\phi(x(t_f) + \int_{t}^{t_f} \big [d\tau \frac{1}{2} u^{\top} R u + q(x, \tau) \big]
+    \]
+where \(q(x, t)\) is a state dependent potential function.</li>
+
+<li>Important conclusions:
+\[ \psi(x_0, t) = \int [\mathrm{d}\xi]_{x_0} \big (-
+    \frac{1}{\lambda} S(\xi) \big)
+    \]
+where \(V(x, t) = - \lambda \log \psi(x, t)\),
+\(\int [\mathrm{d}x]_{x_0}\) means an integral over all paths \(x\) that state at
+\(x_0\) and
+\[
+    S(\xi) = \phi(x_f) + \int_{t}^{t_f} d\tau \big ( \frac{1}{2} u^{\top} R u + q(x, \tau) \big )
+    \]</li>
+</ul>
+
+
+<p>
+Note:
+</p>
+<ul class="org-ul">
+<li>I have changed the symbols to make them more consistent with other papers.</li>
+<li>The dynamics is fully actuated, which means all state variables can be changed by \(u\) or the noise.
+Theodorou et al.(2010) made some extension, where the dynamics can be under-actuated and only actuated states have
+noise.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgf198dbb" class="outline-2">
+<h2 id="orgf198dbb">Path Integral for robot control</h2>
+<div class="outline-text-2" id="text-orgf198dbb">
+<p>
+Path integral method was further developed by 
+Theodorou et al.(2010), which studies a class of stochastic optimal control problem, where
+</p>
+<ul class="org-ul">
+<li><p>
+System dynamics:
+</p>
+\begin{equation}
+\label{eq:pi-dynamics}
+\dot{x} = f(x, t) + G(x)(u + \varepsilon)
+\end{equation}
+<p>
+where \(\varepsilon\) is Gaussian noise with variance \(\Sigma_{\varepsilon}\).
+</p>
+
+<p>
+Note:
+</p>
+<ul class="org-ul">
+<li>The noise term has to be in the control or the directly controlled state, otherwise, the method doesn't apply.</li>
+<li>It is sometime referred as 'linear in control'.</li>
+</ul></li>
+
+<li><p>
+Immediate cost function:
+</p>
+\begin{equation}
+\label{eq:pi-cost}
+r_t(x, u) = q_t(x) + \frac{1}{2} u^{\top} R u
+\end{equation}
+<p>
+Note:
+</p>
+<ul class="org-ul">
+<li>The immediate cost can be split into a state cost and a control dependent cost.</li>
+<li>It is sometimes referred as 'quadratic'.</li>
+</ul></li>
+
+<li>Finite horizon cost function:
+\[
+   R(\tau) = \Phi(t_N) + \int_{t_i}^{t_N} r_t(x, u) dt
+   \]
+where \(\Phi\) is the terminal cost function.</li>
+
+<li>Value function
+\[
+   V(x_{t_i}) = \min_{u_{t}} \mathbb{E}_{\tau}[R(\tau)] 
+   \]
+the expectation of is taken over all possible trajectories, \(\tau\), starting at \(x_{t_i}\)</li>
+
+<li><p>
+The stochastic HJB equation is:
+</p>
+\begin{equation}
+\label{eq:sto-hjb}
+\partial_t V_t = \min_{u} \big ( r_t + (\nabla_x V_t)^{\top} (f + G u) + \frac{1}{2} Tr (\nabla_{xx} V_t) G_t \Sigma_{\varepsilon}G_t^{\top}) \big )
+\end{equation}
+<p>
+which is a <a href="#org60f9e8d">diffusion process</a>. 
+</p></li>
+
+<li>The Hamiltonian for the stochastic process:
+\[
+   H := r_t + (\nabla_x V_t)^{\top} (f + G u) + \color{red}{\frac{1}{2} Tr (\nabla_{xx} V_t) G_t \Sigma_{\varepsilon}G_t^{\top})}
+   \]
+compared with deterministic process, the difference is the red term, which is from the noise.
+
+<ul class="org-ul">
+<li><p>
+The optimal control \(u^*\) is given by (set the gradient of Hamiltonian w.r.t. control to zero):
+\[
+     u^* = -R^{-1} G_t^{\top}(\nabla_x V_t)
+     \]
+</p>
+
+<p>
+substitute it into the stochastic HJB Eq. eqref:eq:sto-hjb, and then use <b>an exponential transformation</b>:
+\[
+    V_t = - \lambda \log \Psi_t
+    \]
+where \(\lambda\) is a scalar. 
+</p>
+
+<p>
+Furthermore,  set R to be inverse proportional to the noise variance as \(\lambda R^{-1} = \Sigma_{\varepsilon}\),
+so that
+\[
+    \lambda G_t R^{-1} G^{\top} = G_t \Sigma_{\varepsilon}G_t^{\top} = \Sigma(x_t) := \Sigma_t
+    \]
+we get
+\[
+    -\partial_t \Psi_t  = - \frac{1}{\lambda}q_t\Psi_t + f^{\top}(\nabla_x\Psi_t) + \frac{1}{2}Tr\big( (\nabla_{xx}\Psi_t)G_t\Sigma_{\varepsilon}G_t^{\top}\big)
+    \]
+with boundary condition: \(\Psi_{t_N} = \exp(-\frac{1}{\lambda}\Phi_N)\). This partial differential equation (PDE)  
+corresponds to so called Chapman Kolmogorov PDE.  
+One step further, we can apply Feynman-Kac theorem to get one of the major conclusion:
+</p>
+<div class="mdframed" id="org057069e">
+\begin{equation}
+\label{eq:pi-psi}
+\color{red}{\Psi_{t_i} = \mathbb{E}_{\tau_i} \big[ \exp(-\frac{\Phi_N + \int_{t_i}^{t_N} q_t dt}{\lambda}) \big]}
+\end{equation}
+<p>
+where \(\tau_i :=(x_{t_i}, \ldots, x_{t_N})\) is a sample path starting at state \(x_{t_i}\).
+</p>
+
+</div>
+
+<p>
+Note:
+</p>
+<ol class="org-ol">
+<li>Since \(V_t = -\lambda \log(\Psi_t)\). If we can get \(\Psi_t\), we can get \(V_t\) and thus solve optimal control
+problem.
+To get the value function, we don't need to solve the HJB but We can approximate it using 
+forward path integral!</li>
+
+<li>We have replace the control with optimal control, so we don't need to solve it, explicitly.</li>
+
+<li>It is still hard to solve Eq. eqref:eq:pi-psi, but we can get its approximation by sampling.</li>
+
+<li>Regarding the simplification \(\lambda R^{-1} = \Sigma_{\varepsilon}\), it couples the control cost with the
+system dynamics. This assumption transforms the Gaussian probability for state transitions into a quadratic
+command cost.</li>
+
+<li>In Sutton &amp; Barto(2018), \(\lambda\) is referred as temperature. High temperatures cause the actions to
+be all (nearly) equiprobable. Low temperatures cause a greater difference in selection probability for actions
+that differ in their value estimates.</li>
+</ol></li>
+</ul></li>
+</ul>
+</div>
+<div id="outline-container-org88bf0f3" class="outline-3">
+<h3 id="org88bf0f3">Special case:</h3>
+<div class="outline-text-3" id="text-org88bf0f3">
+<p>
+For fully actuated system:
+</p>
+<ul class="org-ul">
+<li>Optimal control at every time step \(t_i\):
+\[
+     u_{t_i}^* = \int P(\tau_i)u(\tau_i)d\tau_i 
+     \]</li>
+<li>Probability of a trajectory:
+\[
+     p(\tau_i) = \frac{\exp(-\frac{1}{\lambda}\tilde{S}(\tau_i))}{\int  \exp(-\frac{1}{\lambda}\tilde{S}(\tau_i)) d\tau_i}
+     \]</li>
+</ul>
+
+
+<p>
+For systems that can be partitioned into directly actuated part and non-directly actuated:
+</p>
+\begin{equation*}
+\begin{pmatrix}
+x^m \\
+x^c
+\end{pmatrix}
+=
+\begin{pmatrix}
+f^m(x) \\
+f^c(x)
+\end{pmatrix}
++ 
+\begin{pmatrix}
+0 \\
+G^c
+\end{pmatrix}
+(u + \varepsilon)
+\end{equation*}
+
+<p>
+When \(G^{c}\) is square and state independent, the optimal control is given by (refer to eq:23):
+</p>
+\begin{equation}
+\label{eq:pi-opt-control}
+u_{t_i}^* = \frac{\int\exp(-\frac{1}{\lambda}\tilde{S}(\tau_i)) \varepsilon_{t_i} d\tau}  {\int\exp(-\frac{1}{\lambda}\tilde{S}(\tau_i))d\tau}
+\end{equation}
+<p>
+where, for many systems,
+</p>
+\begin{equation}
+\label{eq:pi-tildle-s}
+\tilde{S}(\tau_i) = \Phi_{t_N} + \int_{t_i}^{t_N} r_t dt 
+\end{equation}
+
+<p>
+Note: Eq. eqref:eq:pi-tildle-s has been simplified for specific systems and is different from what in Table 1 of the
+original paper. For derivation, refer to <a href="#orge1fe33a">Appendix A</a>
+</p>
+
+
+
+
+<p>
+For other more general cases and PI^2 (policy improvement with path integrals) method, please refer to the paper.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orga2f6e7b" class="outline-2">
+<h2 id="orga2f6e7b">Cross entropy method</h2>
+<div class="outline-text-2" id="text-orga2f6e7b">
+<p>
+The cross-entropy (CE) method is a Monte Carlo method for importance sampling and optimization. It is applicable to
+both combinatorial and continuous problems, with either a static or noisy objective.
+</p>
+
+<p>
+The method approximates the optimal importance sampling estimator by repeating two phases:[1]
+</p>
+<ul class="org-ul">
+<li>Draw a sample from a probability distribution.</li>
+<li>Minimize the cross-entropy between this distribution and a target distribution to produce a better sample in the
+next iteration.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgb8259c1" class="outline-2">
+<h2 id="orgb8259c1">Optimal control as a graphical model inference problem</h2>
+<div class="outline-text-2" id="text-orgb8259c1">
+<p>
+Kappen(2012) established the link between optimal control and probabilistic
+inference in a clear way.
+</p>
+
+<p>
+The optimal control is to minimize the following KL divergence:
+</p>
+\begin{eqnarray*}
+C(x^0, p) &=& D_{KL}(p||\psi) \\
+\psi(\tau) &=& q(\tau) \exp(-\sum_{t=0}^T C^x(x, t))
+\end{eqnarray*}
+<p>
+where \(p\) is the probability of controlled trajectory,
+\(q\) is the probability of uncontrolled trajectory,
+\(\tau = x^{0:T}\), \(S(\tau) = \sum_{t=0}^T C^x(x, t)\), and \(C^x\) is the state dependent cost.
+</p>
+
+<p>
+Because
+</p>
+\begin{equation}
+\label{eq:kappen-kl}
+D_{KL}(p||\psi) = \int_{\tau} p \log(\frac{p}{q \exp(-S)}) d\tau = \int_{\tau}p [\log(\frac{p}{q}) + S] d\tau
+\end{equation}
+<p>
+we can rewrite the cost function as:
+\[
+  \hat{R}(x^t, u^t, x^{t+1}, t) = \log(\frac{p^t(x^{t+1}| x^t, u^t)}{q^t(x^{t+1}| x^t)}) + C^x(x^t, t) \quad t=0,\ldots,T-1
+  \]
+and
+\[
+  \hat{R} (x^T, u^T, x^{T+1}, T) = C^x(x^T, T)
+  \]
+</p>
+
+<p>
+The result of this KL minimization yields the "Boltzman distribution"
+</p>
+\begin{eqnarray*}
+p(\tau) &=& \frac{1}{Z(x^0)}\psi(\tau)
+\end{eqnarray*}
+<p>
+and the optimal cost:
+\[
+  C(x^0, p^*) = - \log(Z(x^0)),
+  \]
+where \(Z(x^0) = \sum_\tau \psi(\tau)\) is a normalization constant.
+</p>
+
+<p>
+The optimal control in the current state \(x^0\) is given by
+\[
+  p(x^1| x^0) = \sum_{x^{2:T}} p(x^{1:T}| x^0)
+  \]
+</p>
+</div>
+</div>
+<div id="outline-container-org1d6eb5d" class="outline-2">
+<h2 id="org1d6eb5d">Reinforcement learning and control as probabilistic inference</h2>
+<div class="outline-text-2" id="text-org1d6eb5d">
+<p>
+Levine(2018) uses a graphical model to model the relationship between state, action, the next state,
+and rewards. It formulates the probability for s and a to be optimal as exp(r(s,a)), This leads to a very natural
+posterior distribution over actions when condition on \(O_t = 1\) for all \(t \in {1,\ldots, T}\)
+</p>
+\begin{eqnarray}
+\label{eq:inference}
+p(\tau|O_{1:T}) &=& \frac{[p(s_1)\prod_{t=1}^T p(s_{t+1}| s_t, a_t)]\exp(\sum_{t=1}^T r(s_t, a_t))}{Z} \nonumber \\
+&\approx& p(s_1)\prod_{t=1}^T p(s_{t+1}| s_t, a_t)]\exp(\sum_{t=1}^T r(s_t, a_t))
+\end{eqnarray}
+
+<p>
+The probability of observing a given trajectory is given by the product between its probability
+to occur according to the dynamics (the term in square brackets on the last line), and the exponential
+of the total reward along that trajectory.
+</p>
+
+
+<p>
+In general \(p(\tau | O_{1:T})\) is hard to derive because of the partition function, instead, 
+we can minimize the Kullback–Leibler divergence between:
+</p>
+\begin{equation*}                
+D_{KL}(\hat{p}||p(\tau| O_{1:T})) = - \mathbb{E}_{\hat{p}}[\sum_{t=1:T} r(s, a)] - \mathcal{H}(\hat{p}) + C
+\end{equation*}                          
+<p>
+and thus it is to maximize 
+\marginnote{This objective is also call evidence lower bound (ELBO) or negative varianional free energy}
+</p>
+\begin{equation}
+\label{eq:rl-maxent}
+\max_{\hat{p}}  J(\hat{p}) = \mathbb{E}_{\hat{p}}[\sum_{t=1:T} r(s, a)] + \mathcal{H}(\hat{p})
+\end{equation}
+<p>
+This type of control objective is sometimes referred to as maximum entropy reinforcement learning or maximum entropy
+control.
+</p>
+
+<p>
+If we define 
+</p>
+\begin{equation}
+\label{eq:link-q}
+q := \exp(-\sum_{t=0:T} C^u),
+\end{equation}
+<p>
+where \(C^u\) is the control dependent cost.
+Eq. eqref:eq:kappen-kl becomes
+</p>
+\begin{eqnarray}
+- D_{KL}(p||\psi) &=& -\int_{\tau} p\log(p)d\tau - \mathbb{E}_p[\sum_{t=0:T} (C^u + C^x)] \nonumber  \\
+  &=& \mathcal{H}(p) + \mathbb{E}[\sum_{t=1:T}r(s,a)]
+\end{eqnarray}
+<p>
+As we can see that eqref:eq:kappen-kl is a special form of eqref:eq:rl-maxent, where the reward can be partitioned into
+a state dependent term and a control dependent term.
+</p>
+
+<p>
+Eq eqref:eq:link-q shows the probability of uncontrolled trajectory is a function of 'control' cost, which sounds
+wired. But because the noise term is in the control, you can think it as 'noise' cost.
+</p>
+</div>
+</div>
+<div id="outline-container-org692ea3d" class="outline-2">
+<h2 id="org692ea3d">Appendix</h2>
+<div class="outline-text-2" id="text-org692ea3d">
+</div>
+<div id="outline-container-orge1fe33a" class="outline-3">
+<h3 id="orge1fe33a">Appendix A</h3>
+<div class="outline-text-3" id="text-orge1fe33a">
+<p>
+\(\tilde{S}\) is defined as:
+</p>
+\begin{equation}
+\tilde{s} = \Phi_{t_N} + \sum_{j = i}^{N-1} q_{t_j} dt + \frac{1}{2} \sum_{j=i}^{N-1} ||\frac{x_{t_{j+1}}^c - x_{t_j}^c}{dt} - f_{t_j}^c||^2_{H_{t_j}^{-1}} dt
++ \frac{1}{2} \sum_{j=i}^{N-1} \log |H_j| 
+\end{equation}
+<p>
+and
+\[
+   H_{t_j} := G_{t_j}^c R^{-1}G_{t_j}^{c\top} 
+   \]
+</p>
+
+<p>
+For many systems, when \(dt \to 0\), 
+\[
+   \frac{x_{t_{j+1}}^c - x_{t_j}^c}{dt} - f_{t_j}^c \to G^c u 
+   \]
+</p>
+\begin{eqnarray*}
+\Vert \frac{x_{t_{j+1}}^c - x_{t_j}^c}{dt} - f_{t_j}^c \Vert^2_{H_{t_j}^{-1}} &\to& (G^c u)^{\top} ( G^c R^{-1}G^{c\top} )^{-1} G^c u   \\
+&\to& u^{\top} R u
+\end{eqnarray*}
+
+<p>
+For some system, when \({G^c_t}^{\top} = {G^c_t}^{-1}\) and \(dt \to 0\)
+\[
+   \tilde{s} = \Phi_{t_N} + \int_{t_i}^{t_N} r_t dt + C
+   \]
+where \(C\) is a constant and it can then be canceled in Eq. eqref:eq:pi-opt-control.
+</p>
+</div>
+</div>
+<div id="outline-container-org60f9e8d" class="outline-3">
+<h3 id="org60f9e8d">Diffusion process</h3>
+<div class="outline-text-3" id="text-org60f9e8d">
+<p>
+a diffusion equation is usually written as:
+\[
+   \partial_t \Phi(r, t) = \nabla \cdot [D(\Phi, r)\nabla\Phi(r,t)]
+   \]
+where \(\Phi(r,t)\) is the density of the diffusing material at location \(r\) and time \(t\)
+and \(D(\phi, r)\) is the collective diffusion coefficient <sup><a id="fnr.diffusion" class="footref" href="#fn.diffusion" role="doc-backlink">1</a></sup>.  
+Diffusion equation shows us how the diffusion speed depends on the density of the material.
+</p>
+</div>
+</div>
+<div id="outline-container-org342b436" class="outline-3">
+<h3 id="org342b436">Laplace approximation</h3>
+<div class="outline-text-3" id="text-org342b436">
+<p>
+<a href="https://james-brennan.github.io/posts/laplace_approximation/">https://james-brennan.github.io/posts/laplace_approximation/</a>
+<a href="https://bookdown.org/rdpeng/advstatcomp/laplace-approximation.html">https://bookdown.org/rdpeng/advstatcomp/laplace-approximation.html</a>
+</p>
+
+<p>
+Simply put the Laplace approximation entails finding a Gaussian approximation to
+a continuous probability density. 
+</p>
+
+<p>
+Key notes:
+</p>
+<ul class="org-ul">
+<li>Technically, it works for functions that are in the class of L2,</li>
+</ul>
+<p>
+\[
+\int g^2(x) dx < \infty
+\]
+</p>
+<ul class="org-ul">
+<li>We are interested in approximating a distribution: \[ p(z) = \frac{1}{Z} f(z) \]
+where \(Z\) is the normalization coefficient. Especially we are interested in
+its posterior, which is in general computationally intractable.</li>
+
+<li><p>
+log trick + its second-order Taylor expansion at a peak. 
+In details: To calculate \(\int f(z) dx\), do 'log' trick, \(f(z) = \exp(\ln (f(z))\),
+and make a Taylor expansion of it centered on the peak \(z_0\):
+\[
+  \ln(f(z)) \approx \ln(f(z_0)) - \frac{1}{2}\mathbb(A) (z-z_0)^2
+  \]
+where
+\[
+  \mathbb{A} = -\frac{d^2}{dz^2} \ln f(z) |_{z=z_0}
+  \]
+Thus:
+\[
+  f(z) \approx f(z_0) \exp(- \frac{1}{2}\mathbb(A) (z-z_0)^2)
+  = f(z_0) (\frac{A}{2\pi})^{-1/2} q(z)
+  \]
+where \(q(z)\) is distribution PDF \(\mathcal{N}(z|z_0, A^{-1})\)
+</p>
+
+<p>
+\[
+  \ln(f(z)) \approx \ln(f(z_0) - \frac{1}{2} (z - z_0)^{\top} \mathbb{H} (z -z_0)
+  \]
+where H is the Hessian matrix, the matrix of second-order partial derivatives which
+describes the local curvature of \(ln(f)\)
+</p></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgf6b2462" class="outline-3">
+<h3 id="orgf6b2462">Posterior mode</h3>
+<div class="outline-text-3" id="text-orgf6b2462">
+<p>
+The maximum of a distribution is called 'mode', the peaks in a distribution. 
+</p>
+
+<p>
+An alternative estimate to the posterior mode is the posterior mean. It is given
+by E (θ |s), whenever it exists. If the posterior distribution of θ is symmetric
+about its mode, and the expectation exists, then the posterior mean is the same
+as the posterior mode, but otherwise these estimates will be different.
+</p>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.diffusion" class="footnum" href="#fnr.diffusion" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="https://en.wikipedia.org/wiki/Diffusion_equation">https://en.wikipedia.org/wiki/Diffusion_equation</a>
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<script>
+// Sidebar toggle
+document.querySelector('.sidebar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  this.classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+document.querySelector('.top-bar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  document.querySelector('.sidebar-toggle').classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+
+// Search toggle
+(function() {
+  var overlay = document.querySelector('.search-overlay');
+  var input = document.querySelector('.search-input');
+  var results = document.querySelector('.search-results');
+  document.querySelector('.top-bar-search').addEventListener('click', function() {
+    overlay.classList.toggle('active');
+    if (overlay.classList.contains('active')) input.focus();
+  });
+  document.querySelector('.search-close').addEventListener('click', function() {
+    overlay.classList.remove('active');
+    input.value = '';
+    results.innerHTML = '';
+  });
+  var pages = [];
+  fetch('/search-index.json').then(function(r){return r.json();}).then(function(d){pages=d;});
+  input.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { results.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    results.innerHTML = html || '<p style="color:#64748b">No results</p>';
+  });
+
+  // Sidebar search
+  var sInput = document.querySelector('.sidebar-search-input');
+  var sResults = document.querySelector('.sidebar-search-results');
+  sInput.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { sResults.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    sResults.innerHTML = html || '<p style="color:rgba(255,255,255,0.4)">No results</p>';
+  });
+})();
+
+// Theme toggle
+(function() {
+  var stored = localStorage.getItem('theme');
+  if (stored) {
+    document.documentElement.setAttribute('data-theme', stored);
+  }
+  document.querySelector('.theme-toggle').addEventListener('click', function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+})();
+
+// Active nav highlight
+(function() {
+  var path = window.location.pathname;
+  document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (path === href || (href !== '/index.html' && path.indexOf(href.replace('.html','')) === 0)) {
+      link.classList.add('active');
+    }
+  });
+})();
+
+// Fade in / fade out on scroll
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    } else {
+      entry.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.intro p, .blog-card, .pub-entry, .timeline-item, .hero-image').forEach(function(el) {
+  el.classList.add('fade-item');
+  observer.observe(el);
+});
+
+// Scroll progress bar
+window.addEventListener('scroll', function() {
+  var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var progress = (scrollTop / scrollHeight) * 100;
+  document.querySelector('.scroll-progress').style.width = progress + String.fromCharCode(37);
+});
+
+// Tag filtering on blogs page
+(function() {
+  document.querySelectorAll('.card-tag').forEach(function(tag) {
+    tag.style.cursor = 'pointer';
+    tag.addEventListener('click', function(e) {
+      e.preventDefault();
+      var selected = this.textContent.trim();
+      var allCards = document.querySelectorAll('.blog-card');
+      var allItems = document.querySelectorAll('.timeline-item');
+      var isActive = this.classList.contains('tag-active');
+      document.querySelectorAll('.card-tag').forEach(function(t) { t.classList.remove('tag-active'); });
+      if (isActive) {
+        allCards.forEach(function(c) { c.style.display = ''; });
+        allItems.forEach(function(i) { i.style.display = ''; });
+      } else {
+        this.classList.add('tag-active');
+        allCards.forEach(function(c) {
+          var t = c.querySelector('.card-tag');
+          c.style.display = (t && t.textContent.trim() === selected) ? '' : 'none';
+        });
+        allItems.forEach(function(i) {
+          var visible = i.querySelectorAll('.blog-card[style=""], .blog-card:not([style])');
+          var hasVisible = Array.from(i.querySelectorAll('.blog-card')).some(function(c) { return c.style.display !== 'none'; });
+          i.style.display = hasVisible ? '' : 'none';
+        });
+      }
+    });
+  });
+})();
+</script>
+</div>
+</body>
+</html>

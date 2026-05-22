@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2026-05-20 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Natural Gradient</title>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="../css/org.css"/>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<div class="scroll-progress"></div>
+<aside class="sidebar">
+  <div class="sidebar-inner">
+    <img src="/images/avatar.svg" alt="Chenggang Liu" class="sidebar-avatar"/>
+    <a href="/index.html" class="site-logo">Chenggang Liu</a>
+    <nav class="sidebar-nav">
+      <a href="/index.html">Home</a>
+      <a href="/blogs.html">Blogs</a>
+      <a href="/publications.html">Publications</a>
+      <a href="/about.html">About</a>
+    </nav>
+    <button class="theme-toggle" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div class="sidebar-social">
+      <a href="https://www.linkedin.com/in/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="https://github.com/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <a href="https://scholar.google.com/citations?user=omz_MCoAAAAJ&hl=en" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg></a>
+    </div>
+  </div>
+</aside>
+<button class="sidebar-toggle" aria-label="Toggle menu">
+  <span></span><span></span><span></span>
+</button>
+</div>
+<div id="content" class="content">
+<header>
+<h1 class="title">Natural Gradient</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org99b8091">Why nature gradient</a></li>
+<li><a href="#orgda84c63">The difference between nature gradient and Newton's method</a></li>
+<li><a href="#org89c5f87">Fisher Information matrix</a></li>
+</ul>
+</div>
+</nav>
+<p>
+I want to answer the following questions:
+</p>
+<ul class="org-ul">
+<li>why nature gradient</li>
+<li>what's the difference between nature gradient and Newton's method</li>
+<li>The connection between nature gradient and Fisher information matrix</li>
+</ul>
+
+<p>
+Related topics:
+</p>
+<ul class="org-ul">
+<li>Gradient descent</li>
+<li>Newton's method</li>
+<li>ADAM</li>
+<li>Differential or Riemannian geometry</li>
+<li>KL divergence</li>
+<li>Fisher information</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-plantuml">"ML" --&gt; "KL divergence"
+"KL divergence" -&gt; "Fisher information matrix"
+"Fisher information matrix" --&gt; "nature gradient"
+"Gradient descent" --&gt; "nature gradient"
+"Optmization" --&gt; "Gradient descent"
+</pre>
+</div>
+<div id="outline-container-org99b8091" class="outline-2">
+<h2 id="org99b8091">Why nature gradient</h2>
+<div class="outline-text-2" id="text-org99b8091">
+<p>
+This is based on the paper of "Why nature gradient" <sup><a id="fnr.why-nature-gradient" class="footref" href="#fn.why-nature-gradient" role="doc-backlink">1</a></sup>
+</p>
+
+<p>
+Remarks:
+</p>
+<ul class="org-ul">
+<li>Nature gradient is based upon <b>Riemannian geometry</b></li>
+<li>Gradient descent method works well if:
+<ol class="org-ol">
+<li>single minimum</li>
+<li>gradients are <b>isotropic</b> in magnitude with respect to any direction
+away from this minimum.</li>
+</ol></li>
+<li>Natural gradient adaptation provides <b>isotropic</b> convergence properties about any local minimum</li>
+<li><p>
+Notion of distance
+</p>
+<ul class="org-ul">
+<li>Euclidean distance is defined as:
+\[
+      d_{E}(v, v + \delta v) = \sqrt{\delta v^{\top} \delta v} 
+      \]</li>
+<li><p>
+More general non-Euclidean distance
+</p>
+\begin{align*}
+d_{W}(w, w + \delta w) &= \sqrt{ \sum_{i=1}^{N} \sum_{j=1}^N \delta w_i \delta w_j g_{i, j}(w)} \\
+&= \sqrt{ \delta w^{\top} G(w) \delta w}
+\end{align*}
+<p>
+where \(G(w)\) is a Rienmannian metric tensor, is an \((N \times N)\) positive-definite matrix
+whose \((i,j)\) th entry is \(g_{i, j}(w)\).
+The Riemannian metric tensor characterizes the intrinsic curvature of a particular manifold in N-dimensional space.
+In the case of the Euclidean coordinate system, \(G ( v ) = I\) is the identity matrix.
+</p>
+
+<p>
+<b>Note:</b>
+</p>
+<ul class="org-ul">
+<li>a Rienmannian metric tensor is a function of \(w\) because it is not constant and
+changes with the vector \(w\).</li>
+<li>a Rienmannian metric tensor is always positive-definite, which is different from 
+a Hessian matrix, which can be non-positive definite.</li>
+</ul></li>
+</ul>
+
+<blockquote>
+<p>
+<b>Riemannian Metrics Definitions</b><sup><a id="fnr.rienmannian-manifolds" class="footref" href="#fn.rienmannian-manifolds" role="doc-backlink">2</a></sup>: 
+</p>
+
+<p>
+A Riemannian metric on a smooth manifold \(M\) is a 2-tensor field \(g \in T2(M)\) that is
+symmetric (i.e., \(g(X, Y ) = g(Y,X)\) ) and positive definite (i.e., \(g(X, X) > 0\) if \(X \ne 0\) ). A Riemannian metric thus
+determines an inner product on each tangent space \(T_p M\), which is typically written \(\langle X, Y \rangle := g(X, Y )\) for \(X, Y \in T_p M\) . A
+manifold together with a given Riemannian metric is called a Riemannian manifold. 
+</p>
+</blockquote></li>
+
+<li><p>
+Why we care about 'distance'
+The distance is related to the objective function or the loss function in optimization.
+For example, if the loss function is 
+\[
+    L(v) = || v - v_0||_2^2 = (v_1 - c_1)^2 + (v_2 - c_2)^2
+    \], 
+the distance is defined in the Euclidean space and vanilla gradient descent will work.  
+If 
+\[
+    L(w) = ||w - w_0||_2^2  = (w_1 \mathrm{cos}(w_2) - c_1)^2 + (w_1 \mathrm{sin}(w_2) - c_2)^2
+    \]
+the distance is defined in a polar coordinates and vanilla gradient descent may not work (check the paper for details). Instead, 
+the nature gradient descent will still work. 
+</p>
+
+<p>
+In machine learning, the loss function is often defined in term of KL-divergence, and therefore, Fisher information
+matrix is natural choice since it is the Riemannian metric tensor <sup><a id="fnr.elementary-introduction-information-geometry" class="footref" href="#fn.elementary-introduction-information-geometry" role="doc-backlink">3</a></sup>.
+</p></li>
+
+<li><p>
+how to determine \(G(w)\):  
+</p>
+<ul class="org-ul">
+<li>When the nature of the manifold can be described in terms of a
+transformation of Euclidean orthogonal space with coordinate vector \(v\) to
+\(w\) , then one can determine the form of \(G(w)\) through the relationship
+\[
+       d_{E}^2(v, v + \delta v) = d_{W}^2(w, w + \delta w)
+       \]
+where  \(v\) is small and \(w +  \delta w\) is the transformed value of
+\(v + \delta v\) . check out the example in this paper.</li>
+</ul>
+<ul class="org-ul">
+<li>when the transformation is unknown, we can do numerical approximation.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgda84c63" class="outline-2">
+<h2 id="orgda84c63">The difference between nature gradient and Newton's method</h2>
+<div class="outline-text-2" id="text-orgda84c63">
+<p>
+When the objective \(J(w)\) is a quadratic function of \(w\) , the Hessian \(F(w)\) is equal to \(G(w)\) for the underlying
+parameter space, and thus Newton's method and natural gradient adaptation are identical. In more general contexts, the
+two techniques are different. In particular, \(G(w)\) is always positive definite by construction, whereas \(F(w)\) may
+not be for particular choices and values of \(J(w)\) and \(w\) , respectively.
+</p>
+</div>
+</div>
+<div id="outline-container-org89c5f87" class="outline-2">
+<h2 id="org89c5f87">Fisher Information matrix</h2>
+<div class="outline-text-2" id="text-org89c5f87">
+<p>
+Fisher information (sometimes simply called information) is a way of measuring the amount of information that an
+observable random variable X carries about an unknown parameter θ of a distribution that models X. 
+</p>
+
+<p>
+Formally, it is the variance of the "score", or the expected value of the observed information.
+</p>
+
+<p>
+It describes the probability that we observe a given outcome of X, given a known value of θ. If f is sharply peaked with
+respect to changes in θ, it is easy to indicate the “correct” value of θ from the data, or equivalently, that the data X
+provides a lot of information about the parameter θ. If the likelihood f is flat and spread-out, then it would take many
+samples of X to estimate the actual “true” value of θ that would be obtained using the entire population being sampled.
+</p>
+
+<p>
+注： 如果用概率参数模型预测观察值出现的频率越高，越尖，说明这个概率模型越准确；而反过来，说明测量值提供的关于参数的信
+息越多。
+</p>
+
+<p>
+Formally, the partial derivative with respect to θ of the natural logarithm of the likelihood function is
+called the “score”. Under certain regularity conditions, if θ is the true parameter (i.e. X is actually distributed as
+f(X; θ)), it can be shown that the expected value (the first moment) of the score is 0:
+</p>
+
+<p>
+The variance of the score is defined to be the Fisher information。
+</p>
+
+<blockquote>
+<p>
+<b>Fisher Information Matrix definition:</b>
+</p>
+
+<p>
+When there are N parameters, so that θ is an N × 1 vector 
+\[
+  \theta =\begin{bmatrix}
+  \theta_{1}, \theta _{2}, \dots ,\theta _{N} 
+  \end{bmatrix}^{\mathrm {T}} 
+  \]
+</p>
+
+<p>
+then the Fisher information takes the form of an N
+× N matrix. This matrix is called the Fisher information matrix (FIM) and has typical element
+</p>
+
+<p>
+\[
+  {{\bigl [}{\mathcal {I}}(\theta ){\bigr ]}}_{i,j} = \operatorname {E} \left[\left.\left({\frac {\partial
+  }{\partial \theta _{i}}}\log f(X;\theta )\right)\left({\frac {\partial }{\partial \theta _{j}}}\log f(X;\theta
+  )\right)\right|\theta \right]
+  \]
+</p>
+
+<p>
+The FIM is a N × N positive semidefinite matrix. If it is positive definite, then it defines a Riemannian metric on
+the N-dimensional parameter space. The information geometry uses this to connect Fisher information to differential
+geometry, and in that context, this metric is known as the Fisher information metric.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.why-nature-gradient" class="footnum" href="#fnr.why-nature-gradient" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Amari, Shun-ichi &amp; Douglas, S.C.. (1998). Why natural gradient?. ICASSP, IEEE International
+Conference on Acoustics, Speech and Signal Processing - Proceedings. 2. 1213 - 1216 vol.2. 10.1109/ICASSP.1998.675489.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.rienmannian-manifolds" class="footnum" href="#fnr.rienmannian-manifolds" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="https://sites.math.washington.edu/~lee/Books/RM/">https://sites.math.washington.edu/~lee/Books/RM/</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.elementary-introduction-information-geometry" class="footnum" href="#fnr.elementary-introduction-information-geometry" role="doc-backlink">3</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+An elementary introduction to information geometry, <a href="https://arxiv.org/pdf/1808.08271.pdf">https://arxiv.org/pdf/1808.08271.pdf</a>
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<script>
+// Sidebar toggle
+document.querySelector('.sidebar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  this.classList.toggle('active');
+});
+
+// Theme toggle
+(function() {
+  var stored = localStorage.getItem('theme');
+  if (stored) {
+    document.documentElement.setAttribute('data-theme', stored);
+  }
+  document.querySelector('.theme-toggle').addEventListener('click', function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+})();
+
+// Active nav highlight
+(function() {
+  var path = window.location.pathname;
+  document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (path === href || (href !== '/index.html' && path.indexOf(href.replace('.html','')) === 0)) {
+      link.classList.add('active');
+    }
+  });
+})();
+
+// Fade in / fade out on scroll
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    } else {
+      entry.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.intro p, .blog-card, .pub-entry, .timeline-item, .hero-image').forEach(function(el) {
+  el.classList.add('fade-item');
+  observer.observe(el);
+});
+
+// Scroll progress bar
+window.addEventListener('scroll', function() {
+  var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var progress = (scrollTop / scrollHeight) * 100;
+  document.querySelector('.scroll-progress').style.width = progress + String.fromCharCode(37);
+});
+</script>
+</div>
+</body>
+</html>

@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2026-05-21 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>轨迹优化方法与实践</title>
+<meta name="description" content="经验之谈" />
+<meta name="generator" content="Org Mode" />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<div class="scroll-progress"></div>
+<aside class="sidebar">
+  <div class="sidebar-inner">
+    <img src="/images/avatar.svg" alt="Chenggang Liu" class="sidebar-avatar"/>
+    <a href="/index.html" class="site-logo">Chenggang Liu</a>
+    <nav class="sidebar-nav">
+      <a href="/index.html">Home</a>
+      <a href="/blogs.html">Blogs</a>
+      <a href="/publications.html">Publications</a>
+      <a href="/about.html">About</a>
+    </nav>
+    <div class="sidebar-search">
+      <input type="text" class="sidebar-search-input" placeholder="Search..."/>
+      <div class="sidebar-search-results"></div>
+    </div>
+    <button class="theme-toggle" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div class="sidebar-social">
+      <a href="https://www.linkedin.com/in/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="https://github.com/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <a href="https://scholar.google.com/citations?user=omz_MCoAAAAJ&hl=en" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg></a>
+    </div>
+  </div>
+</aside>
+<button class="sidebar-toggle" aria-label="Toggle menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="top-bar">
+  <button class="top-bar-toggle" aria-label="Toggle menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+  <a href="/index.html" class="top-bar-title">Chenggang Liu</a>
+  <button class="top-bar-search" aria-label="Open search bar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+  </button>
+</div>
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" class="search-input" placeholder="Search..."/>
+    <button class="search-close" aria-label="Close search">&times;</button>
+  </div>
+  <div class="search-results"></div>
+</div>
+</div>
+<div id="content" class="content">
+<header>
+<h1 class="title">轨迹优化方法与实践</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org612ac51">本文初衷</a></li>
+<li><a href="#orgda7189a">概述</a></li>
+<li><a href="#org964ac77">轨迹优化方法</a>
+<ul>
+<li><a href="#orgc301273">概述</a></li>
+<li><a href="#org2f8890b">有限时域离散状态轨迹优化问题</a></li>
+<li><a href="#orgaf2d4a0">贝尔曼方程</a></li>
+<li><a href="#orgff31a7e">动态规划法</a></li>
+<li><a href="#orgc980ef4">微分动态规划方法</a></li>
+<li><a href="#org382592c">在应用中需解决的问题和方法</a>
+<ul>
+<li><a href="#org5a19e3a">初始轨迹的生成问题:</a></li>
+<li><a href="#orgb7d56e5">错误局部最优的规避问题:</a></li>
+<li><a href="#org0171bb5">实时性问题：</a></li>
+</ul>
+</li>
+<li><a href="#org2ee9243">总结</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+<div id="outline-container-org612ac51" class="outline-2">
+<h2 id="org612ac51">本文初衷</h2>
+<div class="outline-text-2" id="text-org612ac51">
+<p>
+本文是对实践的一个总结，主要面向的是从事无人驾驶的工程技术人员和研究人员，
+旨在基于大数据的深度学习被广泛关注的今天，让更多的人熟悉和了解轨迹优化技术。
+轨迹优化技术与深度神经网络有非常紧密的联系<sup><a id="fnr.neural-ode" class="footref" href="#fn.neural-ode" role="doc-backlink">1</a></sup><sup>, </sup><sup><a id="fnr.dl-opt-control" class="footref" href="#fn.dl-opt-control" role="doc-backlink">2</a></sup>，
+因此两者可以相互学习和借鉴。
+本文提到的方法不仅适用于无人驾驶的运动规划和控制问题，同时也适用于复杂动力
+学系统，如足式机器人、仿生机器人和飞行器的运动规划和控制问题。
+</p>
+</div>
+</div>
+<div id="outline-container-orgda7189a" class="outline-2">
+<h2 id="orgda7189a">概述</h2>
+<div class="outline-text-2" id="text-orgda7189a">
+<p>
+无人驾驶技术可以减少车祸发生，降低运输成本，让出行不便的人重获生活上的自由，具有巨大的市场价值。
+另一方面，对无人驾驶技术的投入将极大地降低传感器和计算机硬件的价格，促进人工智能算法的发展，
+从而带动整个机器人产业的发展并产生更加深远的社会影响。
+</p>
+
+<p>
+在无人驾驶系统的设计中经常会遇到以下一些极富挑战的问题：
+</p>
+<ol class="org-ol">
+<li>道路在线检测问题：在图像中检测到不连续的道路标志，如何确定道路的边界。</li>
+<li>其他车辆的运动预测问题：已知其他车辆的运动速度、朝向和所在的道路，如何确定其未来一段时间内的轨迹。</li>
+<li>隐含状态估计问题：已知车辆的位置、速度和朝向随时间变化的信息，如何确定其加速度、方向盘转角等不能直接观测的信息。</li>
+<li>地图路径平滑问题：已知道路中线，如何生成高阶平滑的轨迹。</li>
+<li>执行轨迹的生成问题：已知道路边界，其他车辆和行人的未来运动轨迹和所遵守的交通规则，如何确定车辆自身的执行轨迹。</li>
+<li>轨迹跟踪问题：已知车辆自身当前的状态和未来执行轨迹，如何生成油门和方向盘的控制指令？</li>
+<li>模仿学习问题：如何通过大量的人工驾驶数据，通过机器学习算法提高系统的性能。</li>
+</ol>
+
+<p>
+这些看似互不相关的问题，其背后却有许多相似的实质，轨迹优化方法为这些问题提供了行之有效的解决方案。
+</p>
+</div>
+</div>
+<div id="outline-container-org964ac77" class="outline-2">
+<h2 id="org964ac77">轨迹优化方法</h2>
+<div class="outline-text-2" id="text-org964ac77">
+</div>
+<div id="outline-container-orgc301273" class="outline-3">
+<h3 id="orgc301273">概述</h3>
+<div class="outline-text-3" id="text-orgc301273">
+<p>
+轨迹优化方法是在满足特定约束的前提下寻找使评价函数最小（或最大）的轨迹的方法。轨迹优化源于变分法(Calculus
+of Variations）。轨迹可以表示为系统状态变量和控制变量的函数，而评价函数是轨迹函数的函数，变分法是在当前轨迹附近进行轻微的扰
+动寻找使轨迹代价下降的方法。在变分法中一个最重要的结论是欧拉-拉格朗日方程（Euler-Lagrange）。欧拉-拉格朗日方程给
+出了轨迹最优的必要条件。充分理解欧拉-拉格朗日方程对于充分理解和灵活应用轨迹优化非常有帮助。
+</p>
+
+<p>
+严格地讲轨迹优化解决的是以下一类优化问题：\[ \min_{x, u} \phi(x(t_f)) + \int_{t_0}^{t_f} l(x(t), u(t), t) dt \] s.t.
+\[ \dot{x}(t) = f(x(t), u(t), t) \] \[ x(t_0) - x_0 = 0 \] \[ h(x, u) \le 0\] 其中\(x\) 是系统的状态变量，如车辆的位置
+和速度，\(u\) 是系统的控制变量，如油门大小和方向盘的转角，\(f\) 是微分形式的系统动力学方程，描述了系统的状态的变化与当前状
+态和控制输入之间的关系。
+</p>
+
+<p>
+根据变分法，无约束情况下轨迹最优的必要条件是：
+</p>
+\begin{equation*}
+l_x + \lambda^\top f_x + \dot{\lambda}^\top = 0
+\end{equation*}
+\begin{equation*}
+l_u + \lambda^\top f_u = 0
+\end{equation*}
+\begin{equation*}
+\phi_x(x(t_f)) - \lambda^\top(t_f) = 0
+\end{equation*}
+<p>
+其中\(\lambda\) 称为系统的协状态。
+</p>
+
+<p>
+轨迹优化跟最优控制有着紧密的联系。
+两者的区别在于：最优控制通常研究的是状态反馈控制律，
+即对于任意指定的系统状态计算对应的最优控制输出；
+而轨迹优化研究的是从某个指定状态开始的最优控制序列。
+两者的联系在于：动力学系统在最优反馈控制律的作用下形成向量场，
+最优轨迹是最优控制向量场中起始于某个特定状态的流。
+如果我们知道了最优状态反馈控制律就可以得到起始于任意状态的最优轨迹；
+反之，如果我们得到了始于任意状态的最优轨迹，
+就能够通过这些最优轨迹重构最优反馈控制律 <sup><a id="fnr.random-sampling-state-dp" class="footref" href="#fn.random-sampling-state-dp" role="doc-backlink">3</a></sup> <sup>, </sup><sup><a id="fnr.trajectory-based-dp" class="footref" href="#fn.trajectory-based-dp" role="doc-backlink">4</a></sup>。
+也可以通过在线优化构成反馈控制律<sup><a id="fnr.mpc" class="footref" href="#fn.mpc" role="doc-backlink">5</a></sup>，或者将离线规划的结果与在线优化相结合构成反馈控制律<sup><a id="fnr.offline-online-walking" class="footref" href="#fn.offline-online-walking" role="doc-backlink">6</a></sup>
+</p>
+
+<p>
+根据求解的过程的不同，轨迹优化可分为间接方法和直接方法：
+</p>
+<ul class="org-ul">
+<li>间接方法：依赖Pontryagin 最大值原理，将轨迹优化问题转化为两点边值问题，然后利用求解两点边值的方法求解最优轨迹，
+最后对计算结果离散化。间接法在求解的最后进行离散化，因此结果的精度很高，但缺点是不容易收敛。</li>
+
+<li>直接方法：直接方法首先将原问题离散化，从而将无限维连续优化问题转化为有限参数的非线性优化问题，
+然后利用常规的非线性优化方法求解最优轨迹。
+直接法在一开始对原问题进行离散化，其结果会存在一定的近似误差，但优点是比较容易收敛。</li>
+</ul>
+
+<p>
+通常我们将把无限维连续轨迹优化问题转化为有限维常规非线性优化问题的过程称为改编（transcription）。
+根据改编方法的不同，轨迹优化方法又可大致分成打靶法和配点法，
+两者的主要不同在于对状态方程的处理。
+</p>
+<ul class="org-ul">
+<li>打靶法 （shooting method）：打靶法只优化控制变量，状态变量和协状态通过对状态方程前向积分得到。
+基本过程是首先采用初始的控制轨迹\(u(0,\ldots,N-1)\)
+生成初始的状态轨迹，根据末端边值误差\(e_f\triangleq  \lambda(N)-V_x(x(N))^\top\)
+采用非线性优化方法求解\(\lambda(0)\) 使得\(e_f\) 接近于零。
+打靶法的优点是能够得到非常精确的最优轨迹。打靶法适用于控制变量的维数较低且初始估计比较准确的应用场合。
+打靶法存在的主要问题是对于有强约束或者动力学不稳定的系统优化不容易收敛。
+这种情况下可以采用多目标打靶法将轨迹分成若干轨迹片段，然后在每条轨迹片段上反复采用打靶法，
+直到所有断点满足连续条件。</li>
+
+<li>配点法（collocation）：配点法采用条函数（spline）近似状态轨迹和控制轨迹，
+然后采用常规的非线性优化方法（NLP）求解样条函数的参数。
+伪谱方法（pseudospectral method）采用全局多项式函数近似状态轨迹和控制轨迹，
+系统状态方程约束由正交配置法近似，从而将原问题参数化。
+主要的伪谱方法有勒让德伪谱方法(the Legendre pseudospectral method) 和切比雪夫伪谱方法（the Chebyshev pseudospectral method）。</li>
+</ul>
+
+<p>
+除此之外，还有很多其他轨迹优化方法，例如CHOMP 和 DDP 等。 每种轨迹优化方法都有其自身的特点，适用于不同的场合。没有适
+合所有应用的最好的轨迹优化方法，实践中要根据对精度、对实时性的要求和优化问题的结构灵活选择。在非线性不强，对实时性要
+求较高的场合，微分动态规划（Differential Dynamic Programming）提供了一种行之有效的方法，下面重点介绍一下。微分动态规
+划方法大致属于直接打靶法。但和上面介绍的方法略有不同的是它不明确的区分改编和优化，而是沿轨迹反复地做前向和反向积分从
+而满足系统的动力学方程和轨迹最优的必要条件。微分动态规划法有接近二次型的收敛速度。此外，微分动态规划方法在收敛的同时
+给出了最优反馈控制律的一阶近似和值函数的二次阶近似，在很多分析中非常有用。
+</p>
+</div>
+</div>
+<div id="outline-container-org2f8890b" class="outline-3">
+<h3 id="org2f8890b">有限时域离散状态轨迹优化问题</h3>
+<div class="outline-text-3" id="text-org2f8890b">
+<p>
+为了简单起见，我们首先来介绍有限时域离散状态轨迹优化问题：
+\[ U, X = \arg \min_{X, U} \big \{ \phi(x_N) + \sum_{i=0}^{N-1} L(x_i, u_i, i)  \big \}
+   \]
+s.t.
+\[ x_{i+1} = F(x_i, u_i, i) \]
+\[ x_0 = \bar{x}_0 \]
+</p>
+
+<p>
+在介绍微分动态规划法之前，需要首先介绍一下贝尔曼方程和动态规划法（dynamic programming）。
+</p>
+</div>
+</div>
+<div id="outline-container-orgaf2d4a0" class="outline-3">
+<h3 id="orgaf2d4a0">贝尔曼方程</h3>
+<div class="outline-text-3" id="text-orgaf2d4a0">
+<p>
+最优性原理（也称为嵌入原理）：不论一个问题的初始状态为何，以最优控制所形成的状态作为初始条件，余下的控制对余下的问题也必构成最优策略：
+\[
+   u^*(i) = \arg \min_{u_i} \big \{ L(x_i, u_i, i) + \min \{ \sum_{k = i+1}^{N-1} L(x_k, u_k, k) + \Phi(x_N) \big \} \}
+   \]
+</p>
+
+<p>
+在最优控制中，值函数是一个被提到的函数。 对于有限时域轨迹优化问题，值函数是关于系统状态\(x\) 和阶段\(i\) 变化的时变函数:
+\[
+   V(x_i, i) = \min_{u_i} \big \{ \sum_{k=i}^{N-1} L(x_k, u_k, k) + \Phi(x_N) \big \}
+   \]
+</p>
+
+<p>
+对于无限时域问题，值函数是关于系统状态\(x\) 的稳态函数:
+\[
+   V(x_i) = \min_{u_i} \big \{ \sum_{k=i}^{\infty} L(x_k, u_k, k)\big \}
+   \]
+</p>
+
+<p>
+定义了值函数以后，贝尔曼方程可描述为如下的嵌套形式：
+\[
+   V(x_i, i) = \min_{u_i} \big \{ L(x_i, u_i, i) + V(F(x_i, u_i), i+1) \big \}
+   \]
+</p>
+</div>
+</div>
+<div id="outline-container-orgff31a7e" class="outline-3">
+<h3 id="orgff31a7e">动态规划法</h3>
+<div class="outline-text-3" id="text-orgff31a7e">
+<p>
+动态规划采用分而治之的思路将多步或长期优化问题通过贝尔曼方程转化为单步或短期优化问题，
+从而将指数复杂度降低为多项式复杂度。
+求解动态规划的最常用的方法是“值迭代”法（Value iteration）。
+对于有限时域的最优控制问题，其最后阶段的值函数通常是已知的，即：
+\[
+   V(x_N, N) = \Phi(x_N, N)
+   \]
+</p>
+
+<p>
+其他阶段的值函数可以根据贝尔曼方程反向迭代得到：
+\[
+   V(x_i, i) = \min_{u} \big \{ L(x_i, u, i) + V(F(x_i, u_i), i+1) \big \}
+   \]
+</p>
+
+<p>
+在数值计算中，需要对值函数\(V(x_i, i)\) 进行近似，通常采用的方法是表格法（Tabular method）。
+表格法对状态空间进行离散化，然后对网格点处的状态运用贝尔曼方程求解值函数。
+在迭代的过程中，非网格点处的值函数通过函数差插值得到。
+</p>
+
+<p>
+已知值函数，最优状态反馈控制律可以通过下面的方程得到：
+\[ 
+   {u}^*(x,i) = \arg \min_{u}\big \{ L(x, u, i)+ V(F(x, u), i+1)\big \} 
+   \]
+</p>
+
+<p>
+有了最优状态反馈控制律，轨迹优化问题可以采用得到的最优状态反馈控制律和系统状态方程生成起始于任意指定状态的最优轨迹。
+</p>
+
+<p>
+如果状态变量的量化级数为\(R_x\) ，控制变量的量化级数为\(R_u\) ，状态变量的维数为\(d_x\) ，控制变量的维数为\(d_u\) ，那么动态
+规划的计算量将正比于\(R_x^{d_x}R_{u}^{d_u}\) ，而存储量正比于\(R_{x}^{d_x}\) 。动态规划方法的计算量和存储量随着状态变量维
+数成指数增长的问题称为“维数灾”问题。“维数灾”问题的存在限制了其在实际中的应用。
+</p>
+</div>
+</div>
+<div id="outline-container-orgc980ef4" class="outline-3">
+<h3 id="orgc980ef4">微分动态规划方法</h3>
+<div class="outline-text-3" id="text-orgc980ef4">
+<p>
+在动态规划法中我们需要对整个状态空间的值函数进行近似，因此存在“维数灾”问题。
+为了克服这个问题，微分动态规划只对当前轨迹的邻域内的值函数进行近似，从而得到当前轨迹临域内的最优反馈控制律。
+通过临域最优反馈控制律不断更新轨迹，进而不断逼近最优轨迹。
+</p>
+
+<p>
+设当前轨迹上一点的状态和控制分别为\(x_i\) 和\(u_i\) ，
+对当轨迹做很小的绕动\(x=x_i + \Delta x_i\) ，\(u = u_i + \Delta u_i\) 。
+</p>
+
+<p>
+定义一个中间函数：\(Q(x,u) = L(x,u)  +  V(F(x,u))\) 。
+根据贝尔曼方程，阶段\(i\) 的最优控制和值函数可以通过最小化\(Q\) 函数得到。
+\(Q\) 函数的二阶近似可以表示为：
+</p>
+\begin{align*}
+Q(x, u) &= Q(x_i, u_i) + Q_x(x_i, u_i) \Delta x_i +
+Q_u(x_i, u_i) \Delta u_i + \\
+& \Delta x_{i}^\top Q_{xu}(x_i, u_i) \Delta u_i +
+ \frac{1}{2} \Delta x_{i}^\top Q_{xx}(x_i, u_i) \Delta x_i +
+\frac{1}{2} \Delta u_{i}^\top Q_{uu}(x_i, u_i) \Delta u_i 
+\end{align*}
+
+<p>
+使得\(Q\) 函数最小的控制扰动 \(\Delta u\) 为：
+</p>
+\begin{align}
+\Delta u_i^* &= - Q_{uu}(i)^{-1}Q_{u}(i) - Q_{uu}(i)^{-1}Q_{ux}(i) \Delta x_i
+\end{align}
+
+<p>
+阶段\(i\) 的值函数在当前轨迹临域附近可以近似为：
+</p>
+\begin{align}
+\label{org9a096ad}
+V(x) &= \min_{\Delta u_i} Q(x_i + \Delta x_i, u_i + \Delta u_i) \nonumber \\
+& = Q(x_i + \Delta x_i, u_i + \Delta u_i^*) \nonumber \\
+& = Q(x_i, u_i) - \frac{1}{2}Q_u Q_{uu}^{-1} Q_u^{\top} + (Q_x - Q_u Q_{uu}^{-1}Q_{ux}) \Delta x_i + \frac{1}{2}\Delta x_{i}^\top (Q_{xx} - Q_{xu} Q_{uu}^{-1} Q_{ux}) \Delta x_i
+\end{align}
+
+<p>
+\(Q\) 函数的各阶导数如下：
+</p>
+\begin{align}
+\label{eq:value-update-start}        
+Q_{x}(i) &= L_{x}(i)+V_{x}(i+1) F_{x}(i)\\
+Q_{u} (i)&= L_{u}(i)+V_{x}(+1)F_{u}(i)\\
+Q_{xx}(i) &= L_{xx}(i) + F_x(i)^\top V_{xx}(i+1)F_{x}(i) +V_{x}(i+1)F_{xx}(i)  \\
+Q_{uu} (i)&= L_{uu}(i) + F_u(i)^\top V_{xx}(i+1)F_{u}(i) +V_{x}(i+1)F_{uu}(i)  \\
+Q_{ux} (i)&= L_{ux}(i) + F_u(i)^\top V_{xx}(i+1)F_{x}(i) +V_{x}(i+1)F_{ux}(i)  \\
+\end{align}
+<p>
+其中\(F_x(i) := F_x|_{x_i, u_i}\) , 
+\(F_u(i) := F_u|_{x_i, u_i}\) , 
+\(F_{xx}(i) := F_{xx}|_{x_i, u_i}\) ， 
+\(F_{uu}(i) := F_{uu}|_{x_i, u_i}\) ， 
+\(F_{xu}(i) := F_{xu}|_{x_i, u_i}\) ，
+\(L_x(i) := L_x|_{x_i, u_i}\) ， 
+\(L_u(i) := L_{u}|_{x_i, u_i}\) ， 
+\(L_{xx}(i) := L_{xx}|_{x_i, u_i}\) ， 
+\(L_{xu}(i) := L_{xu}|_{x_i, u_i}\) ， 
+\(L_{uu}(i) := L_{uu}|_{x_i, u_i}\) ，
+\(V_x(i) := V_x(x)|x=x_i\) ，
+\(V_{xx}(i) := V_{xx}(x)|_{x = x_i}\) 。
+</p>
+
+\begin{align}
+V_{x}(i)  &:= V_x(x)|_{x = x_i} = Q_x(i) - Q_u(i) Q_{uu}(i)^{-1} Q_{ux}(i) \\
+V_{xx}(i) &:= V_{xx}(x)|_{x=x_i} = Q_{xx}(i) - Q_{xu}(i) Q_{uu}(i)^{-1} Q_{ux}(i)
+\end{align}
+
+<p>
+边界条件为：
+</p>
+\begin{align}
+V(N) &= \Phi(N) \\
+V_{x}(N) & = \Phi_x(N) \\
+V_{xx}(N) &= \Phi_{xx}(N)
+\end{align}
+
+<p>
+微分动态规化法可以描述为：
+</p>
+<ol class="org-ol">
+<li>根据控制变量的初始值，通过前向积分得到系统的状态轨迹。</li>
+<li>反向更新系统的值函数估计并计算临域最优反馈控制律。</li>
+<li>利用临域最优控制生成新的轨迹。</li>
+<li>计算新轨迹的代价，如果满足退出条件则退出；否则，如果代价的下降满足下降预期，返回步骤2并重复；否则算法报错。</li>
+</ol>
+
+<p>
+因为上面得到的最优控制律是基于值函数近似得到的，
+所以在更新控制的时候需要选取一定的下降步长：
+\[
+   \Delta u_i^* = - \alpha Q_{uu}(i)^{-1}Q_{u}(i) - Q_{uu}(i)^{-1}Q_{ux}(i) \Delta x_i
+   \]
+</p>
+
+<p>
+在求解的过程中，可以采用置信域（trust region） 方法或者线性回溯搜索（backtracking line search）方法<sup><a id="fnr.line-search" class="footref" href="#fn.line-search" role="doc-backlink">7</a></sup>。
+线性回溯搜索法是非线性优化中常用的一种方法，
+其基本思想是在迭代开始的时候采用一个较大的步长，然后对生成的轨迹进行评估。
+如果当前轨迹的代价没有达到下降预期，减小搜索步长和下降预期，
+重复上面的过程直到代价的实际下降达到或超过下降预期为止，否则算法报错。
+根据方程 \eqref{org9a096ad}，代价函数的最大下降预期为：
+\[
+   \Delta Q = \frac{1}{2}Q_u Q_{uu}^{-1} Q_u^{\top}
+   \]
+</p>
+
+<p>
+微分动态规划法需要用到代价函数的Hessian 矩阵，虽然在理论上能够提高收敛的速度，
+但是在实践中因为Hessian 矩阵的维数通常比较高，计算比较耗时，有时反而会降低求解速度。
+如果系统的状态方程非线性不强，代价函数接近二次型，可以对算法做进一步简化，例如采用一阶模型近似动力学方程，采用二次型近似代价函数，
+从而得一种新的优化方法，迭代线性二次型方法（iLQR）。iLQR 与Gauss-Newton方法类似，为保证收敛，在应用中需要注意以下两点：
+</p>
+<ol class="org-ol">
+<li>代价函数在最优轨迹附近趋近于零。</li>
+<li>代价函数的非线性不能太强。</li>
+</ol>
+
+<p>
+DDP 要求在迭代的过程中 Hessian 矩阵必须是正定的。如果在求解的过程中 Hessian 出现非正定，可以采用
+Trust region 方法或者Levenberg-Marquardt 方法<sup><a id="fnr.lm" class="footref" href="#fn.lm" role="doc-backlink">8</a></sup><sup>, </sup><sup><a id="fnr.lm-trust-region" class="footref" href="#fn.lm-trust-region" role="doc-backlink">9</a></sup>。Levenberg-Marquardt 方法是一种在梯度下降方
+法和牛顿方法之间进行自适应的方法，即如果代价下降，减小阻尼系数使得算法趋向于牛顿方法；否则提高阻尼系数使算法趋向于
+梯度方法。如果将函数的优化过程看成是动力学系统的镇定控制过程，Levernberg-Marquardt 方法非常类似于变增益控制，两者之间
+存在很多有趣的联系值得我们去探索。
+</p>
+</div>
+</div>
+<div id="outline-container-org382592c" class="outline-3">
+<h3 id="org382592c">在应用中需解决的问题和方法</h3>
+<div class="outline-text-3" id="text-org382592c">
+</div>
+<div id="outline-container-org5a19e3a" class="outline-4">
+<h4 id="org5a19e3a">初始轨迹的生成问题:</h4>
+<div class="outline-text-4" id="text-org5a19e3a">
+<p>
+轨迹优化是一种局部优化方法，初始轨迹的选取对于优化的结果和收敛的速度至关重要。
+常用的初始轨迹生成方法有：
+</p>
+<ul class="org-ul">
+<li>反馈控制法：在实际中常常会遇到使系统稳定于某个指定的状态的控制和规划问题，
+例如倒立摆摆起控制、仿人机器人的站立平衡控制和泊车控制等。
+对于这类问题，一个常用的方法是对系统在稳定状态附近线性化，设计线性二次型控制器（LQR），然后利用 LQR 控制器生成初始轨迹。
+另一类常见的问题是跟踪问题。例如在无人驾驶的车道内的控制问题（in-lane control)，
+可以通过路径跟踪控制器来生成初始轨迹，如pure pursued controller, gain scheduling controller, Stanley controller 等。</li>
+
+<li>由简入繁法：将要解决的问题进行简化，去掉计算耗时或者非线性很强代价函数和约束条件，
+然后对简化后的问题进行优化从而得到初始轨迹。
+例如，在无人驾驶中车道内的控制问题可以忽略所有运动目标和边界约束，对静止的交通环境进行优化，将优化的结果作为初始轨迹。</li>
+
+<li>优势互补法：每一种轨迹优化方法都有其自身的优缺点，在实际应用中可以将多种方法结合从而达到最好的效果。
+例如直接配点法的优势在于约束处理的能力比较强，对非线性比较强的系统收敛性比较好。
+因此在DDP 不能收敛的情况可以考虑于直接配点法结合。
+在结构复杂的机器人的控制中，有些问题的维数高、约束复杂，找到可行解
+本身就非常难，此时可以考虑与随机采样方法结合，如 RRT <sup><a id="fnr.rrt" class="footref" href="#fn.rrt" role="doc-backlink">10</a></sup>, Probabilistic roadmap <sup><a id="fnr.prm" class="footref" href="#fn.prm" role="doc-backlink">11</a></sup><sup>, </sup><sup><a id="fnr.egress" class="footref" href="#fn.egress" role="doc-backlink">12</a></sup>。</li>
+
+<li>控制律重用法：上面介绍的几种生成初始轨迹的方法属于“冷启动”方法，控制律重用法则属于一种“热启动”方法。
+轨迹优化经常用于实现模型预测控制（Model Predictive Control）或滚动优化（Receding Horizon Optimization)，
+在上述应用中通常我们有上一步的优化结果，
+如果每一步之间代价函数的变化不大，可以采用上次优化得到的临域最优控制律 (neighboring optimal control law) 生成初始轨迹。
+如果初始状态距离上一次的最优轨迹很近，而且代价函数和上次相比变化不大，
+这种方法可以大大提升优化的收敛速度。例如在无人驾驶的应用中采用此方法我们将计算时间缩短近30% 。
+不过需要注意的是虽然该方法能够大大提升best case 的计算速度，却会降低worst case 的计算速度，
+在某些应用中往往worst case 的性能更为重要，此时需要考虑与其他方法结合来解决这个问题。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgb7d56e5" class="outline-4">
+<h4 id="orgb7d56e5">错误局部最优的规避问题:</h4>
+<div class="outline-text-4" id="text-orgb7d56e5">
+<p>
+轨迹优化方法是一种局部优化方法，在实际应用中可能会收敛到不期望的局部最优，
+例如在自动驾驶应用中，车辆可能在错误的一侧躲避障碍。
+避免”错误“的局部最优解的方法有：
+</p>
+<ul class="org-ul">
+<li>代价函数法：在设计代价函数的时候尽量减少不希望的局部最优，例如，在求取点到线的距离的时候应该采用有符号距离。
+在设计代价函数的时候还可以通过增加 regularization term 和shaping terms 来避免错误收敛的发生。</li>
+
+<li>初始轨迹法：如果代价函数存在多个局部最优，如车辆在躲避障碍物的时候可以从两侧中的任意一侧通过，应该保证初始轨迹在期望一侧。</li>
+
+<li>约束加强法：很多收敛问题是约束造成的，即系统无法跨越约束造成的障碍，最终收敛到了“错误”的局部最优。此时可以采用的方法是约束加强法，
+即在优化的初始阶段将约束松弛，然后在优化的过程中逐渐加强并最终满足所有约束。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org0171bb5" class="outline-4">
+<h4 id="org0171bb5">实时性问题：</h4>
+<div class="outline-text-4" id="text-org0171bb5">
+<p>
+实时性是轨迹优化在应用中需要考虑的最核心问题之一。近年来在线优化方法被越来越多地用于解决控制和规划问题，一个最重要的
+原因是优化算法实时性得到了很大的提高。提高算法实时性需要较多的经验，例如针对不同的问题和要求，选择合适的模型、代价函
+数、时域长度、优化步长、约束处理方法、初始轨迹生成方法和函数近似方法等。不同的建模和实现方式，即使是同样一种算法的性
+能也会有几个数量级的差别。例如在无人驾驶的应用中，通过对算法和实现方法的优化我们将收敛时间降低了近80%。
+</p>
+
+<p>
+提高优化算法的实时性的技巧大致归纳如下：
+</p>
+<ul class="org-ul">
+<li>提高初始轨迹的质量，例如控制律重用法。</li>
+
+<li>软件实现中采用数据导向的编程方法（Data-orientated Programming），
+指导思想是将跟计算相关的数据存放在相邻地址，避免内存动态分配，缓存尽量多的中间变量，充分利用CPU和缓存实现高效的流水操作。</li>
+
+<li>避免代价函数中的非二次型成分，例如线性代价函数的引入会导致收敛速度从二阶收敛退化为一阶收敛。</li>
+
+<li>代价函数分层计算，例如在线性搜索的过程中，可以首先计算计算量较小的代价从而可以对当前的轨迹进行快速评估以避免不必要的计算。</li>
+
+<li>选择合适的模型：通过一定的方法，在保证精度的同时尽量减少模型的复杂度和非线性。</li>
+
+<li>在轨迹优化中计算量最大的是常微分方程积分，在应用中可以在积分精度和计算速度间进行折中，选择合适的积分方法。</li>
+
+<li>时间步长和时域的选取：在时域不变的情况下，增加计算步长可以减少优化的阶段数，提高收敛速度。但是大步长会降低结果的质
+量，降低满足约束的精度，并更容易出现“震铃”现象（在平衡点附近反复震荡）。一种有效的方法是采用变步长方法，近处用小步
+长，远处用大步长。</li>
+
+<li>优化时域的选取：缩短优化时域长度可以等比例地缩短计算时间，但同时会降低结果的最优性。在模型预测控制中，可能会出现低
+频震荡问题，如在无人驾驶的轨迹生成中可能会产生摇摆问题。一种可行的方法是通过提高终端代价函数的质量，在缩短时域长度
+的同时，不降低优化结果的质量。</li>
+
+<li>约束的处理。微分动态规划方法主要用来处理无约束的轨迹优化问题，在应用中可以通过惩罚函数法近似地处理约束。通常状态约
+束比控制约束更难处理。在算法设计的过程中，可以采用不同的方法对两种约束进行处理，从而极大地提升优化收敛速度。另外，
+如果初始轨迹严重违反约束，可以通过约束加强法使算法更加稳定、收敛更快。</li>
+
+<li>梯度和Hessian 矩阵的计算：为了提高计算速度，应该为算法提供梯度和Hessian 矩阵，避免使用有限微分法在线计算。</li>
+
+<li>并行计算和硬件加速：线性搜索、ODE 积分和值函数更新等都可以采用硬件加速。</li>
+
+<li>代码深度优化：在计算的过程中有大量的稀疏矩阵运算，可以将算法对特定问题做深度优化，从而避免不必要的计算和内存开销。</li>
+
+<li>制定正确的优化退出条件：因为优化算法本身对原问题的进行了很多近似，可以通过制定合适的优化退出条件提前退出迭代，从而
+换取更高的运行速度。虽然可能牺牲了一定的最优性，但在实时控制中有时反而会带来更大的性能提升。</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org2ee9243" class="outline-3">
+<h3 id="org2ee9243">总结</h3>
+<div class="outline-text-3" id="text-org2ee9243">
+<p>
+我们首先介绍了轨迹优化的定义，分类及与最优控制之间的关系。然后介绍了最优控制中一种全局方法（动态规划方法）和局部方法
+（微分动态规划法）。最后介绍了轨迹优化在实际应用中会遇到的问题和解决方法。在下一章，我们将介绍迹优化的概率解释，从而
+建立起轨迹优化与机器学习之间的联系。
+</p>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.neural-ode" class="footnum" href="#fnr.neural-ode" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Neural Ordinary Differential Equations, Ricky T. Q. Chen, Yulia Rubanova, Jesse Bettencourt, David Duvenaud
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.dl-opt-control" class="footnum" href="#fnr.dl-opt-control" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Deep Learning Theory Review: An Optimal Control and Dynamical Systems Perspective, G.H. Liu, Evangelos, A. Theodorou
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.random-sampling-state-dp" class="footnum" href="#fnr.random-sampling-state-dp" role="doc-backlink">3</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Random sampling of states in dynamic programming, C. G. Atkeson and B. J. Stephens, , in IEEE Transactions on Systems, Man, and Cybernetics, Part B (Cybernetics), vol. 38, no. 4, pp. 924-929, Aug. 2008.
+doi: 10.1109/TSMCB.2008.926610
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.trajectory-based-dp" class="footnum" href="#fnr.trajectory-based-dp" role="doc-backlink">4</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Trajectory-Based Dynamic Programming. Atkeson C.G., Liu C., In: Mombaur K., Berns K. (eds) Modeling, Simulation and Optimization of Bipedal Walking. Cognitive Systems Monographs, vol 18. Springer, Berlin, Heidelberg
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.mpc" class="footnum" href="#fnr.mpc" role="doc-backlink">5</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="https://en.wikipedia.org/wiki/Model_predictive_control">https://en.wikipedia.org/wiki/Model_predictive_control</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.offline-online-walking" class="footnum" href="#fnr.offline-online-walking" role="doc-backlink">6</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Biped walking control using offline and online optimization, C. LIU and J. SU, China Control Conference (CCC), 2011
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.line-search" class="footnum" href="#fnr.line-search" role="doc-backlink">7</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="https://en.wikipedia.org/wiki/Backtracking_line_search">https://en.wikipedia.org/wiki/Backtracking_line_search</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.lm" class="footnum" href="#fnr.lm" role="doc-backlink">8</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="http://people.duke.edu/~hpgavin/ce281/lm.pdf">http://people.duke.edu/~hpgavin/ce281/lm.pdf</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.lm-trust-region" class="footnum" href="#fnr.lm-trust-region" role="doc-backlink">9</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="http://www.applied-mathematics.net/LMvsTR/LMvsTR.pdf">http://www.applied-mathematics.net/LMvsTR/LMvsTR.pdf</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.rrt" class="footnum" href="#fnr.rrt" role="doc-backlink">10</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="https://en.wikipedia.org/wiki/Rapidly-exploring_random_tree">https://en.wikipedia.org/wiki/Rapidly-exploring_random_tree</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.prm" class="footnum" href="#fnr.prm" role="doc-backlink">11</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="https://en.wikipedia.org/wiki/Probabilistic_roadmap">https://en.wikipedia.org/wiki/Probabilistic_roadmap</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.egress" class="footnum" href="#fnr.egress" role="doc-backlink">12</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Full-body motion planning and control for the car egress task of the DARPA robotics challenge, C. Liu, C. G. Atkeson, Siyuan Feng, and X Xinjilefu, 2015 humanoid Robots
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<script>
+// Sidebar toggle
+document.querySelector('.sidebar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  this.classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+document.querySelector('.top-bar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  document.querySelector('.sidebar-toggle').classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+
+// Search toggle
+(function() {
+  var overlay = document.querySelector('.search-overlay');
+  var input = document.querySelector('.search-input');
+  var results = document.querySelector('.search-results');
+  document.querySelector('.top-bar-search').addEventListener('click', function() {
+    overlay.classList.toggle('active');
+    if (overlay.classList.contains('active')) input.focus();
+  });
+  document.querySelector('.search-close').addEventListener('click', function() {
+    overlay.classList.remove('active');
+    input.value = '';
+    results.innerHTML = '';
+  });
+  var pages = [];
+  fetch('/search-index.json').then(function(r){return r.json();}).then(function(d){pages=d;});
+  input.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { results.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    results.innerHTML = html || '<p style="color:#64748b">No results</p>';
+  });
+
+  // Sidebar search
+  var sInput = document.querySelector('.sidebar-search-input');
+  var sResults = document.querySelector('.sidebar-search-results');
+  sInput.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { sResults.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    sResults.innerHTML = html || '<p style="color:rgba(255,255,255,0.4)">No results</p>';
+  });
+})();
+
+// Theme toggle
+(function() {
+  var stored = localStorage.getItem('theme');
+  if (stored) {
+    document.documentElement.setAttribute('data-theme', stored);
+  }
+  document.querySelector('.theme-toggle').addEventListener('click', function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+})();
+
+// Active nav highlight
+(function() {
+  var path = window.location.pathname;
+  document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (path === href || (href !== '/index.html' && path.indexOf(href.replace('.html','')) === 0)) {
+      link.classList.add('active');
+    }
+  });
+})();
+
+// Fade in / fade out on scroll
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    } else {
+      entry.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.intro p, .blog-card, .pub-entry, .timeline-item, .hero-image').forEach(function(el) {
+  el.classList.add('fade-item');
+  observer.observe(el);
+});
+
+// Scroll progress bar
+window.addEventListener('scroll', function() {
+  var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var progress = (scrollTop / scrollHeight) * 100;
+  document.querySelector('.scroll-progress').style.width = progress + String.fromCharCode(37);
+});
+
+// Tag filtering on blogs page
+(function() {
+  document.querySelectorAll('.card-tag').forEach(function(tag) {
+    tag.style.cursor = 'pointer';
+    tag.addEventListener('click', function(e) {
+      e.preventDefault();
+      var selected = this.textContent.trim();
+      var allCards = document.querySelectorAll('.blog-card');
+      var allItems = document.querySelectorAll('.timeline-item');
+      var isActive = this.classList.contains('tag-active');
+      document.querySelectorAll('.card-tag').forEach(function(t) { t.classList.remove('tag-active'); });
+      if (isActive) {
+        allCards.forEach(function(c) { c.style.display = ''; });
+        allItems.forEach(function(i) { i.style.display = ''; });
+      } else {
+        this.classList.add('tag-active');
+        allCards.forEach(function(c) {
+          var t = c.querySelector('.card-tag');
+          c.style.display = (t && t.textContent.trim() === selected) ? '' : 'none';
+        });
+        allItems.forEach(function(i) {
+          var visible = i.querySelectorAll('.blog-card[style=""], .blog-card:not([style])');
+          var hasVisible = Array.from(i.querySelectorAll('.blog-card')).some(function(c) { return c.style.display !== 'none'; });
+          i.style.display = hasVisible ? '' : 'none';
+        });
+      }
+    });
+  });
+})();
+</script>
+</div>
+</body>
+</html>

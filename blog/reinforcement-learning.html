@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2026-05-21 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reinforcement Learning</title>
+<meta name="description" content="Foundations and modern approaches to RL" />
+<meta name="generator" content="Org Mode" />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<div class="scroll-progress"></div>
+<aside class="sidebar">
+  <div class="sidebar-inner">
+    <img src="/images/avatar.svg" alt="Chenggang Liu" class="sidebar-avatar"/>
+    <a href="/index.html" class="site-logo">Chenggang Liu</a>
+    <nav class="sidebar-nav">
+      <a href="/index.html">Home</a>
+      <a href="/blogs.html">Blogs</a>
+      <a href="/publications.html">Publications</a>
+      <a href="/about.html">About</a>
+    </nav>
+    <div class="sidebar-search">
+      <input type="text" class="sidebar-search-input" placeholder="Search..."/>
+      <div class="sidebar-search-results"></div>
+    </div>
+    <button class="theme-toggle" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div class="sidebar-social">
+      <a href="https://www.linkedin.com/in/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="https://github.com/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <a href="https://scholar.google.com/citations?user=omz_MCoAAAAJ&hl=en" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg></a>
+    </div>
+  </div>
+</aside>
+<button class="sidebar-toggle" aria-label="Toggle menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="top-bar">
+  <button class="top-bar-toggle" aria-label="Toggle menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+  <a href="/index.html" class="top-bar-title">Chenggang Liu</a>
+  <button class="top-bar-search" aria-label="Open search bar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+  </button>
+</div>
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" class="search-input" placeholder="Search..."/>
+    <button class="search-close" aria-label="Close search">&times;</button>
+  </div>
+  <div class="search-results"></div>
+</div>
+</div>
+<div id="content" class="content">
+<header>
+<h1 class="title">Reinforcement Learning</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgf67ffc4">Introduction</a></li>
+<li><a href="#org7887a0a">Reinforcement Learning</a>
+<ul>
+<li><a href="#org81dfd00">Policy-based methods</a>
+<ul>
+<li><a href="#org2a68967">Short derivation  of policy gradient</a></li>
+<li><a href="#org937f7cd">REINFORCE</a></li>
+<li><a href="#org1889ff2">REINFORCE with baseline</a></li>
+</ul>
+</li>
+<li><a href="#orga738680">Value-based methods</a>
+<ul>
+<li><a href="#org8648c14">Standard Q learning</a></li>
+<li><a href="#orgaa611e3">Deep Q Networks</a></li>
+<li><a href="#orgf9ec688">Double Q-learning </a></li>
+<li><a href="#orga48d46d">DPG (Deterministic Policy Gradient)</a></li>
+</ul>
+</li>
+<li><a href="#org1b8bd1c">Actor-Critic (AC) method</a>
+<ul>
+<li><a href="#orga1771a6">AC (Actor-Critic) method</a></li>
+<li><a href="#orga4a4a84">A2C (Advantage Actor-Critic) method</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org0e3cb4c">The connection between Advantage and Regret</a></li>
+<li><a href="#orgaf02280">Online resources</a></li>
+<li><a href="#org909a076">Reference</a></li>
+</ul>
+</div>
+</nav>
+<div id="outline-container-orgf67ffc4" class="outline-2">
+<h2 id="orgf67ffc4">Introduction</h2>
+<div class="outline-text-2" id="text-orgf67ffc4">
+<p>
+This note is intended to be a reference for personal lear&gt;ning and implementation of reinforcement learning.
+</p>
+</div>
+</div>
+<div id="outline-container-org7887a0a" class="outline-2">
+<h2 id="org7887a0a">Reinforcement Learning</h2>
+<div class="outline-text-2" id="text-org7887a0a">
+</div>
+<div id="outline-container-org81dfd00" class="outline-3">
+<h3 id="org81dfd00">Policy-based methods</h3>
+<div class="outline-text-3" id="text-org81dfd00">
+<p>
+These methods directly learn the policy, which is a mapping from states to actions. 
+</p>
+</div>
+<div id="outline-container-org2a68967" class="outline-4">
+<h4 id="org2a68967">Short derivation  of policy gradient</h4>
+<div class="outline-text-4" id="text-org2a68967">
+<p>
+\[
+  J(\pi_{\theta}) =  \mathbb{E}_{\tau \sim \pi_{\theta}}[ R(\tau_{0:T})] 
+  \]
+where \(R(\tau_{0:T}) := \sum_{t \in 0:T}r(s_t, a_t)\). We will ignore the time index, \(t\),
+if it is the whole time horizon. 
+</p>
+
+\begin{eqnarray}
+\nabla_{\theta} J(\pi_{\theta}) &=& \nabla_{\theta} \int_{\tau} p(\tau) R(\tau) \nonumber \\
+&=& \int_{\tau}  {\color{red} \nabla_{\theta} p(\tau)} R(\tau) \nonumber \\
+&=& \int_{\tau} {\color{red} p(\tau) \nabla_{\theta} \ln p(\tau)} R(\tau) \nonumber \\
+&=& \mathbb{E}_{\tau \sim \pi_{\theta}} \nabla_{\theta} \ln p(\tau) R(\tau) \nonumber 
+\end{eqnarray}
+
+<p>
+Then we get
+</p>
+\begin{equation}
+\label{orgd4c1dc2}
+\nabla_{\theta} J(\pi_{\theta}) = \mathbb{E}_{\tau \sim \pi_{\theta}} \nabla_{\theta} \ln p(\tau) R(\tau)
+\end{equation}
+
+<p>
+Now let's see how to get the trajectory probability under the sample policy, \(\ln p(\tau)\):
+</p>
+\begin{eqnarray}
+\label{org15d030e}
+\ln p(\tau) = \ln p_0(s_0) + \sum_{t \in 0:T} [\ln P(s_{t+1}| s_t, a_t) + \ln \pi_{\theta}(a_t| s_t)]
+\end{eqnarray}
+
+<p>
+The first and second term on the RHS of \eqref{org15d030e}  is independent of \(\pi_{\theta}\),  therefore,
+</p>
+\begin{equation*}
+\nabla_{\theta}  \ln p(\tau) = \cancel{\nabla_{\theta} \ln p_0(s_0)} + \sum_{t \in 0:T} [\cancel{\nabla_{\theta} \ln P(s_{t+1}| s_t, a_t)} + \nabla_{\theta} \ln \pi_{\theta}(a_t| s_t)]
+\end{equation*}
+
+<p>
+Therefore, the policy gradient is
+</p>
+\begin{equation}
+\label{org56fb322}
+\nabla_{\theta} J(\pi_{\theta}) = \mathbb{E}_{\tau \sim \pi_{\theta}} \left [ \sum_{t \in 0:T}
+\left [\nabla_{\theta} \ln \pi_{\theta}(a_t|s_t) R(\tau) \right ] \right ] 
+\end{equation}
+
+<p>
+Because an action can only affect states and actions after it is taken, "causality trick",  \eqref{org56fb322} can be improved:
+</p>
+\begin{equation}
+\label{orgef1a2e8}
+\nabla_{\theta} J(\pi_{\theta}) = \mathbb{E}_{\tau \sim \pi_{\theta}} \left [ \sum_{t \in =0:T}
+\left [\nabla_{\theta} \ln \pi_{\theta}(a_t|s_t) R(\tau_{t:T}) \right] \right] 
+\end{equation}
+
+<p>
+During training, we could minimize the following surrogate function instead:
+</p>
+\begin{equation*}
+g(\theta)  = \frac{1}{N} \sum_{n \in 1:N} \left[
+\sum_{t \in =0:T}
+\ln \pi_{\theta}(a_t|s_t) R(\tau_{t:T}) \right] 
+\end{equation*}
+</div>
+</div>
+<div id="outline-container-org937f7cd" class="outline-4">
+<h4 id="org937f7cd">REINFORCE</h4>
+<div class="outline-text-4" id="text-org937f7cd">
+<p>
+REINFORCE method uses \eqref{orgef1a2e8} to update policy.
+\[
+    \nabla_{\theta} J(\pi_{\theta}) = \frac{1}{N}\sum_{n = 1:N} \big [
+    \sum_{t \in 0:T} \nabla_{\theta} \ln \pi_{\theta}(a_t|s_t) R(\tau_{t:T}) \big ]
+    \]
+where \(\frac{1}{N}\sum_{n = 1:N}[\cdot]\) is an empirical estimate to \(\mathbb{E}_{\tau \sim \pi_{\theta}} [\cdot]\) in \eqref{orgef1a2e8}.
+</p>
+
+<p>
+During training, instead of maximize \(J(\theta)\), we minimize the following surrogate loss function: 
+\[
+    g(\theta) = - \sum_{t \in 0:T} \ln \pi_{\theta}(a_t|s_t) R(\tau_{t:T})
+    \]
+</p>
+
+<p>
+An example implementation can be found <a href="https://github.com/cgliu/reinforcement_learning/blob/master/REINFORCE/train.py">here</a>
+</p>
+
+<p>
+It is on-policy method with "high variance" and low sampling efficiency. 
+</p>
+</div>
+</div>
+<div id="outline-container-org1889ff2" class="outline-4">
+<h4 id="org1889ff2">REINFORCE with baseline</h4>
+<div class="outline-text-4" id="text-org1889ff2">
+<p>
+To reduce variance in REINFORCE method, REINFORCE with baseline method subtracts a baseline to reduce variance. 
+\[
+    \nabla_{\theta} J(\pi_{\theta}) =  \mathbb{E}_{\tau \sim \pi_{\theta}} \big [
+    \sum_{t \in 0:T} \nabla_{\theta} \ln \pi_{\theta}(a_t|s_t) (R(\tau_{t:T}) -{\color{red} b_t(s_t)}) \big ]
+    \]
+Subtracting a baseline is proved to be unbiased <sup><a id="fnr.lec-5" class="footref" href="#fn.lec-5" role="doc-backlink">1</a></sup>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orga738680" class="outline-3">
+<h3 id="orga738680">Value-based methods</h3>
+<div class="outline-text-3" id="text-orga738680">
+<p>
+Value-based methods learn a value function that estimates the expected cumulative reward (return) from a given state or
+state-action pair. They don't explicitly store a policy but instead, the policy is derived implicitly from the value
+function by choosing the action with the highest value.
+</p>
+</div>
+<div id="outline-container-org8648c14" class="outline-4">
+<h4 id="org8648c14">Standard Q learning</h4>
+<div class="outline-text-4" id="text-org8648c14">
+<p>
+\[
+    \theta_{t+1} = \theta_{t} + \alpha (Y^Q_{t} - Q(S_t, A_t; \theta_t)) \nabla_{\theta_t}Q(S_t, A_t; \theta_t)
+    \]
+and
+\[
+    Y^Q_t \equiv R_{t+1} + \gamma \max_{a} Q(S_{t+1}, a; \theta_t)
+    \]
+where \(\theta\) is the parameters of Q function 
+</p>
+
+<p>
+The predicted reward: 
+\[
+    \hat{R}_{t+1} = Q(S_t, A_t; \theta_t) - \gamma \max_a Q(S_{t+1}, a; \theta_t)
+    \]
+</p>
+
+<p>
+When to Use Q-Learning?
+</p>
+<ul class="org-ul">
+<li>Small discrete state &amp; action spaces (e.g., grid-world, classic control problems).</li>
+<li>Off-policy learning needed (can learn from stored experiences).</li>
+<li>Need for model-free learning (environment dynamics unknown).</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgaa611e3" class="outline-4">
+<h4 id="orgaa611e3">Deep Q Networks</h4>
+<div class="outline-text-4" id="text-orgaa611e3">
+<p>
+\[
+    Y^{DQN}_t \equiv R_{t+1} + \gamma \max_{a}Q(S_{t+1}, a; {\color{red} \theta_{t}^-})
+    \]
+where \(\theta^-\) is the parameters of the target network.
+</p>
+
+<p>
+Highlights:
+</p>
+<ol class="org-ol">
+<li>It has two networks: a target networks and an online networks</li>
+<li>It uses experience replay</li>
+<li>The target networks is updates lower than the online networks</li>
+</ol>
+
+<p>
+The replay buffer minimizes the correlations between samples. 
+The use of the target networks gives consistent targets during temporal difference backups. 
+</p>
+
+<p>
+An example implementation can be found <a href="w3m:https://github.com/cgliu/reinforcement_learning/tree/master/DQN">here</a>.
+</p>
+</div>
+</div>
+<div id="outline-container-orgf9ec688" class="outline-4">
+<h4 id="orgf9ec688">Double Q-learning <sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup></h4>
+<div class="outline-text-4" id="text-orgf9ec688">
+<p>
+\[
+    Y^{DoubleQ}_t \equiv R_{t+1} + \gamma Q(S_{t+1}, {\color{blue} \arg\max_{a} Q(S_{t+1}, a;\theta_t)}); {\color{cyan} \theta'_t})
+    \]
+Motivation:
+</p>
+<ul class="org-ul">
+<li>decouple action selection and evaluation to resolve the overestimate action-value issue, which can lead to sub-optimal policy.</li>
+</ul>
+
+<p>
+Highlights:
+</p>
+<ol class="org-ol">
+<li>Two networks parameterized \(\theta\) and \(\theta'\), which are symmetrically updated by switching their role.</li>
+<li>The action is selected based the online networks but evaluated by the other networks</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orga48d46d" class="outline-4">
+<h4 id="orga48d46d">DPG (Deterministic Policy Gradient)</h4>
+<div class="outline-text-4" id="text-orga48d46d">
+<p>
+actor-critic architecture: The critic \(Q(s, a)\) is learned using Bellman equation as in Q-learning.
+It maintains a parameterized policy function \(\mu(s; \theta^\mu)\) and updates it by the chain rule:
+\[
+    \nabla_{\theta^\mu}J = E_{s_t \sim \rho^\beta} [\nabla_a Q(s,a; \theta^Q)|_{s=s_t, a=\mu(s_t)}\nabla_{\theta_\mu}(s; \theta^\mu)|_{s=s_t}]
+    \]
+where \(J\) is the expected return, \(\beta\) is the offline policy that generate the replays. \(\rho^\beta\) is the state visitation distribution for policy \(\beta\).
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org1b8bd1c" class="outline-3">
+<h3 id="org1b8bd1c">Actor-Critic (AC) method</h3>
+<div class="outline-text-3" id="text-org1b8bd1c">
+<p>
+The actor-critic algorithm (AC) is a family of reinforcement learning (RL) algorithms
+that combine policy gradient method with the Q-learning method <sup><a id="fnr.ac-wiki" class="footref" href="#fn.ac-wiki" role="doc-backlink">3</a></sup>. An AC algorithm consists of two main
+components: an "actor" that determines which actions to take according to a policy function, and a "critic" that
+evaluates those actions according to a value function.
+</p>
+</div>
+<div id="outline-container-orga1771a6" class="outline-4">
+<h4 id="orga1771a6">AC (Actor-Critic) method</h4>
+<div class="outline-text-4" id="text-orga1771a6">
+<p>
+For Actor training, we minimize the following surrogate loss:
+\[
+   \min_{\theta}  - \frac{1}{N} \sum_{n \in 1:N} \sum_{j \in 0:T} \ln \pi_{\theta}(a_j|s_j) Q_{w}^{\pi_\theta}(s_j, a_j)
+   \]
+where
+\[
+   Q_w^{\pi_{\theta}(s_j, a_j)} := \sum_{t = j}^{T} \mathbb{E}_{\pi_{\theta}}[r(s_t,a_t) | s_j, a_j]
+   \]
+</p>
+
+<p>
+The Critic can be learned by Q-learning or SARSA.
+In SARSA, the critic maintains an estimate of the Q-function and the critic is updated by minimizing TD(1) error:
+\[
+   \min_{\omega} [r(s_t, a_t) + Q_\omega^{\pi_\theta}(s_{t+1}, a_{t+1}) - Q_\omega^{\pi_{\theta}}(s_t, a_t)]^2
+   \]
+</p>
+</div>
+</div>
+<div id="outline-container-orga4a4a84" class="outline-4">
+<h4 id="orga4a4a84">A2C (Advantage Actor-Critic) method</h4>
+<div class="outline-text-4" id="text-orga4a4a84">
+<p>
+In this method, for the actor training, we minimize the following surrogate loss:
+\[
+    \min_{\theta} - \mathbb{E}_{\tau \sim \pi} \big [
+    \sum_{j \in 0:T} \ln \pi_{\theta}(a_j|s_j) {\color{red} \hat{A}(s_t, a_t)} \big ]
+    \]
+where 
+\[
+    \hat{A}(s_t, a_t) = Q^{\pi}(s_t, a_t) - V^{\pi}(s_t) = r(s_t, a_t) + \gamma V^{\pi}(s_{t+1}) - V^{\pi}(s_t)
+    \]
+Advantage is approximate by TD(1) error <sup><a id="fnr.2.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup>.
+</p>
+
+<p>
+To training the critic, we minimize TD(1) error:
+\[
+    \min_{\omega} \left [r(s_t, a_t) + \gamma V_{\omega}(s_{t+1}) - V_\omega(s_t) \right]^2 
+    \]
+</p>
+
+<p>
+An example implementation can be found <a href="https://github.com/cgliu/reinforcement_learning/blob/master/a2c/train.py">here</a>. 
+</p>
+
+<p>
+A3C is Asynchronous Advantage Actor-Critic (A3C): Parallel and asynchronous version of A2C.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org0e3cb4c" class="outline-2">
+<h2 id="org0e3cb4c">The connection between Advantage and Regret</h2>
+<div class="outline-text-2" id="text-org0e3cb4c">
+<p>
+\[
+  A(s,a) = Q^{\pi}(s, a) - V^{\pi}(s)
+  \]
+where
+\[
+  V^{\pi}(s) = \int \pi(a| s) Q(s, a)
+  \]
+</p>
+
+<p>
+\[
+  \mathrm{Regret}(T) = \sum_{t=1}^{T} [V^*(s_t) - V^{\pi}(s_t)] 
+  \]
+</p>
+
+<ul class="org-ul">
+<li>Advantage measures short-term decision quality (local improvement in action selection).</li>
+<li>Regret measures long-term performance loss (cumulative cost of suboptimal choices).</li>
+<li>Minimizing regret implies maximizing advantage over time.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgaf02280" class="outline-2">
+<h2 id="orgaf02280">Online resources</h2>
+<div class="outline-text-2" id="text-orgaf02280">
+<ul class="org-ul">
+<li>Stable Baselines3 (SB3) is a set of reliable implementations of reinforcement learning algorithms in PyTorch.
+<a href="https://github.com/DLR-RM/stable-baselines3/tree/master">https://github.com/DLR-RM/stable-baselines3/tree/master</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org909a076" class="outline-2">
+<h2 id="org909a076">Reference</h2>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.lec-5" class="footnum" href="#fnr.lec-5" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="https://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-5.pdf">https://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-5.pdf</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="https://huggingface.co/blog/deep-rl-a2c">https://huggingface.co/blog/deep-rl-a2c</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.ac-wiki" class="footnum" href="#fnr.ac-wiki" role="doc-backlink">3</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="https://en.wikipedia.org/wiki/Actor-critic_algorithm">https://en.wikipedia.org/wiki/Actor-critic_algorithm</a>
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<script>
+// Sidebar toggle
+document.querySelector('.sidebar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  this.classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+document.querySelector('.top-bar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  document.querySelector('.sidebar-toggle').classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+
+// Search toggle
+(function() {
+  var overlay = document.querySelector('.search-overlay');
+  var input = document.querySelector('.search-input');
+  var results = document.querySelector('.search-results');
+  document.querySelector('.top-bar-search').addEventListener('click', function() {
+    overlay.classList.toggle('active');
+    if (overlay.classList.contains('active')) input.focus();
+  });
+  document.querySelector('.search-close').addEventListener('click', function() {
+    overlay.classList.remove('active');
+    input.value = '';
+    results.innerHTML = '';
+  });
+  var pages = [];
+  fetch('/search-index.json').then(function(r){return r.json();}).then(function(d){pages=d;});
+  input.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { results.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    results.innerHTML = html || '<p style="color:#64748b">No results</p>';
+  });
+
+  // Sidebar search
+  var sInput = document.querySelector('.sidebar-search-input');
+  var sResults = document.querySelector('.sidebar-search-results');
+  sInput.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { sResults.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    sResults.innerHTML = html || '<p style="color:rgba(255,255,255,0.4)">No results</p>';
+  });
+})();
+
+// Theme toggle
+(function() {
+  var stored = localStorage.getItem('theme');
+  if (stored) {
+    document.documentElement.setAttribute('data-theme', stored);
+  }
+  document.querySelector('.theme-toggle').addEventListener('click', function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+})();
+
+// Active nav highlight
+(function() {
+  var path = window.location.pathname;
+  document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (path === href || (href !== '/index.html' && path.indexOf(href.replace('.html','')) === 0)) {
+      link.classList.add('active');
+    }
+  });
+})();
+
+// Fade in / fade out on scroll
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    } else {
+      entry.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.intro p, .blog-card, .pub-entry, .timeline-item, .hero-image').forEach(function(el) {
+  el.classList.add('fade-item');
+  observer.observe(el);
+});
+
+// Scroll progress bar
+window.addEventListener('scroll', function() {
+  var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var progress = (scrollTop / scrollHeight) * 100;
+  document.querySelector('.scroll-progress').style.width = progress + String.fromCharCode(37);
+});
+
+// Tag filtering on blogs page
+(function() {
+  document.querySelectorAll('.card-tag').forEach(function(tag) {
+    tag.style.cursor = 'pointer';
+    tag.addEventListener('click', function(e) {
+      e.preventDefault();
+      var selected = this.textContent.trim();
+      var allCards = document.querySelectorAll('.blog-card');
+      var allItems = document.querySelectorAll('.timeline-item');
+      var isActive = this.classList.contains('tag-active');
+      document.querySelectorAll('.card-tag').forEach(function(t) { t.classList.remove('tag-active'); });
+      if (isActive) {
+        allCards.forEach(function(c) { c.style.display = ''; });
+        allItems.forEach(function(i) { i.style.display = ''; });
+      } else {
+        this.classList.add('tag-active');
+        allCards.forEach(function(c) {
+          var t = c.querySelector('.card-tag');
+          c.style.display = (t && t.textContent.trim() === selected) ? '' : 'none';
+        });
+        allItems.forEach(function(i) {
+          var visible = i.querySelectorAll('.blog-card[style=""], .blog-card:not([style])');
+          var hasVisible = Array.from(i.querySelectorAll('.blog-card')).some(function(c) { return c.style.display !== 'none'; });
+          i.style.display = hasVisible ? '' : 'none';
+        });
+      }
+    });
+  });
+})();
+</script>
+</div>
+</body>
+</html>

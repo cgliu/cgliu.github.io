@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2026-05-20 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Trajectory Optimization</title>
+<meta name="generator" content="Org Mode" />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<div class="scroll-progress"></div>
+<aside class="sidebar">
+  <div class="sidebar-inner">
+    <img src="/images/avatar.svg" alt="Chenggang Liu" class="sidebar-avatar"/>
+    <a href="/index.html" class="site-logo">Chenggang Liu</a>
+    <nav class="sidebar-nav">
+      <a href="/index.html">Home</a>
+      <a href="/blogs.html">Blogs</a>
+      <a href="/publications.html">Publications</a>
+      <a href="/about.html">About</a>
+    </nav>
+    <button class="theme-toggle" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div class="sidebar-social">
+      <a href="https://www.linkedin.com/in/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="https://github.com/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <a href="https://scholar.google.com/citations?user=omz_MCoAAAAJ&hl=en" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg></a>
+    </div>
+  </div>
+</aside>
+<button class="sidebar-toggle" aria-label="Toggle menu">
+  <span></span><span></span><span></span>
+</button>
+</div>
+<div id="content" class="content">
+<header>
+<h1 class="title">Trajectory Optimization</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org76273fe">Control vs. Planning</a></li>
+<li><a href="#orge69b240">Optimal control problem</a>
+<ul>
+<li><a href="#org184aeac">Continuous-time optimal control problem</a></li>
+<li><a href="#org49f192b">Discrete-time optimal control problem</a></li>
+</ul>
+</li>
+<li><a href="#org272290d">CHOMP (Co-variant Hamiltonian Optimization for Motion Planning)</a>
+<ul>
+<li><a href="#org611600a">Remarks</a></li>
+<li><a href="#orga2c30c5">Problem formulation</a></li>
+<li><a href="#org9d46429">Functional gradient</a></li>
+<li><a href="#orgc6b382a">Functional gradient</a></li>
+<li><a href="#org74d6cb4">Functionals and Co-variant Gradients for Trajectory Optimization</a></li>
+<li><a href="#orgecc9067">Waypoint Trajectory Parameterization</a></li>
+<li><a href="#org5461078">Update rule:</a></li>
+<li><a href="#org419cd63">Hamiltonian Monte Carlo</a></li>
+<li><a href="#orgd47019e">Relationship to DDP</a></li>
+</ul>
+</li>
+<li><a href="#org9ba234f">Continuous DDP (Differential Dynamic Programming)</a>
+<ul>
+<li><a href="#org4d8cdbd">Calculus of Variation</a></li>
+<li><a href="#orgb6e8b3b">Gradient method</a></li>
+<li><a href="#orgb12e528">Newton-Raphson method (successive sweep method)</a></li>
+<li><a href="#org2b527de">Control parameters</a></li>
+</ul>
+</li>
+<li><a href="#org6e29e5f">Discrete DDP</a></li>
+<li><a href="#orga3ce50d">iLQR</a>
+<ul>
+<li><a href="#orgb4e64d1">Problem definition and notations</a></li>
+<li><a href="#org20136f2">The algorithm</a></li>
+</ul>
+</li>
+<li><a href="#org97eee11">Continuous LQR (Linear Quadratic Regulator)</a>
+<ul>
+<li><a href="#org946fc45">Finite horizon LQR</a></li>
+<li><a href="#org8af8177">Infinite horizon LQR</a></li>
+</ul>
+</li>
+<li><a href="#org540e33b">Discrete LQR</a></li>
+<li><a href="#orgaad5a59">Backpropagate as a network</a></li>
+<li><a href="#org3def8cd">Numerical Integration</a>
+<ul>
+<li><a href="#orgb2a9bf5">The model ODE</a></li>
+<li><a href="#org072e854">Euler method</a></li>
+<li><a href="#org1b9c3ca">Runge-Kutta methods</a></li>
+<li><a href="#org655655d">Quadrature</a></li>
+<li><a href="#org1b1f55c">Solve ODEs backwards in time</a></li>
+</ul>
+</li>
+<li><a href="#orgccd4a49">Lagrange interpolation</a>
+<ul>
+<li><a href="#org83b590f">Spectral method for ODE and PDE</a></li>
+</ul>
+</li>
+<li><a href="#org79053b6">Direct transcription</a>
+<ul>
+<li><a href="#orgf1a1e92">Euler method</a></li>
+<li><a href="#org7f19f76">Runge-Kutta method</a></li>
+<li><a href="#org4732d17">Lagrange Pseudospectral method</a></li>
+<li><a href="#org2e0fea5">Gauss Pseudospectral method</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+<div id="outline-container-org76273fe" class="outline-2">
+<h2 id="org76273fe">Control vs. Planning</h2>
+<div class="outline-text-2" id="text-org76273fe">
+<p>
+Control and planning are the two ends of a continuous spectrum.
+Control is more in a real-time and close-loop fashion while planning is more in an offline and
+open-loop fashion. There is no clear boundary between control and planning, for example,
+we can apply a control law and simulate forwards in time to make a open-loop long-term plan or
+we can apply a open-loop plan in an iterative fashion online to get a close-loop control,
+such as Model Predictive Control (MPC).
+</p>
+
+<p>
+With the development of computer speed, open-loop planning methods, specifically trajectory optimization methods, become
+popular in real-time control and attract a lot of attention.
+</p>
+</div>
+</div>
+<div id="outline-container-orge69b240" class="outline-2">
+<h2 id="orge69b240">Optimal control problem</h2>
+<div class="outline-text-2" id="text-orge69b240">
+</div>
+<div id="outline-container-org184aeac" class="outline-3">
+<h3 id="org184aeac">Continuous-time optimal control problem</h3>
+<div class="outline-text-3" id="text-org184aeac">
+<ul class="org-ul">
+<li><p>
+Functional forms:
+</p>
+<ul class="org-ul">
+<li><p>
+Lagrange Formulation
+</p>
+\begin{equation}
+\label{eq:b1}
+J(u(\cdot),t_f) = \int_{t_0}^{t_f}L(\mathbf{x},\mathbf{u},t)dt
+\end{equation}</li>
+
+<li><p>
+Bolza Formulation
+</p>
+\begin{equation}
+\label{eq:b2}
+J(u(\cdot),t_f) = \phi(\mathbf{x}(t_f), t_f) + \int_{t_0}^{t_f} L(\mathbf{x},\mathbf{u},t) dt
+\end{equation}
+
+<p>
+s.t.
+</p>
+\begin{equation}
+  \label{eq:b3}
+  \dot{\mathbf{x}} = f(\mathbf{x},\mathbf{u},t),
+\end{equation}
+<p>
+and the boundary conditions
+</p>
+\begin{equation}
+  \label{eq:10}
+  \mathbf{x}(t_0)=\mathbf{x}_0,\quad \psi(\mathbf{x}_f,t_f) = 0
+\end{equation}
+<p>
+where \(\mathbf{x}(t)\in \mathbb{R}^n\) is the state, \(\mathbf{u}(t)\in \mathbb{R}^m\) is the control, \(t\) is the independent
+variable (generally speaking, time), \(t_0\) is the initial time, and \(t_f\) is the terminal time. The terms \(\phi\) and \(L\)
+are called the terminal penalty term and Lagrangian, respectively.
+</p></li>
+
+<li><p>
+Mayer Formulation
+In the Mayer formulation, the state vector is extended by:
+\(x_{n+1}(t)\).
+</p>
+\begin{equation}
+\label{eq:m1}
+x_{n+1}(t) = \int_{t_0}^tL(\mathbf{x},\mathbf{u},t)dt.
+\end{equation}
+<p>
+Then the objective is to choose \(\mathbf{u}(t)\) to minimize
+</p>
+\begin{equation}
+\label{eq:m2}
+J(u(\cdot),t_f) = \phi(\mathbf{x}(t_f),t_f)
+\end{equation}
+
+<p>
+s.t.
+</p>
+\begin{equation}
+\label{eq:m3}
+\dot{\mathbf{x}} =
+\begin{bmatrix}
+f(\mathbf{x},\mathbf{u},t) \\
+l(\mathbf{x},\mathbf{u},t)
+\end{bmatrix}
+\end{equation}
+<p>
+and the boundary conditions
+</p>
+
+\begin{equation}
+\mathbf{x}(t_0) =
+\begin{bmatrix}
+\mathbf{x}_0 \\
+0
+\end{bmatrix}
+\end{equation}
+<p>
+\[ \quad \psi(\mathbf{x}_f,t_f) = 0  \]
+</p></li>
+</ul>
+
+<p>
+Mayer formulation and Bolza formulation are equivalent, but Mayer form yield a simpler expression.
+</p>
+
+<p>
+Lagrange, Bolza, and Mayer forms are equivalent.  In particular, there are constraints on the state of the form
+</p>
+\begin{equation}
+\label{eq:state-constraint}
+S(\mathbf{x}(t)) \le 0
+\end{equation}
+<p>
+and on the control variable
+</p>
+\begin{equation}
+\label{eq:control-constraint}
+C(\mathbf{x}(t),\mathbf{u}(t)) \le 0
+\end{equation}
+
+<p>
+The optimal control can be derived using Pontryagin's maximum principle (a necessary condition), or by solving the
+Hamilton-Jacobi-Bellman equation (a necessary and sufficient condition).
+</p></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org49f192b" class="outline-3">
+<h3 id="org49f192b">Discrete-time optimal control problem</h3>
+<div class="outline-text-3" id="text-org49f192b">
+<p>
+The discrete-time optimal control problem:
+\[ J_k(x_k) = \min_{u_k \in \mathcal{U}} \{ \phi(x_N) + \sum_{k=0}^{N-1} L_k(x_k,u_k)  \} \]
+s.t.
+\[ x_{k+1} = F(x_k, u_k, k) \]
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org272290d" class="outline-2">
+<h2 id="org272290d">CHOMP (Co-variant Hamiltonian Optimization for Motion Planning)</h2>
+<div class="outline-text-2" id="text-org272290d">
+</div>
+<div id="outline-container-org611600a" class="outline-3">
+<h3 id="org611600a">Remarks</h3>
+<div class="outline-text-3" id="text-org611600a">
+<ul class="org-ul">
+<li>Suited for gradient-cheap application, where gradient can be computed inexpensively</li>
+<li>Trajectory optimization is invariant to parameterization
+<ul class="org-ul">
+<li>trajectory: a mapping from time t to configuration q</li>
+<li>objective function: a function of trajectory (functional)</li>
+</ul></li>
+<li>Compared with sampling-based method, optimal control, and trajectory optimization (DDP and iLQR)</li>
+<li><p>
+The meaning of the name: Co-variant gradient and Hamiltonian Monte Carlo
+</p>
+
+<p>
+<a href="https://personalrobotics.ri.cmu.edu/files/courses/papers/CHOMP12-ijrr.pdf">https://personalrobotics.ri.cmu.edu/files/courses/papers/CHOMP12-ijrr.pdf</a>
+</p></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orga2c30c5" class="outline-3">
+<h3 id="orga2c30c5">Problem formulation</h3>
+<div class="outline-text-3" id="text-orga2c30c5">
+<p>
+\[ \xi(t)^* = \arg \min_{\xi} U(\xi(t)) \]
+where  \(U (\xi(t)) = F_{smooth}(\xi(t)) + \lambda F_{obs}(\xi(t))\), and
+</p>
+
+<p>
+The smoothness objective:
+\[\
+    F_{smooth}(\xi(t)) = \frac{1}{2} \int_{0}^{1} ||\frac{d}{dt} \xi(t) ||^2 dt
+    \]
+</p>
+
+<p>
+The obstacle objective:
+\[
+    F_{obs}(\xi(t)) = \int_{0}^{1} \int_{B} c(x(\xi(t), u)) || \frac{d}{dt} x(\xi(t), u)|| du dt
+    \]
+</p>
+</div>
+</div>
+<div id="outline-container-org9d46429" class="outline-3">
+<h3 id="org9d46429">Functional gradient</h3>
+<div class="outline-text-3" id="text-org9d46429">
+<ul class="org-ul">
+<li>The functional gradient \(\nabla U\) is the perturbation \(\phi\)
+that maximizes \(U[\xi + \epsilon \phi]\) as \(\epsilon \to 0\).
+Choosing a traditional Euclidean norm \(||\xi||^2 = \int \xi(t)^2
+     dt\), for any differential objective of form \(F(\xi) = \int L(t,
+     \xi, \xi') dt\), the Euclidean functional gradient: \[ \nabla
+     F(\xi) = \frac{\partial L}{\partial \xi} - \frac{d}{dt}
+     \frac{\partial L}{\partial \dot{\xi}} \]</li>
+
+<li>Euler-Lagrange equation
+\[
+     \frac{\partial L}{\partial q} - \frac{d}{dt} \frac{\partial L}{\partial \dot{q}} = 0
+     \]
+Euler-Lagrange equation is the stationary condition for:
+\[
+     \min_{q(t)} S(q) = \int_{a}^{b} L(t, q, \dot{q}) dt
+     \]</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc6b382a" class="outline-3">
+<h3 id="orgc6b382a">Functional gradient</h3>
+<div class="outline-text-3" id="text-orgc6b382a">
+<ul class="org-ul">
+<li>The functional gradient of the smoothness objective:</li>
+</ul>
+<p>
+\[
+    \nabla F_{smooth} = - \ddot{\xi}
+    \]
+</p>
+
+<ul class="org-ul">
+<li>The functional gradient of the obstacle objective</li>
+</ul>
+<p>
+\[
+    \nabla F_{obs} = \int_{B} J^{\top} ||x'|| \big( (I - \hat{x}'\hat{x}^{\top})\nabla{c} -ck\big) du
+    \]
+where \(k = \frac{(I - \hat{x}'\hat{x}'^{\top}) x''}{||x'||^2}\) is the curvature vector along the workspace trajectory.
+</p>
+
+<p>
+The matrix \((I - \hat{x}'\hat{x}'^{\top})\) is a projection matrix that projects workspace gradients orthogonally to the trajectory’s direction of motion.
+</p>
+</div>
+</div>
+<div id="outline-container-org74d6cb4" class="outline-3">
+<h3 id="org74d6cb4">Functionals and Co-variant Gradients for Trajectory Optimization</h3>
+<div class="outline-text-3" id="text-org74d6cb4">
+<ul class="org-ul">
+<li>To removing the dependence on the parametrization (finite difference),
+defining a norm on trajectory perturbations to depend solely on the
+dynamical quantities of the trajectory:
+\[ ||\xi||_A := \int \sum_{n=1}^{k} \alpha_n (D^n \xi(t))^2 dt \]
+where \(D\) is differential operator, \(A = D^{\top} D\).</li>
+</ul>
+
+
+<p>
+Invariant norm \(||\xi(t)||_{A} := <\xi, A\xi> = \int (D\xi(t))^2 dt\)
+</p>
+
+<ul class="org-ul">
+<li>Functional gradients based on the invariant norm:
+\[ \bar{\nabla}_{A} U(\xi) := A^{-1} \bar{\nabla} U(\xi) \]</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgecc9067" class="outline-3">
+<h3 id="orgecc9067">Waypoint Trajectory Parameterization</h3>
+<div class="outline-text-3" id="text-orgecc9067">
+<p>
+refer to the paper
+</p>
+</div>
+</div>
+<div id="outline-container-org5461078" class="outline-3">
+<h3 id="org5461078">Update rule:</h3>
+<div class="outline-text-3" id="text-org5461078">
+<p>
+\[ \xi_{i+1} = \arg \min_{\xi} U(\xi_i) + (\xi - \xi_i)^{\top} \nabla U(\xi_i) + \frac{\eta}{2} || \xi - \xi_i||_M \]
+</p>
+
+<p>
+This update rule is covariant in the sense that the change to the trajectory that results from the update
+is a function only of the trajectory itself, and not the particular representation used (e.g. waypoint
+based), at least in the limit of small step size and fine discretization.
+</p>
+
+<p>
+The overall CHOMP objective function is strongly convex – that is, it can be
+lower-bounded over the entire region by a quadratic with curvature A
+\[ \xi_{i+1} = \xi_{i} - \eta A^{-1} \nabla U(\xi_{i}) \]
+</p>
+</div>
+</div>
+<div id="outline-container-org419cd63" class="outline-3">
+<h3 id="org419cd63">Hamiltonian Monte Carlo</h3>
+<div class="outline-text-3" id="text-org419cd63">
+<p>
+refer: <a href="http://arogozhnikov.github.io/2016/12/19/markov_chain_monte_carlo.html">http://arogozhnikov.github.io/2016/12/19/markov_chain_monte_carlo.html</a>
+</p>
+
+<ul class="org-ul">
+<li>Intuition
+\[ p(\xi, \alpha) \propto exp(-\alpha U(\xi)) \]</li>
+
+<li><p>
+define a Hamilton function as
+\[ H(\xi, \gamma) := U(\xi) + K(\gamma)  \]
+where \(K(\gamma) = \frac{1}{2} \gamma'\gamma\).
+</p>
+
+<p>
+\[ p(\xi, \gamma) \propto exp(-H(\xi, \gamma)) \]
+</p>
+
+<p>
+The system dynamics (Hamilton equation):
+\[ \frac{d\xi}{dt} = \gamma \]
+\[ \frac{\gamma}{dt} = -\nabla U(\xi) \]
+</p>
+
+<p>
+The full numerically robust Hamiltonian Monte Carlo. refer to the paper
+</p></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd47019e" class="outline-3">
+<h3 id="orgd47019e">Relationship to DDP</h3>
+<div class="outline-text-3" id="text-orgd47019e">
+<p>
+For the sake of simplicity, let's consider a simple case, where:
+\[ x = q \]
+</p>
+
+<p>
+\[ \dot{x} = u \]
+\[ L(x,u,t) = c(x) ||u|| + \frac{1}{2} u^{\top} u \]
+\[ H = c(x) ||u|| + \frac{1}{2} u^{\top} u + \lambda^{\top} u \]
+\[ \lambda = -H_x = - c_x(x) ||u|| \]
+Therefore,
+\[ H = c(x) ||u|| + \frac{1}{2} u^{\top} u - ||u|| c_x(x) u \]
+and
+\[ H_u = c(x) ||u||_u + u - ||u||_u c_x(x) u - ||u||c_x(x) \]
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org9ba234f" class="outline-2">
+<h2 id="org9ba234f">Continuous DDP (Differential Dynamic Programming)</h2>
+<div class="outline-text-2" id="text-org9ba234f">
+</div>
+<div id="outline-container-org4d8cdbd" class="outline-3">
+<h3 id="org4d8cdbd">Calculus of Variation</h3>
+<div class="outline-text-3" id="text-org4d8cdbd">
+<p>
+In optimal control, we are trying to solve:
+\[
+   u = \arg \min_{u} J = \psi(x(t_f)) + \int_{t_0}^{t_f}  L(x(t), u(t), t) dt
+   \]
+s.t.
+\[ \dot{x}(t) = f(x(t), u(t), t) \]
+\[ x(t_0) = x_0 \]
+</p>
+
+<p>
+The total cost \(J\) is a sum of the terminal cost and an integral along the way. The total cost \(J\) is also called
+performance index.
+</p>
+
+<p>
+Using Lagrange method to augment the cost:
+\[
+  \bar{J} = L + \lambda^{\top} (f-\dot{x})
+  \]
+</p>
+
+<p>
+Assuming \(J\) is chosen to be continuous in \(x\), \(u\), and \(t\), we write the variation as <sup><a id="fnr.continuous-value-func-assumption" class="footref" href="#fn.continuous-value-func-assumption" role="doc-backlink">1</a></sup>:
+\[
+  \delta \bar{J} = \psi_x \delta x(t_f) + \int_{t_0}^{t_f}
+  [ L_x \delta x + L_u \delta u +
+  \lambda^{\top} f_x \delta x + \lambda^{\top} f_u \delta u - \lambda^{\top} \delta \dot(x) ] dt
+  \]
+where subscripts denote partial derivatives.
+</p>
+
+<p>
+The last term:
+\[
+  -\int_{t_0}^{t_f} \lambda^{\top} \delta \dot{x} dt =
+  -\lambda^{\top} \delta x |_{t_0}^{t_f} + \int_{t_0}^{t_f} \dot \lambda \delta x dt
+  \]
+and thus
+</p>
+
+\begin{align}
+\label{eq:continous-variation}
+\boxed{
+\delta \bar{J} =  [\psi_x(x(t_f)) - \lambda(t_f)^{\top}] \delta x(t_f) +
+\lambda(t_0)^{\top} \delta x(t_0) +
+\int_{t_0}^{t_f} (H_x + \dot \lambda^{\top}) \delta x dt +
+\int_{t_0}^{t_f} H_u \delta u dt
+}
+\end{align}
+
+<p>
+where \(H = L + \lambda^{\top} f\) and is called Hamiltonian <sup><a id="fnr.lagrangian-hamiltonian" class="footref" href="#fn.lagrangian-hamiltonian" role="doc-backlink">2</a></sup>.
+</p>
+
+<p>
+To extreme Eq. \ref{eq:continous-variation}, there are three components of variation
+that must independently be zero since we can vary any of \(\delta x\), \(\delta u\), or \(x(t_f)\):
+</p>
+\begin{equation*}
+L_x + \lambda^{\top} f_x + \dot{\lambda}^{\top} = 0
+\end{equation*}
+\begin{equation*}
+L_u + \lambda^{\top} f_u = 0
+\end{equation*}
+\begin{equation*}
+\psi_x(x(t_f)) - \lambda^{\top}(t_f) = 0
+\end{equation*}
+
+<p>
+The evolution of \(\lambda\) is given in reverse time, from the final state to the initial. This is
+the primary difficulty of solving optimal control problems.
+</p>
+
+<p>
+Finally, we have the following equations that extreme the our objective function:
+</p>
+\begin{eqnarray}
+\label{eq:state-de}
+\dot{x} &=& f(x(t), u(t), t) \\
+\label{eq:co-state-de}
+\dot{\lambda} &=& -L_x^{\top} - f_x^{\top}\lambda \\
+L_u + \lambda^{\top} f_u &=& 0
+\end{eqnarray}
+<p>
+s.t.
+\[ x(t_0) = x_0 \]
+\[ \lambda^{\top}(t_f) = \psi_x(x(t_f)) \]
+</p>
+
+
+<p>
+Note:
+</p>
+<ul class="org-ul">
+<li>\(\delta x(t_0) = 0\) if the initial state is fixed.</li>
+<li>The function \(L + \lambda^{\top} f\) is called Hamiltonian <sup><a id="fnr.3" class="footref" href="#fn.3" role="doc-backlink">3</a></sup>.
+It is counterpart in discrete time is the Bellmen equation.</li>
+<li>If \(H\) is not differentiable w.r.t. \(u\), then \(u\) can still be derived using the Pontryagin Maximum Principle:
+\[ u = \arg \min_{u} H(x, u, t, \lambda) \]</li>
+<li>The Lagrange multiplier is often called co-state.</li>
+<li>If we replace \(u\) in Eqs. \ref{eq:state-de} and \ref{eq:co-state-de} with the solution of the optimal control,
+then Eqs. \ref{eq:state-de} and \ref{eq:co-state-de} become equations only of \(x\) and \(\lambda\),
+which are often called Hamiltonian Differential Equations.</li>
+<li>Denote \(V\) as the value function, then \(V_x^{\top}\) is a solution of \(\lambda\).</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgb6e8b3b" class="outline-3">
+<h3 id="orgb6e8b3b">Gradient method</h3>
+<div class="outline-text-3" id="text-orgb6e8b3b">
+<p>
+Gradient method is outlined as follows:
+</p>
+<ol class="org-ol">
+<li>For a given \(x_0\), pick a control history \(u(t)\).</li>
+<li>Solve ODE forwards in time to get state history:  <br>
+Propagate \(\dot{x} = f(x(t), u(t), t)\) forward in time to create a state history</li>
+<li>Solve ODE backwards in time to get co-state history: <br>
+Evaluate \(\psi_x(x(t_f))\), and propagate the co-state backwards in time from \(t_f\) to \(t_0\)</li>
+<li>At each time step, minimize the Hamiltonian by:
+<ul class="org-ul">
+<li>choosing \(\delta u = - \epsilon H_u\), where \(\epsilon \in (0, 1]\)</li>
+<li>update \(u = u + \delta u\)</li>
+</ul></li>
+<li>If \(J^{i+1} < J^{i}\), go back to step 2 with \(i = i + 1\).
+Otherwise, reduce the step size \(\epsilon\) and repeat 4 (backtracking line search).</li>
+<li>Exit if the early exit conditions are satisfied.</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgb12e528" class="outline-3">
+<h3 id="orgb12e528">Newton-Raphson method (successive sweep method)</h3>
+<div class="outline-text-3" id="text-orgb12e528">
+<p>
+Newton-Raphson method uses second order variation to minimize the Hamiltonian, \(H = L + \lambda^{\top} f\).
+</p>
+
+<div class="LaTeX" id="org01d3c34">
+\begin{equation}
+\label{eq:H-expansion}
+H(x+\delta x, u + \delta u, t + dt) =
+\frac{1}{2}
+\begin{bmatrix}
+1 \\
+\delta x  \\
+\delta u
+\end{bmatrix}^{\top}
+\left[
+\begin{array}{cc|c}
+2 H      & H_x    & H_u \\
+H_x^{\top} & H_{xx} & H_{xu} \\
+\hline
+H_u^{\top} & H_{ux} & H_{uu}
+\end{array}
+\right]
+\begin{bmatrix}
+1 \\
+\delta x  \\
+\delta u
+\end{bmatrix}
++ H_t dt
+\end{equation}
+
+</div>
+
+<p>
+The Newton step of \(\delta u\) is given by:
+</p>
+\begin{eqnarray}
+\label{eq:newton-control-update}
+\delta u &=& \arg \min_{\delta u} \delta H \\
+&=& -H_{uu}^{-1}H_u - H_{uu}^{-1} H_{ux}\delta x
+\end{eqnarray}
+
+<p>
+Compared with gradient method, there is an additional term of
+\(-H_{uu}^{-1}H_{ux} \delta x\), which means \(\lambda\) is changed
+because \(\delta u\) depends on \(\delta x\).
+</p>
+
+\begin{equation}
+\label{eq:lambda-ode}
+\dot{\lambda}^{\top} = -H_x - H_u u_x = -H_x + H_u H_{uu}^{-1} H_{ux}
+\end{equation}
+
+\begin{equation}
+\label{eq:lambda_x-ode}
+\dot{\lambda_x}^{\top} = -H_{xx} - H_{ux} u_x = -H_{xx} + H_{ux} H_{uu}^{-1} H_{ux}
+\end{equation}
+
+\begin{eqnarray}
+H_u &=& L_u + \lambda f_u \\
+H_{ux} &=& L_{ux} + \lambda_x f_u + \lambda f_{ux} \\
+H_{uu} &=& L_{uu} + \lambda f_{ux}
+\end{eqnarray}
+
+<p>
+Newton's method is outlined as follows:
+</p>
+<ol class="org-ol">
+<li>For a given \(x_0\), pick a control history \(u(t)\).</li>
+<li>For iteration \(i\), solve ODE forwards in time to get state history \(x(t)^{i}\): <br>
+Propagate \(\dot{x} = f(x(t), u(t), t)\) forwards in time to create a state history</li>
+<li>Solve ODE backwards in time to get co-state history \(\lambda(t)^{i}\): <br>
+Evaluate \(\psi_x(x(t_f))\) and \(\psi_{xx}(x(t_f))\), and propagate
+\(\lambda(t)\) and \(\lambda_x(t)\) backwards in time from \(t_f\) to \(t_0\)</li>
+<li>At each time step, minimize the Hamiltonian by: <br>
+\(u^{i+1}=u^{i}-\epsilon H_{uu}^{-1}H_{u} - H_{uu}^{-1}H_{ux}\delta x\)</li>
+<li>If \(J^{i+1} < J^{i}\), go back to step 2 with \(i = i + 1\). Otherwise, reduce the step size \(\epsilon\)
+and repeat step 4 (backtracking line search).</li>
+</ol>
+
+<p>
+Note:
+</p>
+<ul class="org-ul">
+<li>If the system dynamics is linear and the cost function is quadratic, one step convergence
+can be achieved with \(\epsilon=1\)</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org2b527de" class="outline-3">
+<h3 id="org2b527de">Control parameters</h3>
+<div class="outline-text-3" id="text-org2b527de">
+<p>
+Control parameters are constant variables in the optimal control problem structure, for example:
+\(L(x,u,\alpha, t)\).
+According to the maximum principle:
+</p>
+<div class="LaTeX" id="org357ea10">
+\begin{equation*}
+H(x+\delta x, \alpha + \delta \alpha, u + \delta u, , t) =
+\frac{1}{2}
+\begin{bmatrix}
+1 \\
+\delta x  \\
+\delta \alpha \\
+\delta u
+\end{bmatrix}^{\top}
+\begin{bmatrix}
+2 H             & H_x          & H_{\alpha}        & H_u          \\
+H_x^{\top}        & H_{xx}       & H_{x\alpha}       & H_{xu}       \\
+H_{\alpha}^{\top} & H_{\alpha x} & H_{\alpha \alpha} & H_{\alpha u} \\
+H_u^{\top}        & H_{ux}       & H_{u\alpha}       & H_{uu}
+\end{bmatrix}
+\begin{bmatrix}
+1 \\
+\delta x  \\
+\delta \alpha \\
+\delta u
+\end{bmatrix}
+
+\end{equation*}
+
+</div>
+
+<p>
+Thus, we have:
+\[ \delta u = -H_{uu}^{-1} H_u - H_{uu}^{-1} H_{ux} \delta x - H_{uu}^{-1}H_{u\alpha} \delta \alpha \]
+when it converge, \(H_u = 0\) and:
+\[ u^{*}_x = -H_{uu}^{-1} H_{ux} \]
+and
+\[ u^{*}_{\alpha} = -H_{uu}^{-1} H_{u\alpha} \]
+</p>
+
+<p>
+As you can see, \(\alpha\) has similar coefficient as the sate variable. We can actually take \(\alpha\) as a state variable and
+then solve it in the same way:
+define \(v = [x^{\top}, \alpha^{\top}]^{\top}\), the dynamics:
+</p>
+<div class="LaTeX" id="org909f6d4">
+\begin{equation}
+\dot{v} =
+\begin{bmatrix}
+f(v, u, t) \\
+0
+\end{bmatrix}
+\end{equation}
+
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org6e29e5f" class="outline-2">
+<h2 id="org6e29e5f">Discrete DDP</h2>
+<div class="outline-text-2" id="text-org6e29e5f">
+<p>
+Discrete time optimal control is to find a control sequence that:
+\[ u(0, \ldots, N-1) = \arg \min_{u} \phi(x_N) + \sum_{i=k}^{N-1} a\big ( L(x_i, u_i, i) + V(x_{i+1}, i+1) \big ) \]
+s.t.
+\[ x_{k+1} = F(x_k, u_k, k) \]
+\[ x(0) = x_0 \]
+</p>
+
+<p>
+Define an optimal cost-to-go function (value function) as:
+\[
+  V(x_k, k) = \min_{u} \sum_{i=k}^{N-1} \big ( L(x_i, u_i, i) + V(x_{i+1}, i+1) \big ) + \phi(x(N))
+  \]
+</p>
+
+<p>
+and a \(Q\) function:
+\[
+  Q(x_k, u_k, k) = L(x_k, u_k, k) + V(x_{k+1}, k+1)
+  \]
+</p>
+
+<p>
+The optimal control at time \(k\) is given by:
+\[ u^*(k) = \arg \min_{u(k)} Q(x_k, u_k, k) \]
+</p>
+
+
+<p>
+Second order expansion:
+</p>
+\begin{equation}
+Q(x_k + \delta x, u_k + \delta u) = 
+\frac{1}{2}
+\begin{bmatrix}
+1 \\
+\delta x_k \\
+\delta u_k
+\end{bmatrix}^{\top}
+\begin{bmatrix}
+2 Q      & Q_x     &  Q_u    \\
+Q_x^{\top} & Q_{xx}  &  Q_{xu} \\
+Q_u^{\top} & Q_{ux}  &  Q_{uu}
+\end{bmatrix}
+\begin{bmatrix}
+1 \\
+\delta x_k \\
+\delta u_k
+\end{bmatrix}
+\end{equation}
+
+<p>
+The Newton step of \(u\) at time \(k\) is given by:
+\[
+  \delta u = -Q_{uu}^{-1}Q_{u}^{\top} - Q_{uu}^{-1}Q_{ux} \delta x
+  \]
+</p>
+
+<p>
+For \(Q\) approximation:
+</p>
+\begin{eqnarray*}
+Q_x(k)    &=& L_x(k) + V_x(k+1) F_{x}(k) \\
+Q_u(k)    &=& L_u(k) + V_x(k+1) F_{u}(k) \\
+Q_{xx}(k) &=& L_{xx}(k) + F_x(k)^{\top} V_{xx}(k+1) F_x(k) + V_x(k+1) F_{xx}(k) \\
+Q_{xu}(k) &=& L_{xu}(k) + F_u(k)^{\top} V_{xx}(k+1) F_x(k) + V_x(k+1) F_{xu}(k) \\
+Q_{ux}(k) &=& L_{ux}(k) + F_x(k)^{\top} V_{xx}(k+1) F_u(k) + V_x(k+1) F_{ux}(k) \\
+Q_{uu}(k) &=& L_{uu}(k) + F_u(k)^{\top} V_{xx}(k+1) F_u(k) + V_x(k+1) F_{uu}(k)
+\end{eqnarray*}
+
+<p>
+The value function (optimal cost to go) is the Q function when the control is optimal. Therefore,
+the value function approximation is given by:
+</p>
+\begin{eqnarray*}
+V(k)      &=& Q(k) - Q_uQ_{uu}^{-1}Q_u^{\top} \\
+V_x(k)    &=& Q_x(k) - Q_u(k) Q_{uu}^{-1}(k) Q_{ux}(k) \\
+V_{xx}(k) &=& Q_{xx}(k) - Q_{xu}(k) Q_{uu}^{-1}(k) Q_{ux}(k)
+\end{eqnarray*}
+
+<p>
+The terminal conditions are:
+\[ V_x(N) = \phi_x(N) \]
+\[ V_{xx}(N) = \phi_{xx}(N) \]
+</p>
+</div>
+</div>
+<div id="outline-container-orga3ce50d" class="outline-2">
+<h2 id="orga3ce50d">iLQR</h2>
+<div class="outline-text-2" id="text-orga3ce50d">
+<p>
+The iLQR is a special form of DDP that it uses first order approximation of the system dynamics.
+</p>
+</div>
+<div id="outline-container-orgb4e64d1" class="outline-3">
+<h3 id="orgb4e64d1">Problem definition and notations</h3>
+<div class="outline-text-3" id="text-orgb4e64d1">
+<p>
+ Problem:
+\[ u(0, \ldots , N-1) = \arg \min_{u} \sum_{k=0}^{N-1} L(x_k, u_k, k) + \phi(x_N) \]
+s.t.
+</p>
+\begin{equation}
+\label{eq:ilqr-dynamics}
+x_{k+1} = F(x_k, u_k, k)
+\end{equation}
+
+<p>
+The first order approximation of the dynamics is given by:
+\[ x(k+1) = F_x \delta x(k) + F_u \delta u(k) + F(x_k, u_k, k) \]
+</p>
+
+<p>
+Define a vector as \(v := [1 \  \delta x^{\top} \ \delta u^{\top}]^{\top}\).
+</p>
+
+<p>
+The second order expansion of the cost function:
+</p>
+\begin{equation}
+L(x, u, k) := v^{\top}
+\begin{bmatrix}
+L   & L_x^{\top}   & L_u^{\top} \\
+L_x & L_{xx}     & L_{xu} \\
+L_u & L_{ux}     & L_{uu}
+\end{bmatrix}
+v
+\end{equation}
+
+<p>
+Define \(Z(x(k), u(k), k) := L(x(k), u(k), k) + V(x(k+1), k+1)\), which is often called Q function.
+The second order approximation of the Q function is given by:
+</p>
+\begin{equation}
+Z(x_k,u_k, k) =
+\frac{1}{2}
+\begin{bmatrix}
+1 \\
+\delta x \\
+\delta u
+\end{bmatrix}^{\top}
+\left[
+\begin{array}{ccc}
+2Z  & Z_x^{\top} & Z_u^{\top} \\
+Z_x & Z_{xx}   & Z_{xu}   \\
+Z_u & Z_{ux}   & Z_{uu}
+\end{array}
+\right]
+\begin{bmatrix}
+1 \\
+\delta x \\
+\delta u
+\end{bmatrix}
+\end{equation}
+
+<p>
+For the shake of simplicity, let us denote the hessian matrix as:
+</p>
+\begin{equation}
+\left[
+\begin{array}{cc|c}
+2Z  & Z_x^{\top} & Z_u^{\top} \\
+Z_x & Z_{xx}   & Z_{xu}   \\
+\hline
+Z_u & Z_{ux}   & Z_{uu}
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c|c}
+Z_{11} & Z_{12} \\
+\hline
+Z_{21} & Z_{22}
+\end{array}
+\right]
+\end{equation}
+<p>
+where \(Z_{11} \in R^{(1 + N) \times (1 + N)}\), \(Z_{12} \in R^{(1+N) \times M}\), \(Z_{21} \in R^{M \times (1 + N)}\) and
+\(Z_{22} \in R^{M \times M}\)
+</p>
+
+<p>
+Then the optimal control taken a Newton step is given by:
+\[ u^*(k) = u(k) - \alpha k - K \delta x(k) \]
+where
+\[
+  \left[k | K \right] = - Z_{22}^{-1}(k)Z_{21}(k) \in R^{M \times (1 + N)}
+  \]
+</p>
+
+
+<p>
+The value function is the Q function when the control is optimal.
+Its second order approximation is thus given by<sup><a id="fnr.ilqr-value-func-approximation" class="footref" href="#fn.ilqr-value-func-approximation" role="doc-backlink">4</a></sup>:
+</p>
+\begin{equation}
+\label{eq:ilqr-value-update}
+V(x, k) =
+\begin{bmatrix}
+1 \\
+\delta x
+\end{bmatrix}^{\top}
+(Z_{11}(k) - Z_{12}(k)Z_{22}^{-1}(k) Z_{21}(k))
+\begin{bmatrix}
+1 \\
+\delta x
+\end{bmatrix}
+\end{equation}
+
+<p>
+To make it symmetric,
+\[ V = 0.5 (V^{\top} + V) \]
+</p>
+
+<p>
+For convenience, let's define a dynamics Jacobian as:
+</p>
+\begin{equation}
+\label{eq:ilqr-dynamics-jacobian}
+D:=
+\begin{bmatrix}
+1 & 0        & 0 \\
+0 & F_x^{\top} & F_u^{\top}
+\end{bmatrix}
+\end{equation}
+
+<p>
+The the chain rule for Q function update is given by:
+</p>
+\begin{equation}
+\label{eq:ilqr-q-update}
+Z(k) = L + D^{\top} V(k+1) D
+\end{equation}
+<p>
+where
+\[ V(N) = \phi(x_N, N) \]
+\[ V_x(N) = \phi_x(x_N, N)     \]
+\[ V_{xx}(N) = \phi_{xx}(x_N, N) \]
+</p>
+</div>
+</div>
+<div id="outline-container-org20136f2" class="outline-3">
+<h3 id="org20136f2">The algorithm</h3>
+<div class="outline-text-3" id="text-org20136f2">
+<p>
+The iLQR is outlined as follows:
+</p>
+<ol class="org-ol">
+<li>For a given \(x_0\), pick a control history \(u(0, \ldots, N-1)\)</li>
+<li>Simulate forwards in time to get the state history, \(x(0, \ldots, N)\),
+according to the system dynamics of Eq. \ref{eq:ilqr-dynamics}</li>
+<li>Simulate backwards in time to update the Q history, \(Z(N, \ldots, 0)\),
+according to Eqs. \ref{eq:ilqr-value-update}, \ref{eq:ilqr-dynamics-jacobian} and \ref{eq:ilqr-q-update}.</li>
+<li>if the initial state is open, \(\delta x(0) = V_{xx}^{-1}(0) V_x(0)\). Otherwise, \(\delta x(0) = 0\).
+recorder the current cost as \(J^{0}\) and its maximum possible decrease as:
+\[
+     \Delta J = V(0) - J^0
+     \]</li>
+<li>early stop:
+<ul class="org-ul">
+<li>if \(\Delta J > 0\), return ERROR.</li>
+<li>else if \(\Delta J > - abs\_tols\) or \(|\Delta J / J^0| < rel\_tol\), return SUCCESS</li>
+<li>if exceed iteration number, return WARNING</li>
+</ul></li>
+<li>Backtracking line search<sup><a id="fnr.backtracing-line-search" class="footref" href="#fn.backtracing-line-search" role="doc-backlink">5</a></sup>:
+<ol class="org-ol">
+<li>Start with \(\alpha = 1.0\) and iteration number \(i\) as 1</li>
+<li>Simulate forwards in time to get the state and control history.
+\[ x(0) \gets x(0) - \alpha \delta x(0) \]
+\[ u(k) \gets u(k) - \alpha k - K \delta x(k) \]</li>
+<li>Evaluate the resultant trajectory and denote its cost as \(J^i\).</li>
+<li>if \(J^{i} < J^{0} - \alpha * c * |\Delta J|\), where \(c \in (0, 0.5)\) is the Armijo factor (typically \(c=0.25)\), then return SUCCESS.
+Otherwise, \(\alpha \gets \tau \alpha\), where \(\tau \in (0,1)\) is the backtracking parameter, and repeat b).
+If \(i > i_{max}\) or \(\alpha\) becomes zero, return ERROR.</li>
+</ol></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-org97eee11" class="outline-2">
+<h2 id="org97eee11">Continuous LQR (Linear Quadratic Regulator)</h2>
+<div class="outline-text-2" id="text-org97eee11">
+</div>
+<div id="outline-container-org946fc45" class="outline-3">
+<h3 id="org946fc45">Finite horizon LQR</h3>
+<div class="outline-text-3" id="text-org946fc45">
+<p>
+For finite horizon LQR, we are solving:
+\[
+   u(t) = \arg \min_{u} x_f^{\top} Q(t_f) x_f +
+   \int_{t_0}^{t_f} \frac{1}{2} x^{\top}(t) Q(t) x(t) + \frac{1}{2} u^{\top}(t) R(t) u(t)
+   \]
+s.t.
+\[ \dot{x}(t) = A(t) x(t) + B(t) u(t) \]
+</p>
+
+<p>
+The Hamiltonian:
+\[ H = \frac{1}{2} x^{\top} Q x + \frac{1}{2} u^{\top} R u  + \lambda^{\top} (A x + B u) \]
+The optimal control is given by:
+\[ H_u = 0 \]
+then we have:
+\[ u^*= -R^{-1} B^{\top} \lambda \]
+</p>
+
+<p>
+For the co-state:
+\[\dot{\lambda} = -H_x^{\top} = -Q x - A^{\top} \lambda \]
+</p>
+
+<p>
+Using the optimal control, the system dynamics with co-state can be written as:
+</p>
+\begin{equation}
+\label{eq:Hamiltonian-de}
+\frac{d}{dt} \begin{bmatrix}
+x \\
+\lambda
+\end{bmatrix}
+= \begin{bmatrix}
+A(t) & - B(t)R^{-1}(t)B^{\top}(t) \\
+-Q(t) & -A^{\top} (t)
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+\lambda
+\end{bmatrix}
+\end{equation}
+
+<p>
+Note:
+</p>
+<ul class="org-ul">
+<li>Eq. \ref{eq:Hamiltonian-de} is called Hamiltonian DE.</li>
+<li>The \(2n \times 2n\) matrix is called Hamiltonian for the problem.</li>
+<li>with conditions: \(x(0) = x_0\) and \(\lambda(t_f) = Q_f x(t_f)\),
+the problem is a Two-Point Boundary Value problem.</li>
+</ul>
+
+<p>
+Since \(\lambda(t_f) = Q_f x(t_f)\), let's try a connection \(\lambda = P(t) x(t)\), we have:
+</p>
+\begin{equation}
+\label{eq:riccati-de}
+-\dot{P} = P(t)A(t) + A(t)^{\top} P(t) + Q(t) - P(t)B(t)R^{-1}(t)B(t)^{\top} P(t)
+\end{equation}
+<p>
+s.t.
+\[ P(t_f) = Q_f \]
+</p>
+
+<p>
+Note:
+</p>
+<ul class="org-ul">
+<li>Eq. \ref{eq:riccati-de} is Riccati differential equation.</li>
+<li>It can be derived by Eq. \ref{eq:lambda_x-ode}.</li>
+<li>we can integrate backwards in time to get \(P(t)\) and then get optimal control:
+\[ u^*= -R^{-1}(t) B^{\top}(t) P(t) x(t) \]</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org8af8177" class="outline-3">
+<h3 id="org8af8177">Infinite horizon LQR</h3>
+<div class="outline-text-3" id="text-org8af8177">
+<p>
+For finite horizon LQR, we are solving:
+\[
+   \min_{u} \int_{0}^{\infty} \frac{1}{2} x^{\top}(t) Q x(t) + \frac{1}{2} u^{\top}(t) R u(t)
+   \]
+s.t.
+\[ \dot{x}(t) = A x(t) + B u(t) \]
+</p>
+
+<p>
+\(P\) is found by solving the continuous time algebraic Riccati equation:
+</p>
+
+
+<p>
+\[
+   0 = PA + A^{\top} P + Q - PBR^{-1}B^{\top} P
+   \]
+</p>
+
+<p>
+The optimal control is given by:
+\[
+   u = -R^{-1}B^{\top} P x
+   \]
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org540e33b" class="outline-2">
+<h2 id="org540e33b">Discrete LQR</h2>
+<div class="outline-text-2" id="text-org540e33b">
+<p>
+For discrete time LQR, we are interested in the following problem:
+\[
+  u(0, \dots, N-1) = \arg \min_{u} \sum_{k=0}^{N-1} \frac{1}{2} x_k^{\top} Q_k x_k +
+  \frac{1}{2} u_k^{\top} R_k u_k +  x_N^{\top} P_N x_N
+  \]
+s.t.
+\[ x_{k+1} = A_k x_k + B_k u_k \]
+\[ x_0 = x(0) \]
+</p>
+
+<p>
+We can derive discrete time LQR using the results of discrete time DDP,
+where \(L_x(k) = x^{\top} Q\), \(L_u= u^{\top} R\), \(L_{xx} = Q\), \(Luu = Q\),
+\(F_x = A\), \(F_u = B\).
+</p>
+</div>
+</div>
+<div id="outline-container-orgaad5a59" class="outline-2">
+<h2 id="orgaad5a59">Backpropagate as a network</h2>
+<div class="outline-text-2" id="text-orgaad5a59">
+<p>
+The following diagram best describes the nature of the optimal control problem, which is a Two-point Boundary Value Problem, where
+the initial state and the final co-state are defined <sup><a id="fnr.Efficient-robust-policy-optimization" class="footref" href="#fn.Efficient-robust-policy-optimization" role="doc-backlink">6</a></sup>.
+</p>
+
+<div class="org-center">
+
+<figure id="org573af3c">
+<img src="./one-step-traj-opt.png" alt="one-step-traj-opt.png">
+
+</figure>
+</div>
+
+<p>
+Note: There is a connection between &pi; and v(k+1), which is not shown in the original paper, because:
+\[ \pi(x_k) = \arg \min_{u_k} L(x_k, u_k, k) + V(x_{k+1}, k+1) \]
+</p>
+</div>
+</div>
+<div id="outline-container-org3def8cd" class="outline-2">
+<h2 id="org3def8cd">Numerical Integration</h2>
+<div class="outline-text-2" id="text-org3def8cd">
+</div>
+<div id="outline-container-orgb2a9bf5" class="outline-3">
+<h3 id="orgb2a9bf5">The model ODE</h3>
+<div class="outline-text-3" id="text-orgb2a9bf5">
+<p>
+The first order ODE:
+\[ \frac{dy}{dt} = f(t, y) \]
+where \(y \in R^N\). It is interesting because high order ODEs can be written in form of
+a system of first order ODEs.
+</p>
+</div>
+</div>
+<div id="outline-container-org072e854" class="outline-3">
+<h3 id="org072e854">Euler method</h3>
+<div class="outline-text-3" id="text-org072e854">
+<ul class="org-ul">
+<li>forward Euler:
+\[ y_{k+1} =  y_{k} + \Delta T f(y(k)) \]</li>
+
+<li>backward Euler:
+\[ y_{k+1} = y_k + \Delta T f(y(k+1)) \]</li>
+</ul>
+
+<p>
+The forward Euler is also called explicit method because
+you can evaluate the next time step by an explicit equation.
+It is simple but less stable.
+</p>
+
+<p>
+The backward Euler is also called implicit method because
+you have to solve nonlinear equations to get the next step.
+It is more complicate by more stable <sup><a id="fnr.7" class="footref" href="#fn.7" role="doc-backlink">7</a></sup>.
+</p>
+</div>
+</div>
+<div id="outline-container-org1b9c3ca" class="outline-3">
+<h3 id="org1b9c3ca">Runge-Kutta methods</h3>
+<div class="outline-text-3" id="text-org1b9c3ca">
+<p>
+The Runge-Katta methods are the most popular methods of solving ODE numerically.
+They can be derived for any order of accuracy.
+The most popular method is the fourth order Runge-Kutta method, or RK4 method, which is given by
+</p>
+\begin{eqnarray}
+y_{k+1} &=& y_k + \frac{1}{6} (k_1 + 2K_2 + 2K_3 + k_4), \\
+k_1 &=& h f(t_k, y_k) \\
+k_2 &=& h f(t_k + \frac{h}{2}, y_k + \frac{1}{2} k_1) \\
+K_3 &=& h f(t_k + \frac{h}{2}, y_k + \frac{1}{2} k_2) \\
+k_4 &=& h f(t_k + h, y_k + k_3)
+\end{eqnarray}
+</div>
+</div>
+<div id="outline-container-org655655d" class="outline-3">
+<h3 id="org655655d">Quadrature</h3>
+<div class="outline-text-3" id="text-org655655d">
+<p>
+Quadrature is more or less a a synonym for numerical integration,
+especially as applied to one-dimensional integrals.
+Some authors refer to numerical integration over more than one dimension as cubature;
+others take quadrature to include higher-dimensional integration.
+</p>
+
+<p>
+\[ \int_a^b f(y) dt \approx \sum_{i=1}^N w_i f(t_i) \]
+where \(w_i\) are the quadrature weights and \(t_i\) are the quadrature points or nodes.
+</p>
+
+<p>
+An interpolatory quadrature formula can be created for arbitrary support points by
+approximating the integrand by Lagrange polynomials, so that
+\[ \int_a^b f(y) dt \approx \int_{a}^b \sum_{i=1}^N L_i(t) \cdot f(t_i) dt \]
+</p>
+
+<p>
+The quadrature weights can be easily determined as
+\[ w_i = \int_a^b L_i(t) dt \]
+</p>
+
+<p>
+The quadrature formula with the maximum degree of precision is the
+<b>Gauss quadrature</b> formula, which is exact for polynomials of degree \(2N - 1\) or less. The
+Gauss formula is found by choosing the weights \(w_i\) and points \(t_i\) which make the
+formula exact for the highest degree polynomial possible. The points and weights
+are determined so that
+\[ \int_{-1}^{1} f(t) dt = \sum_{i=1}^N w_i \cdot f(t_i) + E_N \]
+and the error \(E_N\) is zero for a polynomial of degree \(2N-1\). The Gauss
+points are determined as the zeros of the \(N^{th}\) degree Legendre polynomial and
+the weights are the integrals of the resulting Lagrange interpolating polynomials, so
+that
+\[ w_i = \int_{-1}^{1} \prod_{k=1, k \ne i}^{N} \frac{t-t_k}{t_i - t_k} dt,\  i =1, \ldots, N \]
+</p>
+
+<p>
+There are other types of quadrature formula, such LGL, which is similar to the Gauss formula,
+except the boundary points are fixed at -1 and 1.
+</p>
+
+<p>
+The error in the pesudospectral integration at the \(i^{th}\) point is bounded by
+\[
+   \|E_i\| \le \| \frac{d^N f(\xi)}{dt^N}\| \frac{2}{N!}, \ \xi \in [-1,1]
+   \]
+and the pseudospectral integral will converge for any \(f(t)\) whose derivatives are bounded,
+as the number of nodes used approaches infinity <sup><a id="fnr.gauss-pseudospectral-opt" class="footref" href="#fn.gauss-pseudospectral-opt" role="doc-backlink">8</a></sup>.
+</p>
+</div>
+</div>
+<div id="outline-container-org1b1f55c" class="outline-3">
+<h3 id="org1b1f55c">Solve ODEs backwards in time</h3>
+<div class="outline-text-3" id="text-org1b1f55c">
+<p>
+Having a dynamics equation, it seems normal to integrate forward to get the time history. Backward ODE sounds odd
+because how can you integrate a dynamic system backward in time. But actually, it is still normal in math. We can
+still use Runge-Kutta to integrate ODEs backward in time using a negative time step!
+</p>
+
+\begin{eqnarray}
+y_{k-1} &=& y_k + \frac{1}{6} (k_1 + 2K_2 + 2K_3 + k_4), \\
+k_1 &=& h f(t_k, y_k) \\
+k_2 &=& h f(t_k - \frac{h}{2}, y_k - \frac{1}{2} k_1) \\
+K_3 &=& h f(t_k - \frac{h}{2}, y_k - \frac{1}{2} k_2) \\
+k_4 &=& h f(t_k - h, y_k - k_3)
+\end{eqnarray}
+
+
+<figure id="orgfae263f">
+<img src="forward_backward_sim.png" alt="forward_backward_sim.png" width="500">
+
+<figcaption><span class="figure-number">Figure 1: </span>Comparison between solving ODEs forwards and backwards in time</figcaption>
+</figure>
+
+<p>
+<a href="https://github.com/cgliu/optimal_control/blob/master/tests/ode_forwards_backwards.py">Code</a>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgccd4a49" class="outline-2">
+<h2 id="orgccd4a49">Lagrange interpolation</h2>
+<div class="outline-text-2" id="text-orgccd4a49">
+<p>
+Given \(N\) arbitrary support points of the function \(f(t)\), on interval \(t \in [a,b]\),
+there exists a unique polynomial P(t), of degree N-1 so that
+\[
+  P(t_i) = f_i, i = 1, \ldots, N
+  \]
+</p>
+
+<p>
+The unique polynomial can be found using Lagrange interpolation formula so that
+\[
+  P(t) = \sum_{i=1}^{N} f_i L_i(t)
+  \]
+where \(L_i(t)\) are the Lagrange interpolation polynomials
+\[
+  L_i(t) = \prod_{k=1, k \ne i}^{N} \frac{t-t_k}{t_i - t_k} dt,\  i =1, \ldots, N 
+  \]
+</p>
+</div>
+<div id="outline-container-org83b590f" class="outline-3">
+<h3 id="org83b590f">Spectral method for ODE and PDE</h3>
+<div class="outline-text-3" id="text-org83b590f">
+<ul class="org-ul">
+<li>Galerkin, tau method</li>
+<li>Pseudospectral method, or collocation method
+satisfy boundary constraints and collocation points</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org79053b6" class="outline-2">
+<h2 id="org79053b6">Direct transcription</h2>
+<div class="outline-text-2" id="text-org79053b6">
+<p>
+Take the state and the control at collocation points as optimization variables
+</p>
+</div>
+<div id="outline-container-orgf1a1e92" class="outline-3">
+<h3 id="orgf1a1e92">Euler method</h3>
+</div>
+<div id="outline-container-org7f19f76" class="outline-3">
+<h3 id="org7f19f76">Runge-Kutta method</h3>
+</div>
+<div id="outline-container-org4732d17" class="outline-3">
+<h3 id="org4732d17">Lagrange Pseudospectral method</h3>
+<div class="outline-text-3" id="text-org4732d17">
+<p>
+it is outlined as:
+</p>
+<ul class="org-ul">
+<li><b>Lagrange interpolation + Gauss quadrature</b></li>
+<li>the state and control are interpolated using Lagrange interpolation
+at N LGL points</li>
+<li>the dynamics constraints are enforced at the LGL points</li>
+<li>boundary constraints are enforced using the boundary points of approximating polynomial</li>
+<li>the integration in the cost function is discretized using GL quadrature rule</li>
+</ul>
+
+<p>
+problems:
+</p>
+<ul class="org-ul">
+<li>the cost is evaluated only at the collocation points, which in general is sparse.
+It may miss some important details in the cost functions. <b>more details here</b></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org2e0fea5" class="outline-3">
+<h3 id="org2e0fea5">Gauss Pseudospectral method</h3>
+<div class="outline-text-3" id="text-org2e0fea5">
+<p>
+outlined as:
+</p>
+<ul class="org-ul">
+<li>convert to Bolza formulation
+use Lagrange interpolation + Gauss quadrature</li>
+<li>integration approximation matrix</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.continuous-value-func-assumption" class="footnum" href="#fnr.continuous-value-func-assumption" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Here we are assuming the augmented Lagrangian is differentiable. In fact, it is
+quite often for problems with bounded controls and terminal cost to have nondifferentiable optimal cost-to-go functions.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.lagrangian-hamiltonian" class="footnum" href="#fnr.lagrangian-hamiltonian" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Recall that we can get Hamiltonian from Lagrangian by calculating the momenta by
+differentiating the augmented Lagrangian with respect to the 'velocity', \(\dot{x}\), as
+\(p=\frac{\partial{L}}{\partial{\dot{q}}}\). Then the Hamiltonian is then given by \(H=p\dot{q}-L\). As we can see that the
+Lagrange multiplier \(\lambda\) in Eq. \ref{eq:continous-variation} is actually the 'momenta', but with an opposite sign.
+This gives us an interesting insight into the optimal control problem.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3" role="doc-backlink">3</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+'Cool things in Physics and optimization'  <a href="https://cgliu.github.io/posts/optimization-physics.pdf">Link</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.ilqr-value-func-approximation" class="footnum" href="#fnr.ilqr-value-func-approximation" role="doc-backlink">4</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+This is not a 'real' value function since we haven't found the optimal trajectory yet.
+However, this is the best one that we can get.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.backtracing-line-search" class="footnum" href="#fnr.backtracing-line-search" role="doc-backlink">5</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+: Refer to <a href="https://en.wikipedia.org/wiki/Backtracking_line_search">https://en.wikipedia.org/wiki/Backtracking_line_search</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.Efficient-robust-policy-optimization" class="footnum" href="#fnr.Efficient-robust-policy-optimization" role="doc-backlink">6</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Efficient robust policy optimization, American Control Conference (ACC), 2012, Christopher G. Atkeson, Robotics Institute, Carnegie Mellon University, 5000 Forbes Avenue, Pittsburgh, PA, USA
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.7" class="footnum" href="#fnr.7" role="doc-backlink">7</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="https://web.stanford.edu/~fringer/teaching/numerical_methods_02/handouts/lecture7.pdf">https://web.stanford.edu/~fringer/teaching/numerical_methods_02/handouts/lecture7.pdf</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.gauss-pseudospectral-opt" class="footnum" href="#fnr.gauss-pseudospectral-opt" role="doc-backlink">8</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+A Gauss Pseudospectral Transcription for Optimal Control
+by David Benson, MIT, 2005
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<script>
+// Sidebar toggle
+document.querySelector('.sidebar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  this.classList.toggle('active');
+});
+
+// Theme toggle
+(function() {
+  var stored = localStorage.getItem('theme');
+  if (stored) {
+    document.documentElement.setAttribute('data-theme', stored);
+  }
+  document.querySelector('.theme-toggle').addEventListener('click', function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+})();
+
+// Active nav highlight
+(function() {
+  var path = window.location.pathname;
+  document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (path === href || (href !== '/index.html' && path.indexOf(href.replace('.html','')) === 0)) {
+      link.classList.add('active');
+    }
+  });
+})();
+
+// Fade in / fade out on scroll
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    } else {
+      entry.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.intro p, .blog-card, .pub-entry, .timeline-item, .hero-image').forEach(function(el) {
+  el.classList.add('fade-item');
+  observer.observe(el);
+});
+
+// Scroll progress bar
+window.addEventListener('scroll', function() {
+  var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var progress = (scrollTop / scrollHeight) * 100;
+  document.querySelector('.scroll-progress').style.width = progress + String.fromCharCode(37);
+});
+</script>
+</div>
+</body>
+</html>

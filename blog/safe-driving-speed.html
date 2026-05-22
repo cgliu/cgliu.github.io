@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2026-05-21 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Safe Driving Speed for Self-Driving Car</title>
+<meta name="description" content="Determining safe operational speeds for autonomous vehicles" />
+<meta name="generator" content="Org Mode" />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<div class="scroll-progress"></div>
+<aside class="sidebar">
+  <div class="sidebar-inner">
+    <img src="/images/avatar.svg" alt="Chenggang Liu" class="sidebar-avatar"/>
+    <a href="/index.html" class="site-logo">Chenggang Liu</a>
+    <nav class="sidebar-nav">
+      <a href="/index.html">Home</a>
+      <a href="/blogs.html">Blogs</a>
+      <a href="/publications.html">Publications</a>
+      <a href="/about.html">About</a>
+    </nav>
+    <div class="sidebar-search">
+      <input type="text" class="sidebar-search-input" placeholder="Search..."/>
+      <div class="sidebar-search-results"></div>
+    </div>
+    <button class="theme-toggle" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div class="sidebar-social">
+      <a href="https://www.linkedin.com/in/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="https://github.com/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <a href="https://scholar.google.com/citations?user=omz_MCoAAAAJ&hl=en" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg></a>
+    </div>
+  </div>
+</aside>
+<button class="sidebar-toggle" aria-label="Toggle menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="top-bar">
+  <button class="top-bar-toggle" aria-label="Toggle menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+  <a href="/index.html" class="top-bar-title">Chenggang Liu</a>
+  <button class="top-bar-search" aria-label="Open search bar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+  </button>
+</div>
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" class="search-input" placeholder="Search..."/>
+    <button class="search-close" aria-label="Close search">&times;</button>
+  </div>
+  <div class="search-results"></div>
+</div>
+</div>
+<div id="content" class="content">
+<header>
+<h1 class="title">Safe Driving Speed for Self-Driving Car</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org935d865">Introduction</a></li>
+<li><a href="#org5088765">Questions</a></li>
+<li><a href="#org661fb7d">A simple deterministic case study</a></li>
+<li><a href="#orgf320fdb">Probabilistic Collision</a></li>
+<li><a href="#org430a1b2">A simple probabilistic case study</a></li>
+</ul>
+</div>
+</nav>
+<div id="outline-container-org935d865" class="outline-2">
+<h2 id="org935d865">Introduction</h2>
+<div class="outline-text-2" id="text-org935d865">
+<p>
+I think safety is not something luxury, but something we need to consider at the beginning of design. It won't happen
+automatically and we need to build safety into the design. Safety comes from design, not from testing. To achieve the
+desired safety assurance level, we need to figure out the critical performance parameters in the design.
+</p>
+</div>
+</div>
+<div id="outline-container-org5088765" class="outline-2">
+<h2 id="org5088765">Questions</h2>
+<div class="outline-text-2" id="text-org5088765">
+<ul class="org-ul">
+<li>How can we evaluate how safe is the current design?</li>
+<li>We want the perception system to be perfect, but it is not practical.
+Then what's the required precision of the perception system?</li>
+<li>We can't know the extract location of the vehicle, then what's
+the required precision of the localization system?</li>
+<li>The software can't run infinite fast and the vehicle platform has an intrinsic delay.
+How does the perception-reaction delay impact on the safety of the whole system? What's a reasonable target maximum reaction delay?</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org661fb7d" class="outline-2">
+<h2 id="org661fb7d">A simple deterministic case study</h2>
+<div class="outline-text-2" id="text-org661fb7d">
+<p>
+Assuming the vehicle's initial speed is \(v_0\), its maximum deceleration is \(a\), the perception-reaction delay is \(\tau\),
+then the minimum stop distance is
+\[
+  d = v_0 \tau + \frac{v_0^2}{2 a}
+  \]
+</p>
+
+<p>
+If there is any obstacle within this distance, a collision will occur.
+To avoid collisions, the vehicle needs to ensure a clearance distance as a function of current speed \(v_0\).
+</p>
+
+\begin{equation}
+\label{eq:1}
+\mathrm{clearnace} = v_0 \tau + \frac{v_0^2}{2 a}
+\end{equation}
+
+
+<p>
+Discussion:
+</p>
+<ul class="org-ul">
+<li>the required clearance distance increases with the reaction delay, \(\tau\),
+and the rate is the initial speed.</li>
+<li>The required clearance distance quadratically increases with the initial speed.</li>
+</ul>
+
+<p>
+We have assumed the pedestrian doesn't move before the vehicle is stopped. What if he is moving towards us at speed, \(v_p\)?
+\[
+  \mathrm{clearnace} = \frac{v_0^2}{2 a} + (\tau + \frac{v_p}{a}) v_0 + \tau v_p
+  \]
+</p>
+
+<p>
+As we can see, there is a minimal clearance distance for moving obstacle, which is \(\tau v_p\), which \(v_p\) is the
+worst-case approaching speed.
+</p>
+
+<p>
+The equation above gives us the relation between the reaction time, the clearance distance, and the driving speed based on
+perfect perception and localization.
+But the world is not perfect, we can't know our and others' exact location. We need take uncertainties into
+account so we can derive more practical performance requirements.
+</p>
+</div>
+</div>
+<div id="outline-container-orgf320fdb" class="outline-2">
+<h2 id="orgf320fdb">Probabilistic Collision</h2>
+<div class="outline-text-2" id="text-orgf320fdb">
+<p>
+The collision probability for the AV with its environment at a particular moment of time:
+\[
+  p = \int_{\mathcal{S}} p_{av}(s) p_{env}(s) ds
+  \]
+where \(p_{av}(s)\) is the probability of the av at location \(s\),
+\(p_{env}(s)\) is the probability that location \(s\) is occupied by its environment,
+\(s \in \mathcal{S}\) and \(S\) the operational area.
+</p>
+</div>
+</div>
+<div id="outline-container-org430a1b2" class="outline-2">
+<h2 id="org430a1b2">A simple probabilistic case study</h2>
+<div class="outline-text-2" id="text-org430a1b2">
+<p>
+Assuming the vehicle's initial position and velocity satisfy:
+\[
+  x_{av}(0) \sim \mathcal{N}(\mu_{av}(0), \Sigma_{av(0)})
+  \]
+where \(\Sigma_{av}(0)\) is the localization co-variance matrix at time 0.
+</p>
+
+<p>
+Assuming the pedestrian's initial position and velocity satisfy:
+\[
+  x_{ped} \sim \mathcal{N}(\mu_{ped}(0), \Sigma_{ped}(0))
+  \]
+where \(\Sigma_{ped}(0)\) is the perception co-variance matrix at time 0.
+</p>
+
+
+<figure id="orgbb75f03">
+<img src="probabilistic_collision.png" alt="probabilistic_collision.png" width="500">
+
+</figure>
+
+<p>
+For shake of simplicity, let's consider a simple linear system for the vehicle and the pedestrian:
+\[
+  x(k+1) = A x(k) + B u(k)
+  \]
+where
+\(x := [\mathrm{position} \ \mathrm{velocity}]^{\top}\), \(u := \mathrm{acceleration}\),
+</p>
+\begin{equation}
+A = \begin{bmatrix}
+1 & dt \\
+0 & 1
+\end{bmatrix}
+\end{equation}
+<p>
+and \(B = [0.5 dt^2, dt ]^{\top}\)
+</p>
+
+<p>
+If we ignore the process noise and only consider the measurement noise, then we have
+</p>
+\begin{equation}
+\label{eq:prediction}
+P(t) = \begin{bmatrix}
+\sigma_p^2 + t^2 \sigma_v^2 & t \sigma_v^2 \\
+t \sigma_v^2 & \sigma_v^2
+\end{bmatrix}
+\end{equation}
+<p>
+where \(\sigma_p\) is the position variance and \(\sigma_v\) is the velocity variance.
+Notice that the position variance at time t is \(\sigma_p(t)^2 = \sigma_p(0)^2 + t^2 \sigma_v^2(0)\).
+</p>
+
+
+<p>
+Let's denote the distance between the vehicle and the pedestrian as \(z=s_{ped} -s_{av}\).
+Since \(z\) is a linear combination of two normal distributions, we have
+\[
+  p(z|t) \sim \mathcal{N}(s_{ped}(t) - s_{av}(t), \sigma_{p_{av}}(t)^2 + \sigma_{p_{ped}}(t)^2)
+  \]
+Let's denote \(\sigma_{p_{av}}^2 + \sigma_{p_{ped}}^2\) as \(\sigma_{p}^2\),
+\(\sigma_{v_{av}}^2 + \sigma_{v_{ped}}^2\) as \(\sigma_{v}^2\).
+</p>
+
+
+<p>
+Finally, we can get the collision probability at time t:
+\[
+  P(z \le 0 | t) = \int_{-\infty}^{0} p(z|t) dz
+  \]
+</p>
+
+
+<figure id="org2c6c5ae">
+<img src="collision_probability.png" alt="collision_probability.png" width="500">
+
+</figure>
+
+<p>
+If we want the collision probability at time t, \(P(z|t) \le  2.5\%\), the clearance distance must satisfy:
+\[
+  z \ge  2 \sigma_{p}
+  \]
+</p>
+
+<p>
+So far, we know the relationship between a clearance distance and uncertainties.
+If we take the controlability into account, the clearance distance becomes:
+</p>
+\begin{equation}
+\label{eq:final}
+\mathrm{clearance} = v_0 \tau + \frac{v_0^2}{2 a} + 2 \sigma_{p}(T)
+\end{equation}
+<p>
+where \(T\) is the time to stop and \(T = \tau + v_0/a\). Eq. \ref{eq:final} looks simple but has lot of information, for
+example, \(\sigma_p(T)\) depends on localization co-variance, prediction co-variance, and perception co-variance.
+</p>
+
+<p>
+If using a prediction in Eq. \ref{eq:prediction}, we have
+\[
+  \mathrm{clearance} = v_0 \tau + \frac{v_0^2}{2 a} + 2 \sqrt{\sigma_{p}^2(0) + T^2 \sigma_v^2(0)}
+  \]
+</p>
+
+<p>
+In general, \(\sigma_v >> \sigma_p\), this equation can be further simplified as:
+\[
+  \mathrm{clearance} = \frac{v_0^2}{2a} + \big ( \tau + \frac{2\sigma_v}{a}\big ) v_0 + 2 \sigma_v \tau
+  \]
+</p>
+
+<p>
+Notice that there is a minimum clearance distance cause by the reaction delay: \(\mathrm{clearance}_{min} = 2 \sigma_v \tau\).
+</p>
+
+<p>
+For the first time, we get the connection between the safe drive speed,
+the localization precision, the perception precision, and the system reaction delay.
+When we design a safe self-driving system, we need to consider the perception, localization,
+motion planning, and control system as a whole. I hope this equation can help us find such a
+safe system.
+</p>
+
+<p>
+To be continued &#x2026;
+</p>
+<div class="org-center">
+<iframe width="853" height="480" src="https://www.youtube.com/embed/yZ-axiu9aqc?ecver=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script>
+// Sidebar toggle
+document.querySelector('.sidebar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  this.classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+document.querySelector('.top-bar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  document.querySelector('.sidebar-toggle').classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+
+// Search toggle
+(function() {
+  var overlay = document.querySelector('.search-overlay');
+  var input = document.querySelector('.search-input');
+  var results = document.querySelector('.search-results');
+  document.querySelector('.top-bar-search').addEventListener('click', function() {
+    overlay.classList.toggle('active');
+    if (overlay.classList.contains('active')) input.focus();
+  });
+  document.querySelector('.search-close').addEventListener('click', function() {
+    overlay.classList.remove('active');
+    input.value = '';
+    results.innerHTML = '';
+  });
+  var pages = [];
+  fetch('/search-index.json').then(function(r){return r.json();}).then(function(d){pages=d;});
+  input.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { results.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    results.innerHTML = html || '<p style="color:#64748b">No results</p>';
+  });
+
+  // Sidebar search
+  var sInput = document.querySelector('.sidebar-search-input');
+  var sResults = document.querySelector('.sidebar-search-results');
+  sInput.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { sResults.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    sResults.innerHTML = html || '<p style="color:rgba(255,255,255,0.4)">No results</p>';
+  });
+})();
+
+// Theme toggle
+(function() {
+  var stored = localStorage.getItem('theme');
+  if (stored) {
+    document.documentElement.setAttribute('data-theme', stored);
+  }
+  document.querySelector('.theme-toggle').addEventListener('click', function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+})();
+
+// Active nav highlight
+(function() {
+  var path = window.location.pathname;
+  document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (path === href || (href !== '/index.html' && path.indexOf(href.replace('.html','')) === 0)) {
+      link.classList.add('active');
+    }
+  });
+})();
+
+// Fade in / fade out on scroll
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    } else {
+      entry.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.intro p, .blog-card, .pub-entry, .timeline-item, .hero-image').forEach(function(el) {
+  el.classList.add('fade-item');
+  observer.observe(el);
+});
+
+// Scroll progress bar
+window.addEventListener('scroll', function() {
+  var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var progress = (scrollTop / scrollHeight) * 100;
+  document.querySelector('.scroll-progress').style.width = progress + String.fromCharCode(37);
+});
+
+// Tag filtering on blogs page
+(function() {
+  document.querySelectorAll('.card-tag').forEach(function(tag) {
+    tag.style.cursor = 'pointer';
+    tag.addEventListener('click', function(e) {
+      e.preventDefault();
+      var selected = this.textContent.trim();
+      var allCards = document.querySelectorAll('.blog-card');
+      var allItems = document.querySelectorAll('.timeline-item');
+      var isActive = this.classList.contains('tag-active');
+      document.querySelectorAll('.card-tag').forEach(function(t) { t.classList.remove('tag-active'); });
+      if (isActive) {
+        allCards.forEach(function(c) { c.style.display = ''; });
+        allItems.forEach(function(i) { i.style.display = ''; });
+      } else {
+        this.classList.add('tag-active');
+        allCards.forEach(function(c) {
+          var t = c.querySelector('.card-tag');
+          c.style.display = (t && t.textContent.trim() === selected) ? '' : 'none';
+        });
+        allItems.forEach(function(i) {
+          var visible = i.querySelectorAll('.blog-card[style=""], .blog-card:not([style])');
+          var hasVisible = Array.from(i.querySelectorAll('.blog-card')).some(function(c) { return c.style.display !== 'none'; });
+          i.style.display = hasVisible ? '' : 'none';
+        });
+      }
+    });
+  });
+})();
+</script>
+</div>
+</body>
+</html>

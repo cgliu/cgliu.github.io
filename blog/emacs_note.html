@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2026-05-20 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Notes on Emacs</title>
+<meta name="author" content="Frank Liu" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="../css/org-manual.css" />
+<style type="text/css">body{ max-width:80%; }</style>
+
+<script src="../js/org-info.js">
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+// @license-end
+</script>
+
+<script>
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+org_html_manager.set("TOC_DEPTH", "2");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "index.html");
+org_html_manager.set("LOCAL_TOC", "0");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "#dddddd");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "0");
+org_html_manager.set("VIEW", "showall");
+org_html_manager.setup();  // activate after the parameters are set
+// @license-end
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="index.html"> UP </a>
+ |
+ <a accesskey="H" href=""> HOME </a>
+</div><div id="preamble" class="status">
+<div class="scroll-progress"></div>
+<aside class="sidebar">
+  <div class="sidebar-inner">
+    <img src="/images/avatar.svg" alt="Chenggang Liu" class="sidebar-avatar"/>
+    <a href="/index.html" class="site-logo">Chenggang Liu</a>
+    <nav class="sidebar-nav">
+      <a href="/index.html">Home</a>
+      <a href="/blogs.html">Blogs</a>
+      <a href="/publications.html">Publications</a>
+      <a href="/about.html">About</a>
+    </nav>
+    <button class="theme-toggle" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div class="sidebar-social">
+      <a href="https://www.linkedin.com/in/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="https://github.com/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <a href="https://scholar.google.com/citations?user=omz_MCoAAAAJ&hl=en" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg></a>
+    </div>
+  </div>
+</aside>
+<button class="sidebar-toggle" aria-label="Toggle menu">
+  <span></span><span></span><span></span>
+</button>
+</div>
+<div id="content" class="content">
+<header>
+<h1 class="title">Notes on Emacs</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org95457c8">Time management in Emacs</a></li>
+<li><a href="#org837b70d">Installation Emacs from source</a></li>
+<li><a href="#orge9f155d">Automatically install missing package</a></li>
+<li><a href="#orge6f692b">helm mode settings</a></li>
+<li><a href="#org1dc00d5">Programming in Emacs</a>
+<ul>
+<li><a href="#org45cb8a6">Find things at fingertip</a></li>
+<li><a href="#org4c6b3e4">Index special file format (for example, .hidl files)</a></li>
+<li><a href="#orge0aca37">Git integration</a></li>
+<li><a href="#orgae5ba69">elpy usage</a></li>
+<li><a href="#org24cf34f">Other convenient things</a></li>
+</ul>
+</li>
+<li><a href="#org9e0f2e2">Useful commands</a>
+<ul>
+<li><a href="#orgb7bf503">Multiple line edit (rectangle edit)</a></li>
+<li><a href="#orgdfcc082">How to decide whether to save (diff buffer with original file)</a></li>
+<li><a href="#orgf0ce5e2">How to split into 3 even windows</a></li>
+<li><a href="#org72651cf">change font size</a></li>
+<li><a href="#org5928b29">run shell command in Emacs</a></li>
+<li><a href="#org4b15c18">Show all key bindings</a></li>
+</ul>
+</li>
+<li><a href="#org9beeca7">rtags c++ indexer</a>
+<ul>
+<li><a href="#org229bebd">General</a></li>
+<li><a href="#orgb5c3d8a">install</a></li>
+<li><a href="#org44e21c9">usage</a></li>
+<li><a href="#orgab302fb">help</a></li>
+<li><a href="#orgfc5c17c">Emacs setting for rtags</a></li>
+</ul>
+</li>
+<li><a href="#org9da0887">Terminal in Emacs</a></li>
+<li><a href="#orge7f50bf">terminal color theme settings</a></li>
+<li><a href="#org401ba28">set fill-paragraph width</a></li>
+<li><a href="#org2fa44b5">MobileOrg setting</a></li>
+<li><a href="#org63b468c">Common key bindings</a></li>
+<li><a href="#org314552c">color theme</a>
+<ul>
+<li><a href="#org45c93b2">Cool website that can generate color theme online:</a></li>
+<li><a href="#org415daad">Using Emacs native color theme (maybe only for V24 or later)</a></li>
+</ul>
+</li>
+<li><a href="#org10953ae">Column View in org-mode</a></li>
+<li><a href="#orgdc7cb17">Search in Emacs</a></li>
+<li><a href="#org7784b85">How to get rid of ^M&#xa0;&#xa0;&#xa0;<span class="tag"><span class="EMACS">EMACS</span>&#xa0;<span class="REMOVE">REMOVE</span></span></a></li>
+<li><a href="#org3745f63">org-mode&#xa0;&#xa0;&#xa0;<span class="tag"><span class="EMACS">EMACS</span>&#xa0;<span class="KEYS">KEYS</span></span></a>
+<ul>
+<li><a href="#org6ca60ba">demote and promote</a></li>
+</ul>
+</li>
+<li><a href="#org106bad5">Emacs org clocking&#xa0;&#xa0;&#xa0;<span class="tag"><span class="EMACS">EMACS</span>&#xa0;<span class="CLOCK_KEYS">CLOCK_KEYS</span></span></a></li>
+<li><a href="#org5b2d665">Spreadsheet</a></li>
+<li><a href="#org704b5ab">UI settings</a></li>
+<li><a href="#org56f96b2">Switch between input method</a></li>
+<li><a href="#orgdbc9d1d">Make presentation / slides</a>
+<ul>
+<li><a href="#org0dee1c3">for 8.2.3b</a></li>
+<li><a href="#orgb17e7bb">S5 solution (A Simple Standards-Based Slide Show System)</a></li>
+<li><a href="#orgc17bdf7">reveal</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+<div id="outline-container-org95457c8" class="outline-2">
+<h2 id="org95457c8">Time management in Emacs</h2>
+<div class="outline-text-2" id="text-org95457c8">
+<p>
+agenda mode
+C-c a X
+f forward in time
+b backward in time
+F follow mode
+</p>
+</div>
+</div>
+<div id="outline-container-org837b70d" class="outline-2">
+<h2 id="org837b70d">Installation Emacs from source</h2>
+<div class="outline-text-2" id="text-org837b70d">
+<ul class="org-ul">
+<li>install all dependencies</li>
+</ul>
+<pre class="example" id="org81d196d">
+sudo apt-get build-dep emacs24
+</pre>
+<ul class="org-ul">
+<li>download source code from
+<a href="http://www.gnu.org/software/emacs/">http://www.gnu.org/software/emacs/</a></li>
+<li>extract emacs-xx.x.tar.gz and install</li>
+</ul>
+<pre class="example" id="orga441ad9">
+tar -zxvf emacs-24.3.tar.gz
+cd emacs-24.3
+./configure
+make
+sudo make install
+</pre>
+</div>
+</div>
+<div id="outline-container-orge9f155d" class="outline-2">
+<h2 id="orge9f155d">Automatically install missing package</h2>
+<div class="outline-text-2" id="text-orge9f155d">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(package-initialize)
+(<span class="org-keyword">require</span> '<span class="org-constant">package</span>)
+(add-to-list 'package-archives '(<span class="org-string">"melpa"</span> . <span class="org-string">"http://melpa.org/packages/"</span>))
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Install use-package
+</span>(<span class="org-keyword">setq</span> package-list '(use-package))
+(<span class="org-keyword">dolist</span> (package package-list)
+(<span class="org-keyword">unless</span> (package-installed-p package)
+ (package-install package)))
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Let use-package to ensure a package is installed.
+</span>(<span class="org-keyword">use-package</span> THE-PACKAGE-YOU-WANT-TO-INSTALL <span class="org-builtin">:ensure</span> t)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge6f692b" class="outline-2">
+<h2 id="orge6f692b">helm mode settings</h2>
+<div class="outline-text-2" id="text-orge6f692b">
+<p>
+helm is a must-have package, it can Emacs run like a magic.
+<a href="https://tuhdo.github.io/helm-intro.html">https://tuhdo.github.io/helm-intro.html</a>
+My settings:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> helm <span class="org-builtin">:ensure</span> t)
+(<span class="org-keyword">use-package</span> helm-swoop <span class="org-builtin">:ensure</span> t)
+(<span class="org-keyword">use-package</span> helm-projectile <span class="org-builtin">:ensure</span> t)
+
+(<span class="org-keyword">require</span> '<span class="org-constant">helm-config</span>)
+(helm-mode 1)
+
+(define-key helm-map (kbd <span class="org-string">"&lt;tab&gt;"</span>) 'helm-execute-persistent-action) <span class="org-comment-delimiter">; </span><span class="org-comment">rebind tab to run persistent action
+</span>(define-key helm-map (kbd <span class="org-string">"C-i"</span>) 'helm-execute-persistent-action) <span class="org-comment-delimiter">; </span><span class="org-comment">make TAB work in terminal
+</span>(define-key helm-map (kbd <span class="org-string">"C-z"</span>)  'helm-select-action) <span class="org-comment-delimiter">; </span><span class="org-comment">list actions using C-z
+</span>
+
+(<span class="org-keyword">setq</span> helm-buffers-fuzzy-matching t
+helm-recentf-fuzzy-match    t)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">=== projectile ===
+</span>(projectile-global-mode)
+(<span class="org-keyword">setq</span> projectile-completion-system 'helm)
+(helm-projectile-on)
+(<span class="org-keyword">setq</span> projectile-switch-project-action 'helm-projectile)
+<span class="org-comment-delimiter">;; </span><span class="org-comment">C-c p p switch projects
+</span><span class="org-comment-delimiter">;; </span><span class="org-comment">C-c p f find files in a project
+</span><span class="org-comment-delimiter">;; </span><span class="org-comment">C-c p F find files in projects
+</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">helm semantic
+</span><span class="org-comment-delimiter">;; </span><span class="org-comment">(semantic-mode 1)
+</span><span class="org-comment-delimiter">;; </span><span class="org-comment">(setq helm-semantic-fuzzy-match t
+</span><span class="org-comment-delimiter">;;       </span><span class="org-comment">helm-imenu-fuzzy-match    t)
+</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">hem-man-woman
+</span>(add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
+(<span class="org-keyword">setq</span> helm-locate-fuzzy-match t)
+</pre>
+</div>
+<p>
+My key bindings:
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">keybinding for helm
+</span>(global-set-key (kbd <span class="org-string">"C-x i"</span>) `helm-complete-file-name-at-point)
+(global-set-key (kbd <span class="org-string">"C-x b"</span>) `helm-mini)
+(global-set-key (kbd <span class="org-string">"C-x C-b"</span>) `helm-buffers-list)
+(global-set-key (kbd <span class="org-string">"C-x C-f"</span>) `helm-find-files)
+(global-set-key (kbd <span class="org-string">"C-x C-r"</span>) `helm-recentf)
+(global-set-key (kbd <span class="org-string">"C-x r b"</span>) `helm-bookmarks)
+(global-set-key (kbd <span class="org-string">"M-x"</span>) `helm-M-x)
+(global-set-key (kbd <span class="org-string">"M-y"</span>) `helm-show-kill-ring)
+
+(global-set-key (kbd <span class="org-string">"C-c i"</span>) 'helm-semantic-or-imenu)
+
+
+(global-set-key (kbd <span class="org-string">"C-x c o"</span>) 'helm-occur)
+(global-set-key (kbd <span class="org-string">"C-h SPC"</span>) 'helm-all-mark-rings)
+(global-set-key (kbd <span class="org-string">"C-c C-g"</span>) 'helm-google-suggest)
+(global-set-key (kbd <span class="org-string">"C-p"</span>) 'helm-projectile-find-file)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org1dc00d5" class="outline-2">
+<h2 id="org1dc00d5">Programming in Emacs</h2>
+<div class="outline-text-2" id="text-org1dc00d5">
+</div>
+<div id="outline-container-org45cb8a6" class="outline-3">
+<h3 id="org45cb8a6">Find things at fingertip</h3>
+<div class="outline-text-3" id="text-org45cb8a6">
+<ul class="org-ul">
+<li>Find files in a project
+helm projectile</li>
+<li>Indexing (find function, variable definitions and references)
+If your project is not big, a good solution is <a href="#org9beeca7">rtags c++ indexer</a>.
+But if your project is large, I recommend using global with ctags.
+It works really well and it is super fast
+<ul class="org-ul">
+<li>Installation
+<ul class="org-ul">
+<li>install Exuberant Ctags <a href="http://ctags.sourceforge.net/">http://ctags.sourceforge.net/</a></li>
+<li>install Universal Ctags <a href="https://github.com/universal-ctags/ctags">https://github.com/universal-ctags/ctags</a>
+<ul class="org-ul">
+<li>sudo cp ctags /usr/local/bin/ctags-universal</li>
+</ul></li>
+<li><p>
+install gtags as:
+</p>
+<pre class="example" id="org5277a96">
+./configure --with-exuberant-ctags=/usr/local/ctags --with-universal-ctags=/usr/local/bin/ctags-universal
+./make
+sudo make install
+</pre></li>
+</ul></li>
+
+<li><p>
+A script to generate index files
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">!/bin/</span><span class="org-keyword">bash</span><span class="org-comment">
+</span>find . -type d <span class="org-string">\(</span> -name <span class="org-string">"skip_foler1"</span> <span class="org-sh-escaped-newline">\</span>
+-o -name <span class="org-string">"skip_folder2"</span> <span class="org-string">\)</span> -prune -o <span class="org-sh-escaped-newline">\</span>
+-type f <span class="org-string">\(</span> -name <span class="org-string">"*.cc"</span> -o -name <span class="org-string">"*.hh"</span> -o -name <span class="org-string">"*.py"</span> -o -name <span class="org-string">"*.c"</span> -o -name <span class="org-string">"*.h"</span> -o -name <span class="org-string">"*.hidl"</span> <span class="org-string">\)</span>  <span class="org-sh-escaped-newline">\</span>
+-print &gt; file_list
+gtags -i -v -f file_list
+</pre>
+</div></li>
+<li><p>
+Emacs settings
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">--------------------------------------------------
+</span>(<span class="org-keyword">use-package</span> helm-gtags <span class="org-builtin">:ensure</span> t)
+(<span class="org-keyword">require</span> '<span class="org-constant">helm-gtags</span>)
+(<span class="org-keyword">setq</span>
+ helm-gtags-ignore-case t
+ helm-gtags-auto-update t
+ helm-gtags-use-input-at-cursor t
+ helm-gtags-pulse-at-cursor t
+ helm-gtags-prefix-key <span class="org-string">"\C-cg"</span>
+ helm-gtags-suggested-key-mapping nil
+ )
+
+<span class="org-comment-delimiter">;;; </span><span class="org-comment">Enable helm-gtags-mode
+</span>(add-hook 'dired-mode-hook 'helm-gtags-mode)
+(add-hook 'eshell-mode-hook 'helm-gtags-mode)
+(add-hook 'c-mode-hook 'helm-gtags-mode)
+(add-hook 'c++-mode-hook 'helm-gtags-mode)
+(add-hook 'asm-mode-hook 'helm-gtags-mode)
+(add-hook 'python-mode-hook 'helm-gtags-mode)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
+</span>(define-key helm-gtags-mode-map (kbd <span class="org-string">"C-j"</span>) 'helm-gtags-select)
+(define-key helm-gtags-mode-map (kbd <span class="org-string">"M-."</span>) 'helm-gtags-dwim)
+(define-key helm-gtags-mode-map (kbd <span class="org-string">"M-r"</span>) 'helm-gtags-find-rtag)
+(define-key helm-gtags-mode-map (kbd <span class="org-string">"M-t"</span>) 'helm-gtags-find-tag)
+(define-key helm-gtags-mode-map (kbd <span class="org-string">"M-s"</span>) 'helm-gtags-find-symbol)
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
+</span>(define-key helm-gtags-mode-map (kbd <span class="org-string">"M-*"</span>) 'helm-gtags-resume)
+<span class="org-comment-delimiter">;;</span><span class="org-comment">
+</span>(define-key helm-gtags-mode-map (kbd <span class="org-string">"C-c &lt;left&gt;"</span>) 'helm-gtags-previous-history)
+(define-key helm-gtags-mode-map (kbd <span class="org-string">"C-c &lt;right&gt;"</span>) 'helm-gtags-next-history)
+<span class="org-comment-delimiter">;;</span><span class="org-comment">
+</span><span class="org-comment-delimiter">;; </span><span class="org-comment">(define-key helm-gtags-mode-map (kbd "C-c g") 'vc-git-grep)
+</span>
+</pre>
+</div></li>
+</ul></li>
+<li>locate and search
+<ul class="org-ul">
+<li>global search by M-x rgrep</li>
+<li>or M-x locate</li>
+<li>or M-x helm-locate</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org4c6b3e4" class="outline-3">
+<h3 id="org4c6b3e4">Index special file format (for example, .hidl files)</h3>
+<div class="outline-text-3" id="text-org4c6b3e4">
+<p>
+To use a specific parser to index a specific file types, you can change the field of ':langmap' in your local .globalrc file.
+For example, if you want to index .hidl as c++, you can map it to c++ type.
+</p>
+<pre class="example" id="orgeb84724">
+:langmap=c\:.c.h,yacc\:.y,asm\:.s.S,java\:.java,cpp\:.c++.cc.cpp.cxx.hxx.hpp.hh.hidl.C.H,php\:.php.php3.phtml:
+</pre>
+</div>
+</div>
+<div id="outline-container-orge0aca37" class="outline-3">
+<h3 id="orge0aca37">Git integration</h3>
+<div class="outline-text-3" id="text-orge0aca37">
+<p>
+matgit
+</p>
+</div>
+</div>
+<div id="outline-container-orgae5ba69" class="outline-3">
+<h3 id="orgae5ba69">elpy usage</h3>
+<div class="outline-text-3" id="text-orgae5ba69">
+<ul class="org-ul">
+<li>elpy-goto-definition M-.</li>
+<li>xref-pop-marker-stack M-,</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org24cf34f" class="outline-3">
+<h3 id="org24cf34f">Other convenient things</h3>
+<div class="outline-text-3" id="text-org24cf34f">
+<ul class="org-ul">
+<li>minimap mode</li>
+<li>narrowing for programming
+<dl class="org-dl">
+<dt>C-x n n</dt><dd>Narrow down to between point and mark (narrow-to-region).</dd>
+<dt>C-x n d</dt><dd>Narrow down to the current defun (narrow-to-defun).</dd>
+<dt>C-x n w</dt><dd>cancel narrow down (widen)</dd>
+</dl></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org9e0f2e2" class="outline-2">
+<h2 id="org9e0f2e2">Useful commands</h2>
+<div class="outline-text-2" id="text-org9e0f2e2">
+</div>
+<div id="outline-container-orgb7bf503" class="outline-3">
+<h3 id="orgb7bf503">Multiple line edit (rectangle edit)</h3>
+<div class="outline-text-3" id="text-orgb7bf503">
+<p>
+C+x r t  (string-rectangle)
+For more, please see
+M-x xxx-rectange
+</p>
+</div>
+</div>
+<div id="outline-container-orgdfcc082" class="outline-3">
+<h3 id="orgdfcc082">How to decide whether to save (diff buffer with original file)</h3>
+<div class="outline-text-3" id="text-orgdfcc082">
+<ul class="org-ul">
+<li>M-x diff-buffer-with-file</li>
+</ul>
+<p>
+or
+</p>
+<ul class="org-ul">
+<li>C-x s then d</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgf0ce5e2" class="outline-3">
+<h3 id="orgf0ce5e2">How to split into 3 even windows</h3>
+<div class="outline-text-3" id="text-orgf0ce5e2">
+<ul class="org-ul">
+<li>C-x 3 to add one more frame</li>
+<li>C-x + to equally size all windows</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org72651cf" class="outline-3">
+<h3 id="org72651cf">change font size</h3>
+<div class="outline-text-3" id="text-org72651cf">
+<ul class="org-ul">
+<li>C-x C-+ increase font size</li>
+<li>C-x C&#x2013; decrease fint size</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org5928b29" class="outline-3">
+<h3 id="org5928b29">run shell command in Emacs</h3>
+<div class="outline-text-3" id="text-org5928b29">
+<p>
+M-! run shell command in Emacs
+</p>
+</div>
+</div>
+<div id="outline-container-org4b15c18" class="outline-3">
+<h3 id="org4b15c18">Show all key bindings</h3>
+<div class="outline-text-3" id="text-org4b15c18">
+<p>
+C+h b    (describe-bindings)
+C+h k    (describe-key)
+</p>
+
+
+<ul class="org-ul">
+<li>C-c ; Toggle the COMMENT keyword at the beginning of an entry, which won't be exported.</li>
+<li>C-c / search in current buffer shown as a sparse tree.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org9beeca7" class="outline-2">
+<h2 id="org9beeca7">rtags c++ indexer</h2>
+<div class="outline-text-2" id="text-org9beeca7">
+</div>
+<div id="outline-container-org229bebd" class="outline-3">
+<h3 id="org229bebd">General</h3>
+<div class="outline-text-3" id="text-org229bebd">
+<p>
+I have tried rtags with Emacs. It works well after index. It takes a pretty long time to index a large project.
+Since gtags is much faster and works for me, I don't use it.
+</p>
+</div>
+</div>
+<div id="outline-container-orgb5c3d8a" class="outline-3">
+<h3 id="orgb5c3d8a">install</h3>
+<div class="outline-text-3" id="text-orgb5c3d8a">
+<pre class="example" id="orgdaa289c">
+sudo apt-get install libclang-dev llvm
+cd ~/local/
+git clone --recursive http://github.com/Andersbakken/rtags
+cd rtags
+mkdir build
+cd build &amp;&amp; cmake -DCMAKE_BUILD_TYPE=Release ..
+make
+sudo make install
+</pre>
+</div>
+</div>
+<div id="outline-container-org44e21c9" class="outline-3">
+<h3 id="org44e21c9">usage</h3>
+<div class="outline-text-3" id="text-org44e21c9">
+<ul class="org-ul">
+<li>start
+$nice ionice -c idle rdm -j6</li>
+
+<li>Pointing rtags to the av tree</li>
+</ul>
+
+<p>
+$ rc -J ./source/bazel-out/local_linux-fastbuild/genfiles/compile_commands.json
+</p>
+
+<p>
+$ rc -J ./av/build/compile_commands.json
+</p>
+</div>
+</div>
+<div id="outline-container-orgab302fb" class="outline-3">
+<h3 id="orgab302fb">help</h3>
+<div class="outline-text-3" id="text-orgab302fb">
+<p>
+rc &#x2013;help
+</p>
+</div>
+</div>
+<div id="outline-container-orgfc5c17c" class="outline-3">
+<h3 id="orgfc5c17c">Emacs setting for rtags</h3>
+</div>
+</div>
+<div id="outline-container-org9da0887" class="outline-2">
+<h2 id="org9da0887">Terminal in Emacs</h2>
+<div class="outline-text-2" id="text-org9da0887">
+<ul class="org-ul">
+<li>ansi-term</li>
+<li>To modify the color scheme: M-x customize-group RET term RET</li>
+<li><p>
+emacs settings
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs_lisp">(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+
+(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orge7f50bf" class="outline-2">
+<h2 id="orge7f50bf">terminal color theme settings</h2>
+<div class="outline-text-2" id="text-orge7f50bf">
+<ol class="org-ol">
+<li>put the following into .bashrc or .profile
+export TERM=xterm-256color</li>
+<li>check the effect in Emacs by:
+M-x list-colors-display</li>
+<li>select color theme you like by:
+M-x color-theme-xx</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org401ba28" class="outline-2">
+<h2 id="org401ba28">set fill-paragraph width</h2>
+<div class="outline-text-2" id="text-org401ba28">
+<p>
+C-x f set-fill-column
+default is 70
+</p>
+</div>
+</div>
+<div id="outline-container-org2fa44b5" class="outline-2">
+<h2 id="org2fa44b5">MobileOrg setting</h2>
+<div class="outline-text-2" id="text-org2fa44b5">
+<p>
+<a href="http://jonathanchu.is/posts/org-mode-and-mobileorg-installation-and-config/">http://jonathanchu.is/posts/org-mode-and-mobileorg-installation-and-config/</a>
+</p>
+</div>
+</div>
+<div id="outline-container-org63b468c" class="outline-2">
+<h2 id="org63b468c">Common key bindings</h2>
+<div class="outline-text-2" id="text-org63b468c">
+<dl class="org-dl">
+<dt>alt-x</dt><dd>same as M-x</dd>
+<dt>C-h a</dt><dd>search for command
+c-h i :: information page
+c-h f :: help on function
+c-h k :: help on key bindings
+c-h m :: help on current mode</dd>
+<dt>C-/  </dt><dd>undo</dd>
+<dt>C-x (</dt><dd>start recording macro
+C-x ) :: stop recording macro
+C-x e :: execute</dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-org314552c" class="outline-2">
+<h2 id="org314552c">color theme</h2>
+<div class="outline-text-2" id="text-org314552c">
+</div>
+<div id="outline-container-org45c93b2" class="outline-3">
+<h3 id="org45c93b2">Cool website that can generate color theme online:</h3>
+<div class="outline-text-3" id="text-org45c93b2">
+<p>
+<a href="http://jasonm23.github.io/emacs-theme-editor/">http://jasonm23.github.io/emacs-theme-editor/</a>#
+</p>
+</div>
+</div>
+<div id="outline-container-org415daad" class="outline-3">
+<h3 id="org415daad">Using Emacs native color theme (maybe only for V24 or later)</h3>
+<div class="outline-text-3" id="text-org415daad">
+<ul class="org-ul">
+<li>try ESC-x color-theme
+TAB to show all available themes.</li>
+<li>after you have find a favorite theme, you can add the following to .emacs (theme manoj-dark for example)</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(load-theme  'manoj-dark)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org10953ae" class="outline-2">
+<h2 id="org10953ae">Column View in org-mode</h2>
+<div class="outline-text-2" id="text-org10953ae">
+<ul class="org-ul">
+<li>setting what to show</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-nil">#+COLUMNS: %25ITEM %TAGS %Effort(EV) %CLOCKSUM(RC) %TODO
+</pre>
+</div>
+<dl class="org-dl">
+<dt>C-c C-x C-c</dt><dd>column view</dd>
+<dt>C-c C-x i  </dt><dd>generate gdynamic table</dd>
+<dt>q          </dt><dd>quit column view</dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-orgdc7cb17" class="outline-2">
+<h2 id="orgdc7cb17">Search in Emacs</h2>
+<div class="outline-text-2" id="text-orgdc7cb17">
+<ul class="org-ul">
+<li>find a file with its name</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-nil">M-x find-name-dired
+</pre>
+</div>
+<p>
+or
+</p>
+<div class="org-src-container">
+<pre class="src src-nil">*M-x find-dired*  (accept any command that find do)
+</pre>
+</div>
+<p>
+e.g. case-insensitive search
+-iname \*xxx\*
+Note: '\' is necessary
+</p>
+
+<ul class="org-ul">
+<li>find a file with its contain</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-nil">M-x rgrep
+</pre>
+</div>
+<ul class="org-ul">
+<li>locate or locate-with-filter</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org7784b85" class="outline-2">
+<h2 id="org7784b85">How to get rid of ^M&#xa0;&#xa0;&#xa0;<span class="tag"><span class="EMACS">EMACS</span>&#xa0;<span class="REMOVE">REMOVE</span></span></h2>
+<div class="outline-text-2" id="text-org7784b85">
+<div class="org-src-container">
+<pre class="src src-nil">M-x replace-string C-q C-m RET
+</pre>
+</div>
+<p>
+or run dos2unix
+</p>
+</div>
+</div>
+<div id="outline-container-org3745f63" class="outline-2">
+<h2 id="org3745f63">org-mode&#xa0;&#xa0;&#xa0;<span class="tag"><span class="EMACS">EMACS</span>&#xa0;<span class="KEYS">KEYS</span></span></h2>
+<div class="outline-text-2" id="text-org3745f63">
+<dl class="org-dl">
+<dt>C-c C-&lt;       </dt><dd>outline-promote</dd>
+<dt>C-c C-&gt;       </dt><dd>outline-demote</dd>
+
+<dt>C-j       </dt><dd>org-return-indent</dd>
+
+<dt>C-c C-x v</dt><dd>Copy the visible text in the region into the kill ring.</dd>
+<dt>C-c C-u  </dt><dd>Backward to higher level heading.</dd>
+<dt>C-c C-j  </dt><dd>Jump to a different place without changing the current outline visibility. Shows
+the document structure in a temporary buffer, where you can use the following
+keys to find your destination</dd>
+
+<dt>(no term)</dt><dd>C-c C-x C-s subtree archive</dd>
+<dt>C-c l</dt><dd>store a internal link</dd>
+<dt>C-c C-l</dt><dd>insert a link to current location</dd>
+<dt>C-c &amp;</dt><dd>return back</dd>
+</dl>
+</div>
+<div id="outline-container-org6ca60ba" class="outline-3">
+<h3 id="org6ca60ba">demote and promote</h3>
+<div class="outline-text-3" id="text-org6ca60ba">
+<ul class="org-ul">
+<li>M-x outline-demote</li>
+<li>M-x demote selected region</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org106bad5" class="outline-2">
+<h2 id="org106bad5">Emacs org clocking&#xa0;&#xa0;&#xa0;<span class="tag"><span class="EMACS">EMACS</span>&#xa0;<span class="CLOCK_KEYS">CLOCK_KEYS</span></span></h2>
+<div class="outline-text-2" id="text-org106bad5">
+<dl class="org-dl">
+<dt>C-c C-x C-i</dt><dd>clock in</dd>
+<dt>C-c C-x C-o</dt><dd>clock out</dd>
+<dt>C-c C-x C-i</dt><dd>clock jump</dd>
+<dt>C-c C-c    </dt><dd>recalculate the time interval</dd>
+<dt>C-c C-x C-d</dt><dd>Display time summaries for each subtree in the current buffer (C-c C-c  cancel)</dd>
+<dt>C-c C-x C-r</dt><dd>Insert a dynamic block (see Dynamic blocks) containing a clock report</dd>
+<dt>M-x org-resolve-clocks</dt><dd>You can also check all the files visited by your Org agenda for dangling clocks at any time using M-x org-resolve-clocks.</dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-org5b2d665" class="outline-2">
+<h2 id="org5b2d665">Spreadsheet</h2>
+<div class="outline-text-2" id="text-org5b2d665">
+<ul class="org-ul">
+<li>C-c } you can always turn on the reference visualization grid with</li>
+<li>first formula: :=vmean($2..$3)
+hit C-c C-c you should observe two things</li>
+<li>C-c ' interactive formula editor / C-c = simple interactive formula editor</li>
+<li>C-c | convertactive region into a table.
+items can be separated by s whitespace, comma, or tab.</li>
+<li>C-c ^ sort according to current column.</li>
+<li>&lt;N&gt; in the column to set the field width. as follows:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-nil">| &lt;4&gt;  | &lt;5&gt;   | &lt;7&gt;     |
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org704b5ab" class="outline-2">
+<h2 id="org704b5ab">UI settings</h2>
+<div class="outline-text-2" id="text-org704b5ab">
+<ul class="org-ul">
+<li>How to show line numbers? <br>
+(global-linum-mode 1) ; display line numbers in margin. Emacs 23 only.</li>
+<li>How to show the cursor's column position? <br>
+(column-number-mode 1)</li>
+<li>How to have lines soft wrapped at word boundary? <br>
+Pull the menu ?Options ? Line Wrapping in this Buffer?, or call visual-line-mode.</li>
+<li>How to have lines soft wrapped at word boundary? <br>
+(global-visual-line-mode 1) ; 1 for on, 0 for off.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org56f96b2" class="outline-2">
+<h2 id="org56f96b2">Switch between input method</h2>
+<div class="outline-text-2" id="text-org56f96b2">
+<ul class="org-ul">
+<li>C-\</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgdbc9d1d" class="outline-2">
+<h2 id="orgdbc9d1d">Make presentation / slides</h2>
+<div class="outline-text-2" id="text-orgdbc9d1d">
+</div>
+<div id="outline-container-org0dee1c3" class="outline-3">
+<h3 id="org0dee1c3">for 8.2.3b</h3>
+<div class="outline-text-3" id="text-org0dee1c3">
+<ul class="org-ul">
+<li>add the following at the beginning of an org file</li>
+</ul>
+<pre class="example" id="org0acc320">
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+</pre>
+<ul class="org-ul">
+<li>add the following to .emacs</li>
+</ul>
+<pre class="example" id="org6e1d152">
+(require 'ox-latex)
+(add-to-list 'org-latex-classes
+          '("beamer"
+            "\\documentclass\[presentation\]\{beamer\}"
+            ("\\section\{%s\}" . "\\section*\{%s\}")
+            ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
+            ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}")))
+</pre>
+</div>
+</div>
+<div id="outline-container-orgb17e7bb" class="outline-3">
+<h3 id="orgb17e7bb">S5 solution (A Simple Standards-Based Slide Show System)</h3>
+<div class="outline-text-3" id="text-orgb17e7bb">
+<ul class="org-ul">
+<li>add the following to .emacs</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">export slides in org mode
+</span><span class="org-comment-delimiter">;; </span><span class="org-comment">remember to copy folder "ui" to your pub folder
+</span>(add-to-list 'load-path <span class="org-string">"~/site-lisp/org-s5-master"</span>)
+(<span class="org-keyword">require</span> '<span class="org-constant">org-export-as-s5</span>)
+<span class="org-comment-delimiter">;;</span><span class="org-comment">(setq org-s5-theme "railscast")   ; based off `</span><span class="org-comment"><span class="org-constant">color-theme-railscasts</span></span><span class="org-comment">'
+</span>(<span class="org-keyword">setq</span> org-s5-theme <span class="org-string">"default"</span>)     <span class="org-comment-delimiter">; </span><span class="org-comment">the default S5 theme
+</span><span class="org-comment-delimiter">;;</span><span class="org-comment">(setq org-s5-theme "i18n")        ; the i18n theme by the author of S5
+</span><span class="org-comment-delimiter">;;</span><span class="org-comment">(setq org-s5-theme "advanced_gfx")</span>
+</pre>
+</div>
+<ul class="org-ul">
+<li>to export an org buffer to S5 slides, run the following command:
+org-export-as-s5</li>
+<li>get more themes from:    S5_1.3beta7</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc17bdf7" class="outline-3">
+<h3 id="orgc17bdf7">reveal</h3>
+<div class="outline-text-3" id="text-orgc17bdf7">
+<ol class="org-ol">
+<li>copy ~/site-lisp/org-reveal-master to DIR1</li>
+<li>copy ~/site-lisp/reveal-master to DIR2</li>
+<li>setting emacs</li>
+</ol>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+<span class="org-comment-delimiter">;; </span><span class="org-comment">org reveal export
+</span>(add-to-list 'load-path <span class="org-string">"~/site-lisp/org-reveal-master/"</span>)
+(<span class="org-keyword">require</span> '<span class="org-constant">ox-reveal</span>)
+(<span class="org-keyword">setq</span> org-reveal-root <span class="org-string">"file:///D:/cgliu/emacs-24.2/site-lisp/reveal-master/"</span>)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script>
+// Sidebar toggle
+document.querySelector('.sidebar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  this.classList.toggle('active');
+});
+
+// Theme toggle
+(function() {
+  var stored = localStorage.getItem('theme');
+  if (stored) {
+    document.documentElement.setAttribute('data-theme', stored);
+  }
+  document.querySelector('.theme-toggle').addEventListener('click', function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+})();
+
+// Active nav highlight
+(function() {
+  var path = window.location.pathname;
+  document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (path === href || (href !== '/index.html' && path.indexOf(href.replace('.html','')) === 0)) {
+      link.classList.add('active');
+    }
+  });
+})();
+
+// Fade in / fade out on scroll
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    } else {
+      entry.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.intro p, .blog-card, .pub-entry, .timeline-item, .hero-image').forEach(function(el) {
+  el.classList.add('fade-item');
+  observer.observe(el);
+});
+
+// Scroll progress bar
+window.addEventListener('scroll', function() {
+  var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var progress = (scrollTop / scrollHeight) * 100;
+  document.querySelector('.scroll-progress').style.width = progress + String.fromCharCode(37);
+});
+</script>
+</div>
+</body>
+</html>
