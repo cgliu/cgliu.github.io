@@ -112,8 +112,8 @@
 <ul>
 <li><a href="#orgc95c75a">Remarks</a></li>
 <li><a href="#org397aaa6">Problem formulation</a></li>
-<li><a href="#org1859a79">Functional gradient</a></li>
 <li><a href="#org0ed2e8e">Functional gradient</a></li>
+<li><a href="#org90e6770">Functional gradient</a></li>
 <li><a href="#org11d1ac4">Functionals and Co-variant Gradients for Trajectory Optimization</a></li>
 <li><a href="#org7b51e05">Waypoint Trajectory Parameterization</a></li>
 <li><a href="#orgf97bc84">Update rule:</a></li>
@@ -343,9 +343,9 @@ The obstacle objective:
 </p>
 </div>
 </div>
-<div id="outline-container-org1859a79" class="outline-3">
-<h3 id="org1859a79">Functional gradient</h3>
-<div class="outline-text-3" id="text-org1859a79">
+<div id="outline-container-org0ed2e8e" class="outline-3">
+<h3 id="org0ed2e8e">Functional gradient</h3>
+<div class="outline-text-3" id="text-org0ed2e8e">
 <ul class="org-ul">
 <li>The functional gradient \(\nabla U\) is the perturbation \(\phi\)
 that maximizes \(U[\xi + \epsilon \phi]\) as \(\epsilon \to 0\).
@@ -366,9 +366,9 @@ Euler-Lagrange equation is the stationary condition for:
 </ul>
 </div>
 </div>
-<div id="outline-container-org0ed2e8e" class="outline-3">
-<h3 id="org0ed2e8e">Functional gradient</h3>
-<div class="outline-text-3" id="text-org0ed2e8e">
+<div id="outline-container-org90e6770" class="outline-3">
+<h3 id="org90e6770">Functional gradient</h3>
+<div class="outline-text-3" id="text-org90e6770">
 <ul class="org-ul">
 <li>The functional gradient of the smoothness objective:</li>
 </ul>
@@ -642,7 +642,7 @@ Otherwise, reduce the step size \(\epsilon\) and repeat 4 (backtracking line sea
 Newton-Raphson method uses second order variation to minimize the Hamiltonian, \(H = L + \lambda^{\top} f\).
 </p>
 
-<div class="LaTeX" id="org92fba48">
+<div class="LaTeX" id="org6a56d3c">
 \begin{equation}
 \label{eq:H-expansion}
 H(x+\delta x, u + \delta u, t + dt) =
@@ -734,7 +734,7 @@ Control parameters are constant variables in the optimal control problem structu
 \(L(x,u,\alpha, t)\).
 According to the maximum principle:
 </p>
-<div class="LaTeX" id="org44a56b9">
+<div class="LaTeX" id="orgd7562e1">
 \begin{equation*}
 H(x+\delta x, \alpha + \delta \alpha, u + \delta u, , t) =
 \frac{1}{2}
@@ -775,7 +775,7 @@ As you can see, \(\alpha\) has similar coefficient as the sate variable. We can 
 then solve it in the same way:
 define \(v = [x^{\top}, \alpha^{\top}]^{\top}\), the dynamics:
 </p>
-<div class="LaTeX" id="orga3e0257">
+<div class="LaTeX" id="org6fb4db7">
 \begin{equation}
 \dot{v} =
 \begin{bmatrix}
@@ -1216,7 +1216,7 @@ the initial state and the final co-state are defined <sup><a id="fnr.Efficient-r
 
 <div class="org-center">
 
-<figure id="orgfb4a378">
+<figure id="orgc349e2c">
 <img src="./one-step-traj-opt.png" alt="one-step-traj-opt.png">
 
 </figure>
