@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2026-05-23 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Decel-limited Constant-jerk Stopping Profile</title>
+<meta name="description" content="How to generate stopping profile wit limits on acceleration and jerk" />
+<meta name="generator" content="Org Mode" />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<div class="scroll-progress"></div>
+<aside class="sidebar">
+  <div class="sidebar-inner">
+    <img src="/images/avatar.svg" alt="Chenggang Liu" class="sidebar-avatar"/>
+    <a href="/index.html" class="site-logo">Chenggang Liu</a>
+    <div class="sidebar-social">
+      <a href="https://www.linkedin.com/in/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="https://github.com/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <a href="https://scholar.google.com/citations?user=omz_MCoAAAAJ&hl=en" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg></a>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/index.html">Home</a>
+      <a href="/blogs.html">Blogs</a>
+      <a href="/publications.html">Publications</a>
+      <a href="/about.html">About</a>
+    </nav>
+    <div class="sidebar-search">
+      <input type="text" class="sidebar-search-input" placeholder="Search..."/>
+      <div class="sidebar-search-results"></div>
+    </div>
+    <button class="theme-toggle" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</aside>
+<button class="sidebar-toggle" aria-label="Toggle menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="top-bar">
+  <button class="top-bar-toggle" aria-label="Toggle menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+  <a href="/index.html" class="top-bar-title">Chenggang Liu</a>
+  <button class="top-bar-search" aria-label="Open search bar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+  </button>
+</div>
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" class="search-input" placeholder="Search..."/>
+    <button class="search-close" aria-label="Close search">&times;</button>
+  </div>
+  <div class="search-results"></div>
+</div>
+</div>
+<div id="content" class="content">
+<header>
+<h1 class="title">Decel-limited Constant-jerk Stopping Profile</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orge8b4739">Problem</a>
+<ul>
+<li><a href="#orgcbb106e">Given Parameters</a></li>
+</ul>
+</li>
+<li><a href="#org74504aa">Solution</a>
+<ul>
+<li><a href="#org8018b3b">Kinematic Equations</a></li>
+<li><a href="#orgce38798">Stopping Time</a></li>
+<li><a href="#org4cce49c">Stopping Distance</a></li>
+<li><a href="#org9a78cef">With Acceleration Limit</a></li>
+</ul>
+</li>
+<li><a href="#orga3e01f5">Implementation</a></li>
+<li><a href="#org47c905a">Example Results</a>
+<ul>
+<li><a href="#org8b982e3">Without Acceleration Limit</a></li>
+<li><a href="#orge37a647">With Acceleration Limit</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+<div id="outline-container-orge8b4739" class="outline-2">
+<h2 id="orge8b4739">Problem</h2>
+<div class="outline-text-2" id="text-orge8b4739">
+<p>
+Calculate the stopping distance of a vehicle under constant negative jerk with deceleration limits.
+</p>
+</div>
+<div id="outline-container-orgcbb106e" class="outline-3">
+<h3 id="orgcbb106e">Given Parameters</h3>
+<div class="outline-text-3" id="text-orgcbb106e">
+<ul class="org-ul">
+<li>Initial position: \(s_0\)</li>
+<li>Initial velocity: \(v_0\)</li>
+<li>Initial acceleration: \(a_0\)</li>
+<li>Constant jerk: \(j\) (negative for braking)</li>
+<li>Minimum acceleration: \(a_{min}\) (optional limit)</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org74504aa" class="outline-2">
+<h2 id="org74504aa">Solution</h2>
+<div class="outline-text-2" id="text-org74504aa">
+</div>
+<div id="outline-container-org8018b3b" class="outline-3">
+<h3 id="org8018b3b">Kinematic Equations</h3>
+<div class="outline-text-3" id="text-org8018b3b">
+<p>
+With constant jerk \(j\):
+</p>
+
+<ul class="org-ul">
+<li>Acceleration: \(a(t) = a_0 + jt\)</li>
+<li>Velocity: \(v(t) = v_0 + a_0 t + \frac{1}{2}jt^2\)</li>
+<li>Position: \(s(t) = s_0 + v_0 t + \frac{1}{2}a_0 t^2 + \frac{1}{6}jt^3\)</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgce38798" class="outline-3">
+<h3 id="orgce38798">Stopping Time</h3>
+<div class="outline-text-3" id="text-orgce38798">
+<p>
+Vehicle stops when \(v(t) = 0\):
+</p>
+
+\begin{equation}
+v_0 + a_0 t + \frac{1}{2}jt^2 = 0
+\end{equation}
+
+<p>
+Using the quadratic formula:
+</p>
+
+\begin{equation}
+t_{stop} = \frac{-a_0 - \sqrt{a_0^2 - 2jv_0}}{j}
+\end{equation}
+</div>
+</div>
+<div id="outline-container-org4cce49c" class="outline-3">
+<h3 id="org4cce49c">Stopping Distance</h3>
+<div class="outline-text-3" id="text-org4cce49c">
+<p>
+Substitute \(t_{stop}\) into position equation:
+</p>
+
+\begin{equation}
+d_{stop} = v_0 t + \frac{1}{2}a_0 t^2 + \frac{1}{6}jt^3
+\end{equation}
+</div>
+</div>
+<div id="outline-container-org9a78cef" class="outline-3">
+<h3 id="org9a78cef">With Acceleration Limit</h3>
+<div class="outline-text-3" id="text-org9a78cef">
+<p>
+If \(a_{min}\) is specified and reached before stopping:
+</p>
+
+<p>
+Phase 1 (jerk phase) - Time to reach limit:
+</p>
+\begin{equation}
+t_1 = \frac{a_{min} - a_0}{j}
+\end{equation}
+
+<p>
+Phase 2 (constant acceleration) - Time at limit:
+</p>
+\begin{equation}
+t_2 = -\frac{v_1}{a_{min}}
+\end{equation}
+
+<p>
+where \(v_1\) is velocity at end of phase 1.
+</p>
+
+<p>
+Total stopping distance: \(d_{stop} = d_1 + d_2\)
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orga3e01f5" class="outline-2">
+<h2 id="orga3e01f5">Implementation</h2>
+<div class="outline-text-2" id="text-orga3e01f5">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">import</span> math
+<span class="org-keyword">import</span> matplotlib.pyplot <span class="org-keyword">as</span> plt
+<span class="org-keyword">import</span> numpy <span class="org-keyword">as</span> np
+
+<span class="org-keyword">def</span> <span class="org-function-name">stopping_distance</span>(s0, v0, a0, j, a_min<span class="org-operator">=</span><span class="org-constant">None</span>):
+    <span class="org-doc">"""
+    Calculate stopping distance with constant negative jerk.
+
+    Args:
+        s0: initial position
+        v0: initial velocity
+        a0: initial acceleration
+        j: jerk (negative for braking)
+        a_min: minimum acceleration limit (optional)
+
+    Returns:
+        (stopping_time, stopping_distance)
+    """</span>
+    <span class="org-keyword">if</span> a_min <span class="org-keyword">is</span> <span class="org-constant">None</span>:
+        <span class="org-comment-delimiter"># </span><span class="org-comment">No acceleration limit
+</span>        <span class="org-variable-name">discriminant</span> <span class="org-operator">=</span> a0<span class="org-operator">**</span>2 <span class="org-operator">-</span> 2<span class="org-operator">*</span>j<span class="org-operator">*</span>v0
+        <span class="org-variable-name">t_stop</span> <span class="org-operator">=</span> (<span class="org-operator">-</span>a0 <span class="org-operator">-</span> math.sqrt(discriminant)) <span class="org-operator">/</span> j
+        <span class="org-variable-name">d_stop</span> <span class="org-operator">=</span> v0<span class="org-operator">*</span>t_stop <span class="org-operator">+</span> 0.5<span class="org-operator">*</span>a0<span class="org-operator">*</span>t_stop<span class="org-operator">**</span>2 <span class="org-operator">+</span> (1<span class="org-operator">/</span>6)<span class="org-operator">*</span>j<span class="org-operator">*</span>t_stop<span class="org-operator">**</span>3
+        <span class="org-keyword">return</span> t_stop, d_stop
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Time to reach acceleration limit
+</span>    <span class="org-variable-name">t1</span> <span class="org-operator">=</span> (a_min <span class="org-operator">-</span> a0) <span class="org-operator">/</span> j
+    <span class="org-variable-name">a1</span> <span class="org-operator">=</span> a0 <span class="org-operator">+</span> j<span class="org-operator">*</span>t1
+    <span class="org-variable-name">v1</span> <span class="org-operator">=</span> v0 <span class="org-operator">+</span> a0<span class="org-operator">*</span>t1 <span class="org-operator">+</span> 0.5<span class="org-operator">*</span>j<span class="org-operator">*</span>t1<span class="org-operator">**</span>2
+    <span class="org-variable-name">d1</span> <span class="org-operator">=</span> v0<span class="org-operator">*</span>t1 <span class="org-operator">+</span> 0.5<span class="org-operator">*</span>a0<span class="org-operator">*</span>t1<span class="org-operator">**</span>2 <span class="org-operator">+</span> (1<span class="org-operator">/</span>6)<span class="org-operator">*</span>j<span class="org-operator">*</span>t1<span class="org-operator">**</span>3
+
+    <span class="org-keyword">if</span> v1 <span class="org-operator">&lt;=</span> 0:
+        <span class="org-comment-delimiter"># </span><span class="org-comment">Stops before reaching limit
+</span>        <span class="org-variable-name">discriminant</span> <span class="org-operator">=</span> a0<span class="org-operator">**</span>2 <span class="org-operator">-</span> 2<span class="org-operator">*</span>j<span class="org-operator">*</span>v0
+        <span class="org-variable-name">t_stop</span> <span class="org-operator">=</span> (<span class="org-operator">-</span>a0 <span class="org-operator">-</span> math.sqrt(discriminant)) <span class="org-operator">/</span> j
+        <span class="org-variable-name">d_stop</span> <span class="org-operator">=</span> v0<span class="org-operator">*</span>t_stop <span class="org-operator">+</span> 0.5<span class="org-operator">*</span>a0<span class="org-operator">*</span>t_stop<span class="org-operator">**</span>2 <span class="org-operator">+</span> (1<span class="org-operator">/</span>6)<span class="org-operator">*</span>j<span class="org-operator">*</span>t_stop<span class="org-operator">**</span>3
+        <span class="org-keyword">return</span> t_stop, d_stop
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Constant acceleration phase
+</span>    <span class="org-variable-name">t2</span> <span class="org-operator">=</span> <span class="org-operator">-</span>v1 <span class="org-operator">/</span> a_min
+    <span class="org-variable-name">d2</span> <span class="org-operator">=</span> v1<span class="org-operator">*</span>t2 <span class="org-operator">+</span> 0.5<span class="org-operator">*</span>a_min<span class="org-operator">*</span>t2<span class="org-operator">**</span>2
+
+    <span class="org-keyword">return</span> t1 <span class="org-operator">+</span> t2, d1 <span class="org-operator">+</span> d2
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Example
+</span><span class="org-keyword">if</span> <span class="org-builtin">__name__</span> <span class="org-operator">==</span> <span class="org-string">"__main__"</span>:
+    <span class="org-variable-name">s0</span>, <span class="org-variable-name">v0</span>, <span class="org-variable-name">a0</span>, <span class="org-variable-name">j</span>, <span class="org-variable-name">a_min</span> <span class="org-operator">=</span> 0, 20, 0, <span class="org-operator">-</span>2, <span class="org-operator">-</span>4
+    <span class="org-variable-name">t</span>, <span class="org-variable-name">d</span> <span class="org-operator">=</span> stopping_distance(s0, v0, a0, j, a_min)
+    <span class="org-builtin">print</span>(f<span class="org-string">"Stopping time: </span>{t:.3f}<span class="org-string"> s"</span>)
+    <span class="org-builtin">print</span>(f<span class="org-string">"Stopping distance: </span>{d:.3f}<span class="org-string"> m"</span>)
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Plot
+</span>    <span class="org-variable-name">t1</span> <span class="org-operator">=</span> (a_min <span class="org-operator">-</span> a0) <span class="org-operator">/</span> j
+    <span class="org-variable-name">v1</span> <span class="org-operator">=</span> v0 <span class="org-operator">+</span> a0<span class="org-operator">*</span>t1 <span class="org-operator">+</span> 0.5<span class="org-operator">*</span>j<span class="org-operator">*</span>t1<span class="org-operator">**</span>2
+
+    <span class="org-keyword">if</span> v1 <span class="org-operator">&gt;</span> 0:
+        <span class="org-variable-name">time1</span> <span class="org-operator">=</span> np.linspace(0, t1, 50)
+        <span class="org-variable-name">time2</span> <span class="org-operator">=</span> np.linspace(t1, t, 50)
+        <span class="org-variable-name">time</span> <span class="org-operator">=</span> np.concatenate([time1, time2])
+
+        <span class="org-variable-name">jerk</span> <span class="org-operator">=</span> np.concatenate([np.full_like(time1, j), np.zeros_like(time2)])
+        <span class="org-variable-name">accel</span> <span class="org-operator">=</span> np.concatenate([a0 <span class="org-operator">+</span> j<span class="org-operator">*</span>time1, np.full_like(time2, a_min)])
+
+        <span class="org-variable-name">vel1</span> <span class="org-operator">=</span> v0 <span class="org-operator">+</span> a0<span class="org-operator">*</span>time1 <span class="org-operator">+</span> 0.5<span class="org-operator">*</span>j<span class="org-operator">*</span>time1<span class="org-operator">**</span>2
+        <span class="org-variable-name">v1_val</span> <span class="org-operator">=</span> v0 <span class="org-operator">+</span> a0<span class="org-operator">*</span>t1 <span class="org-operator">+</span> 0.5<span class="org-operator">*</span>j<span class="org-operator">*</span>t1<span class="org-operator">**</span>2
+        <span class="org-variable-name">vel2</span> <span class="org-operator">=</span> v1_val <span class="org-operator">+</span> a_min<span class="org-operator">*</span>(time2 <span class="org-operator">-</span> t1)
+        <span class="org-variable-name">vel</span> <span class="org-operator">=</span> np.concatenate([vel1, vel2])
+
+        <span class="org-variable-name">pos1</span> <span class="org-operator">=</span> s0 <span class="org-operator">+</span> v0<span class="org-operator">*</span>time1 <span class="org-operator">+</span> 0.5<span class="org-operator">*</span>a0<span class="org-operator">*</span>time1<span class="org-operator">**</span>2 <span class="org-operator">+</span> (1<span class="org-operator">/</span>6)<span class="org-operator">*</span>j<span class="org-operator">*</span>time1<span class="org-operator">**</span>3
+        <span class="org-variable-name">d1</span> <span class="org-operator">=</span> v0<span class="org-operator">*</span>t1 <span class="org-operator">+</span> 0.5<span class="org-operator">*</span>a0<span class="org-operator">*</span>t1<span class="org-operator">**</span>2 <span class="org-operator">+</span> (1<span class="org-operator">/</span>6)<span class="org-operator">*</span>j<span class="org-operator">*</span>t1<span class="org-operator">**</span>3
+        <span class="org-variable-name">pos2</span> <span class="org-operator">=</span> d1 <span class="org-operator">+</span> v1_val<span class="org-operator">*</span>(time2 <span class="org-operator">-</span> t1) <span class="org-operator">+</span> 0.5<span class="org-operator">*</span>a_min<span class="org-operator">*</span>(time2 <span class="org-operator">-</span> t1)<span class="org-operator">**</span>2
+        <span class="org-variable-name">pos</span> <span class="org-operator">=</span> np.concatenate([pos1, pos2])
+    <span class="org-keyword">else</span>:
+        <span class="org-variable-name">time</span> <span class="org-operator">=</span> np.linspace(0, t, 100)
+        <span class="org-variable-name">jerk</span> <span class="org-operator">=</span> np.full_like(time, j)
+        <span class="org-variable-name">accel</span> <span class="org-operator">=</span> a0 <span class="org-operator">+</span> j<span class="org-operator">*</span>time
+        <span class="org-variable-name">vel</span> <span class="org-operator">=</span> v0 <span class="org-operator">+</span> a0<span class="org-operator">*</span>time <span class="org-operator">+</span> 0.5<span class="org-operator">*</span>j<span class="org-operator">*</span>time<span class="org-operator">**</span>2
+        <span class="org-variable-name">pos</span> <span class="org-operator">=</span> s0 <span class="org-operator">+</span> v0<span class="org-operator">*</span>time <span class="org-operator">+</span> 0.5<span class="org-operator">*</span>a0<span class="org-operator">*</span>time<span class="org-operator">**</span>2 <span class="org-operator">+</span> (1<span class="org-operator">/</span>6)<span class="org-operator">*</span>j<span class="org-operator">*</span>time<span class="org-operator">**</span>3
+
+    <span class="org-variable-name">fig</span>, <span class="org-variable-name">axes</span> <span class="org-operator">=</span> plt.subplots(2, 3, figsize<span class="org-operator">=</span>(15, 8))
+    axes[0,0].plot(time, pos)
+    axes[0,0].set_ylabel(<span class="org-string">'Position (m)'</span>)
+    axes[0,1].plot(time, vel)
+    axes[0,1].set_ylabel(<span class="org-string">'Velocity (m/s)'</span>)
+    axes[0,2].plot(pos, vel)
+    axes[0,2].set_xlabel(<span class="org-string">'Position (m)'</span>)
+    axes[0,2].set_ylabel(<span class="org-string">'Velocity (m/s)'</span>)
+    axes[1,0].plot(time, accel)
+    axes[1,0].axhline(a_min, color<span class="org-operator">=</span><span class="org-string">'r'</span>, linestyle<span class="org-operator">=</span><span class="org-string">'--'</span>, label<span class="org-operator">=</span>f<span class="org-string">'Limit: </span>{a_min}<span class="org-string"> m/s&#178;'</span>)
+    axes[1,0].set_ylabel(<span class="org-string">'Acceleration (m/s&#178;)'</span>)
+    axes[1,0].set_xlabel(<span class="org-string">'Time (s)'</span>)
+    axes[1,0].legend()
+    axes[1,1].plot(time, jerk)
+    axes[1,1].set_ylabel(<span class="org-string">'Jerk (m/s&#179;)'</span>)
+    axes[1,1].set_xlabel(<span class="org-string">'Time (s)'</span>)
+    axes[1,2].axis(<span class="org-string">'off'</span>)
+    plt.tight_layout()
+    plt.savefig(<span class="org-string">'stopping_profile.png'</span>, dpi<span class="org-operator">=</span>150)
+    <span class="org-builtin">print</span>(<span class="org-string">"</span><span class="org-constant">\n</span><span class="org-string">Plot saved to stopping_profile.png"</span>)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org47c905a" class="outline-2">
+<h2 id="org47c905a">Example Results</h2>
+<div class="outline-text-2" id="text-org47c905a">
+</div>
+<div id="outline-container-org8b982e3" class="outline-3">
+<h3 id="org8b982e3">Without Acceleration Limit</h3>
+<div class="outline-text-3" id="text-org8b982e3">
+<p>
+Initial conditions:
+</p>
+<ul class="org-ul">
+<li>\(v_0 = 20\) m/s</li>
+<li>\(a_0 = 0\) m/s²</li>
+<li>\(j = -2\) m/s³</li>
+</ul>
+
+<p>
+Results:
+</p>
+<ul class="org-ul">
+<li>Stopping time: 4.472 s</li>
+<li>Stopping distance: 59.628 m</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orge37a647" class="outline-3">
+<h3 id="orge37a647">With Acceleration Limit</h3>
+<div class="outline-text-3" id="text-orge37a647">
+<p>
+Initial conditions:
+</p>
+<ul class="org-ul">
+<li>\(v_0 = 20\) m/s</li>
+<li>\(a_0 = 0\) m/s²</li>
+<li>\(j = -2\) m/s³</li>
+<li>\(a_{min} = -4\) m/s²</li>
+</ul>
+
+<p>
+Results:
+</p>
+<ul class="org-ul">
+<li>Stopping time: 6.000 s</li>
+<li><p>
+Stopping distance: 69.333 m
+</p>
+
+
+<figure id="org108422a">
+<img src="stopping_profile.png" alt="stopping_profile.png" width="80%">
+
+<figcaption><span class="figure-number">Figure 1: </span>constant jerk stopping profile</figcaption>
+</figure></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script>
+// Sidebar toggle
+document.querySelector('.sidebar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  this.classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+document.querySelector('.top-bar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  document.querySelector('.sidebar-toggle').classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+
+// Search toggle
+(function() {
+  var overlay = document.querySelector('.search-overlay');
+  var input = document.querySelector('.search-input');
+  var results = document.querySelector('.search-results');
+  document.querySelector('.top-bar-search').addEventListener('click', function() {
+    overlay.classList.toggle('active');
+    if (overlay.classList.contains('active')) input.focus();
+  });
+  document.querySelector('.search-close').addEventListener('click', function() {
+    overlay.classList.remove('active');
+    input.value = '';
+    results.innerHTML = '';
+  });
+  var pages = [];
+  fetch('/search-index.json').then(function(r){return r.json();}).then(function(d){pages=d;});
+  input.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { results.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    results.innerHTML = html || '<p style="color:#64748b">No results</p>';
+  });
+
+  // Sidebar search
+  var sInput = document.querySelector('.sidebar-search-input');
+  var sResults = document.querySelector('.sidebar-search-results');
+  sInput.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { sResults.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    sResults.innerHTML = html || '<p style="color:rgba(255,255,255,0.4)">No results</p>';
+  });
+})();
+
+// Theme toggle
+(function() {
+  var stored = localStorage.getItem('theme');
+  if (stored) {
+    document.documentElement.setAttribute('data-theme', stored);
+  }
+  document.querySelector('.theme-toggle').addEventListener('click', function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+})();
+
+// Active nav highlight
+(function() {
+  var path = window.location.pathname;
+  document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (path === href || (href !== '/index.html' && path.indexOf(href.replace('.html','')) === 0)) {
+      link.classList.add('active');
+    }
+  });
+})();
+
+// Fade in / fade out on scroll
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    } else {
+      entry.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.intro p, .blog-card, .pub-entry, .timeline-item, .hero-image').forEach(function(el) {
+  el.classList.add('fade-item');
+  observer.observe(el);
+});
+
+// Scroll progress bar
+window.addEventListener('scroll', function() {
+  var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var progress = (scrollTop / scrollHeight) * 100;
+  document.querySelector('.scroll-progress').style.width = progress + String.fromCharCode(37);
+});
+
+// Tag filtering on blogs page
+(function() {
+  document.querySelectorAll('.card-tag').forEach(function(tag) {
+    tag.style.cursor = 'pointer';
+    tag.addEventListener('click', function(e) {
+      e.preventDefault();
+      var selected = this.textContent.trim();
+      var allCards = document.querySelectorAll('.blog-card');
+      var allItems = document.querySelectorAll('.timeline-item');
+      var isActive = this.classList.contains('tag-active');
+      document.querySelectorAll('.card-tag').forEach(function(t) { t.classList.remove('tag-active'); });
+      if (isActive) {
+        allCards.forEach(function(c) { c.style.display = ''; });
+        allItems.forEach(function(i) { i.style.display = ''; });
+      } else {
+        this.classList.add('tag-active');
+        allCards.forEach(function(c) {
+          var t = c.querySelector('.card-tag');
+          c.style.display = (t && t.textContent.trim() === selected) ? '' : 'none';
+        });
+        allItems.forEach(function(i) {
+          var visible = i.querySelectorAll('.blog-card[style=""], .blog-card:not([style])');
+          var hasVisible = Array.from(i.querySelectorAll('.blog-card')).some(function(c) { return c.style.display !== 'none'; });
+          i.style.display = hasVisible ? '' : 'none';
+        });
+      }
+    });
+  });
+})();
+</script>
+</div>
+</body>
+</html>

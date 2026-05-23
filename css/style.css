@@ -127,9 +127,10 @@ body {
 .sidebar-social {
   display: flex;
   gap: 0.75rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  margin-top: auto;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
 /* Sidebar search */
@@ -492,6 +493,33 @@ pre code {
   padding: 0;
   border: none;
 }
+
+/* Syntax highlighting */
+.org-keyword { color: #7928a1; font-weight: bold; }
+.org-string { color: #2544bb; }
+.org-comment, .org-comment-delimiter { color: #505050; font-style: italic; }
+.org-function-name { color: #721045; }
+.org-variable-name { color: #005a5f; }
+.org-type { color: #005f5f; }
+.org-constant { color: #0000c0; }
+.org-builtin { color: #8f0075; }
+.org-preprocessor { color: #813e00; }
+.org-warning { color: #a60000; font-weight: bold; }
+.org-doc { color: #2a486a; }
+.org-negation-char { color: #a60000; }
+.org-regexp-grouping-construct,
+.org-regexp-grouping-backslash { color: #813e00; font-weight: bold; }
+
+[data-theme="dark"] .org-keyword { color: #b6a0ff; }
+[data-theme="dark"] .org-string { color: #79a8ff; }
+[data-theme="dark"] .org-comment, [data-theme="dark"] .org-comment-delimiter { color: #989898; }
+[data-theme="dark"] .org-function-name { color: #feacd0; }
+[data-theme="dark"] .org-variable-name { color: #6ae4b9; }
+[data-theme="dark"] .org-type { color: #6ae4b9; }
+[data-theme="dark"] .org-constant { color: #00bcff; }
+[data-theme="dark"] .org-builtin { color: #f78fe7; }
+[data-theme="dark"] .org-preprocessor { color: #fec43f; }
+[data-theme="dark"] .org-doc { color: #80b2f0; }
 
 /* Lists */
 ul, ol {

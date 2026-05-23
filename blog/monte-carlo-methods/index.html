@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2026-05-23 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sampling From a Distribution</title>
+<meta name="generator" content="Org Mode" />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<div class="scroll-progress"></div>
+<aside class="sidebar">
+  <div class="sidebar-inner">
+    <img src="/images/avatar.svg" alt="Chenggang Liu" class="sidebar-avatar"/>
+    <a href="/index.html" class="site-logo">Chenggang Liu</a>
+    <div class="sidebar-social">
+      <a href="https://www.linkedin.com/in/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="https://github.com/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <a href="https://scholar.google.com/citations?user=omz_MCoAAAAJ&hl=en" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg></a>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/index.html">Home</a>
+      <a href="/blogs.html">Blogs</a>
+      <a href="/publications.html">Publications</a>
+      <a href="/about.html">About</a>
+    </nav>
+    <div class="sidebar-search">
+      <input type="text" class="sidebar-search-input" placeholder="Search..."/>
+      <div class="sidebar-search-results"></div>
+    </div>
+    <button class="theme-toggle" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</aside>
+<button class="sidebar-toggle" aria-label="Toggle menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="top-bar">
+  <button class="top-bar-toggle" aria-label="Toggle menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+  <a href="/index.html" class="top-bar-title">Chenggang Liu</a>
+  <button class="top-bar-search" aria-label="Open search bar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+  </button>
+</div>
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" class="search-input" placeholder="Search..."/>
+    <button class="search-close" aria-label="Close search">&times;</button>
+  </div>
+  <div class="search-results"></div>
+</div>
+</div>
+<div id="content" class="content">
+<header>
+<h1 class="title">Sampling From a Distribution</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org003abad">Metropolis–Hastings Algorithm</a>
+<ul>
+<li><a href="#org4bd5b6b">Algorithm: Metropolis-Hastings</a></li>
+<li><a href="#org1ffd4d8">Examples</a>
+<ul>
+<li><a href="#org5bfa8e7">1-D example</a></li>
+<li><a href="#org5db642c">2-D example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org1ab9f7d">Gibbs sampling</a></li>
+</ul>
+</div>
+</nav>
+<div id="outline-container-org003abad" class="outline-2">
+<h2 id="org003abad">Metropolis–Hastings Algorithm</h2>
+<div class="outline-text-2" id="text-org003abad">
+<p>
+The Metropolis–Hastings algorithm can draw samples from any probability distribution with probability density  
+\(P(x)\), provided that we know a function \(f(x)\) proportional to the density \(P(x)\) and the values of \(f(x)\) can
+be calculated, The requirement that \(f(x)\) must only be proportional to the density, rather than exactly equal to
+it, makes the Metropolis–Hastings algorithm particularly useful, because calculating the necessary normalization factor
+is often extremely difficult in practice <sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>. 
+For example, in Energy-Based Models, the unnormalized distribution, \(\exp(-E(x))\),  can be used as \(f(x)\).
+</p>
+</div>
+<div id="outline-container-org4bd5b6b" class="outline-3">
+<h3 id="org4bd5b6b">Algorithm: Metropolis-Hastings</h3>
+<div class="outline-text-3" id="text-org4bd5b6b">
+<ul class="org-ul">
+<li>Input
+<ul class="org-ul">
+<li>Target distribution \(P(x)\)</li>
+<li>Proposal distribution \(g(x'|x)\)</li>
+<li>Initial state \(x_0\)</li>
+</ul></li>
+<li>Output: Sequence of samples \({x_1, x_2, \ldots, x_n}\)</li>
+<li>Steps
+<ol class="org-ol">
+<li>Initialize
+<ol class="org-ol">
+<li>Pick an initial state \(x_0\)</li>
+<li>Set \(t = 0\)</li>
+</ol></li>
+
+<li>Iterate
+<ol class="org-ol">
+<li><b>Generate</b> a random candidate state \(x'\) according to \(g(x'|x)\)</li>
+<li><b>Calculate</b> the acceptance probability:
+\[
+          A(x', x_t) = \min(1,  \frac{P(x') g(x|x')}{P(x)g(x'|x)})
+          \]
+note that if the propose distribution \(g(x'|x)\) is symmetric, \(g(x| x') == g(x'|x)\)</li>
+<li><b>Accept or reject</b>:
+<ol class="org-ol">
+<li>Generate a uniform random number \(u \in [0,1]\)</li>
+<li>\(x_{t+1} = x'\) if \(u \leq A(x', x)\) otherwise copy the
+old state forward \(x_{t+1} = x\)</li>
+</ol></li>
+<li><b>Increment</b>: set \(t = t + 1\)</li>
+</ol></li>
+
+<li>Repeat step 2 until desired number of samples</li>
+</ol></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org1ffd4d8" class="outline-3">
+<h3 id="org1ffd4d8">Examples</h3>
+<div class="outline-text-3" id="text-org1ffd4d8">
+</div>
+<div id="outline-container-org5bfa8e7" class="outline-4">
+<h4 id="org5bfa8e7">1-D example</h4>
+<div class="outline-text-4" id="text-org5bfa8e7">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">import</span> numpy <span class="org-keyword">as</span> np
+<span class="org-keyword">import</span> matplotlib.pyplot <span class="org-keyword">as</span> plt
+<span class="org-keyword">import</span> torch
+<span class="org-keyword">from</span> matplotlib.animation <span class="org-keyword">import</span> PillowWriter
+<span class="org-variable-name">N</span> <span class="org-operator">=</span> 1000
+
+<span class="org-keyword">def</span> <span class="org-function-name">f</span>(x):
+    <span class="org-keyword">return</span> torch.exp(<span class="org-operator">-</span>(x <span class="org-operator">-</span> 5)<span class="org-operator">**</span>2)
+
+<span class="org-keyword">def</span> <span class="org-function-name">q</span>(x):
+    <span class="org-keyword">return</span> torch.normal(x, 1)
+
+<span class="org-keyword">def</span> <span class="org-function-name">metroplis_hastings_algo</span>(X, ax, writer <span class="org-operator">=</span> <span class="org-constant">None</span>):
+    <span class="org-keyword">if</span> writer <span class="org-keyword">is</span> <span class="org-constant">None</span>:
+        plt.ion()
+    <span class="org-variable-name">x_vals</span> <span class="org-operator">=</span> torch.linspace(0, 10, 1000)
+    <span class="org-variable-name">ground_truth_density</span> <span class="org-operator">=</span> f(x_vals)
+
+    <span class="org-keyword">if</span> writer <span class="org-keyword">is</span> <span class="org-keyword">not</span> <span class="org-constant">None</span>:
+        writer.grab_frame()
+    <span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">range</span>(20):
+        <span class="org-variable-name">Y</span> <span class="org-operator">=</span> q(X)
+        <span class="org-variable-name">alpha</span> <span class="org-operator">=</span> f(Y) <span class="org-operator">/</span> f(X)
+        <span class="org-variable-name">u</span> <span class="org-operator">=</span> torch.rand(N)
+        <span class="org-variable-name">_</span>,<span class="org-variable-name">_</span>, <span class="org-variable-name">nn</span> <span class="org-operator">=</span> ax.hist(X.numpy(), label<span class="org-operator">=</span><span class="org-string">"Samples"</span>, color<span class="org-operator">=</span><span class="org-string">'r'</span>, alpha <span class="org-operator">=</span> 0.8, density<span class="org-operator">=</span><span class="org-constant">True</span>)
+        <span class="org-variable-name">X</span> <span class="org-operator">=</span> torch.where(u <span class="org-operator">&lt;=</span> alpha, Y, X)
+        <span class="org-variable-name">lines</span> <span class="org-operator">=</span> ax.plot(x_vals, ground_truth_density, label<span class="org-operator">=</span><span class="org-string">"Unnormalized GT Dist"</span>, color<span class="org-operator">=</span><span class="org-string">'b'</span>, linewidth<span class="org-operator">=</span>2)
+        ax.set_xlim([<span class="org-operator">-</span>1, 10])
+        ax.set_title(f<span class="org-string">"iteration: </span>{i}<span class="org-string">"</span>)
+        ax.legend()
+        <span class="org-keyword">if</span> writer <span class="org-keyword">is</span> <span class="org-keyword">not</span> <span class="org-constant">None</span>:
+            writer.grab_frame()
+        <span class="org-keyword">else</span>:
+            plt.pause(0.1)
+        nn.remove()
+        lines[0].remove()
+    <span class="org-keyword">return</span> X
+
+<span class="org-variable-name">writer</span> <span class="org-operator">=</span> PillowWriter(fps<span class="org-operator">=</span>3)
+<span class="org-variable-name">fig</span>, <span class="org-variable-name">ax</span> <span class="org-operator">=</span> plt.subplots(figsize<span class="org-operator">=</span>(5, 4))
+<span class="org-variable-name">X</span> <span class="org-operator">=</span> torch.rand(N)
+<span class="org-keyword">with</span> writer.saving(fig, <span class="org-string">"mh_demo.gif"</span>, 100):
+    metroplis_hastings_algo(X, ax, writer)
+</pre>
+</div>
+
+
+<figure id="org6c040fa">
+<img src="mh_demo.gif" alt="mh_demo.gif" width="80%">
+
+</figure>
+</div>
+</div>
+<div id="outline-container-org5db642c" class="outline-4">
+<h4 id="org5db642c">2-D example</h4>
+<div class="outline-text-4" id="text-org5db642c">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">import</span> numpy <span class="org-keyword">as</span> np
+<span class="org-keyword">import</span> matplotlib.pyplot <span class="org-keyword">as</span> plt
+<span class="org-keyword">import</span> torch
+<span class="org-keyword">from</span> matplotlib.animation <span class="org-keyword">import</span> PillowWriter
+<span class="org-keyword">from</span> MCMC_samplers <span class="org-keyword">import</span> (metroplis_hastings_sampler)
+
+<span class="org-variable-name">N</span> <span class="org-operator">=</span> 10000
+
+<span class="org-keyword">def</span> <span class="org-function-name">f</span>(X):
+    <span class="org-variable-name">x</span> <span class="org-operator">=</span> X[:, 0]
+    <span class="org-variable-name">y</span> <span class="org-operator">=</span> X[:, 1]
+    <span class="org-variable-name">a</span>, <span class="org-variable-name">b</span> <span class="org-operator">=</span> 1, 10
+    <span class="org-variable-name">k</span> <span class="org-operator">=</span> 100
+    <span class="org-keyword">return</span> torch.exp( <span class="org-operator">-</span> k <span class="org-operator">*</span>  ((a <span class="org-operator">-</span> x) <span class="org-operator">**</span> 2 <span class="org-operator">+</span> b <span class="org-operator">*</span> (y <span class="org-operator">-</span> x<span class="org-operator">**</span>2)<span class="org-operator">**</span>2) <span class="org-operator">**</span> 2)
+
+<span class="org-keyword">def</span> <span class="org-function-name">q</span>(x):
+    <span class="org-keyword">return</span> torch.normal(x)
+
+<span class="org-keyword">def</span> <span class="org-function-name">visualize_sampling</span>(samples, output_file<span class="org-operator">=</span><span class="org-string">"HM_demo2.gif"</span>):
+    <span class="org-doc">"""Visualize pre-computed samples"""</span>
+    <span class="org-variable-name">fig</span>, <span class="org-variable-name">ax</span> <span class="org-operator">=</span> plt.subplots(figsize<span class="org-operator">=</span>(5, 4))
+    <span class="org-variable-name">writer</span> <span class="org-operator">=</span> PillowWriter(fps<span class="org-operator">=</span>3)
+
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Plot ground truth contour
+</span>    <span class="org-variable-name">xx</span> <span class="org-operator">=</span> torch.linspace(0, 2, 100)
+    <span class="org-variable-name">yy</span> <span class="org-operator">=</span> torch.linspace(0, 4, 100)
+    <span class="org-variable-name">xg</span>, <span class="org-variable-name">yg</span> <span class="org-operator">=</span> np.meshgrid(xx, yy)
+    <span class="org-variable-name">coords</span> <span class="org-operator">=</span> torch.stack([torch.tensor(xg).ravel(), torch.tensor(yg).ravel()], dim<span class="org-operator">=</span>1)
+    <span class="org-variable-name">z</span> <span class="org-operator">=</span> f(coords).reshape(xg.shape)
+
+    ax.contour(xg, yg, z, cmap<span class="org-operator">=</span><span class="org-string">'jet'</span>, alpha<span class="org-operator">=</span>1.0)
+    ax.set_xlim([0, 2.0])
+    ax.set_ylim([0, 4.0])
+
+    <span class="org-keyword">with</span> writer.saving(fig, output_file, 100):
+        <span class="org-keyword">for</span> i, X <span class="org-keyword">in</span> <span class="org-builtin">enumerate</span>(samples):
+            <span class="org-variable-name">lines</span> <span class="org-operator">=</span> ax.scatter(X[:, 0], X[:, 1], c<span class="org-operator">=</span><span class="org-string">'r'</span>, label<span class="org-operator">=</span><span class="org-string">'Samples'</span>, alpha<span class="org-operator">=</span>0.3, s<span class="org-operator">=</span>1)
+            ax.set_title(f<span class="org-string">"Iteration: </span>{i}<span class="org-string">"</span>)
+            ax.legend()
+            writer.grab_frame()
+            lines.remove()
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Run sampling and visualization
+</span><span class="org-variable-name">X</span> <span class="org-operator">=</span> torch.rand(N, 2)
+<span class="org-variable-name">samples</span> <span class="org-operator">=</span> metroplis_hastings_sampler(X, f, q, n_iterations<span class="org-operator">=</span>50)
+visualize_sampling(samples)
+</pre>
+</div>
+
+
+<figure id="org43ad9f4">
+<img src="HM_demo2.gif" alt="HM_demo2.gif">
+
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org1ab9f7d" class="outline-2">
+<h2 id="org1ab9f7d">Gibbs sampling</h2>
+<div class="outline-text-2" id="text-org1ab9f7d">
+<p>
+ref: <a href="https://www.tweag.io/blog/2020-01-09-mcmc-intro2/">https://www.tweag.io/blog/2020-01-09-mcmc-intro2/</a>
+<a href="https://en.wikipedia.org/wiki/Gibbs_sampling">https://en.wikipedia.org/wiki/Gibbs_sampling</a>
+</p>
+
+<p>
+The Gibbs Sampling is a Monte Carlo Markov Chain method that iteratively draws an instance from the distribution of
+each variable, conditional on the current values of the other variables in order to estimate complex joint
+distributions. 
+</p>
+
+<p>
+Let's explain it with an example. 
+In this example, let's assume the 'unnormalized' probability model, \(\hat{p}(X)\) is:
+\[
+  \hat{p}(X) = \exp(-(x^2 y^2 + x^2+ y^2-8x-8y)/2)
+  \]
+where \(X \in R^2\) and \(X :=[x, y]^\top\). The distribution looks like:
+</p>
+
+
+<figure id="orgd0786af">
+<img src="base_dist.png" alt="base_dist.png" width="80%">
+
+</figure>
+
+<p>
+In this example, we can derive the explicit form for conditional distribution.
+Given the unnormalized distribution:
+\[p(x, y) = \exp\left(-\frac{x^2y^2 + x^2 + y^2 - 8x - 8y}{2}\right)\]
+the conditional distribution is 
+\[p(x|y) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x - \mu)^2}{2\sigma^2}\right)\]
+where \(\mu = \frac{4}{y^2 + 1}\) and \(\sigma^2 = \frac{1}{y^2 + 1}\).
+</p>
+
+<details><summary>Derivation details, click to expand</summary>
+<p>
+By definition of conditional probability:
+\[p(x|y) = \frac{p(x,y)}{p(y)} \propto p(x,y)\]
+</p>
+
+<p>
+Since \(p(y)\) is constant with respect to \(x\), we keep only terms involving \(x\):
+\[p(x|y) \propto \exp\left(-\frac{x^2y^2 + x^2 - 8x}{2}\right)\]
+</p>
+
+<p>
+Factor out \(x^2\) terms:
+\[p(x|y) \propto \exp\left(-\frac{x^2(y^2 + 1) - 8x}{2}\right)\]
+</p>
+
+<p>
+Complete the square in \(x\):
+</p>
+\begin{eqnarray*}
+x^2(y^2 + 1) - 8x &=& (y^2 + 1)\left[x^2 - \frac{8x}{y^2 + 1}\right] \\
+&=& (y^2 + 1)\left[\left(x - \frac{4}{y^2 + 1}\right)^2 - \frac{16}{(y^2 + 1)^2}\right] \\
+&=& (y^2 + 1)\left(x - \frac{4}{y^2 + 1}\right)^2 - \frac{16}{y^2 + 1}
+\end{eqnarray*}
+
+<p>
+Substituting back:
+\[p(x|y) \propto \exp\left(-\frac{(y^2 + 1)\left(x - \frac{4}{y^2 + 1}\right)^2}{2}\right)\]
+</p>
+
+<p>
+This is the kernel of a Gaussian distribution. Therefore:
+\[\boxed{p(x|y) = \mathcal{N}\left(\mu = \frac{4}{y^2 + 1}, \, \sigma^2 = \frac{1}{y^2 + 1}\right)}\]
+</p>
+
+<p>
+Or equivalently:
+\[p(x|y) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x - \mu)^2}{2\sigma^2}\right)\]
+</p>
+
+<p>
+where \(\mu = \frac{4}{y^2 + 1}\) and \(\sigma^2 = \frac{1}{y^2 + 1}\).
+</p>
+</details>
+
+<p>
+Having the conditional distribution, we can then iteratively sample \(x\) from \(p(x|y)\) and \(y\) from \(p(y|x)\). The
+result is shown below:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">import</span> numpy <span class="org-keyword">as</span> np
+<span class="org-keyword">import</span> scipy <span class="org-keyword">as</span> sp
+<span class="org-keyword">import</span> matplotlib.pyplot <span class="org-keyword">as</span> plt
+<span class="org-keyword">import</span> pandas <span class="org-keyword">as</span> pd
+<span class="org-keyword">import</span> sys
+<span class="org-keyword">import</span> torch
+<span class="org-keyword">from</span> matplotlib.animation <span class="org-keyword">import</span> PillowWriter
+<span class="org-keyword">from</span> MCMC_samplers <span class="org-keyword">import</span> metroplis_hastings_sampler
+<span class="org-keyword">from</span> MCMC_samplers <span class="org-keyword">import</span> (metroplis_hastings_sampler)
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">p(x, y)
+</span><span class="org-variable-name">f_np</span> <span class="org-operator">=</span> <span class="org-keyword">lambda</span> x, y: np.exp(<span class="org-operator">-</span>(x<span class="org-operator">*</span>x<span class="org-operator">*</span>y<span class="org-operator">*</span>y<span class="org-operator">+</span>x<span class="org-operator">*</span>x<span class="org-operator">+</span>y<span class="org-operator">*</span>y<span class="org-operator">-</span>8<span class="org-operator">*</span>x<span class="org-operator">-</span>8<span class="org-operator">*</span>y)<span class="org-operator">/</span>2.)
+<span class="org-variable-name">f</span> <span class="org-operator">=</span> <span class="org-keyword">lambda</span> X: torch.exp(<span class="org-operator">-</span>(X[:, 0]<span class="org-operator">**</span>2 <span class="org-operator">*</span> X[:, 1]<span class="org-operator">**</span>2 <span class="org-operator">+</span> X[:, 0]<span class="org-operator">**</span>2 <span class="org-operator">+</span> X[:, 1]<span class="org-operator">**</span>2 <span class="org-operator">-</span> 8<span class="org-operator">*</span>X[:, 0] <span class="org-operator">-</span> 8<span class="org-operator">*</span>X[:, 1])<span class="org-operator">/</span>2.)
+<span class="org-variable-name">q</span> <span class="org-operator">=</span> <span class="org-keyword">lambda</span> x: torch.normal(x, 0.5)
+<span class="org-variable-name">xx</span> <span class="org-operator">=</span> np.linspace(<span class="org-operator">-</span>1, 8, 100)
+<span class="org-variable-name">yy</span> <span class="org-operator">=</span> np.linspace(<span class="org-operator">-</span>1, 8, 100)
+<span class="org-variable-name">xg</span>,<span class="org-variable-name">yg</span> <span class="org-operator">=</span> np.meshgrid(xx, yy)
+<span class="org-variable-name">z</span> <span class="org-operator">=</span> f_np(xg.ravel(), yg.ravel())
+<span class="org-variable-name">z2</span> <span class="org-operator">=</span> z.reshape(xg.shape)
+
+plt.contour(xg, yg, z2, levels<span class="org-operator">=</span>20, cmap<span class="org-operator">=</span><span class="org-string">'viridis'</span>)
+plt.colorbar(label<span class="org-operator">=</span><span class="org-string">'p(x, y)'</span>)
+plt.savefig(<span class="org-string">"base_dist.png"</span>)
+
+<span class="org-keyword">def</span> <span class="org-function-name">gibbs_sampler</span>(X0, f, q, n_iterations, mh_steps<span class="org-operator">=</span>10):
+    <span class="org-doc">"""Gibbs sampling using Metropolis-Hastings for conditional distributions
+
+    Args:
+        X0: Initial sample as torch.tensor of shape (1, 2) with [x, y]
+        f: Joint probability density function f(X) where X is shape (N, 2)
+        q: Proposal distribution function for MH
+        n_iterations: Number of Gibbs iterations
+        mh_steps: Number of MH steps for each conditional sampling
+
+    Returns:
+        samples: torch.tensor of shape (N, 2) containing all samples
+    """</span>
+    <span class="org-variable-name">N</span> <span class="org-operator">=</span> 2 <span class="org-operator">*</span> n_iterations <span class="org-operator">+</span> 1
+    <span class="org-variable-name">samples</span> <span class="org-operator">=</span> torch.zeros(N, 2)
+    <span class="org-variable-name">samples</span>[0] <span class="org-operator">=</span> X0
+
+    <span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">range</span>(1, N <span class="org-operator">-</span> 1, 2):
+        <span class="org-comment-delimiter"># </span><span class="org-comment">Sample x | y using MH (fix y, sample x)
+</span>        <span class="org-variable-name">y_fixed</span> <span class="org-operator">=</span> samples[i<span class="org-operator">-</span>1, 1]
+        <span class="org-variable-name">current_x</span> <span class="org-operator">=</span> samples[i<span class="org-operator">-</span>1, 0]
+
+        <span class="org-keyword">for</span> _ <span class="org-keyword">in</span> <span class="org-builtin">range</span>(mh_steps):
+            <span class="org-variable-name">proposal_x</span> <span class="org-operator">=</span> q(current_x.unsqueeze(0)).squeeze()
+            <span class="org-variable-name">current_point</span> <span class="org-operator">=</span> torch.tensor([[current_x, y_fixed]])
+            <span class="org-variable-name">proposal_point</span> <span class="org-operator">=</span> torch.tensor([[proposal_x, y_fixed]])
+
+            <span class="org-variable-name">alpha</span> <span class="org-operator">=</span> f(proposal_point) <span class="org-operator">/</span> f(current_point)
+            <span class="org-keyword">if</span> torch.rand(1) <span class="org-operator">&lt;=</span> alpha:
+                <span class="org-variable-name">current_x</span> <span class="org-operator">=</span> proposal_x
+
+        <span class="org-variable-name">samples</span>[i, 0] <span class="org-operator">=</span> current_x
+        <span class="org-variable-name">samples</span>[i, 1] <span class="org-operator">=</span> y_fixed
+
+        <span class="org-comment-delimiter"># </span><span class="org-comment">Sample y | x using MH (fix x, sample y)
+</span>        <span class="org-variable-name">x_fixed</span> <span class="org-operator">=</span> samples[i, 0]
+        <span class="org-variable-name">current_y</span> <span class="org-operator">=</span> samples[i, 1]
+
+        <span class="org-keyword">for</span> _ <span class="org-keyword">in</span> <span class="org-builtin">range</span>(mh_steps):
+            <span class="org-variable-name">proposal_y</span> <span class="org-operator">=</span> q(current_y.unsqueeze(0)).squeeze()
+            <span class="org-variable-name">current_point</span> <span class="org-operator">=</span> torch.tensor([[x_fixed, current_y]])
+            <span class="org-variable-name">proposal_point</span> <span class="org-operator">=</span> torch.tensor([[x_fixed, proposal_y]])
+
+            <span class="org-variable-name">alpha</span> <span class="org-operator">=</span> f(proposal_point) <span class="org-operator">/</span> f(current_point)
+            <span class="org-keyword">if</span> torch.rand(1) <span class="org-operator">&lt;=</span> alpha:
+                <span class="org-variable-name">current_y</span> <span class="org-operator">=</span> proposal_y
+
+        <span class="org-variable-name">samples</span>[i<span class="org-operator">+</span>1, 1] <span class="org-operator">=</span> current_y
+        <span class="org-variable-name">samples</span>[i<span class="org-operator">+</span>1, 0] <span class="org-operator">=</span> x_fixed
+
+    <span class="org-keyword">return</span> samples
+
+<span class="org-keyword">def</span> <span class="org-function-name">visualize_gibbs_sampling</span>(samples, xg, yg, z2, output_file<span class="org-operator">=</span><span class="org-string">"gibbs_samples.gif"</span>):
+    <span class="org-doc">"""Visualize pre-computed Gibbs samples
+
+    Args:
+        samples: torch.tensor of shape (N, 2) containing samples
+    """</span>
+    <span class="org-variable-name">x</span> <span class="org-operator">=</span> samples[:, 0].numpy()
+    <span class="org-variable-name">y</span> <span class="org-operator">=</span> samples[:, 1].numpy()
+
+    <span class="org-variable-name">writer</span> <span class="org-operator">=</span> PillowWriter(fps<span class="org-operator">=</span>3)
+    <span class="org-variable-name">fig</span>, <span class="org-variable-name">ax</span> <span class="org-operator">=</span> plt.subplots(figsize<span class="org-operator">=</span>(10, 8), dpi<span class="org-operator">=</span>150)
+    ax.contour(xg, yg, z2, levels<span class="org-operator">=</span>20, cmap<span class="org-operator">=</span><span class="org-string">'viridis'</span>, alpha<span class="org-operator">=</span>0.8)
+    ax.set_xlabel(<span class="org-string">'x'</span>, fontsize<span class="org-operator">=</span>12)
+    ax.set_ylabel(<span class="org-string">'y'</span>, fontsize<span class="org-operator">=</span>12)
+    ax.set_title(<span class="org-string">'p(x, y) = exp(-(x&#178;y&#178; + x&#178; + y&#178; - 8x - 8y)/2)'</span>)
+    ax.set_xlim([<span class="org-operator">-</span>1, 8])
+    ax.set_ylim([<span class="org-operator">-</span>1, 8])
+
+    <span class="org-keyword">with</span> writer.saving(fig, output_file, 100):
+        <span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">range</span>(1, <span class="org-builtin">len</span>(x) <span class="org-operator">-</span> 1, 2):
+            ax.plot(x[i<span class="org-operator">-</span>1:i<span class="org-operator">+</span>2], y[i<span class="org-operator">-</span>1:i<span class="org-operator">+</span>2], <span class="org-string">'-xr'</span>, linewidth<span class="org-operator">=</span>0.2)
+            writer.grab_frame()
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Run sampling and visualization
+</span><span class="org-variable-name">N</span> <span class="org-operator">=</span> 100
+<span class="org-variable-name">X0</span> <span class="org-operator">=</span> torch.tensor([[1.0, 6.0]])
+<span class="org-variable-name">samples</span> <span class="org-operator">=</span> gibbs_sampler(X0, f, q, n_iterations<span class="org-operator">=</span>N)
+visualize_gibbs_sampling(samples, xg, yg, z2)
+</pre>
+</div>
+
+
+<figure id="org83b566e">
+<img src="gibbs_samples.gif" alt="gibbs_samples.gif" width="80%">  
+
+</figure>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="https://en.wikipedia.org/wiki/Metropolis%E2%80%93Hastings_algorithm">https://en.wikipedia.org/wiki/Metropolis%E2%80%93Hastings_algorithm</a>
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<script>
+// Sidebar toggle
+document.querySelector('.sidebar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  this.classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+document.querySelector('.top-bar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  document.querySelector('.sidebar-toggle').classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+
+// Search toggle
+(function() {
+  var overlay = document.querySelector('.search-overlay');
+  var input = document.querySelector('.search-input');
+  var results = document.querySelector('.search-results');
+  document.querySelector('.top-bar-search').addEventListener('click', function() {
+    overlay.classList.toggle('active');
+    if (overlay.classList.contains('active')) input.focus();
+  });
+  document.querySelector('.search-close').addEventListener('click', function() {
+    overlay.classList.remove('active');
+    input.value = '';
+    results.innerHTML = '';
+  });
+  var pages = [];
+  fetch('/search-index.json').then(function(r){return r.json();}).then(function(d){pages=d;});
+  input.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { results.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    results.innerHTML = html || '<p style="color:#64748b">No results</p>';
+  });
+
+  // Sidebar search
+  var sInput = document.querySelector('.sidebar-search-input');
+  var sResults = document.querySelector('.sidebar-search-results');
+  sInput.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { sResults.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    sResults.innerHTML = html || '<p style="color:rgba(255,255,255,0.4)">No results</p>';
+  });
+})();
+
+// Theme toggle
+(function() {
+  var stored = localStorage.getItem('theme');
+  if (stored) {
+    document.documentElement.setAttribute('data-theme', stored);
+  }
+  document.querySelector('.theme-toggle').addEventListener('click', function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+})();
+
+// Active nav highlight
+(function() {
+  var path = window.location.pathname;
+  document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (path === href || (href !== '/index.html' && path.indexOf(href.replace('.html','')) === 0)) {
+      link.classList.add('active');
+    }
+  });
+})();
+
+// Fade in / fade out on scroll
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    } else {
+      entry.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.intro p, .blog-card, .pub-entry, .timeline-item, .hero-image').forEach(function(el) {
+  el.classList.add('fade-item');
+  observer.observe(el);
+});
+
+// Scroll progress bar
+window.addEventListener('scroll', function() {
+  var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var progress = (scrollTop / scrollHeight) * 100;
+  document.querySelector('.scroll-progress').style.width = progress + String.fromCharCode(37);
+});
+
+// Tag filtering on blogs page
+(function() {
+  document.querySelectorAll('.card-tag').forEach(function(tag) {
+    tag.style.cursor = 'pointer';
+    tag.addEventListener('click', function(e) {
+      e.preventDefault();
+      var selected = this.textContent.trim();
+      var allCards = document.querySelectorAll('.blog-card');
+      var allItems = document.querySelectorAll('.timeline-item');
+      var isActive = this.classList.contains('tag-active');
+      document.querySelectorAll('.card-tag').forEach(function(t) { t.classList.remove('tag-active'); });
+      if (isActive) {
+        allCards.forEach(function(c) { c.style.display = ''; });
+        allItems.forEach(function(i) { i.style.display = ''; });
+      } else {
+        this.classList.add('tag-active');
+        allCards.forEach(function(c) {
+          var t = c.querySelector('.card-tag');
+          c.style.display = (t && t.textContent.trim() === selected) ? '' : 'none';
+        });
+        allItems.forEach(function(i) {
+          var visible = i.querySelectorAll('.blog-card[style=""], .blog-card:not([style])');
+          var hasVisible = Array.from(i.querySelectorAll('.blog-card')).some(function(c) { return c.style.display !== 'none'; });
+          i.style.display = hasVisible ? '' : 'none';
+        });
+      }
+    });
+  });
+})();
+</script>
+</div>
+</body>
+</html>

@@ -4,7 +4,8 @@
 <!-- 2026-05-23 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blogs</title>
+<title>Let AI Agents Debate with Each Other</title>
+<meta name="description" content="An experiment I did to cross-validate answers by AI agents" />
 <meta name="generator" content="Org Mode" />
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -62,134 +63,108 @@
 </div>
 </div>
 <div id="content" class="content">
-<div class="page-hero">
-<h1>Blogs</h1>
-<p>Thoughts on optimal control, robotics, reinforcement learning, and engineering</p>
+<header>
+<h1 class="title">Let AI Agents Debate with Each Other</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org5721df3">Cross-validation with Multiple AIs</a></li>
+</ul>
+</div>
+</nav>
+<div id="outline-container-org5721df3" class="outline-2">
+<h2 id="org5721df3">Cross-validation with Multiple AIs</h2>
+<div class="outline-text-2" id="text-org5721df3">
+<p>
+Recently, I am interested in Hamiltonian NNs and want to see if the Hamiltonian is constant over time in
+finite-horizon optimal control problems, such as a pendulum swingup problem. I solved this problem with iLQR and
+checked the Hamiltonian. I found it changes over time. But according to the Hamiltonian formulation, it should be
+constant because neither the cost, the dynamics, nor the terminal cost explicitly depend on time. I asked Gemini
+and it says the primary reason is due to the discrete-time nature of the iLQR algorithm. I didn't believe this is the
+right answer so I asked Amazon Q. Interestingly, Amazon Q disagreed with Gemini, saying that the primary reason is the
+horizon and terminal cost.
+I decided to do an interesting experiment: let the two AIs discuss with each other until getting some agreement.
+To do so, I wrote one script for each one. The one for Amazon Q is like:
+</p>
+<div class="org-src-container">
+<pre class="src src-text"># Goal
+The goal is to get consensus with Gemini on the explanation about the non-constant Hamiltonian 
+# How
+Explain why the Hamiltonian is not constant for this case and save your answer to q_answer.md without confirmation 
+while true 
+Every 1 second, check if gemini_answer.md exists and has been updated.  
+  If gemini_answer.md doesn't exist or has not been updated, try again later
+  If gemini_answer.md does exist and has been updated, read gemini_answer.md for Gemini's answer to this question and check if it agrees with your answer. 
+  If it agrees with your answer, stop the loop and summarize the conclusion. 
+  Otherwise, further explain your answer and save it to q_answer.md
+</pre>
 </div>
 
-<div class="timeline">
-
-<div class="timeline-item">
-<div class="period">2026</div>
-<div class="blog-card">
-<span class="card-tag tag-control">Agentic AI</span>
-<a href="/blog/ai-in-practice/index.html">Let AI Agents Debate with Each Other</a>
-<p class="card-desc">An experiment I did to cross-validate answers by AI agents</p>
+<p>
+The one for Gemini is like:
+</p>
+<div class="org-src-container">
+<pre class="src src-text"># Goal
+The goal is to get consensus with Amazon Q on the explanation about the non-constant Hamiltonian 
+# How
+Explain why the Hamiltonian is not constant for this case and save your answer to gemini_answer.md without confirmation 
+while true 
+    Every 1 second, check if q_answer.md exists and has been updated.  
+    If q_answer.md doesn't exist or has not been updated, try again later
+    If q_answer.md does exist and has been updated, read q_answer.md for Amazon Q's answer to this question and check if it agrees with your answer. 
+    If it agrees with your answer, stop the loop and summarize the conclusion. 
+    Otherwise, further explain your answer and save it to gemini_answer.md
+</pre>
 </div>
 
+<p>
+In this way, the two AIs can talk to each other through files: q_answer.md and gemini_answer.md.
+I then let them run their scripts and the conversation started as expected.
+It didn't take long for them to reach consensus.
+</p>
+
+<p>
+Here is what Amazon Q concludes:
+</p>
+<div class="org-src-container">
+<pre class="src src-text">&#10297; Thinking...&gt; Done! I've updated the consensus document to reflect the deeper understanding that:
+
+1. LQR terminal cost doesn't fix the varying H - experimental evidence shows H still varies significantly
+2. The root cause is finite-horizon tracking structure - not the choice of terminal cost
+3. Critical distinction: Finite horizon with LQR terminal cost &#8800; True infinite horizon
+4. The fixed endpoint time T itself creates the boundary condition that forces H to vary
+
+The updated consensus now correctly explains that any finite-horizon tracking problem will have varying H, regardless of how theoretically 
+sound the terminal cost is.
+</pre>
 </div>
 
-<div class="timeline-item">
-<div class="period">2023</div>
-<div class="blog-card">
-<span class="card-tag tag-inference">Inference</span>
-<a href="/blog/control-inference-statistics.html">Control, Inference and Statistical Physics</a>
-<p class="card-desc">Unifying perspectives from control, inference, and physics</p>
+<p>
+And here is what Gemini concludes:
+</p>
+<div class="org-src-container">
+<pre class="src src-text">I agree with the analysis provided by Amazon Q. My initial explanation was incomplete.
+
+The Hamiltonian is not constant in this optimal control problem for the following primary reasons, even in the continuous-time formulation:
+
+1.  **Finite-Time Horizon:** The problem is defined over a fixed time interval, `T = 5` seconds.
+
+2.  **Terminal Cost:** There is a significant penalty on the terminal state, `&#934;(x(T))`, which is a function of the final angle and angular velocity.
+
+These two factors create a two-point boundary value problem. The transversality condition at the final time `T` (`p(T) = &#8706;&#934;/&#8706;x`) imposes a constraint that propagates backward through the costate dynamics. This forces the costates `p(t)` and, consequently, the Hamiltonian `H(t) = L + p'f`, to vary over the time horizon to optimally steer the system to the desired final state while minimizing the total cost.
+
+While time discretization does introduce numerical errors that can cause the calculated Hamiltonian to deviate, the fundamental reason for its non-constant nature is the problem's structure as a finite-horizon optimal control problem with a terminal cost. The Hamiltonian would not be constant even if the problem were solved in continuous time.  
+</pre>
 </div>
 
-<div class="blog-card">
-<span class="card-tag tag-inference">Inference</span>
-<a href="/blog/optimal-control-as-probabilistic-inference.html">Optimal Control as Probabilistic Inference Review</a>
-<p class="card-desc">Bridging control theory and ML</p>
+<p>
+In summary, when you are not sure about the answer given by an AI agent, you can ask another AI agent. When they
+disagree with each other, I show a way to have them discuss with each other. In our experiment, the two AIs reached
+consensus at the end. But if not, I think we can add another AI to create an AI committee. This increases the chance
+to find the right answer.
+</p>
 </div>
-
-</div>
-
-<div class="timeline-item">
-<div class="period">2022</div>
-<div class="blog-card">
-<span class="card-tag tag-ml">Machine Learning</span>
-<a href="/blog/monte-carlo-methods/index.html">Sampling From a Distribution</a>
-</div>
-
-</div>
-
-<div class="timeline-item">
-<div class="period">2020</div>
-<div class="blog-card">
-<span class="card-tag tag-control">Optimal Control</span>
-<a href="/blog/trajectory-optimization-in-chinese.html">轨迹优化方法与实践</a>
-<p class="card-desc">经验之谈</p>
-</div>
-
-<div class="blog-card">
-<span class="card-tag tag-control">Simulation</span>
-<a href="/blog/numerical-integration.html">Numerical Integration</a>
-<p class="card-desc">Numerical integration and quadrature methods</p>
-</div>
-
-</div>
-
-<div class="timeline-item">
-<div class="period">2019</div>
-<div class="blog-card">
-<span class="card-tag tag-av">Autonomous Vehicles</span>
-<a href="/blog/safe-driving-speed.html">Safe Driving Speed for Self-Driving Car</a>
-<p class="card-desc">Determining safe operational speeds for autonomous vehicles</p>
-</div>
-
-<div class="blog-card">
-<span class="card-tag tag-rl">Reinforcement Learning</span>
-<a href="/blog/inverse-reinforcement-learning.html">IRL as Variational Inference</a>
-<p class="card-desc">Inverse reinforcement learning through the lens of variational methods</p>
-</div>
-
-</div>
-
-<div class="timeline-item">
-<div class="period">2018</div>
-<div class="blog-card">
-<span class="card-tag tag-av">Autonomous Vehicles</span>
-<a href="/blog/self-driving-from-engineering-perspective.html">Self-driving Car From An Engineering Perspective</a>
-<p class="card-desc">Engineering challenges in autonomous vehicle development</p>
-</div>
-
-<div class="blog-card">
-<span class="card-tag tag-ml">Machine Learning</span>
-<a href="/blog/natural-gradient.html">Natural Gradient</a>
-<p class="card-desc">Natural gradient methods in optimization and learning</p>
-</div>
-
-<div class="blog-card">
-<span class="card-tag tag-rl">Reinforcement Learning</span>
-<a href="/blog/reinforcement-learning.html">Reinforcement Learning</a>
-<p class="card-desc">Foundations and modern approaches to RL</p>
-</div>
-
-</div>
-
-<div class="timeline-item">
-<div class="period">2017</div>
-<div class="blog-card">
-<span class="card-tag tag-control">Optimal Control</span>
-<a href="/blog/cool-things-in-optimal-control.html">Cool Things in Optimal Control and Physics</a>
-<p class="card-desc">Connections between optimal control and fundamental physics</p>
-</div>
-
-<div class="blog-card">
-<span class="card-tag tag-control">Optimal Control</span>
-<a href="/blog/trajectory-optimization.html">Trajectory Optimization</a>
-<p class="card-desc">Optimal control, DDP, and iLQR</p>
-</div>
-
-</div>
-
-<div class="timeline-item">
-<div class="period">2016</div>
-<div class="blog-card">
-<span class="card-tag tag-av">Autonomois Vehicle</span>
-<a href="/blog/constant-jerk-profile/constant-jerk-stopping-distance.html">Decel-limited Constant-jerk Stopping Profile</a>
-<p class="card-desc">How to generate stopping profile wit limits on acceleration and jerk</p>
-</div>
-
-<div class="blog-card">
-<span class="card-tag tag-tools">Tools</span>
-<a href="/blog/emacs-notes.html">Notes on Emacs</a>
-<p class="card-desc">Notes and tips for Emacs usage</p>
-</div>
-
-</div>
-
 </div>
 </div>
 <div id="postamble" class="status">
