@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2026-05-24 -->
+<!-- 2026-05-25 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Numerical Integration</title>
@@ -104,7 +104,7 @@
 <li><a href="#orgc53b032">Numerical Integration</a>
 <ul>
 <li><a href="#org9d11624">The model ODE</a></li>
-<li><a href="#orga6410bd">Euler method</a></li>
+<li><a href="#orgdf6ef5d">Euler method</a></li>
 <li><a href="#org7c40e82">Runge-Kutta methods</a></li>
 <li><a href="#orgedc3b5a">Quadrature</a></li>
 <li><a href="#org8c9bdec">Solve ODEs backwards in time</a></li>
@@ -117,7 +117,7 @@
 </li>
 <li><a href="#org1c1f372">Direct transcription</a>
 <ul>
-<li><a href="#org2d72309">Euler method</a></li>
+<li><a href="#org5b2d36a">Euler method</a></li>
 <li><a href="#org5c3e2f0">Runge-Kutta method</a></li>
 <li><a href="#orgc8f6b48">Lagrange Pseudospectral method</a></li>
 <li><a href="#orgfb7d44d">Gauss Pseudospectral method</a></li>
@@ -141,9 +141,9 @@ a system of first order ODEs.
 </p>
 </div>
 </div>
-<div id="outline-container-orga6410bd" class="outline-3">
-<h3 id="orga6410bd">Euler method</h3>
-<div class="outline-text-3" id="text-orga6410bd">
+<div id="outline-container-orgdf6ef5d" class="outline-3">
+<h3 id="orgdf6ef5d">Euler method</h3>
+<div class="outline-text-3" id="text-orgdf6ef5d">
 <ul class="org-ul">
 <li>forward Euler:
 \[ y_{k+1} =  y_{k} + \Delta T f(y(k)) \]</li>
@@ -255,7 +255,7 @@ k_4 &=& h f(t_k - h, y_k - k_3)
 \end{eqnarray}
 
 
-<figure id="org5d27faf">
+<figure id="org1f532c6">
 <img src="forward_backward_sim.png" alt="forward_backward_sim.png" width="500">
 
 <figcaption><span class="figure-number">Figure 1: </span>Comparison between solving ODEs forwards and backwards in time</figcaption>
@@ -307,8 +307,8 @@ satisfy boundary constraints and collocation points</li>
 Take the state and the control at collocation points as optimization variables
 </p>
 </div>
-<div id="outline-container-org2d72309" class="outline-3">
-<h3 id="org2d72309">Euler method</h3>
+<div id="outline-container-org5b2d36a" class="outline-3">
+<h3 id="org5b2d36a">Euler method</h3>
 </div>
 <div id="outline-container-org5c3e2f0" class="outline-3">
 <h3 id="org5c3e2f0">Runge-Kutta method</h3>

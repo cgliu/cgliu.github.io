@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2026-05-25 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>EBM and Contrastive Learning</title>
+<meta name="description" content="Explain how contrastive learning works with examples" />
+<meta name="generator" content="Org Mode" />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<div class="scroll-progress"></div>
+<aside class="sidebar">
+  <div class="sidebar-inner">
+    <img src="/images/avatar.svg" alt="Chenggang Liu" class="sidebar-avatar"/>
+    <a href="/index.html" class="site-logo">Chenggang Liu</a>
+    <div class="sidebar-social">
+      <a href="https://www.linkedin.com/in/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="https://github.com/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <a href="https://scholar.google.com/citations?user=omz_MCoAAAAJ&hl=en" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg></a>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/index.html">Home</a>
+      <a href="/blogs.html">Blogs</a>
+      <a href="/publications.html">Publications</a>
+      <a href="/about.html">About</a>
+    </nav>
+    <div class="sidebar-search">
+      <input type="text" class="sidebar-search-input" placeholder="Search..."/>
+      <div class="sidebar-search-results"></div>
+    </div>
+    <button class="theme-toggle" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</aside>
+<button class="sidebar-toggle" aria-label="Toggle menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="top-bar">
+  <button class="top-bar-toggle" aria-label="Toggle menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+  <a href="/index.html" class="top-bar-title">Chenggang Liu</a>
+  <button class="top-bar-search" aria-label="Open search bar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+  </button>
+</div>
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" class="search-input" placeholder="Search..."/>
+    <button class="search-close" aria-label="Close search">&times;</button>
+  </div>
+  <div class="search-results"></div>
+</div>
+</div>
+<div id="content" class="content">
+<header>
+<h1 class="title">EBM and Contrastive Learning</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org7188cf2">What is Energy-Based Model</a></li>
+<li><a href="#org01f073b">How to Learn</a></li>
+<li><a href="#orgc02122d">Contrastive Learning (Contrastive Divergence)</a>
+<ul>
+<li><a href="#orgccd696f">Intuition</a></li>
+<li><a href="#org7e39dd0">Example</a></li>
+<li><a href="#org96b8940">Visualize</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+<div id="outline-container-org7188cf2" class="outline-2">
+<h2 id="org7188cf2">What is Energy-Based Model</h2>
+<div class="outline-text-2" id="text-org7188cf2">
+<p>
+Define a distribution via an unnormalized energy function \(E_\theta(x)\):
+</p>
+
+<p>
+\[
+p_\theta(x) = \frac{\exp(-E_\theta(x))}{Z_\theta}, \quad Z_\theta = \int \exp(-E_\theta(x))\, dx
+\]
+</p>
+
+<ul class="org-ul">
+<li>Low energy = high probability</li>
+<li>\(E_\theta\) can be any neural network (very flexible)</li>
+<li>The partition function \(Z_\theta\) is intractable — cannot compute or differentiate directly</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org01f073b" class="outline-2">
+<h2 id="org01f073b">How to Learn</h2>
+<div class="outline-text-2" id="text-org01f073b">
+<p>
+The log-likelihood gradient decomposes into two terms:
+</p>
+
+<p>
+\[
+\nabla_\theta \log p_\theta(x) = -\nabla_\theta E_\theta(x) + \mathbb{E}_{x^- \sim p_\theta}\left[\nabla_\theta E_\theta(x^-)\right]
+\]
+</p>
+
+<table style="margin-left:auto;margin-right:auto;">
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Term</th>
+<th scope="col" class="org-left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">\(-\nabla_\theta E_\theta(x)\)</td>
+<td class="org-left">Push energy <b>down</b> on real data</td>
+</tr>
+
+<tr>
+<td class="org-left">\(\mathbb{E}_{p_\theta}[\nabla_\theta E_\theta(x^-)]\)</td>
+<td class="org-left">Push energy <b>up</b> on model samples</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+The second term requires sampling from \(p_\theta\) — expensive (MCMC needed).
+</p>
+</div>
+</div>
+<div id="outline-container-orgc02122d" class="outline-2">
+<h2 id="orgc02122d">Contrastive Learning (Contrastive Divergence)</h2>
+<div class="outline-text-2" id="text-orgc02122d">
+<p>
+Approximate the intractable model expectation with short-run MCMC:
+</p>
+
+<ol class="org-ol">
+<li>Take data point \(x^+\)</li>
+<li>Initialize \(x^- = x^+\), run \(k\) steps of Langevin dynamics:
+\[
+   x^-_{t+1} = x^-_t - \frac{\eta}{2}\nabla_x E_\theta(x^-_t) + \sqrt{\eta}\,\xi_t
+   \]</li>
+<li>Update parameters:
+\[
+   \theta \leftarrow \theta - \alpha\left[\nabla_\theta E_\theta(x^+) - \nabla_\theta E_\theta(x^-)\right]
+   \]</li>
+</ol>
+
+<p>
+This is <b>CD-k</b> (Contrastive Divergence). Biased but effective.
+</p>
+</div>
+<div id="outline-container-orgccd696f" class="outline-3">
+<h3 id="orgccd696f">Intuition</h3>
+<div class="outline-text-3" id="text-orgccd696f">
+<ul class="org-ul">
+<li>Real data → lower energy (more probable)</li>
+<li>Negative samples from short MCMC → higher energy (less probable)</li>
+<li>The model learns a "landscape" where data sits in valleys</li>
+</ul>
+<blockquote>
+<p>
+My Note: if we replace x with &tau;, we will see inverse RL is 'contrastive learning' where negative samples come from
+trajectory optimization/RL rather than Langevin dynamics.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-org7e39dd0" class="outline-3">
+<h3 id="org7e39dd0">Example</h3>
+<div class="outline-text-3" id="text-org7e39dd0">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">import</span> torch
+<span class="org-keyword">import</span> torch.nn <span class="org-keyword">as</span> nn
+<span class="org-keyword">from</span> torch.utils.data <span class="org-keyword">import</span> DataLoader, TensorDataset
+<span class="org-comment-delimiter"># </span><span class="org-comment">--- Test Data: 2D Gaussian Mixture ---
+</span><span class="org-variable-name">n</span> <span class="org-operator">=</span> 2000
+<span class="org-variable-name">mix</span> <span class="org-operator">=</span> torch.cat([
+    torch.randn(n <span class="org-operator">//</span> 2, 2) <span class="org-operator">*</span> 0.5 <span class="org-operator">+</span> torch.tensor([2.0, 2.0]),
+    torch.randn(n <span class="org-operator">//</span> 2, 2) <span class="org-operator">*</span> 0.5 <span class="org-operator">+</span> torch.tensor([<span class="org-operator">-</span>2.0, <span class="org-operator">-</span>2.0]),
+])
+<span class="org-variable-name">dataloader</span> <span class="org-operator">=</span> DataLoader(TensorDataset(mix), batch_size<span class="org-operator">=</span>128, shuffle<span class="org-operator">=</span><span class="org-constant">True</span>)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span class="org-comment-delimiter"># </span><span class="org-comment">--- Model ---
+</span><span class="org-keyword">class</span> <span class="org-type">EBM</span>(nn.Module):
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, dim<span class="org-operator">=</span>2, hidden<span class="org-operator">=</span>64):
+        <span class="org-builtin">super</span>().__init__()
+        <span class="org-keyword">self</span>.<span class="org-variable-name">net</span> <span class="org-operator">=</span> nn.Sequential(
+            nn.Linear(dim, hidden), nn.SiLU(),
+            nn.Linear(hidden, hidden), nn.SiLU(),
+            nn.Linear(hidden, 1))
+
+    <span class="org-keyword">def</span> <span class="org-function-name">energy</span>(<span class="org-keyword">self</span>, x):
+        <span class="org-keyword">return</span> <span class="org-keyword">self</span>.net(x).squeeze(<span class="org-operator">-</span>1)
+
+<span class="org-keyword">def</span> <span class="org-function-name">langevin_negative</span>(ebm, x_init, steps<span class="org-operator">=</span>20, step_size<span class="org-operator">=</span>0.01):
+    <span class="org-variable-name">x</span> <span class="org-operator">=</span> x_init.clone().detach().requires_grad_(<span class="org-constant">True</span>)
+    <span class="org-keyword">for</span> _ <span class="org-keyword">in</span> <span class="org-builtin">range</span>(steps):
+        <span class="org-variable-name">e</span> <span class="org-operator">=</span> ebm.energy(x).<span class="org-builtin">sum</span>()
+        <span class="org-variable-name">grad</span> <span class="org-operator">=</span> torch.autograd.grad(e, x)[0]
+        <span class="org-variable-name">x</span> <span class="org-operator">=</span> x.detach() <span class="org-operator">-</span> (step_size <span class="org-operator">/</span> 2) <span class="org-operator">*</span> grad <span class="org-operator">+</span> (step_size<span class="org-operator">**</span>0.5) <span class="org-operator">*</span> torch.randn_like(x)
+        x.requires_grad_(<span class="org-constant">True</span>)
+    <span class="org-keyword">return</span> x.detach()
+
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">--- Training ---
+</span><span class="org-variable-name">ebm</span> <span class="org-operator">=</span> EBM()
+<span class="org-variable-name">opt</span> <span class="org-operator">=</span> torch.optim.Adam(ebm.parameters(), lr<span class="org-operator">=</span>1e<span class="org-operator">-</span>3)
+
+<span class="org-keyword">for</span> epoch <span class="org-keyword">in</span> <span class="org-builtin">range</span>(5):
+    <span class="org-variable-name">total_loss</span> <span class="org-operator">=</span> 0.0
+    <span class="org-keyword">for</span> (x_pos,) <span class="org-keyword">in</span> dataloader:
+        <span class="org-variable-name">x_neg</span> <span class="org-operator">=</span> langevin_negative(ebm, x_pos, steps<span class="org-operator">=</span>20)
+        <span class="org-variable-name">loss</span> <span class="org-operator">=</span> ebm.energy(x_pos).mean() <span class="org-operator">-</span> ebm.energy(x_neg).mean()
+        opt.zero_grad()
+        loss.backward()
+        opt.step()
+        <span class="org-variable-name">total_loss</span> <span class="org-operator">+=</span> loss.item()
+    <span class="org-builtin">print</span>(f<span class="org-string">"Epoch </span>{epoch}<span class="org-string">: loss=</span>{total_loss <span class="org-operator">/</span> <span class="org-builtin">len</span>(dataloader):.4f}<span class="org-string">"</span>)
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">--- Verify: energy should be lower on data than on random noise ---
+</span><span class="org-variable-name">noise</span> <span class="org-operator">=</span> torch.randn(100, 2) <span class="org-operator">*</span> 3
+<span class="org-variable-name">data_sample</span> <span class="org-operator">=</span> mix[:100]
+<span class="org-builtin">print</span>(f<span class="org-string">"Energy on data:  </span>{ebm.energy(data_sample).mean().item():.4f}<span class="org-string">"</span>)
+<span class="org-builtin">print</span>(f<span class="org-string">"Energy on noise: </span>{ebm.energy(noise).mean().item():.4f}<span class="org-string">"</span>)
+</pre>
+</div>
+
+<pre class="example">
+Epoch 0: loss=-0.0043
+Epoch 1: loss=-0.0144
+Epoch 2: loss=-0.0318
+Epoch 3: loss=-0.0606
+Epoch 4: loss=-0.0811
+Energy on data:  -1.1407
+Energy on noise: 2.6085
+</pre>
+</div>
+</div>
+<div id="outline-container-org96b8940" class="outline-3">
+<h3 id="org96b8940">Visualize</h3>
+<div class="outline-text-3" id="text-org96b8940">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">import</span> matplotlib.pyplot <span class="org-keyword">as</span> plt
+<span class="org-keyword">import</span> numpy <span class="org-keyword">as</span> np
+
+<span class="org-variable-name">fig</span>, <span class="org-variable-name">axes</span> <span class="org-operator">=</span> plt.subplots(1, 2, figsize<span class="org-operator">=</span>(10, 4))
+<span class="org-comment-delimiter"># </span><span class="org-comment">Plot data
+</span>axes[0].scatter(mix[:, 0].numpy(), mix[:, 1].numpy(), s<span class="org-operator">=</span>1, alpha<span class="org-operator">=</span>0.5)
+axes[0].set_title(<span class="org-string">"Training Data"</span>)
+axes[0].set_xlim(<span class="org-operator">-</span>5, 5)
+axes[0].set_ylim(<span class="org-operator">-</span>5, 5)
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Plot energy landscape
+</span><span class="org-variable-name">grid</span> <span class="org-operator">=</span> torch.linspace(<span class="org-operator">-</span>5, 5, 100)
+<span class="org-variable-name">xx</span>, <span class="org-variable-name">yy</span> <span class="org-operator">=</span> torch.meshgrid(grid, grid, indexing<span class="org-operator">=</span><span class="org-string">'xy'</span>)
+<span class="org-variable-name">pts</span> <span class="org-operator">=</span> torch.stack([xx.flatten(), yy.flatten()], dim<span class="org-operator">=</span>1)
+<span class="org-keyword">with</span> torch.no_grad():
+    <span class="org-variable-name">energy</span> <span class="org-operator">=</span> ebm.energy(pts).reshape(100, 100).numpy()
+axes[1].contourf(xx.numpy(), yy.numpy(), <span class="org-operator">-</span>energy, levels<span class="org-operator">=</span>30, cmap<span class="org-operator">=</span><span class="org-string">'viridis'</span>)
+axes[1].set_title(<span class="org-string">"Negative Energy (log-density)"</span>)
+axes[1].set_xlim(<span class="org-operator">-</span>5, 5)
+axes[1].set_ylim(<span class="org-operator">-</span>5, 5)
+
+plt.tight_layout()
+<span class="org-variable-name">fname</span> <span class="org-operator">=</span> <span class="org-string">"ebm_visualization.png"</span>
+plt.savefig(fname, dpi<span class="org-operator">=</span>100)
+fname
+</pre>
+</div>
+
+
+<figure id="org1156aaa">
+<img src="ebm_visualization.png" alt="ebm_visualization.png">
+
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script>
+// Sidebar toggle
+document.querySelector('.sidebar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  this.classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+document.querySelector('.top-bar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  document.querySelector('.sidebar-toggle').classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+
+// Search toggle
+(function() {
+  var overlay = document.querySelector('.search-overlay');
+  var input = document.querySelector('.search-input');
+  var results = document.querySelector('.search-results');
+  document.querySelector('.top-bar-search').addEventListener('click', function() {
+    overlay.classList.toggle('active');
+    if (overlay.classList.contains('active')) input.focus();
+  });
+  document.querySelector('.search-close').addEventListener('click', function() {
+    overlay.classList.remove('active');
+    input.value = '';
+    results.innerHTML = '';
+  });
+  var pages = [];
+  fetch('/search-index.json').then(function(r){return r.json();}).then(function(d){pages=d;});
+  input.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { results.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    results.innerHTML = html || '<p style="color:#64748b">No results</p>';
+  });
+
+  // Sidebar search
+  var sInput = document.querySelector('.sidebar-search-input');
+  var sResults = document.querySelector('.sidebar-search-results');
+  sInput.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { sResults.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    sResults.innerHTML = html || '<p style="color:rgba(255,255,255,0.4)">No results</p>';
+  });
+})();
+
+// Theme toggle
+(function() {
+  var stored = localStorage.getItem('theme');
+  if (stored) {
+    document.documentElement.setAttribute('data-theme', stored);
+  }
+  document.querySelector('.theme-toggle').addEventListener('click', function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+})();
+
+// Active nav highlight
+(function() {
+  var path = window.location.pathname;
+  document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (path === href || (href !== '/index.html' && path.indexOf(href.replace('.html','')) === 0)) {
+      link.classList.add('active');
+    }
+  });
+})();
+
+// Fade in / fade out on scroll
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    } else {
+      entry.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.intro p, .blog-card, .pub-entry, .timeline-item, .hero-image').forEach(function(el) {
+  el.classList.add('fade-item');
+  observer.observe(el);
+});
+
+// Scroll progress bar
+window.addEventListener('scroll', function() {
+  var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var progress = (scrollTop / scrollHeight) * 100;
+  document.querySelector('.scroll-progress').style.width = progress + String.fromCharCode(37);
+});
+
+// Tag filtering on blogs page
+(function() {
+  document.querySelectorAll('.card-tag').forEach(function(tag) {
+    tag.style.cursor = 'pointer';
+    tag.addEventListener('click', function(e) {
+      e.preventDefault();
+      var selected = this.textContent.trim();
+      var allCards = document.querySelectorAll('.blog-card');
+      var allItems = document.querySelectorAll('.timeline-item');
+      var isActive = this.classList.contains('tag-active');
+      document.querySelectorAll('.card-tag').forEach(function(t) { t.classList.remove('tag-active'); });
+      if (isActive) {
+        allCards.forEach(function(c) { c.style.display = ''; });
+        allItems.forEach(function(i) { i.style.display = ''; });
+      } else {
+        this.classList.add('tag-active');
+        allCards.forEach(function(c) {
+          var t = c.querySelector('.card-tag');
+          c.style.display = (t && t.textContent.trim() === selected) ? '' : 'none';
+        });
+        allItems.forEach(function(i) {
+          var visible = i.querySelectorAll('.blog-card[style=""], .blog-card:not([style])');
+          var hasVisible = Array.from(i.querySelectorAll('.blog-card')).some(function(c) { return c.style.display !== 'none'; });
+          i.style.display = hasVisible ? '' : 'none';
+        });
+      }
+    });
+  });
+})();
+</script>
+</div>
+</body>
+</html>
