@@ -108,8 +108,10 @@
 <li><a href="#orgccd696f">Intuition</a></li>
 <li><a href="#org7e39dd0">Example</a></li>
 <li><a href="#org96b8940">Visualize</a></li>
+<li><a href="#orgf53a613">Training Animation (GIF)</a></li>
 </ul>
 </li>
+<li><a href="#orgb332c7e">References</a></li>
 </ul>
 </div>
 </nav>
@@ -146,35 +148,8 @@ The log-likelihood gradient decomposes into two terms:
 \]
 </p>
 
-<table style="margin-left:auto;margin-right:auto;">
-
-
-<colgroup>
-<col  class="org-left">
-
-<col  class="org-left">
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">Term</th>
-<th scope="col" class="org-left">Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left">\(-\nabla_\theta E_\theta(x)\)</td>
-<td class="org-left">Push energy <b>down</b> on real data</td>
-</tr>
-
-<tr>
-<td class="org-left">\(\mathbb{E}_{p_\theta}[\nabla_\theta E_\theta(x^-)]\)</td>
-<td class="org-left">Push energy <b>up</b> on model samples</td>
-</tr>
-</tbody>
-</table>
-
 <p>
-The second term requires sampling from \(p_\theta\) — expensive (MCMC needed).
+On the right hand side, the first term pushes energy down on real data and the second term pushes the energy up on model samples. 
 </p>
 </div>
 </div>
@@ -205,21 +180,26 @@ This is <b>CD-k</b> (Contrastive Divergence). Biased but effective.
 <h3 id="orgccd696f">Intuition</h3>
 <div class="outline-text-3" id="text-orgccd696f">
 <ul class="org-ul">
-<li>Real data → lower energy (more probable)</li>
-<li>Negative samples from short MCMC → higher energy (less probable)</li>
+<li>We want the real data to have lower energy (more probable).</li>
+<li>We want negative samples from short MCMC to have higher energy (less probable).</li>
 <li>The model learns a "landscape" where data sits in valleys</li>
+<li>If we replace x with &tau;, we will see inverse RL is 'contrastive learning' where negative samples come from
+trajectory optimization/RL rather than Langevin dynamics.</li>
 </ul>
-<blockquote>
-<p>
-My Note: if we replace x with &tau;, we will see inverse RL is 'contrastive learning' where negative samples come from
-trajectory optimization/RL rather than Langevin dynamics.
-</p>
-</blockquote>
 </div>
 </div>
 <div id="outline-container-org7e39dd0" class="outline-3">
 <h3 id="org7e39dd0">Example</h3>
 <div class="outline-text-3" id="text-org7e39dd0">
+<p>
+We will use a simple example to demonstrate how it works. In this example, we draw data from
+a 2D mixture of two Gaussians:
+</p>
+<ul class="org-ul">
+<li>Cluster 1: n/2 points centered at (2, 2) with std dev 0.5 in each dimension</li>
+<li>Cluster 2: n/2 points centered at (-2, -2) with std dev 0.5 in each dimension</li>
+</ul>
+
 <div class="org-src-container">
 <pre class="src src-python"><span class="org-keyword">import</span> torch
 <span class="org-keyword">import</span> torch.nn <span class="org-keyword">as</span> nn
@@ -234,8 +214,21 @@ trajectory optimization/RL rather than Langevin dynamics.
 </pre>
 </div>
 
+<p>
+We model the energy function with a MLP and define langevin dynamics for sampling negative data:
+</p>
 <div class="org-src-container">
-<pre class="src src-python">
+<pre class="src src-python"><span class="org-comment-delimiter"># </span><span class="org-comment">langevin dynamics for generating negative samples
+</span><span class="org-keyword">def</span> <span class="org-function-name">langevin_negative</span>(ebm, x_init, steps<span class="org-operator">=</span>20, step_size<span class="org-operator">=</span>0.01):
+    <span class="org-variable-name">x</span> <span class="org-operator">=</span> x_init.clone().detach().requires_grad_(<span class="org-constant">True</span>)
+    <span class="org-keyword">for</span> _ <span class="org-keyword">in</span> <span class="org-builtin">range</span>(steps):
+        <span class="org-variable-name">e</span> <span class="org-operator">=</span> ebm.energy(x).<span class="org-builtin">sum</span>()
+        <span class="org-variable-name">score</span> <span class="org-operator">=</span> torch.autograd.grad(<span class="org-operator">-</span> e, x)[0]
+        <span class="org-variable-name">x</span> <span class="org-operator">=</span> x.detach() <span class="org-operator">+</span> (step_size <span class="org-operator">/</span> 2) <span class="org-operator">*</span> score <span class="org-operator">+</span> (step_size<span class="org-operator">**</span>0.5) <span class="org-operator">*</span> torch.randn_like(x)
+        x.requires_grad_(<span class="org-constant">True</span>)
+
+    <span class="org-keyword">return</span> x.detach()
+
 <span class="org-comment-delimiter"># </span><span class="org-comment">--- Model ---
 </span><span class="org-keyword">class</span> <span class="org-type">EBM</span>(nn.Module):
     <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, dim<span class="org-operator">=</span>2, hidden<span class="org-operator">=</span>64):
@@ -247,18 +240,11 @@ trajectory optimization/RL rather than Langevin dynamics.
 
     <span class="org-keyword">def</span> <span class="org-function-name">energy</span>(<span class="org-keyword">self</span>, x):
         <span class="org-keyword">return</span> <span class="org-keyword">self</span>.net(x).squeeze(<span class="org-operator">-</span>1)
+</pre>
+</div>
 
-<span class="org-keyword">def</span> <span class="org-function-name">langevin_negative</span>(ebm, x_init, steps<span class="org-operator">=</span>20, step_size<span class="org-operator">=</span>0.01):
-    <span class="org-variable-name">x</span> <span class="org-operator">=</span> x_init.clone().detach().requires_grad_(<span class="org-constant">True</span>)
-    <span class="org-keyword">for</span> _ <span class="org-keyword">in</span> <span class="org-builtin">range</span>(steps):
-        <span class="org-variable-name">e</span> <span class="org-operator">=</span> ebm.energy(x).<span class="org-builtin">sum</span>()
-        <span class="org-variable-name">grad</span> <span class="org-operator">=</span> torch.autograd.grad(e, x)[0]
-        <span class="org-variable-name">x</span> <span class="org-operator">=</span> x.detach() <span class="org-operator">-</span> (step_size <span class="org-operator">/</span> 2) <span class="org-operator">*</span> grad <span class="org-operator">+</span> (step_size<span class="org-operator">**</span>0.5) <span class="org-operator">*</span> torch.randn_like(x)
-        x.requires_grad_(<span class="org-constant">True</span>)
-    <span class="org-keyword">return</span> x.detach()
-
-
-<span class="org-comment-delimiter"># </span><span class="org-comment">--- Training ---
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-comment-delimiter"># </span><span class="org-comment">--- Training ---
 </span><span class="org-variable-name">ebm</span> <span class="org-operator">=</span> EBM()
 <span class="org-variable-name">opt</span> <span class="org-operator">=</span> torch.optim.Adam(ebm.parameters(), lr<span class="org-operator">=</span>1e<span class="org-operator">-</span>3)
 
@@ -282,54 +268,51 @@ trajectory optimization/RL rather than Langevin dynamics.
 </div>
 
 <pre class="example">
-Epoch 0: loss=-0.0043
-Epoch 1: loss=-0.0144
-Epoch 2: loss=-0.0318
-Epoch 3: loss=-0.0606
-Epoch 4: loss=-0.0811
-Energy on data:  -1.1407
-Energy on noise: 2.6085
+Epoch 0: loss=-0.0094
+Epoch 1: loss=-0.0248
+Epoch 2: loss=-0.0492
+Epoch 3: loss=-0.0763
+Epoch 4: loss=-0.0918
+Energy on data:  0.6611
+Energy on noise: 6.8638
 </pre>
 </div>
 </div>
 <div id="outline-container-org96b8940" class="outline-3">
 <h3 id="org96b8940">Visualize</h3>
 <div class="outline-text-3" id="text-org96b8940">
-<div class="org-src-container">
-<pre class="src src-python"><span class="org-keyword">import</span> matplotlib.pyplot <span class="org-keyword">as</span> plt
-<span class="org-keyword">import</span> numpy <span class="org-keyword">as</span> np
 
-<span class="org-variable-name">fig</span>, <span class="org-variable-name">axes</span> <span class="org-operator">=</span> plt.subplots(1, 2, figsize<span class="org-operator">=</span>(10, 4))
-<span class="org-comment-delimiter"># </span><span class="org-comment">Plot data
-</span>axes[0].scatter(mix[:, 0].numpy(), mix[:, 1].numpy(), s<span class="org-operator">=</span>1, alpha<span class="org-operator">=</span>0.5)
-axes[0].set_title(<span class="org-string">"Training Data"</span>)
-axes[0].set_xlim(<span class="org-operator">-</span>5, 5)
-axes[0].set_ylim(<span class="org-operator">-</span>5, 5)
-
-<span class="org-comment-delimiter"># </span><span class="org-comment">Plot energy landscape
-</span><span class="org-variable-name">grid</span> <span class="org-operator">=</span> torch.linspace(<span class="org-operator">-</span>5, 5, 100)
-<span class="org-variable-name">xx</span>, <span class="org-variable-name">yy</span> <span class="org-operator">=</span> torch.meshgrid(grid, grid, indexing<span class="org-operator">=</span><span class="org-string">'xy'</span>)
-<span class="org-variable-name">pts</span> <span class="org-operator">=</span> torch.stack([xx.flatten(), yy.flatten()], dim<span class="org-operator">=</span>1)
-<span class="org-keyword">with</span> torch.no_grad():
-    <span class="org-variable-name">energy</span> <span class="org-operator">=</span> ebm.energy(pts).reshape(100, 100).numpy()
-axes[1].contourf(xx.numpy(), yy.numpy(), <span class="org-operator">-</span>energy, levels<span class="org-operator">=</span>30, cmap<span class="org-operator">=</span><span class="org-string">'viridis'</span>)
-axes[1].set_title(<span class="org-string">"Negative Energy (log-density)"</span>)
-axes[1].set_xlim(<span class="org-operator">-</span>5, 5)
-axes[1].set_ylim(<span class="org-operator">-</span>5, 5)
-
-plt.tight_layout()
-<span class="org-variable-name">fname</span> <span class="org-operator">=</span> <span class="org-string">"ebm_visualization.png"</span>
-plt.savefig(fname, dpi<span class="org-operator">=</span>100)
-fname
-</pre>
-</div>
-
-
-<figure id="org1156aaa">
-<img src="ebm_visualization.png" alt="ebm_visualization.png">
+<figure id="orged00f8d">
+<img src="ebm_visualization.png" alt="ebm_visualization.png" width="80%">
 
 </figure>
 </div>
+</div>
+<div id="outline-container-orgf53a613" class="outline-3">
+<h3 id="orgf53a613">Training Animation (GIF)</h3>
+<div class="outline-text-3" id="text-orgf53a613">
+
+<figure id="org5543bdc">
+<img src="ebm_training.gif" alt="ebm_training.gif" width="80%">
+
+</figure>
+
+<p>
+As we can see, the neural energy function learns to approximate the negative log-density of the data distribution, assigning lower energy to high-density regions.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb332c7e" class="outline-2">
+<h2 id="orgb332c7e">References</h2>
+<div class="outline-text-2" id="text-orgb332c7e">
+<ul class="org-ul">
+<li>Hinton, G. (2002). <a href="https://www.cs.toronto.edu/~hinton/absps/tr00-004.pdf">Training Products of Experts by Minimizing Contrastive Divergence</a>. Neural Computation.</li>
+<li>LeCun, Y., Chopra, S., Hadsell, R., Ranzato, M., &amp; Huang, F. (2006). <a href="http://yann.lecun.com/exdb/publis/pdf/lecun-06.pdf">A Tutorial on Energy-Based Learning</a>. In Predicting Structured Data.</li>
+<li>Du, Y. &amp; Mordatch, I. (2019). <a href="https://arxiv.org/abs/1903.08689">Implicit Generation and Modeling with Energy-Based Models</a>. NeurIPS.</li>
+<li>Grathwohl, W., Wang, K.-C., Jacobsen, J.-H., Duvenaud, D., Norouzi, M., &amp; Swersky, K. (2020). <a href="https://arxiv.org/abs/1912.03263">Your Classifier is Secretly an Energy Based Model and You Should Treat it Like One</a>. ICLR.</li>
+<li>Song, Y. &amp; Ermon, S. (2019). <a href="https://arxiv.org/abs/1907.05600">Generative Modeling by Estimating Gradients of the Data Distribution</a>. NeurIPS.</li>
+</ul>
 </div>
 </div>
 </div>
