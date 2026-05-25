@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2026-05-23 -->
+<!-- 2026-05-24 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Optimal Control as Probabilistic Inference Review</title>
@@ -102,29 +102,21 @@
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
 <li><a href="#orgdfed18c">Introduction</a></li>
+<li><a href="#org6d73ad1">Linear theory for control of non-linear stochastic systems</a></li>
 <li><a href="#orgf88f51a">Linear solvable Markov decision problems</a>
 <ul>
 <li><a href="#orgc7ac84d">Important conclusions</a></li>
 <li><a href="#orgefe1835">Experiments</a></li>
 </ul>
 </li>
-<li><a href="#org6d73ad1">Linear theory for control of non-linear stochastic systems</a></li>
 <li><a href="#orgf198dbb">Path Integral for robot control</a>
 <ul>
 <li><a href="#org88bf0f3">Special case:</a></li>
 </ul>
 </li>
-<li><a href="#orga2f6e7b">Cross entropy method</a></li>
 <li><a href="#orgb8259c1">Optimal control as a graphical model inference problem</a></li>
 <li><a href="#org1d6eb5d">Reinforcement learning and control as probabilistic inference</a></li>
-<li><a href="#org692ea3d">Appendix</a>
-<ul>
-<li><a href="#orge1fe33a">Appendix A</a></li>
-<li><a href="#org60f9e8d">Diffusion process</a></li>
-<li><a href="#org342b436">Laplace approximation</a></li>
-<li><a href="#orgf6b2462">Posterior mode</a></li>
-</ul>
-</li>
+<li><a href="#org692ea3d">Appendix</a></li>
 </ul>
 </div>
 </nav>
@@ -135,6 +127,72 @@
 This note is intended to be a reference for personal learning and implementation.
 It covers literature on path integral method, optimal control,  reinforcement learning as a probabilistic inference. 
 </p>
+</div>
+</div>
+<div id="outline-container-org6d73ad1" class="outline-2">
+<h2 id="org6d73ad1">Linear theory for control of non-linear stochastic systems</h2>
+<div class="outline-text-2" id="text-org6d73ad1">
+<p>
+How to solve optimal deterministic control problems in the absence of noise:
+</p>
+<ul class="org-ul">
+<li>PMP: Pontryagin Minimization Principle</li>
+<li>HJB: Hamilton-Jacobi-Bellman equation
+How to solve optimal stochastic control problems in the presence of noise:
+<ul class="org-ul">
+<li>PMP: difficult to solve</li>
+<li>Stochastic HJB: the curse of dimensionality</li>
+</ul></li>
+</ul>
+
+
+<p>
+Kappen(2005) studied a restrict class of optimal stochastic control problem.
+</p>
+<ul class="org-ul">
+<li><p>
+Dynamics
+\[
+      dx = b(x, t) dt + u dt + dw
+      \]
+where \(dw\) is a Wiener process with \(\langle dw_i, dw_j \rangle = v_{ij} dt\) and \(\nu_{ij}\) is independent of \(x\), \(u\), and \(t\).
+</p>
+
+<blockquote>
+<p>
+<b>Note:</b> \(\langle dw_i, dw_j \rangle = v_{ij} dt\) defines the covariance structure of the noise. The matrix \(V = [v_{ij}]\) specifies how noise components correlate: diagonal entries are variances, off-diagonal entries are cross-correlations. The independence of \(V\) from state, control, and time is what makes this problem linearly solvable.
+</p>
+</blockquote></li>
+
+<li>Minimize the following cost function:
+\[
+      C(x, u, t) = \mathbb{E}_{x}[\phi(x(t_f) + \int_{t}^{t_f} \big [d\tau \frac{1}{2} u^{\top} R u + q(x, \tau) \big]
+      \]
+where \(q(x, t)\) is a state dependent potential function.</li>
+
+<li>Important conclusions:
+\[ \psi(x_0, t) = \int [\mathrm{d}\xi]_{x_0} \big (-
+      \frac{1}{\lambda} S(\xi) \big)
+      \]
+where \(V(x, t) = - \lambda \log \psi(x, t)\),
+\(\int [\mathrm{d}x]_{x_0}\) means an integral over all paths \(x\) that state at
+\(x_0\) and
+\[
+      S(\xi) = \phi(x_f) + \int_{t}^{t_f} d\tau \big ( \frac{1}{2} u^{\top} R u + q(x, \tau) \big )
+      \]</li>
+</ul>
+
+<blockquote>
+<p>
+Note:
+</p>
+<ul class="org-ul">
+<li>I have changed the symbols to make them more consistent with other papers.</li>
+<li>The dynamics is fully actuated, which means all state variables can be changed by \(u\) or the noise.
+Theodorou et al.(2010) made some extension, where the dynamics can be under-actuated and only actuated states have
+noise.</li>
+</ul>
+</blockquote>
 </div>
 </div>
 <div id="outline-container-orgf88f51a" class="outline-2">
@@ -168,8 +226,8 @@ probabilities.
 
 <li>Bellman equation
 \[
-   v(i) = \min_{u \in \mathcal{U}} \{l(i, u) + \sum_j p_{ij} v(j) \}
-   \]</li>
+  v(i) = \min_{u \in \mathcal{U}} \{l(i, u) + \sum_j p_{ij} v(j) \}
+  \]</li>
 </ul>
 </div>
 <div id="outline-container-orgc7ac84d" class="outline-3">
@@ -208,74 +266,6 @@ where \(z := \exp(-v(i))\) is celled 'state desirability'.</li>
 <a href="https://github.com/cgliu/z-learning.git">https://github.com/cgliu/z-learning.git</a></li>
 </ul>
 </div>
-</div>
-</div>
-<div id="outline-container-org6d73ad1" class="outline-2">
-<h2 id="org6d73ad1">Linear theory for control of non-linear stochastic systems</h2>
-<div class="outline-text-2" id="text-org6d73ad1">
-<p>
-How to solve optimal deterministic control problems in the absence of noise:
-</p>
-<ul class="org-ul">
-<li>PMP: Pontryagin Minimization Principle</li>
-<li>HJB: Hamilton-Jacobi-Bellman equation</li>
-</ul>
-<p>
-How to solve optimal stochastic control problems in the presence of noise:
-</p>
-<ul class="org-ul">
-<li>PMP: difficult to solve</li>
-<li>Stochastic HJB: the curse of dimensionality</li>
-</ul>
-
-
-<p>
-Kappen(2005) studied a restrict class of optimal stochastic control problem.
-</p>
-<ul class="org-ul">
-<li><p>
-Dynamics
-\[
-    dx = b(x, t) dt + u dt + dw
-    \]
-where \(dw\) is a Wiener process with \(\langle dw_i, dw_j \rangle = v_{ij} dt\) and \(\nu_{ij}\) is independent of \(x\), \(u\), and \(t\).
-</p>
-
-<blockquote>
-<p>
-<b>Note:</b> \(\langle dw_i, dw_j \rangle = v_{ij} dt\) defines the covariance structure of the noise. The matrix \(V = [v_{ij}]\) specifies how noise components correlate: diagonal entries are variances, off-diagonal entries are cross-correlations. The independence of \(V\) from state, control, and time is what makes this problem linearly solvable.
-</p>
-</blockquote></li>
-
-<li>Minimize the following cost function:
-\[
-    C(x, u, t) = \mathbb{E}_{x}[\phi(x(t_f) + \int_{t}^{t_f} \big [d\tau \frac{1}{2} u^{\top} R u + q(x, \tau) \big]
-    \]
-where \(q(x, t)\) is a state dependent potential function.</li>
-
-<li>Important conclusions:
-\[ \psi(x_0, t) = \int [\mathrm{d}\xi]_{x_0} \big (-
-    \frac{1}{\lambda} S(\xi) \big)
-    \]
-where \(V(x, t) = - \lambda \log \psi(x, t)\),
-\(\int [\mathrm{d}x]_{x_0}\) means an integral over all paths \(x\) that state at
-\(x_0\) and
-\[
-    S(\xi) = \phi(x_f) + \int_{t}^{t_f} d\tau \big ( \frac{1}{2} u^{\top} R u + q(x, \tau) \big )
-    \]</li>
-</ul>
-
-<blockquote>
-<p>
-Note:
-</p>
-<ul class="org-ul">
-<li>I have changed the symbols to make them more consistent with other papers.</li>
-<li>The dynamics is fully actuated, which means all state variables can be changed by \(u\) or the noise.
-Theodorou et al.(2010) made some extension, where the dynamics can be under-actuated and only actuated states have
-noise.</li>
-</ul>
-</blockquote>
 </div>
 </div>
 <div id="outline-container-orgf198dbb" class="outline-2">
@@ -340,7 +330,7 @@ The stochastic HJB equation is:
 \partial_t V_t = \min_{u} \big ( r_t + (\nabla_x V_t)^{\top} (f + G u) + \frac{1}{2} Tr (\nabla_{xx} V_t) G_t \Sigma_{\varepsilon}G_t^{\top}) \big )
 \end{equation}
 <p>
-which is a <a href="#org60f9e8d">diffusion process</a>. 
+which is a diffusion process. 
 </p></li>
 
 <li>The Hamiltonian for the stochastic process:
@@ -360,8 +350,8 @@ The optimal control \(u^*\) is given by (set the gradient of Hamiltonian w.r.t. 
 <p>
 substitute it into the stochastic HJB Eq. \eqref{eq:sto-hjb}, and then use <b>an exponential transformation</b>:
 \[
-    V_t = - \lambda \log \Psi_t
-    \]
+     V_t = - \lambda \log \Psi_t
+     \]
 where \(\lambda\) is a scalar. 
 </p>
 
@@ -369,17 +359,17 @@ where \(\lambda\) is a scalar.
 Furthermore,  set R to be inverse proportional to the noise variance as \(\lambda R^{-1} = \Sigma_{\varepsilon}\),
 so that
 \[
-    \lambda G_t R^{-1} G^{\top} = G_t \Sigma_{\varepsilon}G_t^{\top} = \Sigma(x_t) := \Sigma_t
-    \]
+     \lambda G_t R^{-1} G^{\top} = G_t \Sigma_{\varepsilon}G_t^{\top} = \Sigma(x_t) := \Sigma_t
+     \]
 we get
 \[
-    -\partial_t \Psi_t  = - \frac{1}{\lambda}q_t\Psi_t + f^{\top}(\nabla_x\Psi_t) + \frac{1}{2}Tr\big( (\nabla_{xx}\Psi_t)G_t\Sigma_{\varepsilon}G_t^{\top}\big)
-    \]
+     -\partial_t \Psi_t  = - \frac{1}{\lambda}q_t\Psi_t + f^{\top}(\nabla_x\Psi_t) + \frac{1}{2}Tr\big( (\nabla_{xx}\Psi_t)G_t\Sigma_{\varepsilon}G_t^{\top}\big)
+     \]
 with boundary condition: \(\Psi_{t_N} = \exp(-\frac{1}{\lambda}\Phi_N)\). This partial differential equation (PDE)  
 corresponds to so called Chapman Kolmogorov PDE.  
 One step further, we can apply Feynman-Kac theorem to get one of the major conclusion:
 </p>
-<div class="mdframed" id="org7f0e3cd">
+<div class="mdframed" id="org8090870">
 \begin{equation}
 \label{eq:pi-psi}
 \color{red}{\Psi_{t_i} = \mathbb{E}_{\tau_i} \big[ \exp(-\frac{\Phi_N + \int_{t_i}^{t_N} q_t dt}{\lambda}) \big]}
@@ -423,12 +413,12 @@ For fully actuated system:
 <ul class="org-ul">
 <li>Optimal control at every time step \(t_i\):
 \[
-     u_{t_i}^* = \int P(\tau_i)u(\tau_i)d\tau_i 
-     \]</li>
+  u_{t_i}^* = \int P(\tau_i)u(\tau_i)d\tau_i 
+  \]</li>
 <li>Probability of a trajectory:
 \[
-     p(\tau_i) = \frac{\exp(-\frac{1}{\lambda}\tilde{S}(\tau_i))}{\int  \exp(-\frac{1}{\lambda}\tilde{S}(\tau_i)) d\tau_i}
-     \]</li>
+  p(\tau_i) = \frac{\exp(-\frac{1}{\lambda}\tilde{S}(\tau_i))}{\int  \exp(-\frac{1}{\lambda}\tilde{S}(\tau_i)) d\tau_i}
+  \]</li>
 </ul>
 
 
@@ -470,7 +460,7 @@ where, for many systems,
 
 <p>
 Note: Eq. \eqref{eq:pi-tildle-s} has been simplified for specific systems and is different from what in Table 1 of the
-original paper. For derivation, refer to <a href="#orge1fe33a">Appendix A</a>
+original paper. For derivation, refer to <a href="#org692ea3d">Appendix</a>
 </p>
 
 
@@ -480,24 +470,6 @@ original paper. For derivation, refer to <a href="#orge1fe33a">Appendix A</a>
 For other more general cases and PI^2 (policy improvement with path integrals) method, please refer to the paper.
 </p>
 </div>
-</div>
-</div>
-<div id="outline-container-orga2f6e7b" class="outline-2">
-<h2 id="orga2f6e7b">Cross entropy method</h2>
-<div class="outline-text-2" id="text-orga2f6e7b">
-<p>
-The cross-entropy (CE) method is a Monte Carlo method for importance sampling and optimization. It is applicable to
-both combinatorial and continuous problems, with either a static or noisy objective.
-</p>
-
-<p>
-The method approximates the optimal importance sampling estimator by repeating two phases:[1]
-</p>
-<ul class="org-ul">
-<li>Draw a sample from a probability distribution.</li>
-<li>Minimize the cross-entropy between this distribution and a target distribution to produce a better sample in the
-next iteration.</li>
-</ul>
 </div>
 </div>
 <div id="outline-container-orgb8259c1" class="outline-2">
@@ -531,12 +503,12 @@ D_{KL}(p||\psi) = \int_{\tau} p \log(\frac{p}{q \exp(-S)}) d\tau = \int_{\tau}p 
 <p>
 we can rewrite the cost function as:
 \[
-  \hat{R}(x^t, u^t, x^{t+1}, t) = \log(\frac{p^t(x^{t+1}| x^t, u^t)}{q^t(x^{t+1}| x^t)}) + C^x(x^t, t) \quad t=0,\ldots,T-1
-  \]
+\hat{R}(x^t, u^t, x^{t+1}, t) = \log(\frac{p^t(x^{t+1}| x^t, u^t)}{q^t(x^{t+1}| x^t)}) + C^x(x^t, t) \quad t=0,\ldots,T-1
+\]
 and
 \[
-  \hat{R} (x^T, u^T, x^{T+1}, T) = C^x(x^T, T)
-  \]
+\hat{R} (x^T, u^T, x^{T+1}, T) = C^x(x^T, T)
+\]
 </p>
 
 <p>
@@ -548,65 +520,22 @@ p(\tau) &=& \frac{1}{Z(x^0)}\psi(\tau)
 <p>
 and the optimal cost:
 \[
-  C(x^0, p^*) = - \log(Z(x^0)),
-  \]
+C(x^0, p^*) = - \log(Z(x^0)),
+\]
 where \(Z(x^0) = \sum_\tau \psi(\tau)\) is a normalization constant.
 </p>
 
 <p>
 The optimal control in the current state \(x^0\) is given by
 \[
-  p(x^1| x^0) = \sum_{x^{2:T}} p(x^{1:T}| x^0)
-  \]
+p(x^1| x^0) = \sum_{x^{2:T}} p(x^{1:T}| x^0)
+\]
 </p>
 </div>
 </div>
 <div id="outline-container-org1d6eb5d" class="outline-2">
 <h2 id="org1d6eb5d">Reinforcement learning and control as probabilistic inference</h2>
 <div class="outline-text-2" id="text-org1d6eb5d">
-<p>
-Levine(2018) uses a graphical model to model the relationship between state, action, the next state,
-and rewards. It formulates the probability for s and a to be optimal as exp(r(s,a)), This leads to a very natural
-posterior distribution over actions when condition on \(O_t = 1\) for all \(t \in {1,\ldots, T}\)
-</p>
-\begin{eqnarray}
-\label{eq:inference}
-p(\tau|O_{1:T}) &=& \frac{[p(s_1)\prod_{t=1}^T p(s_{t+1}| s_t, a_t)]\exp(\sum_{t=1}^T r(s_t, a_t))}{Z} \nonumber \\
-&\approx& p(s_1)\prod_{t=1}^T p(s_{t+1}| s_t, a_t)]\exp(\sum_{t=1}^T r(s_t, a_t))
-\end{eqnarray}
-
-<p>
-The probability of observing a given trajectory is given by the product between its probability
-to occur according to the dynamics (the term in square brackets on the last line), and the exponential
-of the total reward along that trajectory.
-</p>
-
-
-<p>
-In general \(p(\tau | O_{1:T})\) is hard to derive because of the partition function, instead, 
-we can minimize the Kullback–Leibler divergence between:
-</p>
-\begin{equation*}                
-D_{KL}(\hat{p}||p(\tau| O_{1:T})) = - \mathbb{E}_{\hat{p}}[\sum_{t=1:T} r(s, a)] - \mathcal{H}(\hat{p}) + C
-\end{equation*}                          
-<p>
-and thus it is to maximize
-</p>
-<blockquote>
-<p>
-<b>Note:</b> This objective is also called the evidence lower bound (ELBO) or negative variational free energy.
-</p>
-</blockquote>
-
-\begin{equation}
-\label{eq:rl-maxent}
-\max_{\hat{p}}  J(\hat{p}) = \mathbb{E}_{\hat{p}}[\sum_{t=1:T} r(s, a)] + \mathcal{H}(\hat{p})
-\end{equation}
-<p>
-This type of control objective is sometimes referred to as maximum entropy reinforcement learning or maximum entropy
-control.
-</p>
-
 <p>
 If we define 
 </p>
@@ -622,6 +551,7 @@ Eq. \eqref{eq:kappen-kl} becomes
 - D_{KL}(p||\psi) &=& -\int_{\tau} p\log(p)d\tau - \mathbb{E}_p[\sum_{t=0:T} (C^u + C^x)] \nonumber  \\
   &=& \mathcal{H}(p) + \mathbb{E}[\sum_{t=1:T}r(s,a)]
 \end{eqnarray}
+
 <p>
 As we can see that \eqref{eq:kappen-kl} is a special form of \eqref{eq:rl-maxent}, where the reward can be partitioned into
 a state dependent term and a control dependent term.
@@ -636,10 +566,6 @@ wired. But because the noise term is in the control, you can think it as 'noise'
 <div id="outline-container-org692ea3d" class="outline-2">
 <h2 id="org692ea3d">Appendix</h2>
 <div class="outline-text-2" id="text-org692ea3d">
-</div>
-<div id="outline-container-orge1fe33a" class="outline-3">
-<h3 id="orge1fe33a">Appendix A</h3>
-<div class="outline-text-3" id="text-orge1fe33a">
 <p>
 \(\tilde{S}\) is defined as:
 </p>
@@ -650,15 +576,15 @@ wired. But because the noise term is in the control, you can think it as 'noise'
 <p>
 and
 \[
-   H_{t_j} := G_{t_j}^c R^{-1}G_{t_j}^{c\top} 
-   \]
+H_{t_j} := G_{t_j}^c R^{-1}G_{t_j}^{c\top} 
+\]
 </p>
 
 <p>
 For many systems, when \(dt \to 0\), 
 \[
-   \frac{x_{t_{j+1}}^c - x_{t_j}^c}{dt} - f_{t_j}^c \to G^c u 
-   \]
+\frac{x_{t_{j+1}}^c - x_{t_j}^c}{dt} - f_{t_j}^c \to G^c u 
+\]
 </p>
 \begin{eqnarray*}
 \Vert \frac{x_{t_{j+1}}^c - x_{t_j}^c}{dt} - f_{t_j}^c \Vert^2_{H_{t_j}^{-1}} &\to& (G^c u)^{\top} ( G^c R^{-1}G^{c\top} )^{-1} G^c u   \\
@@ -668,111 +594,13 @@ For many systems, when \(dt \to 0\),
 <p>
 For some system, when \({G^c_t}^{\top} = {G^c_t}^{-1}\) and \(dt \to 0\)
 \[
-   \tilde{s} = \Phi_{t_N} + \int_{t_i}^{t_N} r_t dt + C
-   \]
+\tilde{s} = \Phi_{t_N} + \int_{t_i}^{t_N} r_t dt + C
+\]
 where \(C\) is a constant and it can then be canceled in Eq. \eqref{eq:pi-opt-control}.
 </p>
 </div>
 </div>
-<div id="outline-container-org60f9e8d" class="outline-3">
-<h3 id="org60f9e8d">Diffusion process</h3>
-<div class="outline-text-3" id="text-org60f9e8d">
-<p>
-a diffusion equation is usually written as:
-\[
-   \partial_t \Phi(r, t) = \nabla \cdot [D(\Phi, r)\nabla\Phi(r,t)]
-   \]
-where \(\Phi(r,t)\) is the density of the diffusing material at location \(r\) and time \(t\)
-and \(D(\phi, r)\) is the collective diffusion coefficient <sup><a id="fnr.diffusion" class="footref" href="#fn.diffusion" role="doc-backlink">1</a></sup>.  
-Diffusion equation shows us how the diffusion speed depends on the density of the material.
-</p>
 </div>
-</div>
-<div id="outline-container-org342b436" class="outline-3">
-<h3 id="org342b436">Laplace approximation</h3>
-<div class="outline-text-3" id="text-org342b436">
-<p>
-<a href="https://james-brennan.github.io/posts/laplace_approximation/">https://james-brennan.github.io/posts/laplace_approximation/</a>
-<a href="https://bookdown.org/rdpeng/advstatcomp/laplace-approximation.html">https://bookdown.org/rdpeng/advstatcomp/laplace-approximation.html</a>
-</p>
-
-<p>
-Simply put the Laplace approximation entails finding a Gaussian approximation to
-a continuous probability density. 
-</p>
-
-<p>
-Key notes:
-</p>
-<ul class="org-ul">
-<li>Technically, it works for functions that are in the class of L2,</li>
-</ul>
-<p>
-\[
-\int g^2(x) dx < \infty
-\]
-</p>
-<ul class="org-ul">
-<li>We are interested in approximating a distribution: \[ p(z) = \frac{1}{Z} f(z) \]
-where \(Z\) is the normalization coefficient. Especially we are interested in
-its posterior, which is in general computationally intractable.</li>
-
-<li><p>
-log trick + its second-order Taylor expansion at a peak. 
-In details: To calculate \(\int f(z) dx\), do 'log' trick, \(f(z) = \exp(\ln (f(z))\),
-and make a Taylor expansion of it centered on the peak \(z_0\):
-\[
-  \ln(f(z)) \approx \ln(f(z_0)) - \frac{1}{2}\mathbb(A) (z-z_0)^2
-  \]
-where
-\[
-  \mathbb{A} = -\frac{d^2}{dz^2} \ln f(z) |_{z=z_0}
-  \]
-Thus:
-\[
-  f(z) \approx f(z_0) \exp(- \frac{1}{2}\mathbb(A) (z-z_0)^2)
-  = f(z_0) (\frac{A}{2\pi})^{-1/2} q(z)
-  \]
-where \(q(z)\) is distribution PDF \(\mathcal{N}(z|z_0, A^{-1})\)
-</p>
-
-<p>
-\[
-  \ln(f(z)) \approx \ln(f(z_0) - \frac{1}{2} (z - z_0)^{\top} \mathbb{H} (z -z_0)
-  \]
-where H is the Hessian matrix, the matrix of second-order partial derivatives which
-describes the local curvature of \(ln(f)\)
-</p></li>
-</ul>
-</div>
-</div>
-<div id="outline-container-orgf6b2462" class="outline-3">
-<h3 id="orgf6b2462">Posterior mode</h3>
-<div class="outline-text-3" id="text-orgf6b2462">
-<p>
-The maximum of a distribution is called 'mode', the peaks in a distribution. 
-</p>
-
-<p>
-An alternative estimate to the posterior mode is the posterior mean. It is given
-by E (θ |s), whenever it exists. If the posterior distribution of θ is symmetric
-about its mode, and the expectation exists, then the posterior mean is the same
-as the posterior mode, but otherwise these estimates will be different.
-</p>
-</div>
-</div>
-</div>
-<div id="footnotes">
-<h2 class="footnotes">Footnotes: </h2>
-<div id="text-footnotes">
-
-<div class="footdef"><sup><a id="fn.diffusion" class="footnum" href="#fnr.diffusion" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
-<a href="https://en.wikipedia.org/wiki/Diffusion_equation">https://en.wikipedia.org/wiki/Diffusion_equation</a>
-</p></div></div>
-
-
-</div>
-</div></div>
 <div id="postamble" class="status">
 <script>
 // Sidebar toggle
