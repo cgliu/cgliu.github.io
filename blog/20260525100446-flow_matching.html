@@ -294,7 +294,7 @@ Flow matching produces sharp, well-separated bimodal samples with no inter-mode 
 <ul class="org-ul">
 <li>vs. EBM: No MCMC needed at inference — just deterministic ODE integration</li>
 <li>vs. VAE: No blurriness or inter-mode leakage — the deterministic flow avoids the Gaussian decoder averaging problem</li>
-<li>vs. Diffusion: Straight paths require fewer integration steps (50 here vs. 1000 typical for DDPM)</li>
+<li>vs. Diffusion: Simpler training objective (regression vs. score matching); fewer integration steps needed in practice (50 here vs. 1000 typical for DDPM)</li>
 </ul></li>
 </ol>
 </div>
