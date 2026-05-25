@@ -4,8 +4,8 @@
 <!-- 2026-05-24 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Numerical Integration</title>
-<meta name="description" content="Numerical integration and quadrature methods" />
+<title>Sampling with the Score</title>
+<meta name="description" content="Explain how to sample with the score function with examples" />
 <meta name="generator" content="Org Mode" />
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -96,277 +96,93 @@
 </div>
 <div id="content" class="content">
 <header>
-<h1 class="title">Numerical Integration</h1>
+<h1 class="title">Sampling with the Score</h1>
 </header><nav id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgc53b032">Numerical Integration</a>
+<li><a href="#org9a88fdf">How to Sample</a>
 <ul>
-<li><a href="#org9d11624">The model ODE</a></li>
-<li><a href="#org5d458e8">Euler method</a></li>
-<li><a href="#org7c40e82">Runge-Kutta methods</a></li>
-<li><a href="#orgedc3b5a">Quadrature</a></li>
-<li><a href="#org8c9bdec">Solve ODEs backwards in time</a></li>
-</ul>
-</li>
-<li><a href="#orgcc25749">Lagrange interpolation</a>
-<ul>
-<li><a href="#org2d6f7de">Spectral method for ODE and PDE</a></li>
-</ul>
-</li>
-<li><a href="#org1c1f372">Direct transcription</a>
-<ul>
-<li><a href="#orgd0260d0">Euler method</a></li>
-<li><a href="#org5c3e2f0">Runge-Kutta method</a></li>
-<li><a href="#orgc8f6b48">Lagrange Pseudospectral method</a></li>
-<li><a href="#orgfb7d44d">Gauss Pseudospectral method</a></li>
+<li><a href="#org67d019f">Annealed Langevin Dynamics (practical version)</a></li>
+<li><a href="#org743f3b6">Test: Sample from a Known Gaussian</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </nav>
-<div id="outline-container-orgc53b032" class="outline-2">
-<h2 id="orgc53b032">Numerical Integration</h2>
-<div class="outline-text-2" id="text-orgc53b032">
-</div>
-<div id="outline-container-org9d11624" class="outline-3">
-<h3 id="org9d11624">The model ODE</h3>
-<div class="outline-text-3" id="text-org9d11624">
 <p>
-The first order ODE:
-\[ \frac{dy}{dt} = f(t, y) \]
-where \(y \in R^N\). It is interesting because high order ODEs can be written in form of
-a system of first order ODEs.
-</p>
-</div>
-</div>
-<div id="outline-container-org5d458e8" class="outline-3">
-<h3 id="org5d458e8">Euler method</h3>
-<div class="outline-text-3" id="text-org5d458e8">
-<ul class="org-ul">
-<li>forward Euler:
-\[ y_{k+1} =  y_{k} + \Delta T f(y(k)) \]</li>
-
-<li>backward Euler:
-\[ y_{k+1} = y_k + \Delta T f(y(k+1)) \]</li>
-</ul>
-
-<p>
-The forward Euler is also called explicit method because
-you can evaluate the next time step by an explicit equation.
-It is simple but less stable.
+Once you have \(s_\theta(x) \approx \nabla_x \log p(x)\) , sample via <b>Langevin dynamics</b>:
 </p>
 
 <p>
-The backward Euler is also called implicit method because
-you have to solve nonlinear equations to get the next step.
-It is more complicate by more stable <sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>.
-</p>
-</div>
-</div>
-<div id="outline-container-org7c40e82" class="outline-3">
-<h3 id="org7c40e82">Runge-Kutta methods</h3>
-<div class="outline-text-3" id="text-org7c40e82">
-<p>
-The Runge-Katta methods are the most popular methods of solving ODE numerically.
-They can be derived for any order of accuracy.
-The most popular method is the fourth order Runge-Kutta method, or RK4 method, which is given by
-</p>
-\begin{eqnarray}
-y_{k+1} &=& y_k + \frac{1}{6} (k_1 + 2K_2 + 2K_3 + k_4), \\
-k_1 &=& h f(t_k, y_k) \\
-k_2 &=& h f(t_k + \frac{h}{2}, y_k + \frac{1}{2} k_1) \\
-K_3 &=& h f(t_k + \frac{h}{2}, y_k + \frac{1}{2} k_2) \\
-k_4 &=& h f(t_k + h, y_k + k_3)
-\end{eqnarray}
-</div>
-</div>
-<div id="outline-container-orgedc3b5a" class="outline-3">
-<h3 id="orgedc3b5a">Quadrature</h3>
-<div class="outline-text-3" id="text-orgedc3b5a">
-<p>
-Quadrature is more or less a a synonym for numerical integration,
-especially as applied to one-dimensional integrals.
-Some authors refer to numerical integration over more than one dimension as cubature;
-others take quadrature to include higher-dimensional integration.
-</p>
-
-<p>
-\[ \int_a^b f(y) dt \approx \sum_{i=1}^N w_i f(t_i) \]
-where \(w_i\) are the quadrature weights and \(t_i\) are the quadrature points or nodes.
-</p>
-
-<p>
-An interpolatory quadrature formula can be created for arbitrary support points by
-approximating the integrand by Lagrange polynomials, so that
-\[ \int_a^b f(y) dt \approx \int_{a}^b \sum_{i=1}^N L_i(t) \cdot f(t_i) dt \]
-</p>
-
-<p>
-The quadrature weights can be easily determined as
-\[ w_i = \int_a^b L_i(t) dt \]
-</p>
-
-<p>
-The quadrature formula with the maximum degree of precision is the
-<b>Gauss quadrature</b> formula, which is exact for polynomials of degree \(2N - 1\) or less. The
-Gauss formula is found by choosing the weights \(w_i\) and points \(t_i\) which make the
-formula exact for the highest degree polynomial possible. The points and weights
-are determined so that
-\[ \int_{-1}^{1} f(t) dt = \sum_{i=1}^N w_i \cdot f(t_i) + E_N \]
-and the error \(E_N\) is zero for a polynomial of degree \(2N-1\). The Gauss
-points are determined as the zeros of the \(N^{th}\) degree Legendre polynomial and
-the weights are the integrals of the resulting Lagrange interpolating polynomials, so
-that
-\[ w_i = \int_{-1}^{1} \prod_{k=1, k \ne i}^{N} \frac{t-t_k}{t_i - t_k} dt,\  i =1, \ldots, N \]
-</p>
-
-<p>
-There are other types of quadrature formula, such LGL, which is similar to the Gauss formula,
-except the boundary points are fixed at -1 and 1.
-</p>
-
-<p>
-The error in the pesudospectral integration at the \(i^{th}\) point is bounded by
 \[
-   \|E_i\| \le \| \frac{d^N f(\xi)}{dt^N}\| \frac{2}{N!}, \ \xi \in [-1,1]
+x_{t+1} = x_t + \frac{\eta}{2} s_\theta(x_t) + \sqrt{\eta}\, \xi_t, \quad \xi_t \sim \mathcal{N}(0, I)
+\]
+</p>
+
+<p>
+As \(\eta \to 0\) and \(T \to \infty\) , \(x_T \sim p_\theta(x)\) .
+</p>
+
+<p>
+For multi-scale: use <b>annealed Langevin dynamics</b> — start with high noise score, gradually decrease.
+</p>
+<div id="outline-container-org9a88fdf" class="outline-2">
+<h2 id="org9a88fdf">How to Sample</h2>
+<div class="outline-text-2" id="text-org9a88fdf">
+<ol class="org-ol">
+<li>Start from random noise: \(x_0 \sim \mathcal{N}(0, I)\)</li>
+<li>Iteratively update:
+\[
+   x_{t+1} = x_t + \frac{\eta}{2} s_\theta(x_t) + \sqrt{\eta}\, \xi_t, \quad \xi_t \sim \mathcal{N}(0, I)
    \]
-and the pseudospectral integral will converge for any \(f(t)\) whose derivatives are bounded,
-as the number of nodes used approaches infinity <sup><a id="fnr.gauss-pseudospectral-opt" class="footref" href="#fn.gauss-pseudospectral-opt" role="doc-backlink">2</a></sup>.
-</p>
-</div>
-</div>
-<div id="outline-container-org8c9bdec" class="outline-3">
-<h3 id="org8c9bdec">Solve ODEs backwards in time</h3>
-<div class="outline-text-3" id="text-org8c9bdec">
-<p>
-Having a dynamics equation, it seems normal to integrate forward to get the time history. Backward ODE sounds odd
-because how can you integrate a dynamic system backward in time. But actually, it is still normal in math. We can
-still use Runge-Kutta to integrate ODEs backward in time using a negative time step!
-</p>
-
-\begin{eqnarray}
-y_{k-1} &=& y_k + \frac{1}{6} (k_1 + 2K_2 + 2K_3 + k_4), \\
-k_1 &=& h f(t_k, y_k) \\
-k_2 &=& h f(t_k - \frac{h}{2}, y_k - \frac{1}{2} k_1) \\
-K_3 &=& h f(t_k - \frac{h}{2}, y_k - \frac{1}{2} k_2) \\
-k_4 &=& h f(t_k - h, y_k - k_3)
-\end{eqnarray}
-
-
-<figure id="org063ce0b">
-<img src="forward_backward_sim.png" alt="forward_backward_sim.png" width="500">
-
-<figcaption><span class="figure-number">Figure 1: </span>Comparison between solving ODEs forwards and backwards in time</figcaption>
-</figure>
-
-<p>
-<a href="https://github.com/cgliu/optimal_control/blob/master/tests/ode_forwards_backwards.py">Code</a>
-</p>
-</div>
-</div>
-</div>
-<div id="outline-container-orgcc25749" class="outline-2">
-<h2 id="orgcc25749">Lagrange interpolation</h2>
-<div class="outline-text-2" id="text-orgcc25749">
-<p>
-Given \(N\) arbitrary support points of the function \(f(t)\), on interval \(t \in [a,b]\),
-there exists a unique polynomial P(t), of degree N-1 so that
-\[
-  P(t_i) = f_i, i = 1, \ldots, N
-  \]
-</p>
-
-<p>
-The unique polynomial can be found using Lagrange interpolation formula so that
-\[
-  P(t) = \sum_{i=1}^{N} f_i L_i(t)
-  \]
-where \(L_i(t)\) are the Lagrange interpolation polynomials
-\[
-  L_i(t) = \prod_{k=1, k \ne i}^{N} \frac{t-t_k}{t_i - t_k} dt,\  i =1, \ldots, N 
-  \]
-</p>
-</div>
-<div id="outline-container-org2d6f7de" class="outline-3">
-<h3 id="org2d6f7de">Spectral method for ODE and PDE</h3>
-<div class="outline-text-3" id="text-org2d6f7de">
 <ul class="org-ul">
-<li>Galerkin, tau method</li>
-<li>Pseudospectral method, or collocation method
-satisfy boundary constraints and collocation points</li>
+<li>The score \(s_\theta(x_t)\) pushes \(x\) toward high-density regions</li>
+<li>The noise \(\xi_t\) ensures exploration of the full distribution</li>
+</ul></li>
+<li>As \(\eta \to 0\) and \(T \to \infty\), samples converge to \(p(x)\)</li>
+</ol>
+</div>
+<div id="outline-container-org67d019f" class="outline-3">
+<h3 id="org67d019f">Annealed Langevin Dynamics (practical version)</h3>
+<div class="outline-text-3" id="text-org67d019f">
+<ul class="org-ul">
+<li>Use decreasing noise levels \(\sigma_1 > \sigma_2 > \cdots > \sigma_L\)</li>
+<li>At each level, run a few Langevin steps using the score trained at that noise level</li>
+<li>High-noise scores provide a coarse landscape to avoid getting stuck in low-density regions early on</li>
 </ul>
 </div>
 </div>
-</div>
-<div id="outline-container-org1c1f372" class="outline-2">
-<h2 id="org1c1f372">Direct transcription</h2>
-<div class="outline-text-2" id="text-org1c1f372">
-<p>
-Take the state and the control at collocation points as optimization variables
-</p>
-</div>
-<div id="outline-container-orgd0260d0" class="outline-3">
-<h3 id="orgd0260d0">Euler method</h3>
-</div>
-<div id="outline-container-org5c3e2f0" class="outline-3">
-<h3 id="org5c3e2f0">Runge-Kutta method</h3>
-</div>
-<div id="outline-container-orgc8f6b48" class="outline-3">
-<h3 id="orgc8f6b48">Lagrange Pseudospectral method</h3>
-<div class="outline-text-3" id="text-orgc8f6b48">
-<p>
-it is outlined as:
-</p>
-<ul class="org-ul">
-<li><b>Lagrange interpolation + Gauss quadrature</b></li>
-<li>the state and control are interpolated using Lagrange interpolation
-at N LGL points</li>
-<li>the dynamics constraints are enforced at the LGL points</li>
-<li>boundary constraints are enforced using the boundary points of approximating polynomial</li>
-<li>the integration in the cost function is discretized using GL quadrature rule</li>
-</ul>
+<div id="outline-container-org743f3b6" class="outline-3">
+<h3 id="org743f3b6">Test: Sample from a Known Gaussian</h3>
+<div class="outline-text-3" id="text-org743f3b6">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">import</span> torch
 
-<p>
-problems:
-</p>
-<ul class="org-ul">
-<li>the cost is evaluated only at the collocation points, which in general is sparse.
-It may miss some important details in the cost functions. <b>more details here</b></li>
-</ul>
-</div>
-</div>
-<div id="outline-container-orgfb7d44d" class="outline-3">
-<h3 id="orgfb7d44d">Gauss Pseudospectral method</h3>
-<div class="outline-text-3" id="text-orgfb7d44d">
-<p>
-outlined as:
-</p>
-<ul class="org-ul">
-<li>convert to Bolza formulation
-use Lagrange interpolation + Gauss quadrature</li>
-<li>integration approximation matrix</li>
-</ul>
-</div>
-</div>
-</div>
-<div id="footnotes">
-<h2 class="footnotes">Footnotes: </h2>
-<div id="text-footnotes">
+<span class="org-keyword">def</span> <span class="org-function-name">langevin_sample</span>(score_fn, n_steps<span class="org-operator">=</span>1000, eta<span class="org-operator">=</span>0.01, dim<span class="org-operator">=</span>2, n_samples<span class="org-operator">=</span>64):
+    <span class="org-variable-name">x</span> <span class="org-operator">=</span> torch.randn(n_samples, dim)
+    <span class="org-keyword">for</span> _ <span class="org-keyword">in</span> <span class="org-builtin">range</span>(n_steps):
+        <span class="org-variable-name">x</span> <span class="org-operator">=</span> x <span class="org-operator">+</span> (eta <span class="org-operator">/</span> 2) <span class="org-operator">*</span> score_fn(x) <span class="org-operator">+</span> torch.sqrt(torch.tensor(eta)) <span class="org-operator">*</span> torch.randn_like(x)
+    <span class="org-keyword">return</span> x
 
-<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
-<a href="https://web.stanford.edu/~fringer/teaching/numerical_methods_02/handouts/lecture7.pdf">https://web.stanford.edu/~fringer/teaching/numerical_methods_02/handouts/lecture7.pdf</a>
-</p></div></div>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Score of N(mu, I) is -(x - mu)
+</span><span class="org-variable-name">mu</span> <span class="org-operator">=</span> torch.tensor([3.0, <span class="org-operator">-</span>2.0])
+<span class="org-variable-name">score_fn</span> <span class="org-operator">=</span> <span class="org-keyword">lambda</span> x: <span class="org-operator">-</span>(x <span class="org-operator">-</span> mu)
 
-<div class="footdef"><sup><a id="fn.gauss-pseudospectral-opt" class="footnum" href="#fnr.gauss-pseudospectral-opt" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
-A Gauss Pseudospectral Transcription for Optimal Control
-by David Benson, MIT, 2005
-</p></div></div>
-
-
+<span class="org-variable-name">samples</span> <span class="org-operator">=</span> langevin_sample(score_fn, n_steps<span class="org-operator">=</span>2000, eta<span class="org-operator">=</span>0.01, dim<span class="org-operator">=</span>2, n_samples<span class="org-operator">=</span>1000)
+<span class="org-builtin">print</span>(f<span class="org-string">"Mean: </span>{samples.mean(0)}<span class="org-string">"</span>)  <span class="org-comment-delimiter"># </span><span class="org-comment">should be close to [3, -2]
+</span><span class="org-builtin">print</span>(f<span class="org-string">"Std:  </span>{samples.std(0)}<span class="org-string">"</span>)   <span class="org-comment-delimiter"># </span><span class="org-comment">should be close to [1, 1]</span>
+</pre>
 </div>
-</div></div>
+
+<pre class="example">
+Mean: tensor([ 2.9596, -1.9918])
+Std:  tensor([1.0213, 0.9915])
+</pre>
+</div>
+</div>
+</div>
+</div>
 <div id="postamble" class="status">
 <script>
 // Sidebar toggle
