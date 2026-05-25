@@ -286,7 +286,7 @@ Flow matching produces sharp, well-separated bimodal samples with no inter-mode 
 <ol class="org-ol">
 <li><b>Sample quality</b>: The generated samples closely match the training data — two tight clusters at the correct locations with no spurious density between modes. This is a clear improvement over VAE which produced a "bridge" of samples between clusters.</li>
 
-<li><b>Straight trajectories</b>: The flow paths from noise (blue) to data (red) are approximately straight lines, confirming the linear interpolation design. Each trajectory moves directly from its starting noise point toward one of the two data modes.</li>
+<li><b>Non-straight trajectories</b>: Although training uses linear interpolation (straight conditional paths per noise-data pair), the learned marginal velocity field produces curved trajectories at inference. This is because the network predicts an averaged velocity over all possible pairings at each location — early in the flow, the velocity is a mixture of directions toward both modes, and the path curves as it commits to one.</li>
 
 <li><b>Mode assignment</b>: The trajectories show that noise points are routed to the nearest mode — points starting in the upper-right flow to (2,2), points starting lower-left flow to (-2,-2). The velocity field learns a clean partition of space.</li>
 
