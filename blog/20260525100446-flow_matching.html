@@ -4,8 +4,8 @@
 <!-- 2026-05-25 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>EBM and Contrastive Learning</title>
-<meta name="description" content="Explain how contrastive learning works with examples" />
+<title>Flow matching</title>
+<meta name="description" content="Explain how flow matching works with simple examples" />
 <meta name="generator" content="Org Mode" />
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -96,116 +96,110 @@
 </div>
 <div id="content" class="content">
 <header>
-<h1 class="title">EBM and Contrastive Learning</h1>
+<h1 class="title">Flow matching</h1>
 </header><nav id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org7188cf2">What is Energy-Based Model</a></li>
-<li><a href="#org01f073b">How to Learn</a></li>
-<li><a href="#orgc02122d">Contrastive Learning (Contrastive Divergence)</a>
+<li><a href="#org680c20d">What is Flow Matching</a></li>
+<li><a href="#orge7f8f81">How to Learn</a>
 <ul>
-<li><a href="#orgccd696f">Intuition</a></li>
-<li><a href="#org7e39dd0">Example</a></li>
-<li><a href="#org96b8940">Visualize</a></li>
-<li><a href="#orgf53a613">Training Animation (GIF)</a></li>
+<li><a href="#org993068b">Intuition</a></li>
 </ul>
 </li>
-<li><a href="#orgb332c7e">References</a></li>
+<li><a href="#org77e1523">Examples</a>
+<ul>
+<li><a href="#orga5a944d">Generate Samples (ODE Integration)</a></li>
+<li><a href="#orgb3a21d5">Visualize</a></li>
+<li><a href="#org21fdc44">Conclusion</a></li>
+</ul>
+</li>
+<li><a href="#org90a31a5">References</a></li>
 </ul>
 </div>
 </nav>
-<div id="outline-container-org7188cf2" class="outline-2">
-<h2 id="org7188cf2">What is Energy-Based Model</h2>
-<div class="outline-text-2" id="text-org7188cf2">
+<div id="outline-container-org680c20d" class="outline-2">
+<h2 id="org680c20d">What is Flow Matching</h2>
+<div class="outline-text-2" id="text-org680c20d">
 <p>
-Define a distribution via an unnormalized energy function \(E_\theta(x)\):
+Learn a time-dependent velocity field \(v_\theta(x, t)\) that transports a simple prior \(p_0 = \mathcal{N}(0, I)\) to the data distribution \(p_1 = p_{\text{data}}\) along straight paths:
 </p>
 
 <p>
 \[
-p_\theta(x) = \frac{\exp(-E_\theta(x))}{Z_\theta}, \quad Z_\theta = \int \exp(-E_\theta(x))\, dx
+\frac{dx}{dt} = v_\theta(x, t), \quad t \in [0, 1]
 \]
 </p>
 
 <ul class="org-ul">
-<li>Low energy = high probability</li>
-<li>\(E_\theta\) can be any neural network (very flexible)</li>
-<li>The partition function \(Z_\theta\) is intractable — cannot compute or differentiate directly</li>
+<li>At \(t=0\): noise. At \(t=1\): data.</li>
+<li>The flow defines a deterministic mapping between noise and data (no stochasticity at inference)</li>
+<li>Unlike diffusion models, the paths are straight (optimal transport), making sampling fast</li>
 </ul>
-</div>
-</div>
-<div id="outline-container-org01f073b" class="outline-2">
-<h2 id="org01f073b">How to Learn</h2>
-<div class="outline-text-2" id="text-org01f073b">
+
 <p>
-The log-likelihood gradient decomposes into two terms:
+The key idea: define a <b>conditional</b> flow path between each noise-data pair as a linear interpolation:
 </p>
 
 <p>
 \[
-\nabla_\theta \log p_\theta(x) = -\nabla_\theta E_\theta(x) + \mathbb{E}_{x^- \sim p_\theta}\left[\nabla_\theta E_\theta(x^-)\right]
+x_t = (1 - t)\, x_0 + t\, x_1, \quad x_0 \sim \mathcal{N}(0, I),\; x_1 \sim p_{\text{data}}
 \]
 </p>
 
 <p>
-On the right hand side, the first term pushes energy down on real data and the second term pushes the energy up on model samples. 
+The conditional velocity along this path is simply \(v(x_t, t | x_0, x_1) = x_1 - x_0\).
 </p>
 </div>
 </div>
-<div id="outline-container-orgc02122d" class="outline-2">
-<h2 id="orgc02122d">Contrastive Learning (Contrastive Divergence)</h2>
-<div class="outline-text-2" id="text-orgc02122d">
+<div id="outline-container-orge7f8f81" class="outline-2">
+<h2 id="orge7f8f81">How to Learn</h2>
+<div class="outline-text-2" id="text-orge7f8f81">
 <p>
-Approximate the intractable model expectation with short-run MCMC:
+Train a neural network to predict the conditional velocity field:
 </p>
 
+<p>
+\[
+\mathcal{L}(\theta) = \mathbb{E}_{t \sim U[0,1],\, x_0 \sim p_0,\, x_1 \sim p_1} \left[ \| v_\theta(x_t, t) - (x_1 - x_0) \|^2 \right]
+\]
+</p>
+
+<p>
+Training procedure:
+</p>
 <ol class="org-ol">
-<li>Take data point \(x^+\)</li>
-<li>Initialize \(x^- = x^+\), run \(k\) steps of Langevin dynamics:
-\[
-   x^-_{t+1} = x^-_t - \frac{\eta}{2}\nabla_x E_\theta(x^-_t) + \sqrt{\eta}\,\xi_t
-   \]</li>
-<li>Update parameters:
-\[
-   \theta \leftarrow \theta - \alpha\left[\nabla_\theta E_\theta(x^+) - \nabla_\theta E_\theta(x^-)\right]
-   \]</li>
+<li>Sample \(x_1 \sim p_{\text{data}}\) and \(x_0 \sim \mathcal{N}(0, I)\)</li>
+<li>Sample \(t \sim U[0, 1]\)</li>
+<li>Compute \(x_t = (1-t) x_0 + t\, x_1\)</li>
+<li>Regress \(v_\theta(x_t, t)\) toward target \(x_1 - x_0\)</li>
 </ol>
-
-<p>
-This is <b>CD-k</b> (Contrastive Divergence). Biased but effective.
-</p>
 </div>
-<div id="outline-container-orgccd696f" class="outline-3">
-<h3 id="orgccd696f">Intuition</h3>
-<div class="outline-text-3" id="text-orgccd696f">
+<div id="outline-container-org993068b" class="outline-3">
+<h3 id="org993068b">Intuition</h3>
+<div class="outline-text-3" id="text-org993068b">
 <ul class="org-ul">
-<li>We want the real data to have lower energy (more probable).</li>
-<li>We want negative samples from short MCMC to have higher energy (less probable).</li>
-<li>The model learns a "landscape" where data sits in valleys</li>
-<li>If we replace x with &tau;, we will see inverse RL is 'contrastive learning' where negative samples come from
-trajectory optimization/RL rather than Langevin dynamics.</li>
+<li>No MCMC, no ELBO, no adversarial training — just regression</li>
+<li>The model learns "which direction to push" at each point and time</li>
+<li>At inference: start from noise, integrate the ODE forward with Euler steps</li>
+<li>Straight paths = fewer integration steps needed (vs. curved diffusion paths)</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org7e39dd0" class="outline-3">
-<h3 id="org7e39dd0">Example</h3>
-<div class="outline-text-3" id="text-org7e39dd0">
+</div>
+<div id="outline-container-org77e1523" class="outline-2">
+<h2 id="org77e1523">Examples</h2>
+<div class="outline-text-2" id="text-org77e1523">
 <p>
-We will use a simple example to demonstrate how it works. In this example, we draw data from
-a 2D mixture of two Gaussians:
+We use the same 2D Gaussian mixture to demonstrate flow matching.
 </p>
-<ul class="org-ul">
-<li>Cluster 1: n/2 points centered at (2, 2) with std dev 0.5 in each dimension</li>
-<li>Cluster 2: n/2 points centered at (-2, -2) with std dev 0.5 in each dimension</li>
-</ul>
 
 <div class="org-src-container">
 <pre class="src src-python"><span class="org-keyword">import</span> torch
 <span class="org-keyword">import</span> torch.nn <span class="org-keyword">as</span> nn
 <span class="org-keyword">from</span> torch.utils.data <span class="org-keyword">import</span> DataLoader, TensorDataset
-<span class="org-comment-delimiter"># </span><span class="org-comment">--- Test Data: 2D Gaussian Mixture ---
-</span><span class="org-variable-name">n</span> <span class="org-operator">=</span> 2000
+
+<span class="org-variable-name">n</span> <span class="org-operator">=</span> 2000
 <span class="org-variable-name">mix</span> <span class="org-operator">=</span> torch.cat([
     torch.randn(n <span class="org-operator">//</span> 2, 2) <span class="org-operator">*</span> 0.5 <span class="org-operator">+</span> torch.tensor([2.0, 2.0]),
     torch.randn(n <span class="org-operator">//</span> 2, 2) <span class="org-operator">*</span> 0.5 <span class="org-operator">+</span> torch.tensor([<span class="org-operator">-</span>2.0, <span class="org-operator">-</span>2.0]),
@@ -214,104 +208,105 @@ a 2D mixture of two Gaussians:
 </pre>
 </div>
 
-<p>
-We model the energy function with a MLP and define langevin dynamics for sampling negative data:
-</p>
 <div class="org-src-container">
-<pre class="src src-python"><span class="org-comment-delimiter"># </span><span class="org-comment">langevin dynamics for generating negative samples
-</span><span class="org-keyword">def</span> <span class="org-function-name">langevin_negative</span>(ebm, x_init, steps<span class="org-operator">=</span>20, step_size<span class="org-operator">=</span>0.01):
-    <span class="org-variable-name">x</span> <span class="org-operator">=</span> x_init.clone().detach().requires_grad_(<span class="org-constant">True</span>)
-    <span class="org-keyword">for</span> _ <span class="org-keyword">in</span> <span class="org-builtin">range</span>(steps):
-        <span class="org-variable-name">e</span> <span class="org-operator">=</span> ebm.energy(x).<span class="org-builtin">sum</span>()
-        <span class="org-variable-name">score</span> <span class="org-operator">=</span> torch.autograd.grad(<span class="org-operator">-</span> e, x)[0]
-        <span class="org-variable-name">x</span> <span class="org-operator">=</span> x.detach() <span class="org-operator">+</span> (step_size <span class="org-operator">/</span> 2) <span class="org-operator">*</span> score <span class="org-operator">+</span> (step_size<span class="org-operator">**</span>0.5) <span class="org-operator">*</span> torch.randn_like(x)
-        x.requires_grad_(<span class="org-constant">True</span>)
-
-    <span class="org-keyword">return</span> x.detach()
-
-<span class="org-comment-delimiter"># </span><span class="org-comment">--- Model ---
-</span><span class="org-keyword">class</span> <span class="org-type">EBM</span>(nn.Module):
-    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, dim<span class="org-operator">=</span>2, hidden<span class="org-operator">=</span>64):
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">VelocityNet</span>(nn.Module):
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, data_dim<span class="org-operator">=</span>2, hidden<span class="org-operator">=</span>128):
         <span class="org-builtin">super</span>().__init__()
-        <span class="org-keyword">self</span>.<span class="org-variable-name">net</span> <span class="org-operator">=</span> nn.Sequential(
-            nn.Linear(dim, hidden), nn.SiLU(),
+        <span class="org-comment-delimiter"># </span><span class="org-comment">Input: x (2D) + t (1D) = 3D
+</span>        <span class="org-keyword">self</span>.<span class="org-variable-name">net</span> <span class="org-operator">=</span> nn.Sequential(
+            nn.Linear(data_dim <span class="org-operator">+</span> 1, hidden), nn.SiLU(),
             nn.Linear(hidden, hidden), nn.SiLU(),
-            nn.Linear(hidden, 1))
+            nn.Linear(hidden, data_dim))
 
-    <span class="org-keyword">def</span> <span class="org-function-name">energy</span>(<span class="org-keyword">self</span>, x):
-        <span class="org-keyword">return</span> <span class="org-keyword">self</span>.net(x).squeeze(<span class="org-operator">-</span>1)
+    <span class="org-keyword">def</span> <span class="org-function-name">forward</span>(<span class="org-keyword">self</span>, x, t):
+        <span class="org-comment-delimiter"># </span><span class="org-comment">t: (batch,) -&gt; (batch, 1)
+</span>        <span class="org-keyword">return</span> <span class="org-keyword">self</span>.net(torch.cat([x, t.unsqueeze(<span class="org-operator">-</span>1)], dim<span class="org-operator">=-</span>1))
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-python"><span class="org-comment-delimiter"># </span><span class="org-comment">--- Training ---
-</span><span class="org-variable-name">ebm</span> <span class="org-operator">=</span> EBM()
-<span class="org-variable-name">opt</span> <span class="org-operator">=</span> torch.optim.Adam(ebm.parameters(), lr<span class="org-operator">=</span>1e<span class="org-operator">-</span>3)
+<pre class="src src-python"><span class="org-variable-name">model</span> <span class="org-operator">=</span> VelocityNet()
+<span class="org-variable-name">opt</span> <span class="org-operator">=</span> torch.optim.Adam(model.parameters(), lr<span class="org-operator">=</span>1e<span class="org-operator">-</span>3)
 
-<span class="org-keyword">for</span> epoch <span class="org-keyword">in</span> <span class="org-builtin">range</span>(5):
+<span class="org-keyword">for</span> epoch <span class="org-keyword">in</span> <span class="org-builtin">range</span>(200):
     <span class="org-variable-name">total_loss</span> <span class="org-operator">=</span> 0.0
-    <span class="org-keyword">for</span> (x_pos,) <span class="org-keyword">in</span> dataloader:
-        <span class="org-variable-name">x_neg</span> <span class="org-operator">=</span> langevin_negative(ebm, x_pos, steps<span class="org-operator">=</span>20)
-        <span class="org-variable-name">loss</span> <span class="org-operator">=</span> ebm.energy(x_pos).mean() <span class="org-operator">-</span> ebm.energy(x_neg).mean()
+    <span class="org-keyword">for</span> (x1,) <span class="org-keyword">in</span> dataloader:
+        <span class="org-variable-name">x0</span> <span class="org-operator">=</span> torch.randn_like(x1)           <span class="org-comment-delimiter"># </span><span class="org-comment">noise
+</span>        <span class="org-variable-name">t</span> <span class="org-operator">=</span> torch.rand(x1.shape[0])          <span class="org-comment-delimiter"># </span><span class="org-comment">random time
+</span>        <span class="org-variable-name">xt</span> <span class="org-operator">=</span> (1 <span class="org-operator">-</span> t.unsqueeze(1)) <span class="org-operator">*</span> x0 <span class="org-operator">+</span> t.unsqueeze(1) <span class="org-operator">*</span> x1  <span class="org-comment-delimiter"># </span><span class="org-comment">interpolate
+</span>        <span class="org-variable-name">target</span> <span class="org-operator">=</span> x1 <span class="org-operator">-</span> x0                     <span class="org-comment-delimiter"># </span><span class="org-comment">conditional velocity
+</span>        <span class="org-variable-name">pred</span> <span class="org-operator">=</span> model(xt, t)
+        <span class="org-variable-name">loss</span> <span class="org-operator">=</span> ((pred <span class="org-operator">-</span> target) <span class="org-operator">**</span> 2).<span class="org-builtin">sum</span>(dim<span class="org-operator">=</span>1).mean()
         opt.zero_grad()
         loss.backward()
         opt.step()
         <span class="org-variable-name">total_loss</span> <span class="org-operator">+=</span> loss.item()
-    <span class="org-builtin">print</span>(f<span class="org-string">"Epoch </span>{epoch}<span class="org-string">: loss=</span>{total_loss <span class="org-operator">/</span> <span class="org-builtin">len</span>(dataloader):.4f}<span class="org-string">"</span>)
-
-<span class="org-comment-delimiter"># </span><span class="org-comment">--- Verify: energy should be lower on data than on random noise ---
-</span><span class="org-variable-name">noise</span> <span class="org-operator">=</span> torch.randn(100, 2) <span class="org-operator">*</span> 3
-<span class="org-variable-name">data_sample</span> <span class="org-operator">=</span> mix[:100]
-<span class="org-builtin">print</span>(f<span class="org-string">"Energy on data:  </span>{ebm.energy(data_sample).mean().item():.4f}<span class="org-string">"</span>)
-<span class="org-builtin">print</span>(f<span class="org-string">"Energy on noise: </span>{ebm.energy(noise).mean().item():.4f}<span class="org-string">"</span>)
-</pre>
-</div>
-
-<pre class="example">
-Epoch 0: loss=-0.0094
-Epoch 1: loss=-0.0248
-Epoch 2: loss=-0.0492
-Epoch 3: loss=-0.0763
-Epoch 4: loss=-0.0918
-Energy on data:  0.6611
-Energy on noise: 6.8638
+    <span class="org-keyword">if</span> (epoch <span class="org-operator">+</span> 1) <span class="org-operator">%</span> 50 <span class="org-operator">==</span> 0:
+        <span class="org-builtin">print</span>(f<span class="org-string">"Epoch </span>{epoch<span class="org-operator">+</span>1}<span class="org-string">: loss=</span>{total_loss <span class="org-operator">/</span> <span class="org-builtin">len</span>(dataloader):.4f}<span class="org-string">"</span>)
 </pre>
 </div>
 </div>
-<div id="outline-container-org96b8940" class="outline-3">
-<h3 id="org96b8940">Visualize</h3>
-<div class="outline-text-3" id="text-org96b8940">
+<div id="outline-container-orga5a944d" class="outline-3">
+<h3 id="orga5a944d">Generate Samples (ODE Integration)</h3>
+<div class="outline-text-3" id="text-orga5a944d">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-type">@torch.no_grad</span>()
+<span class="org-keyword">def</span> <span class="org-function-name">sample_ode</span>(model, n_samples<span class="org-operator">=</span>2000, steps<span class="org-operator">=</span>50):
+    <span class="org-variable-name">x</span> <span class="org-operator">=</span> torch.randn(n_samples, 2)
+    <span class="org-variable-name">dt</span> <span class="org-operator">=</span> 1.0 <span class="org-operator">/</span> steps
+    <span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">range</span>(steps):
+        <span class="org-variable-name">t</span> <span class="org-operator">=</span> torch.full((n_samples,), i <span class="org-operator">*</span> dt)
+        <span class="org-variable-name">x</span> <span class="org-operator">=</span> x <span class="org-operator">+</span> model(x, t) <span class="org-operator">*</span> dt
+    <span class="org-keyword">return</span> x
 
-<figure id="orgaff60fd">
-<img src="ebm_visualization.png" alt="ebm_visualization.png" width="80%">
+<span class="org-variable-name">samples</span> <span class="org-operator">=</span> sample_ode(model)
+<span class="org-builtin">print</span>(f<span class="org-string">"Sample mean: </span>{samples.mean(0).tolist()}<span class="org-string">"</span>)
+<span class="org-builtin">print</span>(f<span class="org-string">"Sample std:  </span>{samples.std(0).tolist()}<span class="org-string">"</span>)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb3a21d5" class="outline-3">
+<h3 id="orgb3a21d5">Visualize</h3>
+<div class="outline-text-3" id="text-orgb3a21d5">
+
+<figure id="org30ea4c5">
+<img src="flow_matching_visualization.png" alt="flow_matching_visualization.png" width="80%">
 
 </figure>
 </div>
 </div>
-<div id="outline-container-orgf53a613" class="outline-3">
-<h3 id="orgf53a613">Training Animation (GIF)</h3>
-<div class="outline-text-3" id="text-orgf53a613">
-
-<figure id="org46fa873">
-<img src="ebm_training.gif" alt="ebm_training.gif" width="80%">
-
-</figure>
-
+<div id="outline-container-org21fdc44" class="outline-3">
+<h3 id="org21fdc44">Conclusion</h3>
+<div class="outline-text-3" id="text-org21fdc44">
 <p>
-As we can see, the neural energy function learns to approximate the negative log-density of the data distribution, assigning lower energy to high-density regions.
+Flow matching produces sharp, well-separated bimodal samples with no inter-mode leakage:
 </p>
-</div>
-</div>
-</div>
-<div id="outline-container-orgb332c7e" class="outline-2">
-<h2 id="orgb332c7e">References</h2>
-<div class="outline-text-2" id="text-orgb332c7e">
+
+<ol class="org-ol">
+<li><b>Sample quality</b>: The generated samples closely match the training data — two tight clusters at the correct locations with no spurious density between modes. This is a clear improvement over VAE which produced a "bridge" of samples between clusters.</li>
+
+<li><b>Straight trajectories</b>: The flow paths from noise (blue) to data (red) are approximately straight lines, confirming the linear interpolation design. Each trajectory moves directly from its starting noise point toward one of the two data modes.</li>
+
+<li><b>Mode assignment</b>: The trajectories show that noise points are routed to the nearest mode — points starting in the upper-right flow to (2,2), points starting lower-left flow to (-2,-2). The velocity field learns a clean partition of space.</li>
+
+<li><b>Comparison to other methods</b>:
 <ul class="org-ul">
-<li>Hinton, G. (2002). <a href="https://www.cs.toronto.edu/~hinton/absps/tr00-004.pdf">Training Products of Experts by Minimizing Contrastive Divergence</a>. Neural Computation.</li>
-<li>LeCun, Y., Chopra, S., Hadsell, R., Ranzato, M., &amp; Huang, F. (2006). <a href="http://yann.lecun.com/exdb/publis/pdf/lecun-06.pdf">A Tutorial on Energy-Based Learning</a>. In Predicting Structured Data.</li>
-<li>Du, Y. &amp; Mordatch, I. (2019). <a href="https://arxiv.org/abs/1903.08689">Implicit Generation and Modeling with Energy-Based Models</a>. NeurIPS.</li>
-<li>Grathwohl, W., Wang, K.-C., Jacobsen, J.-H., Duvenaud, D., Norouzi, M., &amp; Swersky, K. (2020). <a href="https://arxiv.org/abs/1912.03263">Your Classifier is Secretly an Energy Based Model and You Should Treat it Like One</a>. ICLR.</li>
-<li>Song, Y. &amp; Ermon, S. (2019). <a href="https://arxiv.org/abs/1907.05600">Generative Modeling by Estimating Gradients of the Data Distribution</a>. NeurIPS.</li>
+<li>vs. EBM: No MCMC needed at inference — just deterministic ODE integration</li>
+<li>vs. VAE: No blurriness or inter-mode leakage — the deterministic flow avoids the Gaussian decoder averaging problem</li>
+<li>vs. Diffusion: Straight paths require fewer integration steps (50 here vs. 1000 typical for DDPM)</li>
+</ul></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-org90a31a5" class="outline-2">
+<h2 id="org90a31a5">References</h2>
+<div class="outline-text-2" id="text-org90a31a5">
+<ul class="org-ul">
+<li>Lipman, Y., Chen, R. T. Q., Ben-Hamu, H., Nickel, M., &amp; Le, M. (2023). <a href="https://arxiv.org/abs/2210.02747">Flow Matching for Generative Modeling</a>. ICLR.</li>
+<li>Liu, X., Gong, C., &amp; Liu, Q. (2023). <a href="https://arxiv.org/abs/2209.03003">Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow</a>. ICLR.</li>
+<li>Tong, A., Malkin, N., Huguet, G., Zhang, Y., Rector-Brooks, J., Fatras, K., Wolf, G., &amp; Bengio, Y. (2024). <a href="https://arxiv.org/abs/2302.00482">Improving and Generalizing Flow-Based Generative Models with Minibatch Optimal Transport</a>. TMLR.</li>
 </ul>
 </div>
 </div>

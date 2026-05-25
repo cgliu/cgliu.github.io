@@ -4,8 +4,8 @@
 <!-- 2026-05-25 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>EBM and Contrastive Learning</title>
-<meta name="description" content="Explain how contrastive learning works with examples" />
+<title>Variational Autoencoder (VAE)</title>
+<meta name="description" content="Exaplain how VAE works with a simple example" />
 <meta name="generator" content="Org Mode" />
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -96,116 +96,95 @@
 </div>
 <div id="content" class="content">
 <header>
-<h1 class="title">EBM and Contrastive Learning</h1>
+<h1 class="title">Variational Autoencoder (VAE)</h1>
 </header><nav id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org7188cf2">What is Energy-Based Model</a></li>
-<li><a href="#org01f073b">How to Learn</a></li>
-<li><a href="#orgc02122d">Contrastive Learning (Contrastive Divergence)</a>
+<li><a href="#org2d01465">What is VAE</a></li>
+<li><a href="#org6ee9332">How to Learn</a>
 <ul>
-<li><a href="#orgccd696f">Intuition</a></li>
-<li><a href="#org7e39dd0">Example</a></li>
-<li><a href="#org96b8940">Visualize</a></li>
-<li><a href="#orgf53a613">Training Animation (GIF)</a></li>
+<li><a href="#org75a5e77">Intuition</a></li>
 </ul>
 </li>
-<li><a href="#orgb332c7e">References</a></li>
+<li><a href="#org42237b4">Examples</a>
+<ul>
+<li><a href="#org4827261">Visualize</a></li>
+<li><a href="#org2d5fc39">Conclusion</a></li>
+</ul>
+</li>
+<li><a href="#org52fe3fc">References</a></li>
 </ul>
 </div>
 </nav>
-<div id="outline-container-org7188cf2" class="outline-2">
-<h2 id="org7188cf2">What is Energy-Based Model</h2>
-<div class="outline-text-2" id="text-org7188cf2">
+<div id="outline-container-org2d01465" class="outline-2">
+<h2 id="org2d01465">What is VAE</h2>
+<div class="outline-text-2" id="text-org2d01465">
 <p>
-Define a distribution via an unnormalized energy function \(E_\theta(x)\):
+A Variational Autoencoder models data by introducing a latent variable \(z\):
 </p>
 
 <p>
 \[
-p_\theta(x) = \frac{\exp(-E_\theta(x))}{Z_\theta}, \quad Z_\theta = \int \exp(-E_\theta(x))\, dx
+p_\theta(x) = \int p_\theta(x|z)\, p(z)\, dz
 \]
 </p>
 
 <ul class="org-ul">
-<li>Low energy = high probability</li>
-<li>\(E_\theta\) can be any neural network (very flexible)</li>
-<li>The partition function \(Z_\theta\) is intractable — cannot compute or differentiate directly</li>
+<li><b>Decoder</b> \(p_\theta(x|z)\): generates data from latent code (e.g., Gaussian with learned mean)</li>
+<li><b>Prior</b> \(p(z) = \mathcal{N}(0, I)\): simple distribution over latent space</li>
+<li><b>Encoder</b> \(q_\phi(z|x)\): approximate posterior (recognition network)</li>
 </ul>
-</div>
-</div>
-<div id="outline-container-org01f073b" class="outline-2">
-<h2 id="org01f073b">How to Learn</h2>
-<div class="outline-text-2" id="text-org01f073b">
+
 <p>
-The log-likelihood gradient decomposes into two terms:
+The marginal \(p_\theta(x)\) is intractable because the integral over \(z\) has no closed form.
+</p>
+</div>
+</div>
+<div id="outline-container-org6ee9332" class="outline-2">
+<h2 id="org6ee9332">How to Learn</h2>
+<div class="outline-text-2" id="text-org6ee9332">
+<p>
+Maximize the Evidence Lower Bound (ELBO) instead of the intractable log-likelihood:
 </p>
 
 <p>
 \[
-\nabla_\theta \log p_\theta(x) = -\nabla_\theta E_\theta(x) + \mathbb{E}_{x^- \sim p_\theta}\left[\nabla_\theta E_\theta(x^-)\right]
+\log p_\theta(x) \geq \underbrace{\mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)]}_{\text{reconstruction}} - \underbrace{D_{\mathrm{KL}}(q_\phi(z|x) \| p(z))}_{\text{regularization}}
 \]
 </p>
 
-<p>
-On the right hand side, the first term pushes energy down on real data and the second term pushes the energy up on model samples. 
-</p>
-</div>
-</div>
-<div id="outline-container-orgc02122d" class="outline-2">
-<h2 id="orgc02122d">Contrastive Learning (Contrastive Divergence)</h2>
-<div class="outline-text-2" id="text-orgc02122d">
-<p>
-Approximate the intractable model expectation with short-run MCMC:
-</p>
-
-<ol class="org-ol">
-<li>Take data point \(x^+\)</li>
-<li>Initialize \(x^- = x^+\), run \(k\) steps of Langevin dynamics:
-\[
-   x^-_{t+1} = x^-_t - \frac{\eta}{2}\nabla_x E_\theta(x^-_t) + \sqrt{\eta}\,\xi_t
-   \]</li>
-<li>Update parameters:
-\[
-   \theta \leftarrow \theta - \alpha\left[\nabla_\theta E_\theta(x^+) - \nabla_\theta E_\theta(x^-)\right]
-   \]</li>
-</ol>
-
-<p>
-This is <b>CD-k</b> (Contrastive Divergence). Biased but effective.
-</p>
-</div>
-<div id="outline-container-orgccd696f" class="outline-3">
-<h3 id="orgccd696f">Intuition</h3>
-<div class="outline-text-3" id="text-orgccd696f">
 <ul class="org-ul">
-<li>We want the real data to have lower energy (more probable).</li>
-<li>We want negative samples from short MCMC to have higher energy (less probable).</li>
-<li>The model learns a "landscape" where data sits in valleys</li>
-<li>If we replace x with &tau;, we will see inverse RL is 'contrastive learning' where negative samples come from
-trajectory optimization/RL rather than Langevin dynamics.</li>
+<li><b>Reconstruction term</b>: decoder should reconstruct \(x\) from sampled \(z\)</li>
+<li><b>KL term</b>: encoder posterior should stay close to the prior</li>
+<li>Use the <b>reparameterization trick</b> to backprop through sampling: \(z = \mu + \sigma \odot \epsilon\), where \(\epsilon \sim \mathcal{N}(0, I)\)</li>
+</ul>
+</div>
+<div id="outline-container-org75a5e77" class="outline-3">
+<h3 id="org75a5e77">Intuition</h3>
+<div class="outline-text-3" id="text-org75a5e77">
+<ul class="org-ul">
+<li>The encoder compresses data into a structured latent space</li>
+<li>The KL term prevents the latent space from degenerating (forces it to be smooth and continuous)</li>
+<li>At generation time, sample \(z \sim p(z)\) and decode — no encoder needed</li>
+<li>Trade-off: too strong KL → posterior collapse (latent ignored); too weak KL → poor generation</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org7e39dd0" class="outline-3">
-<h3 id="org7e39dd0">Example</h3>
-<div class="outline-text-3" id="text-org7e39dd0">
+</div>
+<div id="outline-container-org42237b4" class="outline-2">
+<h2 id="org42237b4">Examples</h2>
+<div class="outline-text-2" id="text-org42237b4">
 <p>
-We will use a simple example to demonstrate how it works. In this example, we draw data from
-a 2D mixture of two Gaussians:
+We use the same 2D Gaussian mixture to demonstrate VAE learning a generative model.
 </p>
-<ul class="org-ul">
-<li>Cluster 1: n/2 points centered at (2, 2) with std dev 0.5 in each dimension</li>
-<li>Cluster 2: n/2 points centered at (-2, -2) with std dev 0.5 in each dimension</li>
-</ul>
 
 <div class="org-src-container">
 <pre class="src src-python"><span class="org-keyword">import</span> torch
 <span class="org-keyword">import</span> torch.nn <span class="org-keyword">as</span> nn
 <span class="org-keyword">from</span> torch.utils.data <span class="org-keyword">import</span> DataLoader, TensorDataset
-<span class="org-comment-delimiter"># </span><span class="org-comment">--- Test Data: 2D Gaussian Mixture ---
-</span><span class="org-variable-name">n</span> <span class="org-operator">=</span> 2000
+
+<span class="org-variable-name">n</span> <span class="org-operator">=</span> 2000
 <span class="org-variable-name">mix</span> <span class="org-operator">=</span> torch.cat([
     torch.randn(n <span class="org-operator">//</span> 2, 2) <span class="org-operator">*</span> 0.5 <span class="org-operator">+</span> torch.tensor([2.0, 2.0]),
     torch.randn(n <span class="org-operator">//</span> 2, 2) <span class="org-operator">*</span> 0.5 <span class="org-operator">+</span> torch.tensor([<span class="org-operator">-</span>2.0, <span class="org-operator">-</span>2.0]),
@@ -214,104 +193,108 @@ a 2D mixture of two Gaussians:
 </pre>
 </div>
 
-<p>
-We model the energy function with a MLP and define langevin dynamics for sampling negative data:
-</p>
 <div class="org-src-container">
-<pre class="src src-python"><span class="org-comment-delimiter"># </span><span class="org-comment">langevin dynamics for generating negative samples
-</span><span class="org-keyword">def</span> <span class="org-function-name">langevin_negative</span>(ebm, x_init, steps<span class="org-operator">=</span>20, step_size<span class="org-operator">=</span>0.01):
-    <span class="org-variable-name">x</span> <span class="org-operator">=</span> x_init.clone().detach().requires_grad_(<span class="org-constant">True</span>)
-    <span class="org-keyword">for</span> _ <span class="org-keyword">in</span> <span class="org-builtin">range</span>(steps):
-        <span class="org-variable-name">e</span> <span class="org-operator">=</span> ebm.energy(x).<span class="org-builtin">sum</span>()
-        <span class="org-variable-name">score</span> <span class="org-operator">=</span> torch.autograd.grad(<span class="org-operator">-</span> e, x)[0]
-        <span class="org-variable-name">x</span> <span class="org-operator">=</span> x.detach() <span class="org-operator">+</span> (step_size <span class="org-operator">/</span> 2) <span class="org-operator">*</span> score <span class="org-operator">+</span> (step_size<span class="org-operator">**</span>0.5) <span class="org-operator">*</span> torch.randn_like(x)
-        x.requires_grad_(<span class="org-constant">True</span>)
-
-    <span class="org-keyword">return</span> x.detach()
-
-<span class="org-comment-delimiter"># </span><span class="org-comment">--- Model ---
-</span><span class="org-keyword">class</span> <span class="org-type">EBM</span>(nn.Module):
-    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, dim<span class="org-operator">=</span>2, hidden<span class="org-operator">=</span>64):
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">VAE</span>(nn.Module):
+    <span class="org-keyword">def</span> <span class="org-function-name">__init__</span>(<span class="org-keyword">self</span>, data_dim<span class="org-operator">=</span>2, latent_dim<span class="org-operator">=</span>2, hidden<span class="org-operator">=</span>64):
         <span class="org-builtin">super</span>().__init__()
-        <span class="org-keyword">self</span>.<span class="org-variable-name">net</span> <span class="org-operator">=</span> nn.Sequential(
-            nn.Linear(dim, hidden), nn.SiLU(),
+        <span class="org-comment-delimiter"># </span><span class="org-comment">Encoder: x -&gt; (mu, log_var)
+</span>        <span class="org-keyword">self</span>.<span class="org-variable-name">encoder</span> <span class="org-operator">=</span> nn.Sequential(
+            nn.Linear(data_dim, hidden), nn.SiLU(),
+            nn.Linear(hidden, hidden), nn.SiLU())
+        <span class="org-keyword">self</span>.<span class="org-variable-name">fc_mu</span> <span class="org-operator">=</span> nn.Linear(hidden, latent_dim)
+        <span class="org-keyword">self</span>.<span class="org-variable-name">fc_logvar</span> <span class="org-operator">=</span> nn.Linear(hidden, latent_dim)
+        <span class="org-comment-delimiter"># </span><span class="org-comment">Decoder: z -&gt; x
+</span>        <span class="org-keyword">self</span>.<span class="org-variable-name">decoder</span> <span class="org-operator">=</span> nn.Sequential(
+            nn.Linear(latent_dim, hidden), nn.SiLU(),
             nn.Linear(hidden, hidden), nn.SiLU(),
-            nn.Linear(hidden, 1))
+            nn.Linear(hidden, data_dim))
 
-    <span class="org-keyword">def</span> <span class="org-function-name">energy</span>(<span class="org-keyword">self</span>, x):
-        <span class="org-keyword">return</span> <span class="org-keyword">self</span>.net(x).squeeze(<span class="org-operator">-</span>1)
+    <span class="org-keyword">def</span> <span class="org-function-name">encode</span>(<span class="org-keyword">self</span>, x):
+        <span class="org-variable-name">h</span> <span class="org-operator">=</span> <span class="org-keyword">self</span>.encoder(x)
+        <span class="org-keyword">return</span> <span class="org-keyword">self</span>.fc_mu(h), <span class="org-keyword">self</span>.fc_logvar(h)
+
+    <span class="org-keyword">def</span> <span class="org-function-name">reparameterize</span>(<span class="org-keyword">self</span>, mu, logvar):
+        <span class="org-variable-name">std</span> <span class="org-operator">=</span> (0.5 <span class="org-operator">*</span> logvar).exp()
+        <span class="org-keyword">return</span> mu <span class="org-operator">+</span> std <span class="org-operator">*</span> torch.randn_like(std)
+
+    <span class="org-keyword">def</span> <span class="org-function-name">decode</span>(<span class="org-keyword">self</span>, z):
+        <span class="org-keyword">return</span> <span class="org-keyword">self</span>.decoder(z)
+
+    <span class="org-keyword">def</span> <span class="org-function-name">forward</span>(<span class="org-keyword">self</span>, x):
+        <span class="org-variable-name">mu</span>, <span class="org-variable-name">logvar</span> <span class="org-operator">=</span> <span class="org-keyword">self</span>.encode(x)
+        <span class="org-variable-name">z</span> <span class="org-operator">=</span> <span class="org-keyword">self</span>.reparameterize(mu, logvar)
+        <span class="org-keyword">return</span> <span class="org-keyword">self</span>.decode(z), mu, logvar
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-python"><span class="org-comment-delimiter"># </span><span class="org-comment">--- Training ---
-</span><span class="org-variable-name">ebm</span> <span class="org-operator">=</span> EBM()
-<span class="org-variable-name">opt</span> <span class="org-operator">=</span> torch.optim.Adam(ebm.parameters(), lr<span class="org-operator">=</span>1e<span class="org-operator">-</span>3)
+<pre class="src src-python"><span class="org-variable-name">vae</span> <span class="org-operator">=</span> VAE(data_dim<span class="org-operator">=</span>2, latent_dim<span class="org-operator">=</span>2, hidden<span class="org-operator">=</span>128)
+<span class="org-variable-name">opt</span> <span class="org-operator">=</span> torch.optim.Adam(vae.parameters(), lr<span class="org-operator">=</span>1e<span class="org-operator">-</span>3)
 
-<span class="org-keyword">for</span> epoch <span class="org-keyword">in</span> <span class="org-builtin">range</span>(5):
+<span class="org-variable-name">n_epochs</span> <span class="org-operator">=</span> 200
+<span class="org-keyword">for</span> epoch <span class="org-keyword">in</span> <span class="org-builtin">range</span>(n_epochs):
+    <span class="org-comment-delimiter"># </span><span class="org-comment">KL annealing: ramp beta from 0 to 0.1 over first 100 epochs
+</span>    <span class="org-variable-name">beta</span> <span class="org-operator">=</span> <span class="org-builtin">min</span>(0.1, epoch <span class="org-operator">/</span> 1000.0)
     <span class="org-variable-name">total_loss</span> <span class="org-operator">=</span> 0.0
-    <span class="org-keyword">for</span> (x_pos,) <span class="org-keyword">in</span> dataloader:
-        <span class="org-variable-name">x_neg</span> <span class="org-operator">=</span> langevin_negative(ebm, x_pos, steps<span class="org-operator">=</span>20)
-        <span class="org-variable-name">loss</span> <span class="org-operator">=</span> ebm.energy(x_pos).mean() <span class="org-operator">-</span> ebm.energy(x_neg).mean()
+    <span class="org-keyword">for</span> (x,) <span class="org-keyword">in</span> dataloader:
+        <span class="org-variable-name">x_recon</span>, <span class="org-variable-name">mu</span>, <span class="org-variable-name">logvar</span> <span class="org-operator">=</span> vae(x)
+        <span class="org-variable-name">recon_loss</span> <span class="org-operator">=</span> ((x_recon <span class="org-operator">-</span> x) <span class="org-operator">**</span> 2).<span class="org-builtin">sum</span>(dim<span class="org-operator">=</span>1).mean()
+        <span class="org-variable-name">kl_loss</span> <span class="org-operator">=</span> <span class="org-operator">-</span>0.5 <span class="org-operator">*</span> (1 <span class="org-operator">+</span> logvar <span class="org-operator">-</span> mu.<span class="org-builtin">pow</span>(2) <span class="org-operator">-</span> logvar.exp()).<span class="org-builtin">sum</span>(dim<span class="org-operator">=</span>1).mean()
+        <span class="org-variable-name">loss</span> <span class="org-operator">=</span> recon_loss <span class="org-operator">+</span> beta <span class="org-operator">*</span> kl_loss
         opt.zero_grad()
         loss.backward()
         opt.step()
         <span class="org-variable-name">total_loss</span> <span class="org-operator">+=</span> loss.item()
-    <span class="org-builtin">print</span>(f<span class="org-string">"Epoch </span>{epoch}<span class="org-string">: loss=</span>{total_loss <span class="org-operator">/</span> <span class="org-builtin">len</span>(dataloader):.4f}<span class="org-string">"</span>)
+    <span class="org-keyword">if</span> (epoch <span class="org-operator">+</span> 1) <span class="org-operator">%</span> 50 <span class="org-operator">==</span> 0:
+        <span class="org-builtin">print</span>(f<span class="org-string">"Epoch </span>{epoch<span class="org-operator">+</span>1}<span class="org-string">: loss=</span>{total_loss <span class="org-operator">/</span> <span class="org-builtin">len</span>(dataloader):.4f}<span class="org-string"> beta=</span>{beta:.3f}<span class="org-string">"</span>)
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">--- Verify: energy should be lower on data than on random noise ---
-</span><span class="org-variable-name">noise</span> <span class="org-operator">=</span> torch.randn(100, 2) <span class="org-operator">*</span> 3
-<span class="org-variable-name">data_sample</span> <span class="org-operator">=</span> mix[:100]
-<span class="org-builtin">print</span>(f<span class="org-string">"Energy on data:  </span>{ebm.energy(data_sample).mean().item():.4f}<span class="org-string">"</span>)
-<span class="org-builtin">print</span>(f<span class="org-string">"Energy on noise: </span>{ebm.energy(noise).mean().item():.4f}<span class="org-string">"</span>)
-</pre>
-</div>
-
-<pre class="example">
-Epoch 0: loss=-0.0094
-Epoch 1: loss=-0.0248
-Epoch 2: loss=-0.0492
-Epoch 3: loss=-0.0763
-Epoch 4: loss=-0.0918
-Energy on data:  0.6611
-Energy on noise: 6.8638
+<span class="org-comment-delimiter"># </span><span class="org-comment">Generate samples from prior
+</span><span class="org-keyword">with</span> torch.no_grad():
+    <span class="org-variable-name">z_sample</span> <span class="org-operator">=</span> torch.randn(500, 2)
+    <span class="org-variable-name">generated</span> <span class="org-operator">=</span> vae.decode(z_sample)
+<span class="org-builtin">print</span>(f<span class="org-string">"Generated mean: </span>{generated.mean(0).tolist()}<span class="org-string">"</span>)
+<span class="org-builtin">print</span>(f<span class="org-string">"Generated std:  </span>{generated.std(0).tolist()}<span class="org-string">"</span>)
 </pre>
 </div>
 </div>
-<div id="outline-container-org96b8940" class="outline-3">
-<h3 id="org96b8940">Visualize</h3>
-<div class="outline-text-3" id="text-org96b8940">
+<div id="outline-container-org4827261" class="outline-3">
+<h3 id="org4827261">Visualize</h3>
+<div class="outline-text-3" id="text-org4827261">
 
-<figure id="orgaff60fd">
-<img src="ebm_visualization.png" alt="ebm_visualization.png" width="80%">
+<figure id="org6365754">
+<img src="vae_visualization.png" alt="vae_visualization.png" width="80%">
 
 </figure>
 </div>
 </div>
-<div id="outline-container-orgf53a613" class="outline-3">
-<h3 id="orgf53a613">Training Animation (GIF)</h3>
-<div class="outline-text-3" id="text-orgf53a613">
+<div id="outline-container-org2d5fc39" class="outline-3">
+<h3 id="org2d5fc39">Conclusion</h3>
+<div class="outline-text-3" id="text-org2d5fc39">
+<p>
+The VAE successfully learns the bimodal structure:
+</p>
 
-<figure id="org46fa873">
-<img src="ebm_training.gif" alt="ebm_training.gif" width="80%">
+<ol class="org-ol">
+<li><b>Generated samples</b> match the two-cluster pattern of the training data, with correct centers (~(2,2) and ~(-2,-2)) and spread. However, there is noticeable density between the modes — this is the classic VAE "blurriness" caused by the Gaussian decoder averaging between modes.</li>
 
-</figure>
+<li><b>Latent space</b> shows two separated clusters, confirming the encoder learned to map each data mode to a distinct latent region. The separation is clear but not as sharp as the data space — the KL regularization pulls both clusters toward the origin.</li>
+
+<li><b>Key trade-off</b>: With low beta (0.1), the model preserves mode separation at the cost of a less regular latent space. With beta=1, the latent space would be smoother but generation would collapse to the mean between modes.</li>
+</ol>
 
 <p>
-As we can see, the neural energy function learns to approximate the negative log-density of the data distribution, assigning lower energy to high-density regions.
+This illustrates a limitation of VAEs on multimodal data: the Gaussian prior + Gaussian decoder assumption makes it hard to produce <b>zero</b> density between modes. EBMs and diffusion models handle this better because they don't assume a simple parametric form for the output distribution.
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgb332c7e" class="outline-2">
-<h2 id="orgb332c7e">References</h2>
-<div class="outline-text-2" id="text-orgb332c7e">
+<div id="outline-container-org52fe3fc" class="outline-2">
+<h2 id="org52fe3fc">References</h2>
+<div class="outline-text-2" id="text-org52fe3fc">
 <ul class="org-ul">
-<li>Hinton, G. (2002). <a href="https://www.cs.toronto.edu/~hinton/absps/tr00-004.pdf">Training Products of Experts by Minimizing Contrastive Divergence</a>. Neural Computation.</li>
-<li>LeCun, Y., Chopra, S., Hadsell, R., Ranzato, M., &amp; Huang, F. (2006). <a href="http://yann.lecun.com/exdb/publis/pdf/lecun-06.pdf">A Tutorial on Energy-Based Learning</a>. In Predicting Structured Data.</li>
-<li>Du, Y. &amp; Mordatch, I. (2019). <a href="https://arxiv.org/abs/1903.08689">Implicit Generation and Modeling with Energy-Based Models</a>. NeurIPS.</li>
-<li>Grathwohl, W., Wang, K.-C., Jacobsen, J.-H., Duvenaud, D., Norouzi, M., &amp; Swersky, K. (2020). <a href="https://arxiv.org/abs/1912.03263">Your Classifier is Secretly an Energy Based Model and You Should Treat it Like One</a>. ICLR.</li>
-<li>Song, Y. &amp; Ermon, S. (2019). <a href="https://arxiv.org/abs/1907.05600">Generative Modeling by Estimating Gradients of the Data Distribution</a>. NeurIPS.</li>
+<li>Kingma, D. P. &amp; Welling, M. (2014). <a href="https://arxiv.org/abs/1312.6114">Auto-Encoding Variational Bayes</a>. ICLR.</li>
+<li>Rezende, D. J., Mohamed, S., &amp; Wierstra, D. (2014). <a href="https://arxiv.org/abs/1401.4082">Stochastic Backpropagation and Approximate Inference in Deep Generative Models</a>. ICML.</li>
+<li>Sohn, K., Lee, H., &amp; Yan, X. (2015). <a href="https://papers.nips.cc/paper/5775-learning-structured-output-representation-using-deep-conditional-generative-models">Learning Structured Output Representation using Deep Conditional Generative Models</a>. NeurIPS.</li>
 </ul>
 </div>
 </div>
