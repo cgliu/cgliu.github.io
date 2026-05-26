@@ -102,10 +102,10 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgb3c50a2">Introduction</a>
+<li><a href="#org9596f1e">Introduction</a>
 <ul>
-<li><a href="#orgcaeab63">Introduction</a></li>
-<li><a href="#orga67d88f">Introduction</a></li>
+<li><a href="#org5685961">Introduction</a></li>
+<li><a href="#org67e6552">Introduction</a></li>
 </ul>
 </li>
 <li><a href="#org859cf10">Safety</a>
@@ -125,11 +125,11 @@
 </li>
 <li><a href="#org7e3abd9">AI or Not</a>
 <ul>
-<li><a href="#org85e491f">What are we trying to solve?</a></li>
-<li><a href="#orgb394d03">What are we trying to solve?</a></li>
-<li><a href="#org440f42b">What are we trying to solve?</a></li>
-<li><a href="#orgf86eead">What are we trying to solve?</a></li>
-<li><a href="#orgea2275a">What are we trying to solve?</a></li>
+<li><a href="#orga4e710a">What are we trying to solve?</a></li>
+<li><a href="#orgefb52a0">What are we trying to solve?</a></li>
+<li><a href="#org6998d68">What are we trying to solve?</a></li>
+<li><a href="#org6098dda">What are we trying to solve?</a></li>
+<li><a href="#org8ccaa05">What are we trying to solve?</a></li>
 </ul>
 </li>
 <li><a href="#org1588b67">System Design Consideration</a>
@@ -137,53 +137,53 @@
 <li><a href="#org6a0e0ac">Lesson Learned from the DARPA Robotics Challenge</a></li>
 <li><a href="#org6f9f049">Lesson learned from the egress task</a></li>
 <li><a href="#org4920cc2">What makes a system fragile?</a></li>
-<li><a href="#org403b4b1">Self-driving Architecture</a></li>
-<li><a href="#org73f4bc3">Self-driving Architecture</a></li>
-<li><a href="#org5cde20b">Self-driving Architecture</a></li>
+<li><a href="#orgf4a85cb">Self-driving Architecture</a></li>
+<li><a href="#org27de69f">Self-driving Architecture</a></li>
+<li><a href="#org867bf41">Self-driving Architecture</a></li>
 <li><a href="#orgfdf9a23">Performance goals</a></li>
 </ul>
 </li>
 <li><a href="#org0aa2ad3">Motion Planning Design Consideration</a>
 <ul>
-<li><a href="#orgc5fbebf">Motion planning system design consideration</a></li>
+<li><a href="#orga6b890f">Motion planning system design consideration</a></li>
 <li><a href="#org050b02f">How to drive if collisions are inevitable?</a></li>
-<li><a href="#orgfbaa461">Motion planning system design consideration</a></li>
-<li><a href="#org0e14b07">Optimization-based motion planning</a></li>
+<li><a href="#org7b98994">Motion planning system design consideration</a></li>
+<li><a href="#org170af9a">Optimization-based motion planning</a></li>
 <li><a href="#orga466a20">Driving problem formulation</a></li>
-<li><a href="#orgbc44e10">The risk of collision</a></li>
-<li><a href="#orgbd0c728">The risk of collision</a></li>
-<li><a href="#org773e6e2">The risk of collision</a></li>
-<li><a href="#orgc564f1d">The risk of collision</a></li>
+<li><a href="#org0416966">The risk of collision</a></li>
+<li><a href="#org7e8c274">The risk of collision</a></li>
+<li><a href="#org8fae597">The risk of collision</a></li>
+<li><a href="#org74a9427">The risk of collision</a></li>
 <li><a href="#org5bc8dcd">Optimal problem formulation</a></li>
-<li><a href="#orgf1fb8a0">Optimization-based motion planning</a></li>
-<li><a href="#org43800a9">Optimization-based motion planning</a></li>
-<li><a href="#orgebe9a27">From Excellent to Superb</a></li>
-<li><a href="#org25fb6ba">From Excellent to Superb</a></li>
+<li><a href="#orgd812244">Optimization-based motion planning</a></li>
+<li><a href="#org76d7503">Optimization-based motion planning</a></li>
+<li><a href="#org69110bb">From Excellent to Superb</a></li>
+<li><a href="#org3426981">From Excellent to Superb</a></li>
 </ul>
 </li>
-<li><a href="#orgd8ac766">Summary</a>
+<li><a href="#org8bc248f">Summary</a>
 <ul>
-<li><a href="#orgd234b88">Summary</a></li>
+<li><a href="#org869cc96">Summary</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </nav>
-<div id="outline-container-orgb3c50a2" class="outline-2">
-<h2 id="orgb3c50a2">Introduction</h2>
-<div class="outline-text-2" id="text-orgb3c50a2">
+<div id="outline-container-org9596f1e" class="outline-2">
+<h2 id="org9596f1e">Introduction</h2>
+<div class="outline-text-2" id="text-org9596f1e">
 </div>
-<div id="outline-container-orgcaeab63" class="outline-3">
-<h3 id="orgcaeab63">Introduction</h3>
-<div class="outline-text-3" id="text-orgcaeab63">
+<div id="outline-container-org5685961" class="outline-3">
+<h3 id="org5685961">Introduction</h3>
+<div class="outline-text-3" id="text-org5685961">
 <p>
 The following are my personal opinions, if you have comments, questions or ideas, please feel free to send me Emails at cgliu2008 AT gmail.com
 </p>
 </div>
 </div>
-<div id="outline-container-orga67d88f" class="outline-3">
-<h3 id="orga67d88f">Introduction</h3>
-<div class="outline-text-3" id="text-orga67d88f">
+<div id="outline-container-org67e6552" class="outline-3">
+<h3 id="org67e6552">Introduction</h3>
+<div class="outline-text-3" id="text-org67e6552">
 <p>
 People don't believe self-driving car is achievable argue that:
 </p>
@@ -210,7 +210,7 @@ here is why and how.
 <h3 id="org46f17d8">How to Design A Safety Critical System</h3>
 <div class="outline-text-3" id="text-org46f17d8">
 
-<figure id="org674fbc9">
+<figure id="orgf36cb8e">
 <img src="fly-by-wire-drive-by-wire.png" alt="fly-by-wire-drive-by-wire.png" width="800">
 
 <figcaption><span class="figure-number">Figure 1: </span>Examples of safety critical systems</figcaption>
@@ -263,7 +263,7 @@ erroneous message.</li>
 <div class="outline-text-3" id="text-org0ecccd2">
 <div class="org-center">
 
-<figure id="orga31c2d3">
+<figure id="orgc5384b3">
 <img src="federated-to-ima.png" alt="federated-to-ima.png" height="400">
 
 <figcaption><span class="figure-number">Figure 2: </span>The transition from a federated architecture to an integrated architecture</figcaption>
@@ -310,7 +310,7 @@ DO-297 Integrated Modular Avionics (IMA) Development Guidance and Certification 
 
 <div class="org-center">
 
-<figure id="org982c058">
+<figure id="org2602448">
 <img src="a380-ima.png" alt="a380-ima.png" height="500">
 
 <figcaption><span class="figure-number">Figure 3: </span>A380 Integrated Modular Avionics (IMA) system</figcaption>
@@ -327,12 +327,12 @@ DO-297 Integrated Modular Avionics (IMA) Development Guidance and Certification 
 time partitioning in safety-critical avionics real-time operating systems (RTOS).</li>
 </ul>
 
-<figure id="org2efda77">
+<figure id="orge8822a2">
 <img src="federated-system.png" alt="federated-system.png" height="350">
 
 </figure>
 
-<figure id="orga74b711">
+<figure id="org5ce74fd">
 <img src="IMA-arch.png" alt="IMA-arch.png" height="350">
 
 </figure>
@@ -346,12 +346,12 @@ time partitioning in safety-critical avionics real-time operating systems (RTOS)
 <li>ARINC 664</li>
 </ul>
 
-<figure id="orga133b46">
+<figure id="org1409c66">
 <img src="afdx-es.png" alt="afdx-es.png" height="300">
 
 </figure>
 
-<figure id="org7d2d103">
+<figure id="orgf78185d">
 <img src="afdx-partition.png" alt="afdx-partition.png" height="300">
 
 </figure>
@@ -366,7 +366,7 @@ Software DO-178B, Software Considerations in Airborne Systems and Equipment Cert
 </p>
 <div class="org-center">
 
-<figure id="org0bad368">
+<figure id="orgba20be3">
 <img src="DO-178B-snapshot.png" alt="DO-178B-snapshot.png" height="500">
 
 <figcaption><span class="figure-number">Figure 4: </span>DO-178B Software Development Processes Objectives</figcaption>
@@ -384,7 +384,7 @@ DO-254, Design Assurance Guidance For Airborne Electronic Hardware
 </p>
 <div class="org-center">
 
-<figure id="org255f4a4">
+<figure id="org173e855">
 <img src="do-254-table-a.png" alt="do-254-table-a.png" height="500">
 
 <figcaption><span class="figure-number">Figure 5: </span>DO-254 Hardware Control Category</figcaption>
@@ -422,15 +422,15 @@ engineering effort is still required, which will <b>save money and time</b>.
 <h2 id="org7e3abd9">AI or Not</h2>
 <div class="outline-text-2" id="text-org7e3abd9">
 </div>
-<div id="outline-container-org85e491f" class="outline-3">
-<h3 id="org85e491f">What are we trying to solve?</h3>
-<div class="outline-text-3" id="text-org85e491f">
+<div id="outline-container-orga4e710a" class="outline-3">
+<h3 id="orga4e710a">What are we trying to solve?</h3>
+<div class="outline-text-3" id="text-orga4e710a">
 <p>
 Driver-less has already been achieved during the DARPA Robotics Challenges!
 </p>
 <div class="org-center">
 
-<figure id="org0a21b65">
+<figure id="org5a7b4c1">
 <img src="drc-driving.jpg" alt="drc-driving.jpg" height="600">
 
 <figcaption><span class="figure-number">Figure 6: </span>The robot drove a car by itself in the DARPA Robotics Challenge</figcaption>
@@ -438,12 +438,12 @@ Driver-less has already been achieved during the DARPA Robotics Challenges!
 </div>
 </div>
 </div>
-<div id="outline-container-orgb394d03" class="outline-3">
-<h3 id="orgb394d03">What are we trying to solve?</h3>
-<div class="outline-text-3" id="text-orgb394d03">
+<div id="outline-container-orgefb52a0" class="outline-3">
+<h3 id="orgefb52a0">What are we trying to solve?</h3>
+<div class="outline-text-3" id="text-orgefb52a0">
 <div class="org-center">
 
-<figure id="orgde0c8f8">
+<figure id="org510f826">
 <img src="drc-operators.jpg" alt="drc-operators.jpg" height="600">
 
 <figcaption><span class="figure-number">Figure 7: </span>Tele-assistant system behind the scene</figcaption>
@@ -451,9 +451,9 @@ Driver-less has already been achieved during the DARPA Robotics Challenges!
 </div>
 </div>
 </div>
-<div id="outline-container-org440f42b" class="outline-3">
-<h3 id="org440f42b">What are we trying to solve?</h3>
-<div class="outline-text-3" id="text-org440f42b">
+<div id="outline-container-org6998d68" class="outline-3">
+<h3 id="org6998d68">What are we trying to solve?</h3>
+<div class="outline-text-3" id="text-org6998d68">
 <ul class="org-ul">
 <li>Autonomous \(\ne\) Driver-less</li>
 </ul>
@@ -471,9 +471,9 @@ us before achieving acceptable performance. Pure data-driven approaches are expe
 </p>
 </div>
 </div>
-<div id="outline-container-orgf86eead" class="outline-3">
-<h3 id="orgf86eead">What are we trying to solve?</h3>
-<div class="outline-text-3" id="text-orgf86eead">
+<div id="outline-container-org6098dda" class="outline-3">
+<h3 id="org6098dda">What are we trying to solve?</h3>
+<div class="outline-text-3" id="text-org6098dda">
 <div class="org-center">
 <p>
 <b>The system design should minimize open 'AI' problems!</b>
@@ -481,9 +481,9 @@ us before achieving acceptable performance. Pure data-driven approaches are expe
 </div>
 </div>
 </div>
-<div id="outline-container-orgea2275a" class="outline-3">
-<h3 id="orgea2275a">What are we trying to solve?</h3>
-<div class="outline-text-3" id="text-orgea2275a">
+<div id="outline-container-org8ccaa05" class="outline-3">
+<h3 id="org8ccaa05">What are we trying to solve?</h3>
+<div class="outline-text-3" id="text-org8ccaa05">
 <p>
 How to minimize open AI problems?
 </p>
@@ -519,17 +519,17 @@ The faster the system can respond to the dynamic environment, the less challengi
 <div class="outline-text-3" id="text-org6a0e0ac">
 </div>
 <ul class="org-ul">
-<li><a id="orgf2f3e7d"></a>A block&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br>
-<div class="outline-text-4" id="text-orgf2f3e7d">
+<li><a id="orge8f9341"></a>A block&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br>
+<div class="outline-text-4" id="text-orge8f9341">
 
-<figure id="org3d6f5ae">
+<figure id="org5afa2f9">
 <img src="schaft-robot.jpg" alt="schaft-robot.jpg" width="400">
 
 </figure>
 </div>
 </li>
-<li><a id="org69ae5b3"></a>A block&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br>
-<div class="outline-text-4" id="text-org69ae5b3">
+<li><a id="org0fd0fee"></a>A block&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br>
+<div class="outline-text-4" id="text-org0fd0fee">
 <ul class="org-ul">
 <li>Nimble robots win!</li>
 
@@ -547,17 +547,17 @@ handle uncertainties and model errors.</li>
 <div class="outline-text-3" id="text-org6f9f049">
 </div>
 <ul class="org-ul">
-<li><a id="org25b679d"></a>A block&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br>
-<div class="outline-text-4" id="text-org25b679d">
+<li><a id="orgb8c66b4"></a>A block&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br>
+<div class="outline-text-4" id="text-orgb8c66b4">
 
-<figure id="org021abf5">
+<figure id="org48b263c">
 <img src="egress.png" alt="egress.png" width="400">
 
 </figure>
 </div>
 </li>
-<li><a id="orga0aee7c"></a>A block&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br>
-<div class="outline-text-4" id="text-orga0aee7c">
+<li><a id="orgea368e5"></a>A block&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br>
+<div class="outline-text-4" id="text-orgea368e5">
 <ul class="org-ul">
 <li>Get the robot outside of the car</li>
 <li>Challenges:
@@ -595,24 +595,24 @@ are 'perfect'.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org403b4b1" class="outline-3">
-<h3 id="org403b4b1">Self-driving Architecture</h3>
-<div class="outline-text-3" id="text-org403b4b1">
+<div id="outline-container-orgf4a85cb" class="outline-3">
+<h3 id="orgf4a85cb">Self-driving Architecture</h3>
+<div class="outline-text-3" id="text-orgf4a85cb">
 <div class="org-center">
 
-<figure id="org2a3eb60">
+<figure id="org01d813d">
 <img src="av-evolution.png" alt="av-evolution.png" height="600">
 
 </figure>
 </div>
 </div>
 </div>
-<div id="outline-container-org73f4bc3" class="outline-3">
-<h3 id="org73f4bc3">Self-driving Architecture</h3>
-<div class="outline-text-3" id="text-org73f4bc3">
+<div id="outline-container-org27de69f" class="outline-3">
+<h3 id="org27de69f">Self-driving Architecture</h3>
+<div class="outline-text-3" id="text-org27de69f">
 <div class="org-center">
 
-<figure id="org0d49851">
+<figure id="orgbd74551">
 <img src="av-evolution.png" alt="av-evolution.png" height="300">
 
 </figure>
@@ -633,12 +633,12 @@ are 'perfect'.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org5cde20b" class="outline-3">
-<h3 id="org5cde20b">Self-driving Architecture</h3>
-<div class="outline-text-3" id="text-org5cde20b">
+<div id="outline-container-org867bf41" class="outline-3">
+<h3 id="org867bf41">Self-driving Architecture</h3>
+<div class="outline-text-3" id="text-org867bf41">
 <div class="org-center">
 
-<figure id="orgf7ba7df">
+<figure id="org3009f64">
 <img src="harmonious-building.jpg" alt="harmonious-building.jpg" width="600">
 
 </figure>
@@ -677,9 +677,9 @@ The following formula show the connects between perception, localization, predic
 <h2 id="org0aa2ad3">Motion Planning Design Consideration</h2>
 <div class="outline-text-2" id="text-org0aa2ad3">
 </div>
-<div id="outline-container-orgc5fbebf" class="outline-3">
-<h3 id="orgc5fbebf">Motion planning system design consideration</h3>
-<div class="outline-text-3" id="text-orgc5fbebf">
+<div id="outline-container-orga6b890f" class="outline-3">
+<h3 id="orga6b890f">Motion planning system design consideration</h3>
+<div class="outline-text-3" id="text-orga6b890f">
 <ul class="org-ul">
 <li>One major reason for self-driving car becoming a realistic goal is that the perception algorithm and systems make a
 lot of progress in recent years. Compared with the perception system, the motion planning system seems more mature.
@@ -723,9 +723,9 @@ Therefore, the design goal is not to avoid all kinds of collisions but to avoid 
 </p>
 </div>
 </div>
-<div id="outline-container-orgfbaa461" class="outline-3">
-<h3 id="orgfbaa461">Motion planning system design consideration</h3>
-<div class="outline-text-3" id="text-orgfbaa461">
+<div id="outline-container-org7b98994" class="outline-3">
+<h3 id="org7b98994">Motion planning system design consideration</h3>
+<div class="outline-text-3" id="text-org7b98994">
 <p>
 Motion planning system's functionalities:
 </p>
@@ -738,9 +738,9 @@ Motion planning system's functionalities:
 </ul>
 </div>
 </div>
-<div id="outline-container-org0e14b07" class="outline-3">
-<h3 id="org0e14b07">Optimization-based motion planning</h3>
-<div class="outline-text-3" id="text-org0e14b07">
+<div id="outline-container-org170af9a" class="outline-3">
+<h3 id="org170af9a">Optimization-based motion planning</h3>
+<div class="outline-text-3" id="text-org170af9a">
 <ul class="org-ul">
 <li>Rather than designing control policy or rules, the developers design cost functions and then let optimization
 algorithms figure out the best policy
@@ -785,9 +785,9 @@ Subject to:
 </ul>
 </div>
 </div>
-<div id="outline-container-orgbc44e10" class="outline-3">
-<h3 id="orgbc44e10">The risk of collision</h3>
-<div class="outline-text-3" id="text-orgbc44e10">
+<div id="outline-container-org0416966" class="outline-3">
+<h3 id="org0416966">The risk of collision</h3>
+<div class="outline-text-3" id="text-org0416966">
 <p>
 \[ \mathrm{risk} = \mathrm{severity} \times \mathrm{exposure} \times \mathrm{probability} \]
 </p>
@@ -798,12 +798,12 @@ The expectation of collision risk:
 </p>
 </div>
 </div>
-<div id="outline-container-orgbd0c728" class="outline-3">
-<h3 id="orgbd0c728">The risk of collision</h3>
-<div class="outline-text-3" id="text-orgbd0c728">
+<div id="outline-container-org7e8c274" class="outline-3">
+<h3 id="org7e8c274">The risk of collision</h3>
+<div class="outline-text-3" id="text-org7e8c274">
 <div class="org-center">
 
-<figure id="orga3605bf">
+<figure id="org540daf0">
 <img src="probabilistic_collision.png" alt="probabilistic_collision.png" width="800">
 
 <figcaption><span class="figure-number">Figure 8: </span>Probabilistic collision</figcaption>
@@ -816,24 +816,24 @@ The collision probability:
 </p>
 </div>
 </div>
-<div id="outline-container-org773e6e2" class="outline-3">
-<h3 id="org773e6e2">The risk of collision</h3>
-<div class="outline-text-3" id="text-org773e6e2">
+<div id="outline-container-org8fae597" class="outline-3">
+<h3 id="org8fae597">The risk of collision</h3>
+<div class="outline-text-3" id="text-org8fae597">
 </div>
 <ul class="org-ul">
-<li><a id="orgc073cd5"></a>A block&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br>
-<div class="outline-text-4" id="text-orgc073cd5">
+<li><a id="org200dab0"></a>A block&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br>
+<div class="outline-text-4" id="text-org200dab0">
 
-<figure id="org869d5cd">
+<figure id="orgb64ca9b">
 <img src="severity-front-speed.png" alt="severity-front-speed.png" height="300">
 
 </figure>
 </div>
 </li>
-<li><a id="orgb7340ae"></a>A block&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br>
-<div class="outline-text-4" id="text-orgb7340ae">
+<li><a id="org9074d7f"></a>A block&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br>
+<div class="outline-text-4" id="text-org9074d7f">
 
-<figure id="org098fa74">
+<figure id="org2d0e634">
 <img src="severity-side-speed.png" alt="severity-side-speed.png" height="300">
 
 </figure>
@@ -841,9 +841,9 @@ The collision probability:
 </li>
 </ul>
 </div>
-<div id="outline-container-orgc564f1d" class="outline-3">
-<h3 id="orgc564f1d">The risk of collision</h3>
-<div class="outline-text-3" id="text-orgc564f1d">
+<div id="outline-container-org74a9427" class="outline-3">
+<h3 id="org74a9427">The risk of collision</h3>
+<div class="outline-text-3" id="text-org74a9427">
 <p>
 The severity level at urban drive speed (&lt; 50 mph):
 \[ \mathrm{severity} \propto v \]
@@ -877,9 +877,9 @@ account.
 </p>
 </div>
 </div>
-<div id="outline-container-orgf1fb8a0" class="outline-3">
-<h3 id="orgf1fb8a0">Optimization-based motion planning</h3>
-<div class="outline-text-3" id="text-orgf1fb8a0">
+<div id="outline-container-orgd812244" class="outline-3">
+<h3 id="orgd812244">Optimization-based motion planning</h3>
+<div class="outline-text-3" id="text-orgd812244">
 <ul class="org-ul">
 <li>Navigation (long-range)
 <ul class="org-ul">
@@ -910,9 +910,9 @@ spline + differential fatness.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org43800a9" class="outline-3">
-<h3 id="org43800a9">Optimization-based motion planning</h3>
-<div class="outline-text-3" id="text-org43800a9">
+<div id="outline-container-org76d7503" class="outline-3">
+<h3 id="org76d7503">Optimization-based motion planning</h3>
+<div class="outline-text-3" id="text-org76d7503">
 <ul class="org-ul">
 <li>Harmony
 <ul class="org-ul">
@@ -938,9 +938,9 @@ spline + differential fatness.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgebe9a27" class="outline-3">
-<h3 id="orgebe9a27">From Excellent to Superb</h3>
-<div class="outline-text-3" id="text-orgebe9a27">
+<div id="outline-container-org69110bb" class="outline-3">
+<h3 id="org69110bb">From Excellent to Superb</h3>
+<div class="outline-text-3" id="text-org69110bb">
 <ul class="org-ul">
 <li>Cost function
 <ul class="org-ul">
@@ -964,9 +964,9 @@ spline + differential fatness.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org25fb6ba" class="outline-3">
-<h3 id="org25fb6ba">From Excellent to Superb</h3>
-<div class="outline-text-3" id="text-org25fb6ba">
+<div id="outline-container-org3426981" class="outline-3">
+<h3 id="org3426981">From Excellent to Superb</h3>
+<div class="outline-text-3" id="text-org3426981">
 <ul class="org-ul">
 <li>Robustness
 <ul class="org-ul">
@@ -982,13 +982,13 @@ spline + differential fatness.</li>
 </div>
 </div>
 </div>
-<div id="outline-container-orgd8ac766" class="outline-2">
-<h2 id="orgd8ac766">Summary</h2>
-<div class="outline-text-2" id="text-orgd8ac766">
+<div id="outline-container-org8bc248f" class="outline-2">
+<h2 id="org8bc248f">Summary</h2>
+<div class="outline-text-2" id="text-org8bc248f">
 </div>
-<div id="outline-container-orgd234b88" class="outline-3">
-<h3 id="orgd234b88">Summary</h3>
-<div class="outline-text-3" id="text-orgd234b88">
+<div id="outline-container-org869cc96" class="outline-3">
+<h3 id="org869cc96">Summary</h3>
+<div class="outline-text-3" id="text-org869cc96">
 <ul class="org-ul">
 <li>System design shall avoid or reduce AI problems</li>
 <li>System development should follow a similar path as the natural evolution.</li>

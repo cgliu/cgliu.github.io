@@ -152,7 +152,7 @@ F follow mode
 <ul class="org-ul">
 <li>install all dependencies</li>
 </ul>
-<pre class="example" id="org7eb45b9">
+<pre class="example" id="org0fa180e">
 sudo apt-get build-dep emacs24
 </pre>
 <ul class="org-ul">
@@ -160,7 +160,7 @@ sudo apt-get build-dep emacs24
 <a href="http://www.gnu.org/software/emacs/">http://www.gnu.org/software/emacs/</a></li>
 <li>extract emacs-xx.x.tar.gz and install</li>
 </ul>
-<pre class="example" id="org6865dc0">
+<pre class="example" id="org9d49d5a">
 tar -zxvf emacs-24.3.tar.gz
 cd emacs-24.3
 ./configure
@@ -280,7 +280,7 @@ It works really well and it is super fast
 <li><p>
 install gtags as:
 </p>
-<pre class="example" id="orgf6d250c">
+<pre class="example" id="org9093b6b">
 ./configure --with-exuberant-ctags=/usr/local/ctags --with-universal-ctags=/usr/local/bin/ctags-universal
 ./make
 sudo make install
@@ -356,7 +356,7 @@ Emacs settings
 To use a specific parser to index a specific file types, you can change the field of ':langmap' in your local .globalrc file.
 For example, if you want to index .hidl as c++, you can map it to c++ type.
 </p>
-<pre class="example" id="org19dc37c">
+<pre class="example" id="org8a78524">
 :langmap=c\:.c.h,yacc\:.y,asm\:.s.S,java\:.java,cpp\:.c++.cc.cpp.cxx.hxx.hpp.hh.hidl.C.H,php\:.php.php3.phtml:
 </pre>
 </div>
@@ -479,7 +479,7 @@ Since gtags is much faster and works for me, I don't use it.
 <div id="outline-container-orge291f7c" class="outline-3">
 <h3 id="orge291f7c">install</h3>
 <div class="outline-text-3" id="text-orge291f7c">
-<pre class="example" id="orgd12339e">
+<pre class="example" id="org75f5cee">
 sudo apt-get install libclang-dev llvm
 cd ~/local/
 git clone --recursive http://github.com/Andersbakken/rtags
@@ -779,14 +779,14 @@ Pull the menu ?Options ? Line Wrapping in this Buffer?, or call visual-line-mode
 <ul class="org-ul">
 <li>add the following at the beginning of an org file</li>
 </ul>
-<pre class="example" id="orgec2c488">
+<pre class="example" id="org1f2c259">
 #+startup: beamer
 #+LaTeX_CLASS: beamer
 </pre>
 <ul class="org-ul">
 <li>add the following to .emacs</li>
 </ul>
-<pre class="example" id="org825f5fe">
+<pre class="example" id="org75b0686">
 (require 'ox-latex)
 (add-to-list 'org-latex-classes
           '("beamer"
