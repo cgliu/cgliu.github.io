@@ -1000,6 +1000,22 @@ li {
   color: var(--color-text-muted);
 }
 
+/* Timeline cards (project cards within timeline) */
+.timeline-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.timeline-cards .project-card img {
+  height: 150px;
+}
+
+.timeline-cards .project-info h3 {
+  font-size: 0.9rem;
+}
+
 /* Postamble wrapper — hide visually, keep scripts running */
 #postamble {
   position: absolute;
@@ -1123,7 +1139,7 @@ li {
 .fade-item {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .fade-item.visible {
@@ -1154,6 +1170,112 @@ li {
 .timeline-item.fade-item:nth-child(4) { transition-delay: 0.3s; }
 .timeline-item.fade-item:nth-child(5) { transition-delay: 0.4s; }
 .timeline-item.fade-item:nth-child(6) { transition-delay: 0.5s; }
+
+/* Projects page */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.project-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md, 8px);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: var(--color-bg);
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.project-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+a.project-card { cursor: pointer; }
+
+.project-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.project-info {
+  padding: 1.2rem;
+}
+
+.project-info h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1rem;
+  color: var(--color-heading);
+}
+
+.project-meta {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  margin: 0 0 0.6rem;
+}
+
+.project-info ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.project-info li {
+  margin-bottom: 0.2rem;
+}
+
+/* Video grid for project detail pages */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.video-item iframe {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border: none;
+  border-radius: var(--radius-md, 8px);
+}
+
+.video-item p {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-top: 0.5rem;
+}
+
+/* Project gallery for images on detail pages */
+.project-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.project-gallery figure {
+  margin: 0;
+}
+
+.project-gallery img {
+  width: 100%;
+  border-radius: var(--radius-md, 8px);
+  object-fit: cover;
+}
+
+.project-gallery figcaption {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  margin-top: 0.4rem;
+  text-align: center;
+}
 
 
 /* Dark mode — triggered by data-theme attribute or system preference */
@@ -1231,6 +1353,14 @@ html:not([data-theme]) {
 
 [data-theme="dark"] .pub-entry:hover {
   background: rgba(255,255,255,0.03);
+}
+
+[data-theme="dark"] .project-card {
+  background: var(--color-bg-alt);
+}
+
+[data-theme="dark"] .project-card:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
 }
 
 [data-theme="dark"] .timeline-item::before {
@@ -1325,6 +1455,10 @@ html:not([data-theme]) {
   }
 
   .blog-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .projects-grid {
     grid-template-columns: 1fr;
   }
 

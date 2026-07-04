@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2026-05-29 -->
+<!-- 2026-07-03 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Publications</title>
@@ -23,6 +23,7 @@
     <nav class="sidebar-nav">
       <a href="/index.html">Home</a>
       <a href="/blogs.html">Blogs</a>
+      <a href="/projects.html">Projects</a>
       <a href="/publications.html">Publications</a>
       <a href="/about.html">About</a>
     </nav>
@@ -369,7 +370,7 @@ var observer = new IntersectionObserver(function(entries) {
       entry.target.classList.remove('visible');
     }
   });
-}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+}, { threshold: 0.15, rootMargin: '0px 0px -20px 0px' });
 
 document.querySelectorAll('.intro p, .blog-card, .pub-entry, .timeline-item, .hero-image').forEach(function(el) {
   el.classList.add('fade-item');

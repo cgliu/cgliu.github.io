@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2026-05-29 -->
+<!-- 2026-07-03 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Decel-limited Constant-jerk Stopping Profile</title>
@@ -56,6 +56,7 @@
     <nav class="sidebar-nav">
       <a href="/index.html">Home</a>
       <a href="/blogs.html">Blogs</a>
+      <a href="/projects.html">Projects</a>
       <a href="/publications.html">Publications</a>
       <a href="/about.html">About</a>
     </nav>
@@ -111,14 +112,14 @@
 <li><a href="#org8018b3b">Kinematic Equations</a></li>
 <li><a href="#orgce38798">Stopping Time</a></li>
 <li><a href="#org4cce49c">Stopping Distance</a></li>
-<li><a href="#orgee8ae9f">With Acceleration Limit</a></li>
+<li><a href="#orgef2f80c">With Acceleration Limit</a></li>
 </ul>
 </li>
 <li><a href="#orga3e01f5">Implementation</a></li>
 <li><a href="#org47c905a">Example Results</a>
 <ul>
 <li><a href="#org8b982e3">Without Acceleration Limit</a></li>
-<li><a href="#orgc9370a9">With Acceleration Limit</a></li>
+<li><a href="#org3bfe27b">With Acceleration Limit</a></li>
 </ul>
 </li>
 </ul>
@@ -194,9 +195,9 @@ d_{stop} = v_0 t + \frac{1}{2}a_0 t^2 + \frac{1}{6}jt^3
 \end{equation}
 </div>
 </div>
-<div id="outline-container-orgee8ae9f" class="outline-3">
-<h3 id="orgee8ae9f">With Acceleration Limit</h3>
-<div class="outline-text-3" id="text-orgee8ae9f">
+<div id="outline-container-orgef2f80c" class="outline-3">
+<h3 id="orgef2f80c">With Acceleration Limit</h3>
+<div class="outline-text-3" id="text-orgef2f80c">
 <p>
 If \(a_{min}\) is specified and reached before stopping:
 </p>
@@ -357,9 +358,9 @@ Results:
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc9370a9" class="outline-3">
-<h3 id="orgc9370a9">With Acceleration Limit</h3>
-<div class="outline-text-3" id="text-orgc9370a9">
+<div id="outline-container-org3bfe27b" class="outline-3">
+<h3 id="org3bfe27b">With Acceleration Limit</h3>
+<div class="outline-text-3" id="text-org3bfe27b">
 <p>
 Initial conditions:
 </p>
@@ -380,7 +381,7 @@ Stopping distance: 69.333 m
 </p>
 
 
-<figure id="org9a3b6e9">
+<figure id="org1cd4ab7">
 <img src="stopping_profile.png" alt="stopping_profile.png" width="80%">
 
 <figcaption><span class="figure-number">Figure 1: </span>constant jerk stopping profile</figcaption>
@@ -474,7 +475,7 @@ var observer = new IntersectionObserver(function(entries) {
       entry.target.classList.remove('visible');
     }
   });
-}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+}, { threshold: 0.15, rootMargin: '0px 0px -20px 0px' });
 
 document.querySelectorAll('.intro p, .blog-card, .pub-entry, .timeline-item, .hero-image').forEach(function(el) {
   el.classList.add('fade-item');
