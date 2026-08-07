@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2026-07-03 -->
+<!-- 2026-08-07 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Trajectory Optimization</title>
@@ -113,8 +113,8 @@
 <ul>
 <li><a href="#orgc95c75a">Remarks</a></li>
 <li><a href="#org397aaa6">Problem formulation</a></li>
-<li><a href="#orgbc1b5bf">Functional gradient</a></li>
-<li><a href="#org0aa5aab">Functional gradient</a></li>
+<li><a href="#org75bf88d">Functional gradient</a></li>
+<li><a href="#org110238f">Functional gradient</a></li>
 <li><a href="#org11d1ac4">Functionals and Co-variant Gradients for Trajectory Optimization</a></li>
 <li><a href="#org7b51e05">Waypoint Trajectory Parameterization</a></li>
 <li><a href="#orgf97bc84">Update rule:</a></li>
@@ -344,9 +344,9 @@ The obstacle objective:
 </p>
 </div>
 </div>
-<div id="outline-container-orgbc1b5bf" class="outline-3">
-<h3 id="orgbc1b5bf">Functional gradient</h3>
-<div class="outline-text-3" id="text-orgbc1b5bf">
+<div id="outline-container-org75bf88d" class="outline-3">
+<h3 id="org75bf88d">Functional gradient</h3>
+<div class="outline-text-3" id="text-org75bf88d">
 <ul class="org-ul">
 <li>The functional gradient \(\nabla U\) is the perturbation \(\phi\)
 that maximizes \(U[\xi + \epsilon \phi]\) as \(\epsilon \to 0\).
@@ -367,9 +367,9 @@ Euler-Lagrange equation is the stationary condition for:
 </ul>
 </div>
 </div>
-<div id="outline-container-org0aa5aab" class="outline-3">
-<h3 id="org0aa5aab">Functional gradient</h3>
-<div class="outline-text-3" id="text-org0aa5aab">
+<div id="outline-container-org110238f" class="outline-3">
+<h3 id="org110238f">Functional gradient</h3>
+<div class="outline-text-3" id="text-org110238f">
 <ul class="org-ul">
 <li>The functional gradient of the smoothness objective:</li>
 </ul>
@@ -643,7 +643,7 @@ Otherwise, reduce the step size \(\epsilon\) and repeat 4 (backtracking line sea
 Newton-Raphson method uses second order variation to minimize the Hamiltonian, \(H = L + \lambda^{\top} f\).
 </p>
 
-<div class="LaTeX" id="org6e2ef65">
+<div class="LaTeX" id="orga597e07">
 \begin{equation}
 \label{eq:H-expansion}
 H(x+\delta x, u + \delta u, t + dt) =
@@ -735,7 +735,7 @@ Control parameters are constant variables in the optimal control problem structu
 \(L(x,u,\alpha, t)\).
 According to the maximum principle:
 </p>
-<div class="LaTeX" id="org2bfe07c">
+<div class="LaTeX" id="org29795fb">
 \begin{equation*}
 H(x+\delta x, \alpha + \delta \alpha, u + \delta u, , t) =
 \frac{1}{2}
@@ -776,7 +776,7 @@ As you can see, \(\alpha\) has similar coefficient as the sate variable. We can 
 then solve it in the same way:
 define \(v = [x^{\top}, \alpha^{\top}]^{\top}\), the dynamics:
 </p>
-<div class="LaTeX" id="org1ee685f">
+<div class="LaTeX" id="org7d97262">
 \begin{equation}
 \dot{v} =
 \begin{bmatrix}
@@ -1217,7 +1217,7 @@ the initial state and the final co-state are defined <sup><a id="fnr.Efficient-r
 
 <div class="org-center">
 
-<figure id="org5754612">
+<figure id="org2b2969d">
 <img src="./one-step-traj-opt.png" alt="one-step-traj-opt.png">
 
 </figure>
