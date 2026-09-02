@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2026-09-02 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A Star</title>
+<meta name="description" content="Explain how A star works with simple examples" />
+<meta name="generator" content="Org Mode" />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<div id="preamble" class="status">
+<div class="scroll-progress"></div>
+<aside class="sidebar">
+  <div class="sidebar-inner">
+    <img src="/images/avatar.svg" alt="Chenggang Liu" class="sidebar-avatar"/>
+    <a href="/index.html" class="site-logo">Chenggang Liu</a>
+    <nav class="sidebar-nav">
+      <a href="/index.html">Home</a>
+      <a href="/blogs.html">Blogs</a>
+      <a href="/projects.html">Projects</a>
+      <a href="/publications.html">Publications</a>
+      <a href="/about.html">About</a>
+    </nav>
+    <div class="sidebar-social">
+      <a href="https://www.linkedin.com/in/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="https://github.com/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <a href="https://scholar.google.com/citations?user=omz_MCoAAAAJ&hl=en" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg></a>
+    </div>
+    <div class="sidebar-search">
+      <input type="text" class="sidebar-search-input" placeholder="Search..."/>
+      <div class="sidebar-search-results"></div>
+    </div>
+    <button class="theme-toggle" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</aside>
+<button class="sidebar-toggle" aria-label="Toggle menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="top-bar">
+  <button class="top-bar-toggle" aria-label="Toggle menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+  <a href="/index.html" class="top-bar-title">Chenggang Liu</a>
+  <button class="top-bar-search" aria-label="Open search bar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+  </button>
+</div>
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" class="search-input" placeholder="Search..."/>
+    <button class="search-close" aria-label="Close search">&times;</button>
+  </div>
+  <div class="search-results"></div>
+</div>
+</div>
+<div id="content" class="content">
+<header>
+<h1 class="title">A Star</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org6b857e6">What is A* method</a>
+<ul>
+<li><a href="#org6242dd5">Key Idea</a></li>
+<li><a href="#org2d4e75c">Properties</a></li>
+<li><a href="#orgd8d6e71">Common Heuristics (for 2D grids)</a></li>
+</ul>
+</li>
+<li><a href="#orgaa0aee6">How does it work</a>
+<ul>
+<li><a href="#org62a80e4">Algorithm Steps</a></li>
+<li><a href="#orgdf0a070">Step-by-Step Walkthrough</a></li>
+<li><a href="#org8846472">Data Structures</a></li>
+<li><a href="#orgd72db4e">Complexity</a></li>
+</ul>
+</li>
+<li><a href="#org303af68">Connection with similar methods</a>
+<ul>
+<li><a href="#org620f45b">Dijkstra's Algorithm</a></li>
+<li><a href="#org1da4713">Greedy Best-First Search</a></li>
+<li><a href="#org91b6128">Weighted A* (WA*)</a></li>
+<li><a href="#org539e303">D* Lite</a></li>
+<li><a href="#org99813e2">LPA* (Lifelong Planning A*)</a></li>
+<li><a href="#orge00b019">RRT / RRG / PRM (Sampling-based planners)</a></li>
+<li><a href="#orgef86d5a">Comparison Table</a></li>
+<li><a href="#orga57ff68">IDA* (Iterative Deepening A*)</a></li>
+</ul>
+</li>
+<li><a href="#org8fa1c3a">Simple example code for 2D navigation</a></li>
+</ul>
+</div>
+</nav>
+<div id="outline-container-org6b857e6" class="outline-2">
+<h2 id="org6b857e6">What is A* method</h2>
+<div class="outline-text-2" id="text-org6b857e6">
+<p>
+A* (A-star) is a best-first graph search algorithm that finds the
+least-cost path from a start node to a goal node. It was introduced by
+Hart, Nilsson &amp; Raphael (1968) and remains the most widely used informed
+search algorithm for pathfinding and graph traversal.
+</p>
+</div>
+<div id="outline-container-org6242dd5" class="outline-3">
+<h3 id="org6242dd5">Key Idea</h3>
+<div class="outline-text-3" id="text-org6242dd5">
+<p>
+A* evaluates nodes using a combined cost function:
+</p>
+
+<pre class="example" id="orgf19faae">
+f(n) = g(n) + h(n)
+</pre>
+
+<ul class="org-ul">
+<li><code>g(n)</code>: actual cost from start to node n (known exactly).</li>
+<li><code>h(n)</code>: heuristic estimate of cost from n to goal (estimated).</li>
+<li><code>f(n)</code>: estimated total cost of the cheapest path through n.</li>
+</ul>
+
+<p>
+A* always expands the node with the lowest <code>f(n)</code> from the open list. If
+the heuristic <code>h</code> is <b>admissible</b> (never overestimates) and <b>consistent</b>
+(satisfies triangle inequality), A* is guaranteed to find the optimal path
+and never re-expand a node.
+</p>
+</div>
+</div>
+<div id="outline-container-org2d4e75c" class="outline-3">
+<h3 id="org2d4e75c">Properties</h3>
+<div class="outline-text-3" id="text-org2d4e75c">
+<ul class="org-ul">
+<li><b>Complete</b>: always finds a solution if one exists (on finite graphs).</li>
+<li><b>Optimal</b>: returns the shortest path when h is admissible.</li>
+<li><b>Optimally efficient</b>: no other algorithm using the same heuristic
+expands fewer nodes (among algorithms that guarantee optimality).</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd8d6e71" class="outline-3">
+<h3 id="orgd8d6e71">Common Heuristics (for 2D grids)</h3>
+<div class="outline-text-3" id="text-orgd8d6e71">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Movement</th>
+<th scope="col" class="org-left">Heuristic</th>
+<th scope="col" class="org-left">Formula</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">4-connected</td>
+<td class="org-left">Manhattan</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">dx</td>
+<td class="org-left">+</td>
+<td class="org-left">dy</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">8-connected</td>
+<td class="org-left">Octile (Chebyshev)</td>
+<td class="org-left">max(</td>
+<td class="org-left">dx</td>
+<td class="org-left">,</td>
+<td class="org-left">dy</td>
+<td class="org-left">) + 0.414·min(</td>
+<td class="org-left">dx</td>
+<td class="org-left">,</td>
+<td class="org-left">dy</td>
+<td class="org-left">)</td>
+</tr>
+
+<tr>
+<td class="org-left">Any-angle</td>
+<td class="org-left">Euclidean</td>
+<td class="org-left">sqrt(dx² + dy²)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-orgaa0aee6" class="outline-2">
+<h2 id="orgaa0aee6">How does it work</h2>
+<div class="outline-text-2" id="text-orgaa0aee6">
+</div>
+<div id="outline-container-org62a80e4" class="outline-3">
+<h3 id="org62a80e4">Algorithm Steps</h3>
+<div class="outline-text-3" id="text-org62a80e4">
+<pre class="example" id="orgcd1329a">
+A*(start, goal):
+    open_list ← priority queue ordered by f(n)
+    closed_list ← empty set
+    g(start) = 0
+    f(start) = h(start)
+    insert start into open_list
+
+    while open_list is not empty:
+        current ← node in open_list with lowest f value
+        remove current from open_list
+        add current to closed_list
+
+        if current == goal:
+            return reconstruct_path(current)
+
+        for each neighbor of current:
+            if neighbor in closed_list:
+                skip
+
+            tentative_g = g(current) + cost(current, neighbor)
+
+            if neighbor not in open_list:
+                add neighbor to open_list
+            else if tentative_g &gt;= g(neighbor):
+                skip  (not a better path)
+
+            // This path is the best so far
+            parent(neighbor) = current
+            g(neighbor) = tentative_g
+            f(neighbor) = g(neighbor) + h(neighbor)
+
+    return failure  (no path exists)
+</pre>
+</div>
+</div>
+<div id="outline-container-orgdf0a070" class="outline-3">
+<h3 id="orgdf0a070">Step-by-Step Walkthrough</h3>
+<div class="outline-text-3" id="text-orgdf0a070">
+<ol class="org-ol">
+<li>Start with only the start node in the open list.</li>
+<li>Pop the node with lowest <code>f</code> — this is the most promising candidate.</li>
+<li>If it's the goal, trace back through parent pointers to get the path.</li>
+<li>Otherwise, expand it: look at all neighbors, compute their tentative
+<code>g</code> cost. If this path is better than any previously known, update
+their <code>g</code>, <code>f</code>, and parent.</li>
+<li>Move the expanded node to the closed list (never expand it again).</li>
+<li>Repeat until goal is found or open list is empty.</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org8846472" class="outline-3">
+<h3 id="org8846472">Data Structures</h3>
+<div class="outline-text-3" id="text-org8846472">
+<ul class="org-ul">
+<li><b>Open list</b>: min-heap / priority queue keyed by <code>f(n)</code>. Gives O(log n)
+insert and extract-min.</li>
+<li><b>Closed list</b>: hash set for O(1) membership check.</li>
+<li><b>Parent map</b>: for reconstructing the final path.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd72db4e" class="outline-3">
+<h3 id="orgd72db4e">Complexity</h3>
+<div class="outline-text-3" id="text-orgd72db4e">
+<ul class="org-ul">
+<li>Time: O(b^d) worst case, where b = branching factor, d = depth of
+solution. In practice much better due to heuristic pruning.</li>
+<li>Space: O(b^d) — must store all generated nodes (the main limitation).</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org303af68" class="outline-2">
+<h2 id="org303af68">Connection with similar methods</h2>
+<div class="outline-text-2" id="text-org303af68">
+</div>
+<div id="outline-container-org620f45b" class="outline-3">
+<h3 id="org620f45b">Dijkstra's Algorithm</h3>
+<div class="outline-text-3" id="text-org620f45b">
+<ul class="org-ul">
+<li>A* with <code>h(n) = 0</code> for all nodes.</li>
+<li>Explores uniformly in all directions (no goal-awareness).</li>
+<li>Optimal but expands many more nodes than A* because it lacks heuristic
+guidance.</li>
+<li>A* strictly dominates Dijkstra: it expands a subset of the nodes
+Dijkstra would expand.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org1da4713" class="outline-3">
+<h3 id="org1da4713">Greedy Best-First Search</h3>
+<div class="outline-text-3" id="text-org1da4713">
+<ul class="org-ul">
+<li>Uses <code>f(n) = h(n)</code> only (ignores <code>g(n)</code>).</li>
+<li>Very fast — heads straight for the goal.</li>
+<li>NOT optimal and not even complete in general — can get trapped in dead
+ends or find suboptimal paths.</li>
+<li>A* balances Dijkstra's exhaustiveness with Greedy's speed.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org91b6128" class="outline-3">
+<h3 id="org91b6128">Weighted A* (WA*)</h3>
+<div class="outline-text-3" id="text-org91b6128">
+<ul class="org-ul">
+<li>Uses <code>f(n) = g(n) + w·h(n)</code> where w &gt; 1.</li>
+<li>Trades optimality for speed: guaranteed to find a path within w× the
+optimal cost, but expands far fewer nodes.</li>
+<li>Useful in real-time applications where "good enough" fast beats "perfect"
+slow.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org539e303" class="outline-3">
+<h3 id="org539e303">D* Lite</h3>
+<div class="outline-text-3" id="text-org539e303">
+<ul class="org-ul">
+<li>Incremental version of A* for replanning.</li>
+<li>When edge costs change, D* Lite patches the previous solution rather than
+re-running A* from scratch.</li>
+<li>Used for robot navigation in partially-observed environments.</li>
+<li>See <a href="D-star-lite.html">D* Lite notes</a> for full details.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org99813e2" class="outline-3">
+<h3 id="org99813e2">LPA* (Lifelong Planning A*)</h3>
+<div class="outline-text-3" id="text-org99813e2">
+<ul class="org-ul">
+<li>Also incremental, but for a <b>fixed</b> start position.</li>
+<li>Maintains g and rhs values; only re-expands nodes affected by changes.</li>
+<li>D* Lite extends LPA* to handle a moving start.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orge00b019" class="outline-3">
+<h3 id="orge00b019">RRT / RRG / PRM (Sampling-based planners)</h3>
+<div class="outline-text-3" id="text-orge00b019">
+<ul class="org-ul">
+<li>Designed for high-dimensional continuous spaces where A* on a grid is
+infeasible (e.g., robot arms with 6+ DOF).</li>
+<li>A* works on discrete graphs; sampling-based methods build their own graph
+by random sampling.</li>
+<li>A* can be used <b>on top of</b> a PRM or RRG roadmap — first build the graph
+via sampling, then run A* to find the shortest path within it.</li>
+<li>See <a href="rrg.html">RRG notes</a> for details.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgef86d5a" class="outline-3">
+<h3 id="orgef86d5a">Comparison Table</h3>
+<div class="outline-text-3" id="text-orgef86d5a">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Algorithm</th>
+<th scope="col" class="org-left">Optimal?</th>
+<th scope="col" class="org-left">Informed?</th>
+<th scope="col" class="org-left">Handles changes?</th>
+<th scope="col" class="org-left">Space</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Dijkstra</td>
+<td class="org-left">Yes</td>
+<td class="org-left">No</td>
+<td class="org-left">No (rerun)</td>
+<td class="org-left">O(V)</td>
+</tr>
+
+<tr>
+<td class="org-left">Greedy Best-First</td>
+<td class="org-left">No</td>
+<td class="org-left">Yes</td>
+<td class="org-left">No</td>
+<td class="org-left">O(V)</td>
+</tr>
+
+<tr>
+<td class="org-left">A*</td>
+<td class="org-left">Yes</td>
+<td class="org-left">Yes</td>
+<td class="org-left">No (rerun)</td>
+<td class="org-left">O(V)</td>
+</tr>
+
+<tr>
+<td class="org-left">Weighted A*</td>
+<td class="org-left">ε-opt</td>
+<td class="org-left">Yes</td>
+<td class="org-left">No</td>
+<td class="org-left">O(V)</td>
+</tr>
+
+<tr>
+<td class="org-left">LPA*</td>
+<td class="org-left">Yes</td>
+<td class="org-left">Yes</td>
+<td class="org-left">Yes (fixed start)</td>
+<td class="org-left">O(V)</td>
+</tr>
+
+<tr>
+<td class="org-left">D* Lite</td>
+<td class="org-left">Yes</td>
+<td class="org-left">Yes</td>
+<td class="org-left">Yes (moving)</td>
+<td class="org-left">O(V)</td>
+</tr>
+
+<tr>
+<td class="org-left">IDA*</td>
+<td class="org-left">Yes</td>
+<td class="org-left">Yes</td>
+<td class="org-left">No</td>
+<td class="org-left">O(d) — linear!</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-orga57ff68" class="outline-3">
+<h3 id="orga57ff68">IDA* (Iterative Deepening A*)</h3>
+<div class="outline-text-3" id="text-orga57ff68">
+<ul class="org-ul">
+<li>Depth-first search with an f-cost cutoff that increases each iteration.</li>
+<li>Uses O(d) memory instead of O(b^d) — solves A*'s main weakness.</li>
+<li>Slower (re-expands nodes across iterations) but fits in memory for very
+large state spaces.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org8fa1c3a" class="outline-2">
+<h2 id="org8fa1c3a">Simple example code for 2D navigation</h2>
+<div class="outline-text-2" id="text-org8fa1c3a">
+<div class="org-src-container">
+<pre class="src src-cpp"><span class="org-doc">/**
+ * A* Pathfinding on a 2D Grid
+ *
+ * Demonstrates A* search on an 8-connected grid with obstacles.
+ * Uses octile distance as the heuristic (admissible + consistent for
+ * 8-directional movement).
+ *
+ * Build: clang++ -std=c++17 -O2 -o astar astar.cpp &amp;&amp; ./astar
+ */</span>
+
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;algorithm&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;array&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;cmath&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;iostream&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;queue&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;unordered_map&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;unordered_set&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;vector&gt;</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">---------- Grid Configuration ----------
+</span>
+<span class="org-keyword">constexpr</span> <span class="org-type">int</span> <span class="org-variable-name">ROWS</span> = 15;
+<span class="org-keyword">constexpr</span> <span class="org-type">int</span> <span class="org-variable-name">COLS</span> = 30;
+
+<span class="org-keyword">struct</span> <span class="org-type">Cell</span> {
+    <span class="org-type">int</span> <span class="org-variable-name">r</span>, <span class="org-variable-name">c</span>;
+    <span class="org-type">bool</span> <span class="org-keyword">operator</span><span class="org-function-name">==</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">o</span>) <span class="org-keyword">const</span> { <span class="org-keyword">return</span> r == o.r &amp;&amp; c == o.c; }
+    <span class="org-type">bool</span> <span class="org-keyword">operator</span><span class="org-function-name">!=</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">o</span>) <span class="org-keyword">const</span> { <span class="org-keyword">return</span> <span class="org-negation-char">!</span>(*<span class="org-keyword">this</span> == o); }
+};
+
+<span class="org-keyword">struct</span> <span class="org-type">CellHash</span> {
+    <span class="org-type">size_t</span> <span class="org-keyword">operator</span><span class="org-function-name">()</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">c</span>) <span class="org-keyword">const</span> {
+        <span class="org-keyword">return</span> <span class="org-constant">std</span>::hash&lt;<span class="org-type">long</span> <span class="org-type">long</span>&gt;()(<span class="org-keyword">static_cast</span>&lt;<span class="org-type">long</span> <span class="org-type">long</span>&gt;(c.r) * 10000 + c.c);
+    }
+};
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">8-connected grid directions
+</span><span class="org-keyword">const</span> <span class="org-constant">std</span>::<span class="org-type">array</span>&lt;<span class="org-constant">std</span>::<span class="org-type">pair</span>&lt;<span class="org-type">int</span>, <span class="org-type">int</span>&gt;, 8&gt; <span class="org-variable-name">DIRS</span> = {{
+    {-1, 0}, {1, 0}, {0, -1}, {0, 1},       <span class="org-comment-delimiter">// </span><span class="org-comment">cardinal
+</span>    {-1, -1}, {-1, 1}, {1, -1}, {1, 1}       <span class="org-comment-delimiter">// </span><span class="org-comment">diagonal
+</span>}};
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">---------- Grid Map ----------
+</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">0 = free, 1 = obstacle
+</span><span class="org-type">int</span> <span class="org-variable-name">grid</span>[ROWS][COLS] = {
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0},
+    {0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0},
+    {0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0},
+    {0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
+    {0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+};
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">---------- A* Implementation ----------
+</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">Octile distance heuristic (admissible for 8-connected grids)
+</span><span class="org-type">double</span> <span class="org-function-name">heuristic</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">a</span>, <span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">b</span>) {
+    <span class="org-type">int</span> <span class="org-variable-name">dr</span> = <span class="org-constant">std</span>::abs(a.r - b.r);
+    <span class="org-type">int</span> <span class="org-variable-name">dc</span> = <span class="org-constant">std</span>::abs(a.c - b.c);
+    <span class="org-keyword">return</span> <span class="org-constant">std</span>::max(dr, dc) + 0.414 * <span class="org-constant">std</span>::min(dr, dc);
+}
+
+<span class="org-type">double</span> <span class="org-function-name">moveCost</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">a</span>, <span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">b</span>) {
+    <span class="org-type">int</span> <span class="org-variable-name">dr</span> = <span class="org-constant">std</span>::abs(a.r - b.r);
+    <span class="org-type">int</span> <span class="org-variable-name">dc</span> = <span class="org-constant">std</span>::abs(a.c - b.c);
+    <span class="org-keyword">return</span> (dr + dc == 2) ? 1.414 : 1.0;  <span class="org-comment-delimiter">// </span><span class="org-comment">diagonal vs cardinal
+</span>}
+
+<span class="org-type">bool</span> <span class="org-function-name">inBounds</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">c</span>) {
+    <span class="org-keyword">return</span> c.r &gt;= 0 &amp;&amp; c.r &lt; ROWS &amp;&amp; c.c &gt;= 0 &amp;&amp; c.c &lt; COLS;
+}
+
+<span class="org-type">bool</span> <span class="org-function-name">isWalkable</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">c</span>) {
+    <span class="org-keyword">return</span> inBounds(c) &amp;&amp; grid[c.r][c.c] == 0;
+}
+
+<span class="org-keyword">struct</span> <span class="org-type">AStarResult</span> {
+    <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Cell</span>&gt; <span class="org-variable-name">path</span>;
+    <span class="org-type">int</span> <span class="org-variable-name">nodes_expanded</span>;
+    <span class="org-type">double</span> <span class="org-variable-name">path_cost</span>;
+};
+
+<span class="org-type">AStarResult</span> <span class="org-function-name">astar</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">start</span>, <span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">goal</span>) {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">f(n) = g(n) + h(n)
+</span>    <span class="org-keyword">struct</span> <span class="org-type">OpenNode</span> {
+        <span class="org-type">double</span> <span class="org-variable-name">f</span>;
+        <span class="org-type">Cell</span> <span class="org-variable-name">cell</span>;
+        <span class="org-type">bool</span> <span class="org-keyword">operator</span><span class="org-function-name">&gt;</span>(<span class="org-keyword">const</span> <span class="org-type">OpenNode</span>&amp; <span class="org-variable-name">o</span>) <span class="org-keyword">const</span> { <span class="org-keyword">return</span> f &gt; o.f; }
+    };
+
+    <span class="org-constant">std</span>::<span class="org-type">priority_queue</span>&lt;<span class="org-type">OpenNode</span>, <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">OpenNode</span>&gt;, <span class="org-constant">std</span>::<span class="org-type">greater</span>&lt;&gt;&gt; <span class="org-variable-name">open_list</span>;
+    <span class="org-constant">std</span>::<span class="org-type">unordered_map</span>&lt;<span class="org-type">Cell</span>, <span class="org-type">double</span>, <span class="org-type">CellHash</span>&gt; <span class="org-variable-name">g_cost</span>;
+    <span class="org-constant">std</span>::<span class="org-type">unordered_map</span>&lt;<span class="org-type">Cell</span>, <span class="org-type">Cell</span>, <span class="org-type">CellHash</span>&gt; <span class="org-variable-name">came_from</span>;
+    <span class="org-constant">std</span>::<span class="org-type">unordered_set</span>&lt;<span class="org-type">Cell</span>, <span class="org-type">CellHash</span>&gt; <span class="org-variable-name">closed_list</span>;
+
+    g_cost[start] = 0.0;
+    open_list.push({heuristic(start, goal), start});
+
+    <span class="org-type">int</span> <span class="org-variable-name">expansions</span> = 0;
+
+    <span class="org-keyword">while</span> (<span class="org-negation-char">!</span>open_list.empty()) {
+        <span class="org-keyword">auto</span> [f, current] = open_list.top();
+        open_list.pop();
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Skip if already expanded (duplicate in queue with worse cost)
+</span>        <span class="org-keyword">if</span> (closed_list.count(current)) <span class="org-keyword">continue</span>;
+        closed_list.insert(current);
+        expansions++;
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Goal reached &#8212; reconstruct path
+</span>        <span class="org-keyword">if</span> (current == goal) {
+            <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Cell</span>&gt; <span class="org-variable-name">path</span>;
+            <span class="org-type">Cell</span> <span class="org-variable-name">node</span> = goal;
+            <span class="org-keyword">while</span> (node != start) {
+                path.push_back(node);
+                node = came_from[node];
+            }
+            path.push_back(start);
+            <span class="org-constant">std</span>::reverse(path.begin(), path.end());
+            <span class="org-keyword">return</span> {path, expansions, g_cost[goal]};
+        }
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Expand neighbors
+</span>        <span class="org-keyword">for</span> (<span class="org-keyword">auto</span>&amp; [<span class="org-constant">dr</span>, <span class="org-constant">dc</span>] : DIRS) {
+            <span class="org-type">Cell</span> <span class="org-variable-name">neighbor</span>{current.r + dr, current.c + dc};
+
+            <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>isWalkable(neighbor)) <span class="org-keyword">continue</span>;
+            <span class="org-keyword">if</span> (closed_list.count(neighbor)) <span class="org-keyword">continue</span>;
+
+            <span class="org-comment-delimiter">// </span><span class="org-comment">Don't cut corners through diagonal obstacles
+</span>            <span class="org-keyword">if</span> (dr != 0 &amp;&amp; dc != 0) {
+                <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>isWalkable({current.r + dr, current.c}) ||
+                    <span class="org-negation-char">!</span>isWalkable({current.r, current.c + dc})) {
+                    <span class="org-keyword">continue</span>;
+                }
+            }
+
+            <span class="org-type">double</span> <span class="org-variable-name">tentative_g</span> = g_cost[current] + moveCost(current, neighbor);
+
+            <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>g_cost.count(neighbor) || tentative_g &lt; g_cost[neighbor]) {
+                g_cost[neighbor] = tentative_g;
+                came_from[neighbor] = current;
+                <span class="org-type">double</span> <span class="org-variable-name">f_val</span> = tentative_g + heuristic(neighbor, goal);
+                open_list.push({f_val, neighbor});
+            }
+        }
+    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">No path found
+</span>    <span class="org-keyword">return</span> {{}, expansions, 0.0};
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">---------- Visualization ----------
+</span>
+<span class="org-type">void</span> <span class="org-function-name">printGrid</span>(<span class="org-keyword">const</span> <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Cell</span>&gt;&amp; <span class="org-variable-name">path</span>) {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Mark path cells
+</span>    <span class="org-constant">std</span>::<span class="org-type">unordered_set</span>&lt;<span class="org-type">Cell</span>, <span class="org-type">CellHash</span>&gt; <span class="org-variable-name">path_set</span>(path.begin(), path.end());
+
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"    "</span>;
+    <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">c</span> = 0; c &lt; COLS; ++c) <span class="org-constant">std</span>::cout &lt;&lt; (c % 10);
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"\n    "</span>;
+    <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">c</span> = 0; c &lt; COLS; ++c) <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"-"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"\n"</span>;
+
+    <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">r</span> = 0; r &lt; ROWS; ++r) {
+        <span class="org-constant">std</span>::cout &lt;&lt; (r &lt; 10 ? <span class="org-string">" "</span> : <span class="org-string">""</span>) &lt;&lt; r &lt;&lt; <span class="org-string">"| "</span>;
+        <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">c</span> = 0; c &lt; COLS; ++c) {
+            <span class="org-type">Cell</span> <span class="org-variable-name">cell</span>{r, c};
+            <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>path.empty() &amp;&amp; cell == path.front())
+                <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"S"</span>;       <span class="org-comment-delimiter">// </span><span class="org-comment">start
+</span>            <span class="org-keyword">else</span> <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>path.empty() &amp;&amp; cell == path.back())
+                <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"G"</span>;       <span class="org-comment-delimiter">// </span><span class="org-comment">goal
+</span>            <span class="org-keyword">else</span> <span class="org-keyword">if</span> (path_set.count(cell))
+                <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"*"</span>;       <span class="org-comment-delimiter">// </span><span class="org-comment">path
+</span>            <span class="org-keyword">else</span> <span class="org-keyword">if</span> (grid[r][c] == 1)
+                <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"#"</span>;       <span class="org-comment-delimiter">// </span><span class="org-comment">obstacle
+</span>            <span class="org-keyword">else</span>
+                <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"."</span>;       <span class="org-comment-delimiter">// </span><span class="org-comment">free
+</span>        }
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"\n"</span>;
+    }
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">---------- Main ----------
+</span>
+<span class="org-type">int</span> <span class="org-function-name">main</span>() {
+    <span class="org-type">Cell</span> <span class="org-variable-name">start</span>{1, 1};
+    <span class="org-type">Cell</span> <span class="org-variable-name">goal</span>{13, 28};
+
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"=== A* Pathfinding (2D Grid) ===\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Grid: "</span> &lt;&lt; ROWS &lt;&lt; <span class="org-string">" x "</span> &lt;&lt; COLS &lt;&lt; <span class="org-string">" (8-connected)\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Start: ("</span> &lt;&lt; start.r &lt;&lt; <span class="org-string">", "</span> &lt;&lt; start.c &lt;&lt; <span class="org-string">")\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Goal:  ("</span> &lt;&lt; goal.r &lt;&lt; <span class="org-string">", "</span> &lt;&lt; goal.c &lt;&lt; <span class="org-string">")\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Heuristic: octile distance\n\n"</span>;
+
+    <span class="org-keyword">auto</span> <span class="org-variable-name">result</span> = astar(start, goal);
+
+    <span class="org-keyword">if</span> (result.path.empty()) {
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"No path found!\n"</span>;
+    } <span class="org-keyword">else</span> {
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Path found!\n"</span>;
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"  Path length: "</span> &lt;&lt; result.path.size() &lt;&lt; <span class="org-string">" cells\n"</span>;
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"  Path cost:   "</span> &lt;&lt; result.path_cost &lt;&lt; <span class="org-string">"\n"</span>;
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"  Nodes expanded: "</span> &lt;&lt; result.nodes_expanded &lt;&lt; <span class="org-string">"\n"</span>;
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"  Grid cells:     "</span> &lt;&lt; ROWS * COLS &lt;&lt; <span class="org-string">"\n"</span>;
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"  Efficiency:     "</span>
+                  &lt;&lt; (100.0 * result.nodes_expanded / (ROWS * COLS))
+                  &lt;&lt; <span class="org-string">"% of grid explored\n\n"</span>;
+
+        printGrid(result.path);
+
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"\nLegend: S=start G=goal *=path #=obstacle .=free\n"</span>;
+    }
+
+    <span class="org-keyword">return</span> 0;
+}
+</pre>
+</div>
+
+<p>
+To build and run:
+</p>
+<pre class="example" id="org5695d32">
+clang++ -std=c++17 -O2 -o astar astar.cpp &amp;&amp; ./astar
+</pre>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script>
+// Sidebar toggle
+document.querySelector('.sidebar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  this.classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+document.querySelector('.top-bar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  document.querySelector('.sidebar-toggle').classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+
+// Search toggle
+(function() {
+  var overlay = document.querySelector('.search-overlay');
+  var input = document.querySelector('.search-input');
+  var results = document.querySelector('.search-results');
+  document.querySelector('.top-bar-search').addEventListener('click', function() {
+    overlay.classList.toggle('active');
+    if (overlay.classList.contains('active')) input.focus();
+  });
+  document.querySelector('.search-close').addEventListener('click', function() {
+    overlay.classList.remove('active');
+    input.value = '';
+    results.innerHTML = '';
+  });
+  var pages = [];
+  fetch('/search-index.json').then(function(r){return r.json();}).then(function(d){pages=d;});
+  input.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { results.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    results.innerHTML = html || '<p style="color:#64748b">No results</p>';
+  });
+
+  // Sidebar search
+  var sInput = document.querySelector('.sidebar-search-input');
+  var sResults = document.querySelector('.sidebar-search-results');
+  sInput.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { sResults.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    sResults.innerHTML = html || '<p style="color:rgba(255,255,255,0.4)">No results</p>';
+  });
+})();
+
+// Theme toggle
+(function() {
+  var stored = localStorage.getItem('theme');
+  if (stored) {
+    document.documentElement.setAttribute('data-theme', stored);
+  }
+  document.querySelector('.theme-toggle').addEventListener('click', function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+})();
+
+// Active nav highlight
+(function() {
+  var path = window.location.pathname;
+  document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (path === href || (href !== '/index.html' && path.indexOf(href.replace('.html','')) === 0)) {
+      link.classList.add('active');
+    }
+  });
+})();
+
+// Fade in / fade out on scroll
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    } else {
+      entry.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -20px 0px' });
+
+document.querySelectorAll('.intro p, .blog-card, .pub-entry, .timeline-item, .hero-image').forEach(function(el) {
+  el.classList.add('fade-item');
+  observer.observe(el);
+});
+
+// Scroll progress bar
+window.addEventListener('scroll', function() {
+  var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var progress = (scrollTop / scrollHeight) * 100;
+  document.querySelector('.scroll-progress').style.width = progress + String.fromCharCode(37);
+});
+
+// Tag filtering on blogs page
+(function() {
+  document.querySelectorAll('.card-tag').forEach(function(tag) {
+    tag.style.cursor = 'pointer';
+    tag.addEventListener('click', function(e) {
+      e.preventDefault();
+      var selected = this.textContent.trim();
+      var allCards = document.querySelectorAll('.blog-card');
+      var allItems = document.querySelectorAll('.timeline-item');
+      var isActive = this.classList.contains('tag-active');
+      document.querySelectorAll('.card-tag').forEach(function(t) { t.classList.remove('tag-active'); });
+      if (isActive) {
+        allCards.forEach(function(c) { c.style.display = ''; });
+        allItems.forEach(function(i) { i.style.display = ''; });
+      } else {
+        this.classList.add('tag-active');
+        allCards.forEach(function(c) {
+          var t = c.querySelector('.card-tag');
+          c.style.display = (t && t.textContent.trim() === selected) ? '' : 'none';
+        });
+        allItems.forEach(function(i) {
+          var visible = i.querySelectorAll('.blog-card[style=""], .blog-card:not([style])');
+          var hasVisible = Array.from(i.querySelectorAll('.blog-card')).some(function(c) { return c.style.display !== 'none'; });
+          i.style.display = hasVisible ? '' : 'none';
+        });
+      }
+    });
+  });
+})();
+</script>
+</div>
+</body>
+</html>

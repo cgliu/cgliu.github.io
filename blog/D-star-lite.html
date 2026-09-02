@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2026-08-07 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>D* Lite</title>
+<meta name="description" content="Explain how D* Lite works with simple examples" />
+<meta name="generator" content="Org Mode" />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<div id="preamble" class="status">
+<div class="scroll-progress"></div>
+<aside class="sidebar">
+  <div class="sidebar-inner">
+    <img src="/images/avatar.svg" alt="Chenggang Liu" class="sidebar-avatar"/>
+    <a href="/index.html" class="site-logo">Chenggang Liu</a>
+    <nav class="sidebar-nav">
+      <a href="/index.html">Home</a>
+      <a href="/blogs.html">Blogs</a>
+      <a href="/projects.html">Projects</a>
+      <a href="/publications.html">Publications</a>
+      <a href="/about.html">About</a>
+    </nav>
+    <div class="sidebar-social">
+      <a href="https://www.linkedin.com/in/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="https://github.com/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <a href="https://scholar.google.com/citations?user=omz_MCoAAAAJ&hl=en" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg></a>
+    </div>
+    <div class="sidebar-search">
+      <input type="text" class="sidebar-search-input" placeholder="Search..."/>
+      <div class="sidebar-search-results"></div>
+    </div>
+    <button class="theme-toggle" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</aside>
+<button class="sidebar-toggle" aria-label="Toggle menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="top-bar">
+  <button class="top-bar-toggle" aria-label="Toggle menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+  <a href="/index.html" class="top-bar-title">Chenggang Liu</a>
+  <button class="top-bar-search" aria-label="Open search bar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+  </button>
+</div>
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" class="search-input" placeholder="Search..."/>
+    <button class="search-close" aria-label="Close search">&times;</button>
+  </div>
+  <div class="search-results"></div>
+</div>
+</div>
+<div id="content" class="content">
+<header>
+<h1 class="title">D* Lite</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org336b2e2">What is D* Lite</a>
+<ul>
+<li><a href="#org3ff1ca4">Key Properties</a></li>
+<li><a href="#orgeb1cf8a">When to Use It</a></li>
+<li><a href="#org99e47dc">Comparison</a></li>
+</ul>
+</li>
+<li><a href="#org8c4cc92">How does it work</a>
+<ul>
+<li><a href="#orgd14e534">Core Concepts</a>
+<ul>
+<li><a href="#org4b04cec">g-values and rhs-values</a></li>
+<li><a href="#org845218e">Priority Queue (Open List)</a></li>
+<li><a href="#org7be6611">Locally Overconsistent vs. Underconsistent</a></li>
+</ul>
+</li>
+<li><a href="#org004b5a5">Algorithm Outline</a></li>
+<li><a href="#orgdff5355">Why It's Fast for Replanning</a></li>
+<li><a href="#org93413f9">Intuition</a></li>
+</ul>
+</li>
+<li><a href="#org85e6e69">Example code</a></li>
+</ul>
+</div>
+</nav>
+<div id="outline-container-org336b2e2" class="outline-2">
+<h2 id="org336b2e2">What is D* Lite</h2>
+<div class="outline-text-2" id="text-org336b2e2">
+<p>
+D* Lite is an incremental heuristic search algorithm for finding shortest
+paths in graphs where edge costs can change during traversal. It was
+introduced by Koenig &amp; Likhachev (AAAI 2002) as a simplified and more
+efficient reimplementation of the original D* (Dynamic A*) algorithm by
+Stentz (1994).
+</p>
+</div>
+<div id="outline-container-org3ff1ca4" class="outline-3">
+<h3 id="org3ff1ca4">Key Properties</h3>
+<div class="outline-text-3" id="text-org3ff1ca4">
+<ul class="org-ul">
+<li><b>Incremental</b>: when edge costs change (e.g., a new obstacle is
+discovered), it does NOT recompute the entire shortest path from scratch.
+Instead, it repairs only the affected portion of the previous solution.</li>
+<li><b>Backward search</b>: computes shortest paths from the GOAL to all reachable
+nodes. The robot reads its next move by looking at its successors' g-values.
+This means when the robot moves forward and discovers changes ahead, the
+affected nodes are near the search frontier — cheap to fix.</li>
+<li><b>Optimal</b>: always returns the true shortest path given current knowledge.</li>
+<li><b>Based on LPA*</b>: D* Lite extends Lifelong Planning A* (LPA*) with the
+ability to handle a moving start node (the robot's current position).</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgeb1cf8a" class="outline-3">
+<h3 id="orgeb1cf8a">When to Use It</h3>
+<div class="outline-text-3" id="text-orgeb1cf8a">
+<ul class="org-ul">
+<li>Robot navigation in partially-observed environments (exactly the RRG
+partial observability scenario).</li>
+<li>Any setting where the agent moves through the graph, discovers edge cost
+changes online, and needs to replan quickly.</li>
+<li>Grid-based or graph-based planning where replanning from scratch (A*
+every time) is too expensive.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org99e47dc" class="outline-3">
+<h3 id="org99e47dc">Comparison</h3>
+<div class="outline-text-3" id="text-org99e47dc">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Algorithm</th>
+<th scope="col" class="org-left">Replanning cost (k edge changes)</th>
+<th scope="col" class="org-left">Handles moving start?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">A*</td>
+<td class="org-left">O(n log n) — full recomputation</td>
+<td class="org-left">N/A (single query)</td>
+</tr>
+
+<tr>
+<td class="org-left">LPA*</td>
+<td class="org-left">O(k · log n) — incremental</td>
+<td class="org-left">No (fixed start)</td>
+</tr>
+
+<tr>
+<td class="org-left">D* Lite</td>
+<td class="org-left">O(k · log n) — incremental</td>
+<td class="org-left">Yes</td>
+</tr>
+
+<tr>
+<td class="org-left">D*</td>
+<td class="org-left">O(k · log n) — incremental</td>
+<td class="org-left">Yes (more complex)</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+D* Lite is preferred over original D* because it is simpler to implement,
+has fewer special cases, and achieves the same or better performance.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org8c4cc92" class="outline-2">
+<h2 id="org8c4cc92">How does it work</h2>
+<div class="outline-text-2" id="text-org8c4cc92">
+</div>
+<div id="outline-container-orgd14e534" class="outline-3">
+<h3 id="orgd14e534">Core Concepts</h3>
+<div class="outline-text-3" id="text-orgd14e534">
+</div>
+<div id="outline-container-org4b04cec" class="outline-4">
+<h4 id="org4b04cec">g-values and rhs-values</h4>
+<div class="outline-text-4" id="text-org4b04cec">
+<p>
+Each node <code>s</code> maintains two cost estimates:
+</p>
+<ul class="org-ul">
+<li><code>g(s)</code>: the current best-known shortest distance from <code>s</code> to the goal
+(since search is backward).</li>
+<li><code>rhs(s)</code>: a one-step lookahead value based on successors:
+<code>rhs(s) = min over all successors s' of { c(s, s') + g(s') }</code></li>
+</ul>
+
+<p>
+A node is <b>consistent</b> when <code>g(s) =</code> rhs(s)=. Inconsistent nodes need
+updating.
+</p>
+</div>
+</div>
+<div id="outline-container-org845218e" class="outline-4">
+<h4 id="org845218e">Priority Queue (Open List)</h4>
+<div class="outline-text-4" id="text-org845218e">
+<p>
+Inconsistent nodes are placed on a priority queue ordered by keys:
+</p>
+
+<pre class="example" id="org08b96b0">
+key(s) = [ min(g(s), rhs(s)) + h(s, s_start) + km ;
+            min(g(s), rhs(s)) ]
+</pre>
+
+<p>
+Where:
+</p>
+<ul class="org-ul">
+<li><code>h(s, s_start)</code> is the heuristic (e.g., Euclidean distance to robot)</li>
+<li><code>km</code> is a running offset that accounts for the robot having moved
+(avoids re-keying the entire queue when start changes)</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org7be6611" class="outline-4">
+<h4 id="org7be6611">Locally Overconsistent vs. Underconsistent</h4>
+<div class="outline-text-4" id="text-org7be6611">
+<ul class="org-ul">
+<li><b>Overconsistent</b>: <code>g(s) &gt; rhs(s)</code> — a shorter path to goal was found
+through s. Fix by setting <code>g(s) = rhs(s)</code>.</li>
+<li><b>Underconsistent</b>: <code>g(s) &lt; rhs(s)</code> — the path through s got worse (edge
+cost increased). Fix by setting <code>g(s) = ∞</code>, which may cascade to
+predecessors.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org004b5a5" class="outline-3">
+<h3 id="org004b5a5">Algorithm Outline</h3>
+<div class="outline-text-3" id="text-org004b5a5">
+<pre class="example" id="org0760e01">
+Initialize():
+    for all nodes s: g(s) = rhs(s) = ∞
+    rhs(goal) = 0
+    Insert goal into priority queue with key(goal)
+    km = 0
+
+ComputeShortestPath():
+    while queue.topKey() &lt; key(s_start) OR rhs(s_start) ≠ g(s_start):
+        u = queue.pop()
+        if g(u) &gt; rhs(u):          // overconsistent — path improved
+            g(u) = rhs(u)
+            for all predecessors p of u:
+                update rhs(p), update p's key in queue
+        else:                       // underconsistent — path worsened
+            g(u) = ∞
+            for all predecessors p of u AND u itself:
+                update rhs(p), update p's key in queue
+
+Main():
+    Initialize()
+    ComputeShortestPath()
+    while s_start ≠ goal:
+        s_start = argmin over neighbors n of { c(s_start, n) + g(n) }
+        Move robot to s_start
+        If any edge costs changed:
+            km += h(s_last, s_start)    // offset for moved start
+            s_last = s_start
+            For each changed edge (u, v):
+                Update c(u, v)
+                Update rhs(u)
+                Update u in priority queue
+            ComputeShortestPath()       // incremental repair
+</pre>
+</div>
+</div>
+<div id="outline-container-orgdff5355" class="outline-3">
+<h3 id="orgdff5355">Why It's Fast for Replanning</h3>
+<div class="outline-text-3" id="text-orgdff5355">
+<ol class="org-ol">
+<li>Only inconsistent nodes are processed — if 5 edges change, typically
+only a small neighborhood around those edges is re-expanded.</li>
+<li>The <code>km</code> trick avoids re-keying the entire priority queue when the
+robot moves — old keys remain valid with the offset.</li>
+<li>Previous g-values serve as a warm start — most of the search tree from
+the last iteration is reused.</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org93413f9" class="outline-3">
+<h3 id="org93413f9">Intuition</h3>
+<div class="outline-text-3" id="text-org93413f9">
+<p>
+Think of it as "A* that remembers its work." After the initial search, the
+algorithm has a full cost map from every node to the goal. When an edge
+changes, it locally patches the cost map and propagates corrections only
+as far as necessary. The robot then reads its next step from the patched
+map.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org85e6e69" class="outline-2">
+<h2 id="org85e6e69">Example code</h2>
+<div class="outline-text-2" id="text-org85e6e69">
+<p>
+A complete C++17 implementation of D* Lite on a 2D grid with dynamic
+obstacle discovery:
+</p>
+<div class="org-src-container">
+<pre class="src src-cpp"><span class="org-doc">/**
+ * D* Lite - Incremental shortest path algorithm
+ *
+ * Based on: Koenig &amp; Likhachev, "D* Lite", AAAI 2002.
+ *
+ * This implementation operates on a 2D grid. The robot starts at (0,0)
+ * and navigates to (rows-1, cols-1). Obstacles are discovered online
+ * as the robot moves (simulating limited sensor range).
+ */</span>
+
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;algorithm&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;array&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;climits&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;cmath&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;iostream&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;queue&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;unordered_map&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;unordered_set&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;vector&gt;</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">---------- Grid Configuration ----------
+</span>
+<span class="org-keyword">constexpr</span> <span class="org-type">int</span> <span class="org-variable-name">ROWS</span> = 10;
+<span class="org-keyword">constexpr</span> <span class="org-type">int</span> <span class="org-variable-name">COLS</span> = 10;
+<span class="org-keyword">constexpr</span> <span class="org-type">double</span> <span class="org-variable-name">INF</span> = 1e18;
+<span class="org-keyword">constexpr</span> <span class="org-type">int</span> <span class="org-variable-name">SENSOR_RANGE</span> = 2;  <span class="org-comment-delimiter">// </span><span class="org-comment">robot can see obstacles within this radius
+</span>
+<span class="org-keyword">struct</span> <span class="org-type">Cell</span> {
+    <span class="org-type">int</span> <span class="org-variable-name">r</span>, <span class="org-variable-name">c</span>;
+    <span class="org-type">bool</span> <span class="org-keyword">operator</span><span class="org-function-name">==</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">o</span>) <span class="org-keyword">const</span> { <span class="org-keyword">return</span> r == o.r &amp;&amp; c == o.c; }
+    <span class="org-type">bool</span> <span class="org-keyword">operator</span><span class="org-function-name">!=</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">o</span>) <span class="org-keyword">const</span> { <span class="org-keyword">return</span> <span class="org-negation-char">!</span>(*<span class="org-keyword">this</span> == o); }
+};
+
+<span class="org-keyword">struct</span> <span class="org-type">CellHash</span> {
+    <span class="org-type">size_t</span> <span class="org-keyword">operator</span><span class="org-function-name">()</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">c</span>) <span class="org-keyword">const</span> {
+        <span class="org-keyword">return</span> <span class="org-constant">std</span>::hash&lt;<span class="org-type">int</span>&gt;()(c.r * 1000 + c.c);
+    }
+};
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">8-connected grid neighbors
+</span><span class="org-keyword">const</span> <span class="org-constant">std</span>::<span class="org-type">array</span>&lt;<span class="org-constant">std</span>::<span class="org-type">pair</span>&lt;<span class="org-type">int</span>, <span class="org-type">int</span>&gt;, 8&gt; <span class="org-variable-name">DIRS</span> = {{
+    {-1, 0}, {1, 0}, {0, -1}, {0, 1},
+    {-1, -1}, {-1, 1}, {1, -1}, {1, 1}
+}};
+
+<span class="org-type">double</span> <span class="org-function-name">moveCost</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">a</span>, <span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">b</span>) {
+    <span class="org-type">int</span> <span class="org-variable-name">dr</span> = <span class="org-constant">std</span>::abs(a.r - b.r);
+    <span class="org-type">int</span> <span class="org-variable-name">dc</span> = <span class="org-constant">std</span>::abs(a.c - b.c);
+    <span class="org-keyword">return</span> (dr + dc == 2) ? 1.414 : 1.0;  <span class="org-comment-delimiter">// </span><span class="org-comment">diagonal vs cardinal
+</span>}
+
+<span class="org-type">double</span> <span class="org-function-name">heuristic</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">a</span>, <span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">b</span>) {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Octile distance
+</span>    <span class="org-type">int</span> <span class="org-variable-name">dr</span> = <span class="org-constant">std</span>::abs(a.r - b.r);
+    <span class="org-type">int</span> <span class="org-variable-name">dc</span> = <span class="org-constant">std</span>::abs(a.c - b.c);
+    <span class="org-keyword">return</span> <span class="org-constant">std</span>::max(dr, dc) + 0.414 * <span class="org-constant">std</span>::min(dr, dc);
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">---------- D* Lite ----------
+</span>
+<span class="org-keyword">class</span> <span class="org-type">DStarLite</span> {
+<span class="org-keyword">public</span>:
+    <span class="org-function-name">DStarLite</span>(<span class="org-type">int</span> <span class="org-variable-name">rows</span>, <span class="org-type">int</span> <span class="org-variable-name">cols</span>, <span class="org-type">Cell</span> <span class="org-variable-name">start</span>, <span class="org-type">Cell</span> <span class="org-variable-name">goal</span>)
+        : rows_(rows), cols_(cols), s_start_(start), s_goal_(goal),
+          s_last_(start), km_(0.0)
+    {
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Initialize all cells
+</span>        <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">r</span> = 0; r &lt; rows_; ++r) {
+            <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">c</span> = 0; c &lt; cols_; ++c) {
+                <span class="org-type">Cell</span> <span class="org-variable-name">s</span>{r, c};
+                g_[s] = INF;
+                rhs_[s] = INF;
+                known_obstacle_[s] = <span class="org-constant">false</span>;
+            }
+        }
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Goal: rhs = 0
+</span>        rhs_[s_goal_] = 0.0;
+        open_.push({calculateKey(s_goal_), s_goal_});
+        in_open_[s_goal_] = <span class="org-constant">true</span>;
+    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Run initial shortest path computation
+</span>    <span class="org-type">void</span> <span class="org-function-name">initialize</span>() {
+        computeShortestPath();
+    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Get the next cell the robot should move to
+</span>    <span class="org-type">Cell</span> <span class="org-function-name">getNextMove</span>() <span class="org-keyword">const</span> {
+        <span class="org-type">Cell</span> <span class="org-variable-name">best</span> = s_start_;
+        <span class="org-type">double</span> <span class="org-variable-name">best_cost</span> = INF;
+
+        <span class="org-keyword">for</span> (<span class="org-keyword">auto</span>&amp; [<span class="org-constant">dr</span>, <span class="org-constant">dc</span>] : DIRS) {
+            <span class="org-type">Cell</span> <span class="org-variable-name">neighbor</span>{s_start_.r + dr, s_start_.c + dc};
+            <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>inBounds(neighbor) || isObstacle(neighbor)) <span class="org-keyword">continue</span>;
+
+            <span class="org-type">double</span> <span class="org-variable-name">cost</span> = moveCost(s_start_, neighbor) + getG(neighbor);
+            <span class="org-keyword">if</span> (cost &lt; best_cost) {
+                best_cost = cost;
+                best = neighbor;
+            }
+        }
+        <span class="org-keyword">return</span> best;
+    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Move the robot to a new position
+</span>    <span class="org-type">void</span> <span class="org-function-name">moveStart</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">new_start</span>) {
+        km_ += heuristic(s_last_, new_start);
+        s_last_ = s_start_;
+        s_start_ = new_start;
+    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Update when obstacles are discovered. Returns true if any change occurred.
+</span>    <span class="org-type">bool</span> <span class="org-function-name">updateObstacles</span>(<span class="org-keyword">const</span> <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Cell</span>&gt;&amp; <span class="org-variable-name">new_obstacles</span>) {
+        <span class="org-type">bool</span> <span class="org-variable-name">changed</span> = <span class="org-constant">false</span>;
+        <span class="org-keyword">for</span> (<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">obs</span> : new_obstacles) {
+            <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>known_obstacle_[obs]) {
+                known_obstacle_[obs] = <span class="org-constant">true</span>;
+                changed = <span class="org-constant">true</span>;
+
+                <span class="org-comment-delimiter">// </span><span class="org-comment">All edges into/out of obs are now infinite cost.
+</span>                <span class="org-comment-delimiter">// </span><span class="org-comment">Update predecessors (cells that had obs as a successor).
+</span>                <span class="org-keyword">for</span> (<span class="org-keyword">auto</span>&amp; [<span class="org-constant">dr</span>, <span class="org-constant">dc</span>] : DIRS) {
+                    <span class="org-type">Cell</span> <span class="org-variable-name">pred</span>{obs.r + dr, obs.c + dc};
+                    <span class="org-keyword">if</span> (inBounds(pred) &amp;&amp; <span class="org-negation-char">!</span>isObstacle(pred)) {
+                        updateVertex(pred);
+                    }
+                }
+                <span class="org-comment-delimiter">// </span><span class="org-comment">Update obs itself
+</span>                g_[obs] = INF;
+                rhs_[obs] = INF;
+            }
+        }
+        <span class="org-keyword">if</span> (changed) {
+            computeShortestPath();
+        }
+        <span class="org-keyword">return</span> changed;
+    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Check if a path exists
+</span>    <span class="org-type">bool</span> <span class="org-function-name">hasPath</span>() <span class="org-keyword">const</span> {
+        <span class="org-keyword">return</span> getG(s_start_) &lt; INF;
+    }
+
+    <span class="org-type">Cell</span> <span class="org-function-name">getStart</span>() <span class="org-keyword">const</span> { <span class="org-keyword">return</span> s_start_; }
+    <span class="org-type">Cell</span> <span class="org-function-name">getGoal</span>() <span class="org-keyword">const</span> { <span class="org-keyword">return</span> s_goal_; }
+    <span class="org-type">bool</span> <span class="org-function-name">isObstacle</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">s</span>) <span class="org-keyword">const</span> {
+        <span class="org-keyword">auto</span> <span class="org-variable-name">it</span> = known_obstacle_.find(s);
+        <span class="org-keyword">return</span> it != known_obstacle_.end() &amp;&amp; it-&gt;second;
+    }
+    <span class="org-type">double</span> <span class="org-function-name">getG</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">s</span>) <span class="org-keyword">const</span> {
+        <span class="org-keyword">auto</span> <span class="org-variable-name">it</span> = g_.find(s);
+        <span class="org-keyword">return</span> (it != g_.end()) ? it-&gt;second : INF;
+    }
+
+<span class="org-keyword">private</span>:
+    <span class="org-keyword">using</span> <span class="org-type">Key</span> = <span class="org-constant">std</span>::<span class="org-type">pair</span>&lt;<span class="org-type">double</span>, <span class="org-type">double</span>&gt;;
+
+    <span class="org-type">Key</span> <span class="org-function-name">calculateKey</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">s</span>) <span class="org-keyword">const</span> {
+        <span class="org-type">double</span> <span class="org-variable-name">g_val</span> = getG(s);
+        <span class="org-type">double</span> <span class="org-variable-name">rhs_val</span> = getRhs(s);
+        <span class="org-type">double</span> <span class="org-variable-name">min_val</span> = <span class="org-constant">std</span>::min(g_val, rhs_val);
+        <span class="org-keyword">return</span> {min_val + heuristic(s_start_, s) + km_, min_val};
+    }
+
+    <span class="org-type">double</span> <span class="org-function-name">getRhs</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">s</span>) <span class="org-keyword">const</span> {
+        <span class="org-keyword">auto</span> <span class="org-variable-name">it</span> = rhs_.find(s);
+        <span class="org-keyword">return</span> (it != rhs_.end()) ? it-&gt;second : INF;
+    }
+
+    <span class="org-type">bool</span> <span class="org-function-name">inBounds</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">s</span>) <span class="org-keyword">const</span> {
+        <span class="org-keyword">return</span> s.r &gt;= 0 &amp;&amp; s.r &lt; rows_ &amp;&amp; s.c &gt;= 0 &amp;&amp; s.c &lt; cols_;
+    }
+
+    <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Cell</span>&gt; <span class="org-function-name">getSuccessors</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">s</span>) <span class="org-keyword">const</span> {
+        <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Cell</span>&gt; <span class="org-variable-name">succs</span>;
+        <span class="org-keyword">for</span> (<span class="org-keyword">auto</span>&amp; [<span class="org-constant">dr</span>, <span class="org-constant">dc</span>] : DIRS) {
+            <span class="org-type">Cell</span> <span class="org-variable-name">n</span>{s.r + dr, s.c + dc};
+            <span class="org-keyword">if</span> (inBounds(n) &amp;&amp; <span class="org-negation-char">!</span>isObstacle(n)) {
+                succs.push_back(n);
+            }
+        }
+        <span class="org-keyword">return</span> succs;
+    }
+
+    <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Cell</span>&gt; <span class="org-function-name">getPredecessors</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">s</span>) <span class="org-keyword">const</span> {
+        <span class="org-comment-delimiter">// </span><span class="org-comment">On a grid, predecessors == successors (undirected)
+</span>        <span class="org-keyword">return</span> getSuccessors(s);
+    }
+
+    <span class="org-type">void</span> <span class="org-function-name">updateVertex</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">u</span>) {
+        <span class="org-keyword">if</span> (u != s_goal_) {
+            <span class="org-comment-delimiter">// </span><span class="org-comment">rhs(u) = min over successors s' of { c(u, s') + g(s') }
+</span>            <span class="org-type">double</span> <span class="org-variable-name">min_rhs</span> = INF;
+            <span class="org-keyword">for</span> (<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">succ</span> : getSuccessors(u)) {
+                <span class="org-type">double</span> <span class="org-variable-name">val</span> = moveCost(u, succ) + getG(succ);
+                min_rhs = <span class="org-constant">std</span>::min(min_rhs, val);
+            }
+            rhs_[u] = min_rhs;
+        }
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Remove from open if present
+</span>        in_open_[u] = <span class="org-constant">false</span>;  <span class="org-comment-delimiter">// </span><span class="org-comment">lazy deletion
+</span>
+        <span class="org-comment-delimiter">// </span><span class="org-comment">If inconsistent, insert into open
+</span>        <span class="org-keyword">if</span> (getG(u) != getRhs(u)) {
+            open_.push({calculateKey(u), u});
+            in_open_[u] = <span class="org-constant">true</span>;
+        }
+    }
+
+    <span class="org-type">void</span> <span class="org-function-name">computeShortestPath</span>() {
+        <span class="org-type">int</span> <span class="org-variable-name">expansions</span> = 0;
+        <span class="org-keyword">while</span> (<span class="org-negation-char">!</span>open_.empty()) {
+            <span class="org-keyword">auto</span> [key, u] = open_.top();
+
+            <span class="org-comment-delimiter">// </span><span class="org-comment">Lazy deletion: skip stale entries
+</span>            <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>in_open_[u]) {
+                open_.pop();
+                <span class="org-keyword">continue</span>;
+            }
+
+            <span class="org-type">Key</span> <span class="org-variable-name">start_key</span> = calculateKey(s_start_);
+            <span class="org-keyword">if</span> (key &gt;= start_key &amp;&amp; getRhs(s_start_) == getG(s_start_)) {
+                <span class="org-keyword">break</span>;  <span class="org-comment-delimiter">// </span><span class="org-comment">start is consistent and no smaller keys exist
+</span>            }
+
+            <span class="org-comment-delimiter">// </span><span class="org-comment">Recompute key (may have changed due to km update)
+</span>            <span class="org-type">Key</span> <span class="org-variable-name">new_key</span> = calculateKey(u);
+            <span class="org-keyword">if</span> (key &lt; new_key) {
+                <span class="org-comment-delimiter">// </span><span class="org-comment">Key is outdated, reinsert with correct key
+</span>                open_.pop();
+                open_.push({new_key, u});
+                <span class="org-keyword">continue</span>;
+            }
+
+            open_.pop();
+            in_open_[u] = <span class="org-constant">false</span>;
+            expansions++;
+
+            <span class="org-type">double</span> <span class="org-variable-name">g_val</span> = getG(u);
+            <span class="org-type">double</span> <span class="org-variable-name">rhs_val</span> = getRhs(u);
+
+            <span class="org-keyword">if</span> (g_val &gt; rhs_val) {
+                <span class="org-comment-delimiter">// </span><span class="org-comment">Overconsistent: path through u improved
+</span>                g_[u] = rhs_val;
+                <span class="org-keyword">for</span> (<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">pred</span> : getPredecessors(u)) {
+                    updateVertex(pred);
+                }
+            } <span class="org-keyword">else</span> {
+                <span class="org-comment-delimiter">// </span><span class="org-comment">Underconsistent: path through u worsened
+</span>                g_[u] = INF;
+                updateVertex(u);
+                <span class="org-keyword">for</span> (<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">pred</span> : getPredecessors(u)) {
+                    updateVertex(pred);
+                }
+            }
+        }
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Uncomment to see how few nodes are re-expanded on replans:
+</span>        <span class="org-comment-delimiter">// </span><span class="org-comment">std::cout &lt;&lt; "  [D* Lite] expansions: " &lt;&lt; expansions &lt;&lt; "\n";
+</span>    }
+
+    <span class="org-type">int</span> <span class="org-variable-name">rows_</span>, <span class="org-variable-name">cols_</span>;
+    <span class="org-type">Cell</span> <span class="org-variable-name">s_start_</span>, <span class="org-variable-name">s_goal_</span>, <span class="org-variable-name">s_last_</span>;
+    <span class="org-type">double</span> <span class="org-variable-name">km_</span>;
+
+    <span class="org-constant">std</span>::<span class="org-type">unordered_map</span>&lt;<span class="org-type">Cell</span>, <span class="org-type">double</span>, <span class="org-type">CellHash</span>&gt; <span class="org-variable-name">g_</span>;
+    <span class="org-constant">std</span>::<span class="org-type">unordered_map</span>&lt;<span class="org-type">Cell</span>, <span class="org-type">double</span>, <span class="org-type">CellHash</span>&gt; <span class="org-variable-name">rhs_</span>;
+    <span class="org-constant">std</span>::<span class="org-type">unordered_map</span>&lt;<span class="org-type">Cell</span>, <span class="org-type">bool</span>, <span class="org-type">CellHash</span>&gt; <span class="org-variable-name">known_obstacle_</span>;
+    <span class="org-constant">std</span>::<span class="org-type">unordered_map</span>&lt;<span class="org-type">Cell</span>, <span class="org-type">bool</span>, <span class="org-type">CellHash</span>&gt; <span class="org-variable-name">in_open_</span>;
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Priority queue: (key, cell), smallest key first
+</span>    <span class="org-keyword">using</span> <span class="org-type">QueueEntry</span> = <span class="org-constant">std</span>::<span class="org-type">pair</span>&lt;<span class="org-type">Key</span>, <span class="org-type">Cell</span>&gt;;
+    <span class="org-keyword">struct</span> <span class="org-type">QueueCompare</span> {
+        <span class="org-type">bool</span> <span class="org-keyword">operator</span><span class="org-function-name">()</span>(<span class="org-keyword">const</span> <span class="org-type">QueueEntry</span>&amp; <span class="org-variable-name">a</span>, <span class="org-keyword">const</span> <span class="org-type">QueueEntry</span>&amp; <span class="org-variable-name">b</span>) <span class="org-keyword">const</span> {
+            <span class="org-keyword">return</span> a.first &gt; b.first;  <span class="org-comment-delimiter">// </span><span class="org-comment">min-heap
+</span>        }
+    };
+    <span class="org-constant">std</span>::<span class="org-type">priority_queue</span>&lt;<span class="org-type">QueueEntry</span>, <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">QueueEntry</span>&gt;, <span class="org-type">QueueCompare</span>&gt; <span class="org-variable-name">open_</span>;
+};
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">---------- Simulation ----------
+</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">The "true" world: obstacles the robot doesn't know about yet
+</span><span class="org-type">bool</span> <span class="org-variable-name">trueObstacleMap</span>[ROWS][COLS] = {};
+
+<span class="org-type">void</span> <span class="org-function-name">setupTrueObstacles</span>() {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Vertical wall with a gap
+</span>    <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">r</span> = 1; r &lt; 8; ++r) trueObstacleMap[r][4] = <span class="org-constant">true</span>;
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Horizontal wall
+</span>    <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">c</span> = 5; c &lt; 9; ++c) trueObstacleMap[6][c] = <span class="org-constant">true</span>;
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Scattered obstacles
+</span>    trueObstacleMap[2][2] = <span class="org-constant">true</span>;
+    trueObstacleMap[3][7] = <span class="org-constant">true</span>;
+    trueObstacleMap[8][3] = <span class="org-constant">true</span>;
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Simulate sensor: return obstacles within SENSOR_RANGE of robot
+</span><span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Cell</span>&gt; <span class="org-function-name">sense</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">robot</span>) {
+    <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Cell</span>&gt; <span class="org-variable-name">discovered</span>;
+    <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">dr</span> = -SENSOR_RANGE; dr &lt;= SENSOR_RANGE; ++dr) {
+        <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">dc</span> = -SENSOR_RANGE; dc &lt;= SENSOR_RANGE; ++dc) {
+            <span class="org-type">int</span> <span class="org-variable-name">r</span> = robot.r + dr;
+            <span class="org-type">int</span> <span class="org-variable-name">c</span> = robot.c + dc;
+            <span class="org-keyword">if</span> (r &gt;= 0 &amp;&amp; r &lt; ROWS &amp;&amp; c &gt;= 0 &amp;&amp; c &lt; COLS) {
+                <span class="org-keyword">if</span> (trueObstacleMap[r][c]) {
+                    discovered.push_back({r, c});
+                }
+            }
+        }
+    }
+    <span class="org-keyword">return</span> discovered;
+}
+
+<span class="org-type">void</span> <span class="org-function-name">printGrid</span>(<span class="org-keyword">const</span> <span class="org-type">DStarLite</span>&amp; <span class="org-variable-name">planner</span>, <span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">robot</span>) {
+    <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">r</span> = 0; r &lt; ROWS; ++r) {
+        <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">c</span> = 0; c &lt; COLS; ++c) {
+            <span class="org-type">Cell</span> <span class="org-variable-name">s</span>{r, c};
+            <span class="org-keyword">if</span> (s == robot)
+                <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">" R"</span>;
+            <span class="org-keyword">else</span> <span class="org-keyword">if</span> (s == planner.getGoal())
+                <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">" G"</span>;
+            <span class="org-keyword">else</span> <span class="org-keyword">if</span> (planner.isObstacle(s))
+                <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">" #"</span>;
+            <span class="org-keyword">else</span> <span class="org-keyword">if</span> (trueObstacleMap[r][c])
+                <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">" ?"</span>;  <span class="org-comment-delimiter">// </span><span class="org-comment">unknown obstacle
+</span>            <span class="org-keyword">else</span>
+                <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">" ."</span>;
+        }
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"\n"</span>;
+    }
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"\n"</span>;
+}
+
+<span class="org-type">int</span> <span class="org-function-name">main</span>() {
+    setupTrueObstacles();
+
+    <span class="org-type">Cell</span> <span class="org-variable-name">start</span>{0, 0};
+    <span class="org-type">Cell</span> <span class="org-variable-name">goal</span>{ROWS - 1, COLS - 1};
+
+    <span class="org-type">DStarLite</span> <span class="org-variable-name">planner</span>(ROWS, COLS, start, goal);
+    planner.initialize();
+
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"=== D* Lite Navigation ===\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"R=robot  G=goal  #=known obstacle  ?=hidden obstacle  .=free\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Sensor range: "</span> &lt;&lt; SENSOR_RANGE &lt;&lt; <span class="org-string">" cells\n\n"</span>;
+
+    <span class="org-type">Cell</span> <span class="org-variable-name">robot</span> = start;
+    <span class="org-type">int</span> <span class="org-variable-name">steps</span> = 0;
+    <span class="org-keyword">const</span> <span class="org-type">int</span> <span class="org-variable-name">MAX_STEPS</span> = 100;
+
+    <span class="org-keyword">while</span> (robot != goal &amp;&amp; steps &lt; MAX_STEPS) {
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Step "</span> &lt;&lt; steps &lt;&lt; <span class="org-string">":\n"</span>;
+        printGrid(planner, robot);
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Sense environment from current position
+</span>        <span class="org-keyword">auto</span> <span class="org-variable-name">obstacles</span> = sense(robot);
+        <span class="org-type">bool</span> <span class="org-variable-name">changed</span> = planner.updateObstacles(obstacles);
+        <span class="org-keyword">if</span> (changed) {
+            <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"  ** Discovered new obstacles! Replanning...\n"</span>;
+        }
+
+        <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>planner.hasPath()) {
+            <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"  No path to goal exists!\n"</span>;
+            <span class="org-keyword">break</span>;
+        }
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Move to next cell
+</span>        <span class="org-type">Cell</span> <span class="org-variable-name">next</span> = planner.getNextMove();
+        planner.moveStart(next);
+        robot = next;
+        steps++;
+    }
+
+    <span class="org-keyword">if</span> (robot == goal) {
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Reached goal in "</span> &lt;&lt; steps &lt;&lt; <span class="org-string">" steps!\n"</span>;
+        printGrid(planner, robot);
+    } <span class="org-keyword">else</span> {
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Failed to reach goal.\n"</span>;
+    }
+
+    <span class="org-keyword">return</span> 0;
+}
+</pre>
+</div>
+
+<p>
+To build and run:
+</p>
+<pre class="example" id="orgcd0101b">
+clang++ -std=c++17 -O2 -o dstar_lite dstar_lite.cpp &amp;&amp; ./dstar_lite
+</pre>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script>
+// Sidebar toggle
+document.querySelector('.sidebar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  this.classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+document.querySelector('.top-bar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  document.querySelector('.sidebar-toggle').classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+
+// Search toggle
+(function() {
+  var overlay = document.querySelector('.search-overlay');
+  var input = document.querySelector('.search-input');
+  var results = document.querySelector('.search-results');
+  document.querySelector('.top-bar-search').addEventListener('click', function() {
+    overlay.classList.toggle('active');
+    if (overlay.classList.contains('active')) input.focus();
+  });
+  document.querySelector('.search-close').addEventListener('click', function() {
+    overlay.classList.remove('active');
+    input.value = '';
+    results.innerHTML = '';
+  });
+  var pages = [];
+  fetch('/search-index.json').then(function(r){return r.json();}).then(function(d){pages=d;});
+  input.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { results.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    results.innerHTML = html || '<p style="color:#64748b">No results</p>';
+  });
+
+  // Sidebar search
+  var sInput = document.querySelector('.sidebar-search-input');
+  var sResults = document.querySelector('.sidebar-search-results');
+  sInput.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { sResults.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    sResults.innerHTML = html || '<p style="color:rgba(255,255,255,0.4)">No results</p>';
+  });
+})();
+
+// Theme toggle
+(function() {
+  var stored = localStorage.getItem('theme');
+  if (stored) {
+    document.documentElement.setAttribute('data-theme', stored);
+  }
+  document.querySelector('.theme-toggle').addEventListener('click', function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+})();
+
+// Active nav highlight
+(function() {
+  var path = window.location.pathname;
+  document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (path === href || (href !== '/index.html' && path.indexOf(href.replace('.html','')) === 0)) {
+      link.classList.add('active');
+    }
+  });
+})();
+
+// Fade in / fade out on scroll
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    } else {
+      entry.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -20px 0px' });
+
+document.querySelectorAll('.intro p, .blog-card, .pub-entry, .timeline-item, .hero-image').forEach(function(el) {
+  el.classList.add('fade-item');
+  observer.observe(el);
+});
+
+// Scroll progress bar
+window.addEventListener('scroll', function() {
+  var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var progress = (scrollTop / scrollHeight) * 100;
+  document.querySelector('.scroll-progress').style.width = progress + String.fromCharCode(37);
+});
+
+// Tag filtering on blogs page
+(function() {
+  document.querySelectorAll('.card-tag').forEach(function(tag) {
+    tag.style.cursor = 'pointer';
+    tag.addEventListener('click', function(e) {
+      e.preventDefault();
+      var selected = this.textContent.trim();
+      var allCards = document.querySelectorAll('.blog-card');
+      var allItems = document.querySelectorAll('.timeline-item');
+      var isActive = this.classList.contains('tag-active');
+      document.querySelectorAll('.card-tag').forEach(function(t) { t.classList.remove('tag-active'); });
+      if (isActive) {
+        allCards.forEach(function(c) { c.style.display = ''; });
+        allItems.forEach(function(i) { i.style.display = ''; });
+      } else {
+        this.classList.add('tag-active');
+        allCards.forEach(function(c) {
+          var t = c.querySelector('.card-tag');
+          c.style.display = (t && t.textContent.trim() === selected) ? '' : 'none';
+        });
+        allItems.forEach(function(i) {
+          var visible = i.querySelectorAll('.blog-card[style=""], .blog-card:not([style])');
+          var hasVisible = Array.from(i.querySelectorAll('.blog-card')).some(function(c) { return c.style.display !== 'none'; });
+          i.style.display = hasVisible ? '' : 'none';
+        });
+      }
+    });
+  });
+})();
+</script>
+</div>
+</body>
+</html>

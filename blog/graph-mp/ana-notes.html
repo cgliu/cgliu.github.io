@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2026-09-02 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Anytime Nonparametric A* (ANA*)</title>
+<meta name="description" content="Explain ANA" />
+<meta name="generator" content="Org Mode" />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<div id="preamble" class="status">
+<div class="scroll-progress"></div>
+<aside class="sidebar">
+  <div class="sidebar-inner">
+    <img src="/images/avatar.svg" alt="Chenggang Liu" class="sidebar-avatar"/>
+    <a href="/index.html" class="site-logo">Chenggang Liu</a>
+    <nav class="sidebar-nav">
+      <a href="/index.html">Home</a>
+      <a href="/blogs.html">Blogs</a>
+      <a href="/projects.html">Projects</a>
+      <a href="/publications.html">Publications</a>
+      <a href="/about.html">About</a>
+    </nav>
+    <div class="sidebar-social">
+      <a href="https://www.linkedin.com/in/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="https://github.com/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <a href="https://scholar.google.com/citations?user=omz_MCoAAAAJ&hl=en" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg></a>
+    </div>
+    <div class="sidebar-search">
+      <input type="text" class="sidebar-search-input" placeholder="Search..."/>
+      <div class="sidebar-search-results"></div>
+    </div>
+    <button class="theme-toggle" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</aside>
+<button class="sidebar-toggle" aria-label="Toggle menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="top-bar">
+  <button class="top-bar-toggle" aria-label="Toggle menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+  <a href="/index.html" class="top-bar-title">Chenggang Liu</a>
+  <button class="top-bar-search" aria-label="Open search bar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+  </button>
+</div>
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" class="search-input" placeholder="Search..."/>
+    <button class="search-close" aria-label="Close search">&times;</button>
+  </div>
+  <div class="search-results"></div>
+</div>
+</div>
+<div id="content" class="content">
+<header>
+<h1 class="title">Anytime Nonparametric A* (ANA*)</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org25c9d3c">What is Anytime Nonparametric A*</a>
+<ul>
+<li><a href="#org6aca596">Key Idea</a></li>
+<li><a href="#orgf8fb6fd">Properties</a></li>
+<li><a href="#org89c230b">When to Use</a></li>
+</ul>
+</li>
+<li><a href="#org2e8e6f3">How does it work</a>
+<ul>
+<li><a href="#org07ff528">Core Mechanism</a></li>
+<li><a href="#orgb6f3507">Algorithm</a></li>
+<li><a href="#org29a73ad">Iteration Behavior</a></li>
+<li><a href="#org173db76">Suboptimality Bound</a></li>
+</ul>
+</li>
+<li><a href="#orgdb6550b">Connection with other similar methods</a>
+<ul>
+<li><a href="#org0855bc9">Weighted A* (WA*)</a></li>
+<li><a href="#org50b94ed">ARA* (Anytime Repairing A*)</a></li>
+<li><a href="#orgb15c4b9">A*</a></li>
+<li><a href="#org99116dd">Greedy Best-First Search</a></li>
+<li><a href="#org3b474f6">Focal Search</a></li>
+<li><a href="#orgaff2da3">Comparison Table</a></li>
+<li><a href="#org9bf9baf">D* Lite / LPA*</a></li>
+</ul>
+</li>
+<li><a href="#orgff9abb4">Simple C++ example</a></li>
+</ul>
+</div>
+</nav>
+<div id="outline-container-org25c9d3c" class="outline-2">
+<h2 id="org25c9d3c">What is Anytime Nonparametric A*</h2>
+<div class="outline-text-2" id="text-org25c9d3c">
+<p>
+ANA* (Anytime Nonparametric A*) is an anytime heuristic search algorithm
+that finds an initial suboptimal solution quickly, then iteratively
+improves it toward the optimal solution as more computation time is
+available. It was introduced by van den Berg, Shah,"; Likhachev (ICRA 2011).
+</p>
+</div>
+<div id="outline-container-org6aca596" class="outline-3">
+<h3 id="org6aca596">Key Idea</h3>
+<div class="outline-text-3" id="text-org6aca596">
+<p>
+Unlike Weighted A* (WA*) which requires manually choosing and tuning a
+weight parameter w, ANA* automatically adjusts its search aggressiveness:
+</p>
+<ul class="org-ul">
+<li>First iteration: behaves greedily (like large w), finding a solution fast.</li>
+<li>Subsequent iterations: tightens the bound, re-expanding nodes to find
+better paths.</li>
+<li>No parameter to tune — the algorithm self-regulates based on the current
+best solution cost.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgf8fb6fd" class="outline-3">
+<h3 id="orgf8fb6fd">Properties</h3>
+<div class="outline-text-3" id="text-orgf8fb6fd">
+<ul class="org-ul">
+<li><b>Anytime</b>: returns a valid (suboptimal) solution quickly, improves it
+if given more time. Can be interrupted at any point.</li>
+<li><b>Nonparametric</b>: no weight parameter w to tune (unlike ARA*, WA*).</li>
+<li><b>Bounded suboptimal</b>: at any point, the current solution cost is at most
+<code>E × optimal cost</code>, where E is a computable suboptimality bound that
+decreases over iterations.</li>
+<li><b>Complete and optimal in the limit</b>: given enough time, converges to the
+true optimal solution.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org89c230b" class="outline-3">
+<h3 id="org89c230b">When to Use</h3>
+<div class="outline-text-3" id="text-org89c230b">
+<ul class="org-ul">
+<li>Real-time planning where you need "a good answer now, better answer later."</li>
+<li>Robotics, game AI, or any domain with a computation budget.</li>
+<li>When you don't want to hand-tune the inflation weight (vs ARA*).</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org2e8e6f3" class="outline-2">
+<h2 id="org2e8e6f3">How does it work</h2>
+<div class="outline-text-2" id="text-org2e8e6f3">
+</div>
+<div id="outline-container-org07ff528" class="outline-3">
+<h3 id="org07ff528">Core Mechanism</h3>
+<div class="outline-text-3" id="text-org07ff528">
+<p>
+ANA* uses a key function that prioritizes nodes by how much they could
+improve the current best solution:
+</p>
+
+<pre class="example" id="org0be610a">
+e(s) = (G - g(s)) / h(s)
+</pre>
+
+<p>
+Where:
+</p>
+<ul class="org-ul">
+<li><code>G</code> = cost of the current best solution (initially ∞, then the first
+solution found)</li>
+<li><code>g(s)</code> = cost from start to node s</li>
+<li><code>h(s)</code> = heuristic estimate from s to goal</li>
+</ul>
+
+<p>
+Nodes with higher <code>e(s)</code> are expanded first — these are nodes that are
+cheap to reach (low g) and have high potential to lead to a path better
+than the current solution.
+</p>
+</div>
+</div>
+<div id="outline-container-orgb6f3507" class="outline-3">
+<h3 id="orgb6f3507">Algorithm</h3>
+<div class="outline-text-3" id="text-orgb6f3507">
+<pre class="example" id="org2a5f0c7">
+ANA*(start, goal):
+    G = ∞                          // best solution cost so far
+    E = ∞                          // suboptimality bound
+    g(start) = 0
+    open_list ← {start}
+
+    loop (each iteration):
+        // Prune: remove nodes that can't improve current solution
+        for each s in open_list:
+            if g(s) + h(s) &gt;= G:
+                remove s from open_list
+
+        // Update suboptimality bound
+        E = min over s in open_list of { e(s) }
+        // (E converges to 1.0 as solution approaches optimal)
+
+        // Expand nodes in order of decreasing e(s)
+        while open_list is not empty:
+            s ← node with highest e(s) in open_list
+            remove s from open_list
+
+            if s == goal:
+                G = g(goal)        // improved solution!
+                record path
+                break              // start next iteration
+
+            for each successor s' of s:
+                tentative_g = g(s) + cost(s, s')
+                if tentative_g &lt; g(s'):
+                    g(s') = tentative_g
+                    parent(s') = s
+                    if g(s') + h(s') &lt; G:   // only if can beat current
+                        add s' to open_list
+
+        if open_list is empty:
+            return                  // optimal solution found (E = 1)
+</pre>
+</div>
+</div>
+<div id="outline-container-org29a73ad" class="outline-3">
+<h3 id="org29a73ad">Iteration Behavior</h3>
+<div class="outline-text-3" id="text-org29a73ad">
+<ol class="org-ol">
+<li><b>First iteration</b>: G = ∞, so <code>e(s) = ∞/h(s)</code> — nodes with small h(s)
+(close to goal) are preferred. This is essentially greedy best-first
+search → fast initial solution.</li>
+<li><b>Later iterations</b>: G is finite, pruning removes hopeless nodes, and
+e(s) properly balances g-cost against potential improvement. The search
+becomes more A*-like.</li>
+<li><b>Final iteration</b>: E = 1.0, meaning the current solution is provably
+optimal. The open list is empty — nothing left to improve.</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org173db76" class="outline-3">
+<h3 id="org173db76">Suboptimality Bound</h3>
+<div class="outline-text-3" id="text-org173db76">
+<p>
+At any point during execution:
+</p>
+
+<pre class="example" id="org3715c1c">
+cost(current_solution) ≤ E × cost(optimal_solution)
+</pre>
+
+<p>
+E starts large and monotonically decreases toward 1.0. The user can stop
+whenever E is acceptable (e.g., E ≤ 1.05 means within 5% of optimal).
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgdb6550b" class="outline-2">
+<h2 id="orgdb6550b">Connection with other similar methods</h2>
+<div class="outline-text-2" id="text-orgdb6550b">
+</div>
+<div id="outline-container-org0855bc9" class="outline-3">
+<h3 id="org0855bc9">Weighted A* (WA*)</h3>
+<div class="outline-text-3" id="text-org0855bc9">
+<ul class="org-ul">
+<li>Uses <code>f(s) = g(s) + w·h(s)</code> with fixed w &gt; 1.</li>
+<li>Guarantees ε-suboptimality (solution cost ≤ w × optimal).</li>
+<li><b>Problem</b>: you must choose w upfront. Too high → bad first solution. Too
+low → slow first solution. No automatic adjustment.</li>
+<li>ANA* eliminates this parameter entirely.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org50b94ed" class="outline-3">
+<h3 id="org50b94ed">ARA* (Anytime Repairing A*)</h3>
+<div class="outline-text-3" id="text-org50b94ed">
+<ul class="org-ul">
+<li>Also anytime: starts with large w, decreases w each iteration.</li>
+<li>Requires choosing initial w, decrement schedule, and final w.</li>
+<li>Three parameters to tune vs ANA*'s zero.</li>
+<li>ARA* reuses the search tree between iterations (similar to ANA*).</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgb15c4b9" class="outline-3">
+<h3 id="orgb15c4b9">A*</h3>
+<div class="outline-text-3" id="text-orgb15c4b9">
+<ul class="org-ul">
+<li>Finds optimal solution in one pass — no intermediate results.</li>
+<li>If interrupted early, returns nothing.</li>
+<li>ANA* in its final iteration (E=1) is equivalent to A*.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org99116dd" class="outline-3">
+<h3 id="org99116dd">Greedy Best-First Search</h3>
+<div class="outline-text-3" id="text-org99116dd">
+<ul class="org-ul">
+<li>ANA*'s first iteration (G=∞) behaves like greedy search.</li>
+<li>But greedy search stops there — ANA* keeps improving.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org3b474f6" class="outline-3">
+<h3 id="org3b474f6">Focal Search</h3>
+<div class="outline-text-3" id="text-org3b474f6">
+<ul class="org-ul">
+<li>Maintains a "focal list" of nodes within ε of the best f value.</li>
+<li>Allows secondary optimization within the focal set.</li>
+<li>More complex; ANA* is simpler with similar anytime behavior.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgaff2da3" class="outline-3">
+<h3 id="orgaff2da3">Comparison Table</h3>
+<div class="outline-text-3" id="text-orgaff2da3">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Algorithm</th>
+<th scope="col" class="org-left">Anytime?</th>
+<th scope="col" class="org-left">Parameters</th>
+<th scope="col" class="org-left">Bound guaranteed?</th>
+<th scope="col" class="org-left">Optimal in limit?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">A*</td>
+<td class="org-left">No</td>
+<td class="org-left">0</td>
+<td class="org-left">Yes (exact)</td>
+<td class="org-left">Yes (one-shot)</td>
+</tr>
+
+<tr>
+<td class="org-left">WA*</td>
+<td class="org-left">No</td>
+<td class="org-left">1 (w)</td>
+<td class="org-left">Yes (w·opt)</td>
+<td class="org-left">No (fixed w)</td>
+</tr>
+
+<tr>
+<td class="org-left">ARA*</td>
+<td class="org-left">Yes</td>
+<td class="org-left">3 (w₀,Δw,w_f)</td>
+<td class="org-left">Yes (w·opt)</td>
+<td class="org-left">Yes</td>
+</tr>
+
+<tr>
+<td class="org-left">ANA*</td>
+<td class="org-left">Yes</td>
+<td class="org-left">0</td>
+<td class="org-left">Yes (E·opt)</td>
+<td class="org-left">Yes</td>
+</tr>
+
+<tr>
+<td class="org-left">Focal</td>
+<td class="org-left">No</td>
+<td class="org-left">1 (ε)</td>
+<td class="org-left">Yes (ε·opt)</td>
+<td class="org-left">No</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org9bf9baf" class="outline-3">
+<h3 id="org9bf9baf">D* Lite / LPA*</h3>
+<div class="outline-text-3" id="text-org9bf9baf">
+<ul class="org-ul">
+<li>These are <b>incremental</b> (handle graph changes), not anytime.</li>
+<li>Orthogonal concern: ANA* finds progressively better solutions in a static
+graph; D* Lite repairs existing solutions when edges change.</li>
+<li>Could potentially combine: anytime search + incremental replanning.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgff9abb4" class="outline-2">
+<h2 id="orgff9abb4">Simple C++ example</h2>
+<div class="outline-text-2" id="text-orgff9abb4">
+<details><summary>Click to expand source code (ana_star.cpp)</summary>
+<div class="org-src-container">
+<pre class="src src-cpp"><span class="org-doc">/**
+ * ANA* (Anytime Nonparametric A*) on a 2D Grid
+ *
+ * Demonstrates the anytime property: finds an initial suboptimal solution
+ * quickly, then iteratively improves toward optimal with a decreasing
+ * suboptimality bound E.
+ *
+ * Reference: van den Berg, Shah,"; Likhachev, "ANA*: Anytime
+ * Nonparametric A*", ICRA 2011.
+ *
+ * Build: clang++ -std=c++17 -O2 -o ana_star ana_star.cpp &amp;&amp; ./ana_star
+ */</span>
+
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;algorithm&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;array&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;cmath&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;iostream&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;limits&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;unordered_map&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;unordered_set&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;vector&gt;</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">---------- Grid Configuration ----------
+</span>
+<span class="org-keyword">constexpr</span> <span class="org-type">int</span> <span class="org-variable-name">ROWS</span> = 15;
+<span class="org-keyword">constexpr</span> <span class="org-type">int</span> <span class="org-variable-name">COLS</span> = 30;
+<span class="org-keyword">constexpr</span> <span class="org-type">double</span> <span class="org-variable-name">INF</span> = <span class="org-constant">std</span>::<span class="org-constant">numeric_limits</span>&lt;<span class="org-type">double</span>&gt;::infinity();
+
+<span class="org-keyword">struct</span> <span class="org-type">Cell</span> {
+    <span class="org-type">int</span> <span class="org-variable-name">r</span>, <span class="org-variable-name">c</span>;
+    <span class="org-type">bool</span> <span class="org-keyword">operator</span><span class="org-function-name">==</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">o</span>) <span class="org-keyword">const</span> { <span class="org-keyword">return</span> r == o.r &amp;&amp; c == o.c; }
+    <span class="org-type">bool</span> <span class="org-keyword">operator</span><span class="org-function-name">!=</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">o</span>) <span class="org-keyword">const</span> { <span class="org-keyword">return</span> <span class="org-negation-char">!</span>(*<span class="org-keyword">this</span> == o); }
+};
+
+<span class="org-keyword">struct</span> <span class="org-type">CellHash</span> {
+    <span class="org-type">size_t</span> <span class="org-keyword">operator</span><span class="org-function-name">()</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">c</span>) <span class="org-keyword">const</span> {
+        <span class="org-keyword">return</span> <span class="org-constant">std</span>::hash&lt;<span class="org-type">long</span> <span class="org-type">long</span>&gt;()(<span class="org-keyword">static_cast</span>&lt;<span class="org-type">long</span> <span class="org-type">long</span>&gt;(c.r) * 10000 + c.c);
+    }
+};
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">8-connected grid
+</span><span class="org-keyword">const</span> <span class="org-constant">std</span>::<span class="org-type">array</span>&lt;<span class="org-constant">std</span>::<span class="org-type">pair</span>&lt;<span class="org-type">int</span>, <span class="org-type">int</span>&gt;, 8&gt; <span class="org-variable-name">DIRS</span> = {{
+    {-1, 0}, {1, 0}, {0, -1}, {0, 1},
+    {-1, -1}, {-1, 1}, {1, -1}, {1, 1}
+}};
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">0 = free, 1 = obstacle
+</span><span class="org-type">int</span> <span class="org-variable-name">grid</span>[ROWS][COLS] = {
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0},
+    {0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0},
+    {0,0,0,1,1,1,0,1,1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1,0,0,0,1,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,1,1,1,1,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+};
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">---------- Helpers ----------
+</span>
+<span class="org-type">bool</span> <span class="org-function-name">inBounds</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">c</span>) {
+    <span class="org-keyword">return</span> c.r &gt;= 0 &amp;&amp; c.r &lt; ROWS &amp;&amp; c.c &gt;= 0 &amp;&amp; c.c &lt; COLS;
+}
+
+<span class="org-type">bool</span> <span class="org-function-name">isWalkable</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">c</span>) {
+    <span class="org-keyword">return</span> inBounds(c) &amp;&amp; grid[c.r][c.c] == 0;
+}
+
+<span class="org-type">double</span> <span class="org-function-name">moveCost</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">a</span>, <span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">b</span>) {
+    <span class="org-type">int</span> <span class="org-variable-name">dr</span> = <span class="org-constant">std</span>::abs(a.r - b.r);
+    <span class="org-type">int</span> <span class="org-variable-name">dc</span> = <span class="org-constant">std</span>::abs(a.c - b.c);
+    <span class="org-keyword">return</span> (dr + dc == 2) ? 1.414 : 1.0;
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Octile distance heuristic (admissible for 8-connected)
+</span><span class="org-type">double</span> <span class="org-function-name">heuristic</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">a</span>, <span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">b</span>) {
+    <span class="org-type">int</span> <span class="org-variable-name">dr</span> = <span class="org-constant">std</span>::abs(a.r - b.r);
+    <span class="org-type">int</span> <span class="org-variable-name">dc</span> = <span class="org-constant">std</span>::abs(a.c - b.c);
+    <span class="org-keyword">return</span> <span class="org-constant">std</span>::max(dr, dc) + 0.414 * <span class="org-constant">std</span>::min(dr, dc);
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">---------- ANA* Implementation ----------
+</span>
+<span class="org-keyword">class</span> <span class="org-type">ANAStar</span> {
+<span class="org-keyword">public</span>:
+    <span class="org-function-name">ANAStar</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">start</span>, <span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">goal</span>)
+        : start_(start), goal_(goal), G_(INF), E_(INF) {
+        g_[start_] = 0.0;
+        open_.insert(start_);
+    }
+
+    <span class="org-keyword">struct</span> <span class="org-type">Solution</span> {
+        <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Cell</span>&gt; <span class="org-variable-name">path</span>;
+        <span class="org-type">double</span> <span class="org-variable-name">cost</span>;
+        <span class="org-type">double</span> <span class="org-variable-name">suboptimality_bound</span>;  <span class="org-comment-delimiter">// </span><span class="org-comment">E
+</span>        <span class="org-type">int</span> <span class="org-variable-name">iteration</span>;
+        <span class="org-type">int</span> <span class="org-variable-name">total_expansions</span>;
+    };
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Run ANA* and collect solutions from each iteration
+</span>    <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Solution</span>&gt; <span class="org-function-name">solve</span>(<span class="org-type">int</span> <span class="org-variable-name">max_iterations</span> = 50) {
+        <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Solution</span>&gt; <span class="org-variable-name">solutions</span>;
+        <span class="org-type">int</span> <span class="org-variable-name">total_expansions</span> = 0;
+
+        <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">iter</span> = 0; iter &lt; max_iterations; ++iter) {
+            <span class="org-comment-delimiter">// </span><span class="org-comment">Prune: remove nodes that cannot beat current solution
+</span>            prune();
+
+            <span class="org-keyword">if</span> (open_.empty()) <span class="org-keyword">break</span>;  <span class="org-comment-delimiter">// </span><span class="org-comment">optimal found
+</span>
+            <span class="org-comment-delimiter">// </span><span class="org-comment">Compute suboptimality bound E
+</span>            E_ = computeE();
+            <span class="org-keyword">if</span> (E_ &lt;= 1.0) {
+                <span class="org-comment-delimiter">// </span><span class="org-comment">Current solution is already optimal
+</span>                <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>solutions.empty()) {
+                    solutions.back().suboptimality_bound = 1.0;
+                }
+                <span class="org-keyword">break</span>;
+            }
+
+            <span class="org-comment-delimiter">// </span><span class="org-comment">Expand nodes in order of decreasing e(s)
+</span>            <span class="org-type">bool</span> <span class="org-variable-name">found</span> = <span class="org-constant">false</span>;
+            <span class="org-keyword">while</span> (<span class="org-negation-char">!</span>open_.empty()) {
+                <span class="org-comment-delimiter">// </span><span class="org-comment">Find node with highest e(s)
+</span>                <span class="org-type">Cell</span> <span class="org-variable-name">best</span> = getBestOpen();
+                open_.erase(best);
+                closed_.insert(best);
+                total_expansions++;
+
+                <span class="org-comment-delimiter">// </span><span class="org-comment">Goal reached &#8212; improved solution
+</span>                <span class="org-keyword">if</span> (best == goal_) {
+                    G_ = g_[goal_];
+                    <span class="org-keyword">auto</span> <span class="org-variable-name">path</span> = reconstructPath();
+                    solutions.push_back({path, G_, E_, iter + 1, total_expansions});
+                    found = <span class="org-constant">true</span>;
+
+                    <span class="org-comment-delimiter">// </span><span class="org-comment">Move closed nodes back to open for next iteration
+</span>                    <span class="org-comment-delimiter">// </span><span class="org-comment">(except those that will be pruned)
+</span>                    <span class="org-keyword">for</span> (<span class="org-keyword">const</span> <span class="org-keyword">auto</span>&amp; <span class="org-variable-name">c</span> : closed_) {
+                        <span class="org-keyword">if</span> (c != goal_) {
+                            open_.insert(c);
+                        }
+                    }
+                    closed_.clear();
+                    <span class="org-keyword">break</span>;
+                }
+
+                <span class="org-comment-delimiter">// </span><span class="org-comment">Expand successors
+</span>                <span class="org-keyword">for</span> (<span class="org-keyword">auto</span>&amp; [<span class="org-constant">dr</span>, <span class="org-constant">dc</span>] : DIRS) {
+                    <span class="org-type">Cell</span> <span class="org-variable-name">succ</span>{best.r + dr, best.c + dc};
+                    <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>isWalkable(succ)) <span class="org-keyword">continue</span>;
+
+                    <span class="org-comment-delimiter">// </span><span class="org-comment">Don't cut corners
+</span>                    <span class="org-keyword">if</span> (dr != 0 &amp;&amp; dc != 0) {
+                        <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>isWalkable({best.r + dr, best.c}) ||
+                            <span class="org-negation-char">!</span>isWalkable({best.r, best.c + dc})) {
+                            <span class="org-keyword">continue</span>;
+                        }
+                    }
+
+                    <span class="org-type">double</span> <span class="org-variable-name">tentative_g</span> = g_[best] + moveCost(best, succ);
+
+                    <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>g_.count(succ) || tentative_g &lt; g_[succ]) {
+                        g_[succ] = tentative_g;
+                        parent_[succ] = best;
+
+                        <span class="org-comment-delimiter">// </span><span class="org-comment">Only add if it can potentially beat G
+</span>                        <span class="org-keyword">if</span> (g_[succ] + heuristic(succ, goal_) &lt; G_) {
+                            <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>closed_.count(succ)) {
+                                open_.insert(succ);
+                            }
+                        }
+                    }
+                }
+            }
+
+            <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>found &amp;&amp; open_.empty()) <span class="org-keyword">break</span>;
+        }
+
+        <span class="org-keyword">return</span> solutions;
+    }
+
+<span class="org-keyword">private</span>:
+    <span class="org-comment-delimiter">// </span><span class="org-comment">e(s) = (G - g(s)) / h(s)  &#8212; higher means more promising
+</span>    <span class="org-type">double</span> <span class="org-function-name">eValue</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">s</span>) <span class="org-keyword">const</span> {
+        <span class="org-type">double</span> <span class="org-variable-name">h</span> = heuristic(s, goal_);
+        <span class="org-keyword">if</span> (h &lt; 1e-9) <span class="org-keyword">return</span> INF;  <span class="org-comment-delimiter">// </span><span class="org-comment">at goal
+</span>        <span class="org-type">double</span> <span class="org-variable-name">g</span> = g_.count(s) ? g_.at(s) : INF;
+        <span class="org-keyword">return</span> (G_ - g) / h;
+    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Remove nodes from open that cannot improve current solution
+</span>    <span class="org-type">void</span> <span class="org-function-name">prune</span>() {
+        <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Cell</span>&gt; <span class="org-variable-name">to_remove</span>;
+        <span class="org-keyword">for</span> (<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">s</span> : open_) {
+            <span class="org-type">double</span> <span class="org-variable-name">g</span> = g_.count(s) ? g_.at(s) : INF;
+            <span class="org-keyword">if</span> (g + heuristic(s, goal_) &gt;= G_) {
+                to_remove.push_back(s);
+            }
+        }
+        <span class="org-keyword">for</span> (<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">s</span> : to_remove) {
+            open_.erase(s);
+        }
+    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Compute current suboptimality bound
+</span>    <span class="org-type">double</span> <span class="org-function-name">computeE</span>() <span class="org-keyword">const</span> {
+        <span class="org-type">double</span> <span class="org-variable-name">min_e</span> = INF;
+        <span class="org-keyword">for</span> (<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">s</span> : open_) {
+            <span class="org-type">double</span> <span class="org-variable-name">e</span> = eValue(s);
+            <span class="org-keyword">if</span> (e &lt; min_e) min_e = e;
+        }
+        <span class="org-keyword">return</span> min_e;
+    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Get node with highest e(s) from open list
+</span>    <span class="org-type">Cell</span> <span class="org-function-name">getBestOpen</span>() <span class="org-keyword">const</span> {
+        <span class="org-type">Cell</span> <span class="org-variable-name">best</span> = *open_.begin();
+        <span class="org-type">double</span> <span class="org-variable-name">best_e</span> = -INF;
+        <span class="org-keyword">for</span> (<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">s</span> : open_) {
+            <span class="org-type">double</span> <span class="org-variable-name">e</span> = eValue(s);
+            <span class="org-keyword">if</span> (e &gt; best_e) {
+                best_e = e;
+                best = s;
+            }
+        }
+        <span class="org-keyword">return</span> best;
+    }
+
+    <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Cell</span>&gt; <span class="org-function-name">reconstructPath</span>() <span class="org-keyword">const</span> {
+        <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Cell</span>&gt; <span class="org-variable-name">path</span>;
+        <span class="org-type">Cell</span> <span class="org-variable-name">node</span> = goal_;
+        <span class="org-keyword">while</span> (node != start_) {
+            path.push_back(node);
+            node = parent_.at(node);
+        }
+        path.push_back(start_);
+        <span class="org-constant">std</span>::reverse(path.begin(), path.end());
+        <span class="org-keyword">return</span> path;
+    }
+
+    <span class="org-type">Cell</span> <span class="org-variable-name">start_</span>, <span class="org-variable-name">goal_</span>;
+    <span class="org-type">double</span> <span class="org-variable-name">G_</span>;   <span class="org-comment-delimiter">// </span><span class="org-comment">best solution cost found so far
+</span>    <span class="org-type">double</span> <span class="org-variable-name">E_</span>;   <span class="org-comment-delimiter">// </span><span class="org-comment">current suboptimality bound
+</span>
+    <span class="org-constant">std</span>::<span class="org-type">unordered_map</span>&lt;<span class="org-type">Cell</span>, <span class="org-type">double</span>, <span class="org-type">CellHash</span>&gt; <span class="org-variable-name">g_</span>;
+    <span class="org-constant">std</span>::<span class="org-type">unordered_map</span>&lt;<span class="org-type">Cell</span>, <span class="org-type">Cell</span>, <span class="org-type">CellHash</span>&gt; <span class="org-variable-name">parent_</span>;
+    <span class="org-constant">std</span>::<span class="org-type">unordered_set</span>&lt;<span class="org-type">Cell</span>, <span class="org-type">CellHash</span>&gt; <span class="org-variable-name">open_</span>;
+    <span class="org-constant">std</span>::<span class="org-type">unordered_set</span>&lt;<span class="org-type">Cell</span>, <span class="org-type">CellHash</span>&gt; <span class="org-variable-name">closed_</span>;
+};
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">---------- Visualization ----------
+</span>
+<span class="org-type">void</span> <span class="org-function-name">printGrid</span>(<span class="org-keyword">const</span> <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Cell</span>&gt;&amp; <span class="org-variable-name">path</span>, <span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">start</span>, <span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">goal</span>) {
+    <span class="org-constant">std</span>::<span class="org-type">unordered_set</span>&lt;<span class="org-type">Cell</span>, <span class="org-type">CellHash</span>&gt; <span class="org-variable-name">path_set</span>(path.begin(), path.end());
+
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"    "</span>;
+    <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">c</span> = 0; c &lt; COLS; ++c) <span class="org-constant">std</span>::cout &lt;&lt; (c % 10);
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"\n    "</span>;
+    <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">c</span> = 0; c &lt; COLS; ++c) <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"-"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"\n"</span>;
+
+    <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">r</span> = 0; r &lt; ROWS; ++r) {
+        <span class="org-constant">std</span>::cout &lt;&lt; (r &lt; 10 ? <span class="org-string">" "</span> : <span class="org-string">""</span>) &lt;&lt; r &lt;&lt; <span class="org-string">"| "</span>;
+        <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">c</span> = 0; c &lt; COLS; ++c) {
+            <span class="org-type">Cell</span> <span class="org-variable-name">cell</span>{r, c};
+            <span class="org-keyword">if</span> (cell == start)
+                <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"S"</span>;
+            <span class="org-keyword">else</span> <span class="org-keyword">if</span> (cell == goal)
+                <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"G"</span>;
+            <span class="org-keyword">else</span> <span class="org-keyword">if</span> (path_set.count(cell))
+                <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"*"</span>;
+            <span class="org-keyword">else</span> <span class="org-keyword">if</span> (grid[r][c] == 1)
+                <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"#"</span>;
+            <span class="org-keyword">else</span>
+                <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"."</span>;
+        }
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"\n"</span>;
+    }
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">---------- Main ----------
+</span>
+<span class="org-type">int</span> <span class="org-function-name">main</span>() {
+    <span class="org-type">Cell</span> <span class="org-variable-name">start</span>{1, 1};
+    <span class="org-type">Cell</span> <span class="org-variable-name">goal</span>{13, 28};
+
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"=== ANA* (Anytime Nonparametric A*) ===\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Grid: "</span> &lt;&lt; ROWS &lt;&lt; <span class="org-string">" x "</span> &lt;&lt; COLS &lt;&lt; <span class="org-string">" (8-connected)\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Start: ("</span> &lt;&lt; start.r &lt;&lt; <span class="org-string">", "</span> &lt;&lt; start.c &lt;&lt; <span class="org-string">")\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Goal:  ("</span> &lt;&lt; goal.r &lt;&lt; <span class="org-string">", "</span> &lt;&lt; goal.c &lt;&lt; <span class="org-string">")\n\n"</span>;
+
+    <span class="org-type">ANAStar</span> <span class="org-variable-name">planner</span>(start, goal);
+    <span class="org-keyword">auto</span> <span class="org-variable-name">solutions</span> = planner.solve();
+
+    <span class="org-keyword">if</span> (solutions.empty()) {
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"No path found!\n"</span>;
+        <span class="org-keyword">return</span> 1;
+    }
+
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"--- Anytime Solutions ---\n\n"</span>;
+    <span class="org-keyword">for</span> (<span class="org-keyword">const</span> <span class="org-keyword">auto</span>&amp; <span class="org-variable-name">sol</span> : solutions) {
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Iteration "</span> &lt;&lt; sol.iteration &lt;&lt; <span class="org-string">":\n"</span>;
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"  Path cost:      "</span> &lt;&lt; sol.cost &lt;&lt; <span class="org-string">"\n"</span>;
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"  Subopt bound E: "</span> &lt;&lt; sol.suboptimality_bound &lt;&lt; <span class="org-string">"\n"</span>;
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"  Path length:    "</span> &lt;&lt; sol.path.size() &lt;&lt; <span class="org-string">" cells\n"</span>;
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"  Total expands:  "</span> &lt;&lt; sol.total_expansions &lt;&lt; <span class="org-string">"\n"</span>;
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"\n"</span>;
+    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Show first and last solutions
+</span>    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"--- First solution (fast, suboptimal) ---\n"</span>;
+    printGrid(solutions.front().path, start, goal);
+
+    <span class="org-keyword">if</span> (solutions.size() &gt; 1) {
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"\n--- Final solution (optimal or near-optimal) ---\n"</span>;
+        printGrid(solutions.back().path, start, goal);
+    }
+
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"\nLegend: S=start G=goal *=path #=obstacle .=free\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"\nKey insight: first solution found quickly (greedy),\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"then improved over iterations without any weight parameter.\n"</span>;
+
+    <span class="org-keyword">return</span> 0;
+}
+</pre>
+</div>
+</details>
+
+<p>
+To build and run:
+</p>
+<pre class="example" id="orgb6d4bac">
+clang++ -std=c++17 -O2 -o ana_star ana_star.cpp &amp;&amp; ./ana_star
+</pre>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script>
+// Sidebar toggle
+document.querySelector('.sidebar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  this.classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+document.querySelector('.top-bar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  document.querySelector('.sidebar-toggle').classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+
+// Search toggle
+(function() {
+  var overlay = document.querySelector('.search-overlay');
+  var input = document.querySelector('.search-input');
+  var results = document.querySelector('.search-results');
+  document.querySelector('.top-bar-search').addEventListener('click', function() {
+    overlay.classList.toggle('active');
+    if (overlay.classList.contains('active')) input.focus();
+  });
+  document.querySelector('.search-close').addEventListener('click', function() {
+    overlay.classList.remove('active');
+    input.value = '';
+    results.innerHTML = '';
+  });
+  var pages = [];
+  fetch('/search-index.json').then(function(r){return r.json();}).then(function(d){pages=d;});
+  input.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { results.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    results.innerHTML = html || '<p style="color:#64748b">No results</p>';
+  });
+
+  // Sidebar search
+  var sInput = document.querySelector('.sidebar-search-input');
+  var sResults = document.querySelector('.sidebar-search-results');
+  sInput.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { sResults.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    sResults.innerHTML = html || '<p style="color:rgba(255,255,255,0.4)">No results</p>';
+  });
+})();
+
+// Theme toggle
+(function() {
+  var stored = localStorage.getItem('theme');
+  if (stored) {
+    document.documentElement.setAttribute('data-theme', stored);
+  }
+  document.querySelector('.theme-toggle').addEventListener('click', function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+})();
+
+// Active nav highlight
+(function() {
+  var path = window.location.pathname;
+  document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (path === href || (href !== '/index.html' && path.indexOf(href.replace('.html','')) === 0)) {
+      link.classList.add('active');
+    }
+  });
+})();
+
+// Fade in / fade out on scroll
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    } else {
+      entry.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -20px 0px' });
+
+document.querySelectorAll('.intro p, .blog-card, .pub-entry, .timeline-item, .hero-image').forEach(function(el) {
+  el.classList.add('fade-item');
+  observer.observe(el);
+});
+
+// Scroll progress bar
+window.addEventListener('scroll', function() {
+  var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var progress = (scrollTop / scrollHeight) * 100;
+  document.querySelector('.scroll-progress').style.width = progress + String.fromCharCode(37);
+});
+
+// Tag filtering on blogs page
+(function() {
+  document.querySelectorAll('.card-tag').forEach(function(tag) {
+    tag.style.cursor = 'pointer';
+    tag.addEventListener('click', function(e) {
+      e.preventDefault();
+      var selected = this.textContent.trim();
+      var allCards = document.querySelectorAll('.blog-card');
+      var allItems = document.querySelectorAll('.timeline-item');
+      var isActive = this.classList.contains('tag-active');
+      document.querySelectorAll('.card-tag').forEach(function(t) { t.classList.remove('tag-active'); });
+      if (isActive) {
+        allCards.forEach(function(c) { c.style.display = ''; });
+        allItems.forEach(function(i) { i.style.display = ''; });
+      } else {
+        this.classList.add('tag-active');
+        allCards.forEach(function(c) {
+          var t = c.querySelector('.card-tag');
+          c.style.display = (t && t.textContent.trim() === selected) ? '' : 'none';
+        });
+        allItems.forEach(function(i) {
+          var visible = i.querySelectorAll('.blog-card[style=""], .blog-card:not([style])');
+          var hasVisible = Array.from(i.querySelectorAll('.blog-card')).some(function(c) { return c.style.display !== 'none'; });
+          i.style.display = hasVisible ? '' : 'none';
+        });
+      }
+    });
+  });
+})();
+</script>
+</div>
+</body>
+</html>

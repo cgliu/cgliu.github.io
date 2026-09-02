@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2026-09-02 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dijkstra's Algorithm</title>
+<meta name="description" content="Explain how dijkstra's method with simple examples" />
+<meta name="generator" content="Org Mode" />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<div id="preamble" class="status">
+<div class="scroll-progress"></div>
+<aside class="sidebar">
+  <div class="sidebar-inner">
+    <img src="/images/avatar.svg" alt="Chenggang Liu" class="sidebar-avatar"/>
+    <a href="/index.html" class="site-logo">Chenggang Liu</a>
+    <nav class="sidebar-nav">
+      <a href="/index.html">Home</a>
+      <a href="/blogs.html">Blogs</a>
+      <a href="/projects.html">Projects</a>
+      <a href="/publications.html">Publications</a>
+      <a href="/about.html">About</a>
+    </nav>
+    <div class="sidebar-social">
+      <a href="https://www.linkedin.com/in/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="https://github.com/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <a href="https://scholar.google.com/citations?user=omz_MCoAAAAJ&hl=en" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg></a>
+    </div>
+    <div class="sidebar-search">
+      <input type="text" class="sidebar-search-input" placeholder="Search..."/>
+      <div class="sidebar-search-results"></div>
+    </div>
+    <button class="theme-toggle" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</aside>
+<button class="sidebar-toggle" aria-label="Toggle menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="top-bar">
+  <button class="top-bar-toggle" aria-label="Toggle menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+  <a href="/index.html" class="top-bar-title">Chenggang Liu</a>
+  <button class="top-bar-search" aria-label="Open search bar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+  </button>
+</div>
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" class="search-input" placeholder="Search..."/>
+    <button class="search-close" aria-label="Close search">&times;</button>
+  </div>
+  <div class="search-results"></div>
+</div>
+</div>
+<div id="content" class="content">
+<header>
+<h1 class="title">Dijkstra's Algorithm</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org5ae3462">What is Dijkstra's method</a>
+<ul>
+<li><a href="#org34bbe04">Key Properties</a></li>
+<li><a href="#orge1275fc">Complexity</a></li>
+</ul>
+</li>
+<li><a href="#org7f4b248">How does it work</a>
+<ul>
+<li><a href="#orga8fc4ad">Core Idea</a></li>
+<li><a href="#org226e545">Algorithm</a></li>
+<li><a href="#org39f4d27">Step-by-Step Intuition</a></li>
+<li><a href="#org4fffb83">Why Non-Negative Weights Matter</a></li>
+<li><a href="#org9db1249">Path Reconstruction</a></li>
+</ul>
+</li>
+<li><a href="#org0fb0f5b">Connection with other methods</a>
+<ul>
+<li><a href="#orga01d89a">A*</a></li>
+<li><a href="#orgde42e5e">BFS (Breadth-First Search)</a></li>
+<li><a href="#org51ae8ac">Bellman-Ford</a></li>
+<li><a href="#orgc6346aa">D* Lite</a></li>
+<li><a href="#org7ffe5c8">Floyd-Warshall</a></li>
+<li><a href="#org91497af">In Sampling-Based Planners (RRG, PRM)</a></li>
+<li><a href="#orgf38d677">Summary Table</a></li>
+</ul>
+</li>
+<li><a href="#org99a902e">Example code in C++</a></li>
+</ul>
+</div>
+</nav>
+<div id="outline-container-org5ae3462" class="outline-2">
+<h2 id="org5ae3462">What is Dijkstra's method</h2>
+<div class="outline-text-2" id="text-org5ae3462">
+<p>
+Dijkstra's algorithm (1959) finds the shortest path from a single source
+node to all other nodes in a weighted graph with <b>non-negative</b> edge
+weights. It is the foundation upon which most other shortest-path
+algorithms (A*, D* Lite, etc.) are built.
+</p>
+</div>
+<div id="outline-container-org34bbe04" class="outline-3">
+<h3 id="org34bbe04">Key Properties</h3>
+<div class="outline-text-3" id="text-org34bbe04">
+<ul class="org-ul">
+<li><b>Optimal</b>: always finds the true shortest path.</li>
+<li><b>Complete</b>: will find a solution if one exists (on finite graphs).</li>
+<li><b>Uninformed</b>: uses no heuristic — explores uniformly outward from the
+source like a "wavefront."</li>
+<li><b>Greedy on g(n)</b>: always expands the unvisited node with the smallest
+known distance from the source.</li>
+<li><b>Non-negative weights required</b>: does not work correctly if any edge has
+negative cost (use Bellman-Ford for that).</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orge1275fc" class="outline-3">
+<h3 id="orge1275fc">Complexity</h3>
+<div class="outline-text-3" id="text-orge1275fc">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Implementation</th>
+<th scope="col" class="org-left">Time</th>
+<th scope="col" class="org-left">Space</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Array (naive)</td>
+<td class="org-left">O(V²)</td>
+<td class="org-left">O(V)</td>
+</tr>
+
+<tr>
+<td class="org-left">Binary heap</td>
+<td class="org-left">O((V + E) log V)</td>
+<td class="org-left">O(V)</td>
+</tr>
+
+<tr>
+<td class="org-left">Fibonacci heap</td>
+<td class="org-left">O(V log V + E)</td>
+<td class="org-left">O(V)</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+For sparse graphs (E ≈ V), binary heap is standard. For dense graphs
+(E ≈ V²), the naive array version can be competitive.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org7f4b248" class="outline-2">
+<h2 id="org7f4b248">How does it work</h2>
+<div class="outline-text-2" id="text-org7f4b248">
+</div>
+<div id="outline-container-orga8fc4ad" class="outline-3">
+<h3 id="orga8fc4ad">Core Idea</h3>
+<div class="outline-text-3" id="text-orga8fc4ad">
+<p>
+Maintain a set of "finalized" nodes whose shortest distance is known. At
+each step, pick the unfinalized node with the smallest tentative distance,
+finalize it, then relax all its outgoing edges.
+</p>
+</div>
+</div>
+<div id="outline-container-org226e545" class="outline-3">
+<h3 id="org226e545">Algorithm</h3>
+<div class="outline-text-3" id="text-org226e545">
+<pre class="example" id="orgdc3bfa1">
+Dijkstra(graph, source):
+    dist[source] = 0
+    dist[all others] = ∞
+    prev[all] = undefined
+    priority_queue Q ← all nodes, keyed by dist
+
+    while Q is not empty:
+        u ← Q.extract_min()         // node with smallest dist
+
+        for each neighbor v of u:
+            alt = dist[u] + weight(u, v)
+            if alt &lt; dist[v]:        // relaxation
+                dist[v] = alt
+                prev[v] = u
+                Q.decrease_key(v, alt)
+
+    return dist[], prev[]
+</pre>
+</div>
+</div>
+<div id="outline-container-org39f4d27" class="outline-3">
+<h3 id="org39f4d27">Step-by-Step Intuition</h3>
+<div class="outline-text-3" id="text-org39f4d27">
+<ol class="org-ol">
+<li>Start node gets distance 0; everything else is ∞.</li>
+<li>Extract the node closest to source (initially the source itself).</li>
+<li>For each of its neighbors: "could I reach this neighbor cheaper by going
+through the node I just extracted?" If yes, update the neighbor's
+distance.</li>
+<li>The extracted node is now finalized — its distance will never improve
+(guaranteed because all edge weights are non-negative).</li>
+<li>Repeat until the goal is extracted (single-target) or Q is empty
+(all-targets).</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org4fffb83" class="outline-3">
+<h3 id="org4fffb83">Why Non-Negative Weights Matter</h3>
+<div class="outline-text-3" id="text-org4fffb83">
+<p>
+Once a node is extracted from the priority queue, Dijkstra assumes its
+distance is final. A negative-weight edge could later provide a cheaper
+path to an already-finalized node, violating this invariant.
+</p>
+</div>
+</div>
+<div id="outline-container-org9db1249" class="outline-3">
+<h3 id="org9db1249">Path Reconstruction</h3>
+<div class="outline-text-3" id="text-org9db1249">
+<p>
+Follow the <code>prev[]</code> pointers backward from the goal to the source:
+</p>
+
+<pre class="example" id="org8ffe7fb">
+path = []
+node = goal
+while node ≠ undefined:
+    path.prepend(node)
+    node = prev[node]
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org0fb0f5b" class="outline-2">
+<h2 id="org0fb0f5b">Connection with other methods</h2>
+<div class="outline-text-2" id="text-org0fb0f5b">
+</div>
+<div id="outline-container-orga01d89a" class="outline-3">
+<h3 id="orga01d89a">A*</h3>
+<div class="outline-text-3" id="text-orga01d89a">
+<ul class="org-ul">
+<li>A* = Dijkstra + heuristic.</li>
+<li>A* uses <code>f(n) = g(n) + h(n)</code> to prioritize; Dijkstra uses <code>f(n) = g(n)</code>
+(i.e., h = 0).</li>
+<li>A* expands a subset of the nodes Dijkstra would expand, guided by the
+heuristic toward the goal.</li>
+<li>With h = 0, A* reduces exactly to Dijkstra.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgde42e5e" class="outline-3">
+<h3 id="orgde42e5e">BFS (Breadth-First Search)</h3>
+<div class="outline-text-3" id="text-orgde42e5e">
+<ul class="org-ul">
+<li>BFS = Dijkstra on an unweighted graph (all edges cost 1).</li>
+<li>BFS uses a FIFO queue; Dijkstra uses a priority queue.</li>
+<li>Both explore outward layer by layer, but Dijkstra accounts for varying
+edge weights.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org51ae8ac" class="outline-3">
+<h3 id="org51ae8ac">Bellman-Ford</h3>
+<div class="outline-text-3" id="text-org51ae8ac">
+<ul class="org-ul">
+<li>Handles negative edge weights (Dijkstra cannot).</li>
+<li>Slower: O(V·E) vs Dijkstra's O((V+E) log V).</li>
+<li>Can detect negative cycles.</li>
+<li>Use Bellman-Ford only when negative weights exist.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc6346aa" class="outline-3">
+<h3 id="orgc6346aa">D* Lite</h3>
+<div class="outline-text-3" id="text-orgc6346aa">
+<ul class="org-ul">
+<li>Incremental Dijkstra/A* for replanning.</li>
+<li>When edges change, D* Lite repairs only the affected portion of
+Dijkstra's solution rather than re-running from scratch.</li>
+<li>See <a href="D-star-lite.html">D* Lite notes</a>.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org7ffe5c8" class="outline-3">
+<h3 id="org7ffe5c8">Floyd-Warshall</h3>
+<div class="outline-text-3" id="text-org7ffe5c8">
+<ul class="org-ul">
+<li>All-pairs shortest paths: O(V³).</li>
+<li>Dijkstra solves single-source; run it V times for all-pairs: O(V·(V+E) log V).</li>
+<li>Floyd-Warshall is simpler for dense graphs with all-pairs needs.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org91497af" class="outline-3">
+<h3 id="org91497af">In Sampling-Based Planners (RRG, PRM)</h3>
+<div class="outline-text-3" id="text-org91497af">
+<ul class="org-ul">
+<li>After building a roadmap graph via sampling, Dijkstra (or A*) is used to
+extract the shortest path through the graph.</li>
+<li>The RRG implementation in this project uses Dijkstra for exactly this
+purpose. See <a href="rrg.html">RRG notes</a>.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgf38d677" class="outline-3">
+<h3 id="orgf38d677">Summary Table</h3>
+<div class="outline-text-3" id="text-orgf38d677">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Algorithm</th>
+<th scope="col" class="org-left">Weights</th>
+<th scope="col" class="org-left">Heuristic</th>
+<th scope="col" class="org-left">Optimal</th>
+<th scope="col" class="org-left">Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">BFS</td>
+<td class="org-left">Unweighted</td>
+<td class="org-left">No</td>
+<td class="org-left">Yes</td>
+<td class="org-left">O(V + E)</td>
+</tr>
+
+<tr>
+<td class="org-left">Dijkstra</td>
+<td class="org-left">Non-negative</td>
+<td class="org-left">No</td>
+<td class="org-left">Yes</td>
+<td class="org-left">O((V+E) log V)</td>
+</tr>
+
+<tr>
+<td class="org-left">A*</td>
+<td class="org-left">Non-negative</td>
+<td class="org-left">Yes</td>
+<td class="org-left">Yes</td>
+<td class="org-left">O((V+E) log V) best</td>
+</tr>
+
+<tr>
+<td class="org-left">Bellman-Ford</td>
+<td class="org-left">Any</td>
+<td class="org-left">No</td>
+<td class="org-left">Yes</td>
+<td class="org-left">O(V·E)</td>
+</tr>
+
+<tr>
+<td class="org-left">Floyd-Warshall</td>
+<td class="org-left">Any</td>
+<td class="org-left">No</td>
+<td class="org-left">Yes</td>
+<td class="org-left">O(V³)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-org99a902e" class="outline-2">
+<h2 id="org99a902e">Example code in C++</h2>
+<div class="outline-text-2" id="text-org99a902e">
+<details><summary>Click to expand source code (dijkstra.cpp)</summary>
+<div class="org-src-container">
+<pre class="src src-cpp"><span class="org-doc">/**
+ * Dijkstra's Algorithm on a 2D Grid
+ *
+ * Finds shortest path from start to goal on an 8-connected weighted grid.
+ * Demonstrates the classic priority-queue-based implementation.
+ *
+ * Build: clang++ -std=c++17 -O2 -o dijkstra dijkstra.cpp &amp;&amp; ./dijkstra
+ */</span>
+
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;algorithm&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;array&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;cmath&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;iostream&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;limits&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;queue&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;unordered_map&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;unordered_set&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;vector&gt;</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">---------- Grid Configuration ----------
+</span>
+<span class="org-keyword">constexpr</span> <span class="org-type">int</span> <span class="org-variable-name">ROWS</span> = 12;
+<span class="org-keyword">constexpr</span> <span class="org-type">int</span> <span class="org-variable-name">COLS</span> = 25;
+<span class="org-keyword">constexpr</span> <span class="org-type">double</span> <span class="org-variable-name">INF</span> = <span class="org-constant">std</span>::<span class="org-constant">numeric_limits</span>&lt;<span class="org-type">double</span>&gt;::infinity();
+
+<span class="org-keyword">struct</span> <span class="org-type">Cell</span> {
+    <span class="org-type">int</span> <span class="org-variable-name">r</span>, <span class="org-variable-name">c</span>;
+    <span class="org-type">bool</span> <span class="org-keyword">operator</span><span class="org-function-name">==</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">o</span>) <span class="org-keyword">const</span> { <span class="org-keyword">return</span> r == o.r &amp;&amp; c == o.c; }
+    <span class="org-type">bool</span> <span class="org-keyword">operator</span><span class="org-function-name">!=</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">o</span>) <span class="org-keyword">const</span> { <span class="org-keyword">return</span> <span class="org-negation-char">!</span>(*<span class="org-keyword">this</span> == o); }
+};
+
+<span class="org-keyword">struct</span> <span class="org-type">CellHash</span> {
+    <span class="org-type">size_t</span> <span class="org-keyword">operator</span><span class="org-function-name">()</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">c</span>) <span class="org-keyword">const</span> {
+        <span class="org-keyword">return</span> <span class="org-constant">std</span>::hash&lt;<span class="org-type">long</span> <span class="org-type">long</span>&gt;()(<span class="org-keyword">static_cast</span>&lt;<span class="org-type">long</span> <span class="org-type">long</span>&gt;(c.r) * 10000 + c.c);
+    }
+};
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">8-connected grid directions
+</span><span class="org-keyword">const</span> <span class="org-constant">std</span>::<span class="org-type">array</span>&lt;<span class="org-constant">std</span>::<span class="org-type">pair</span>&lt;<span class="org-type">int</span>, <span class="org-type">int</span>&gt;, 8&gt; <span class="org-variable-name">DIRS</span> = {{
+    {-1, 0}, {1, 0}, {0, -1}, {0, 1},       <span class="org-comment-delimiter">// </span><span class="org-comment">cardinal
+</span>    {-1, -1}, {-1, 1}, {1, -1}, {1, 1}       <span class="org-comment-delimiter">// </span><span class="org-comment">diagonal
+</span>}};
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">0 = free, 1 = obstacle
+</span><span class="org-type">int</span> <span class="org-variable-name">grid</span>[ROWS][COLS] = {
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0},
+    {0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0},
+    {0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+};
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">---------- Dijkstra Implementation ----------
+</span>
+<span class="org-type">bool</span> <span class="org-function-name">inBounds</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">c</span>) {
+    <span class="org-keyword">return</span> c.r &gt;= 0 &amp;&amp; c.r &lt; ROWS &amp;&amp; c.c &gt;= 0 &amp;&amp; c.c &lt; COLS;
+}
+
+<span class="org-type">bool</span> <span class="org-function-name">isWalkable</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">c</span>) {
+    <span class="org-keyword">return</span> inBounds(c) &amp;&amp; grid[c.r][c.c] == 0;
+}
+
+<span class="org-type">double</span> <span class="org-function-name">moveCost</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">a</span>, <span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">b</span>) {
+    <span class="org-type">int</span> <span class="org-variable-name">dr</span> = <span class="org-constant">std</span>::abs(a.r - b.r);
+    <span class="org-type">int</span> <span class="org-variable-name">dc</span> = <span class="org-constant">std</span>::abs(a.c - b.c);
+    <span class="org-keyword">return</span> (dr + dc == 2) ? 1.414 : 1.0;  <span class="org-comment-delimiter">// </span><span class="org-comment">diagonal vs cardinal
+</span>}
+
+<span class="org-keyword">struct</span> <span class="org-type">DijkstraResult</span> {
+    <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Cell</span>&gt; <span class="org-variable-name">path</span>;
+    <span class="org-type">int</span> <span class="org-variable-name">nodes_expanded</span>;
+    <span class="org-type">double</span> <span class="org-variable-name">path_cost</span>;
+};
+
+<span class="org-type">DijkstraResult</span> <span class="org-function-name">dijkstra</span>(<span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">source</span>, <span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">goal</span>) {
+    <span class="org-keyword">struct</span> <span class="org-type">QueueNode</span> {
+        <span class="org-type">double</span> <span class="org-variable-name">dist</span>;
+        <span class="org-type">Cell</span> <span class="org-variable-name">cell</span>;
+        <span class="org-type">bool</span> <span class="org-keyword">operator</span><span class="org-function-name">&gt;</span>(<span class="org-keyword">const</span> <span class="org-type">QueueNode</span>&amp; <span class="org-variable-name">o</span>) <span class="org-keyword">const</span> { <span class="org-keyword">return</span> dist &gt; o.dist; }
+    };
+
+    <span class="org-constant">std</span>::<span class="org-type">priority_queue</span>&lt;<span class="org-type">QueueNode</span>, <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">QueueNode</span>&gt;, <span class="org-constant">std</span>::<span class="org-type">greater</span>&lt;&gt;&gt; <span class="org-variable-name">pq</span>;
+    <span class="org-constant">std</span>::<span class="org-type">unordered_map</span>&lt;<span class="org-type">Cell</span>, <span class="org-type">double</span>, <span class="org-type">CellHash</span>&gt; <span class="org-variable-name">dist</span>;
+    <span class="org-constant">std</span>::<span class="org-type">unordered_map</span>&lt;<span class="org-type">Cell</span>, <span class="org-type">Cell</span>, <span class="org-type">CellHash</span>&gt; <span class="org-variable-name">prev</span>;
+    <span class="org-constant">std</span>::<span class="org-type">unordered_set</span>&lt;<span class="org-type">Cell</span>, <span class="org-type">CellHash</span>&gt; <span class="org-variable-name">finalized</span>;
+
+    dist[source] = 0.0;
+    pq.push({0.0, source});
+
+    <span class="org-type">int</span> <span class="org-variable-name">expansions</span> = 0;
+
+    <span class="org-keyword">while</span> (<span class="org-negation-char">!</span>pq.empty()) {
+        <span class="org-keyword">auto</span> [d, u] = pq.top();
+        pq.pop();
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Skip if already finalized (stale entry in queue)
+</span>        <span class="org-keyword">if</span> (finalized.count(u)) <span class="org-keyword">continue</span>;
+        finalized.insert(u);
+        expansions++;
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Early termination: goal reached
+</span>        <span class="org-keyword">if</span> (u == goal) {
+            <span class="org-comment-delimiter">// </span><span class="org-comment">Reconstruct path
+</span>            <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Cell</span>&gt; <span class="org-variable-name">path</span>;
+            <span class="org-type">Cell</span> <span class="org-variable-name">node</span> = goal;
+            <span class="org-keyword">while</span> (node != source) {
+                path.push_back(node);
+                node = prev[node];
+            }
+            path.push_back(source);
+            <span class="org-constant">std</span>::reverse(path.begin(), path.end());
+            <span class="org-keyword">return</span> {path, expansions, dist[goal]};
+        }
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Relax all neighbors
+</span>        <span class="org-keyword">for</span> (<span class="org-keyword">auto</span>&amp; [<span class="org-constant">dr</span>, <span class="org-constant">dc</span>] : DIRS) {
+            <span class="org-type">Cell</span> <span class="org-variable-name">v</span>{u.r + dr, u.c + dc};
+
+            <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>isWalkable(v)) <span class="org-keyword">continue</span>;
+            <span class="org-keyword">if</span> (finalized.count(v)) <span class="org-keyword">continue</span>;
+
+            <span class="org-comment-delimiter">// </span><span class="org-comment">Don't cut corners through diagonal obstacles
+</span>            <span class="org-keyword">if</span> (dr != 0 &amp;&amp; dc != 0) {
+                <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>isWalkable({u.r + dr, u.c}) ||
+                    <span class="org-negation-char">!</span>isWalkable({u.r, u.c + dc})) {
+                    <span class="org-keyword">continue</span>;
+                }
+            }
+
+            <span class="org-type">double</span> <span class="org-variable-name">alt</span> = dist[u] + moveCost(u, v);
+            <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>dist.count(v) || alt &lt; dist[v]) {
+                dist[v] = alt;
+                prev[v] = u;
+                pq.push({alt, v});
+            }
+        }
+    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">No path found
+</span>    <span class="org-keyword">return</span> {{}, expansions, 0.0};
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">---------- Visualization ----------
+</span>
+<span class="org-type">void</span> <span class="org-function-name">printGrid</span>(<span class="org-keyword">const</span> <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Cell</span>&gt;&amp; <span class="org-variable-name">path</span>, <span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">source</span>, <span class="org-keyword">const</span> <span class="org-type">Cell</span>&amp; <span class="org-variable-name">goal</span>) {
+    <span class="org-constant">std</span>::<span class="org-type">unordered_set</span>&lt;<span class="org-type">Cell</span>, <span class="org-type">CellHash</span>&gt; <span class="org-variable-name">path_set</span>(path.begin(), path.end());
+
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"    "</span>;
+    <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">c</span> = 0; c &lt; COLS; ++c) <span class="org-constant">std</span>::cout &lt;&lt; (c % 10);
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"\n    "</span>;
+    <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">c</span> = 0; c &lt; COLS; ++c) <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"-"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"\n"</span>;
+
+    <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">r</span> = 0; r &lt; ROWS; ++r) {
+        <span class="org-constant">std</span>::cout &lt;&lt; (r &lt; 10 ? <span class="org-string">" "</span> : <span class="org-string">""</span>) &lt;&lt; r &lt;&lt; <span class="org-string">"| "</span>;
+        <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">c</span> = 0; c &lt; COLS; ++c) {
+            <span class="org-type">Cell</span> <span class="org-variable-name">cell</span>{r, c};
+            <span class="org-keyword">if</span> (cell == source)
+                <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"S"</span>;
+            <span class="org-keyword">else</span> <span class="org-keyword">if</span> (cell == goal)
+                <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"G"</span>;
+            <span class="org-keyword">else</span> <span class="org-keyword">if</span> (path_set.count(cell))
+                <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"*"</span>;
+            <span class="org-keyword">else</span> <span class="org-keyword">if</span> (grid[r][c] == 1)
+                <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"#"</span>;
+            <span class="org-keyword">else</span>
+                <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"."</span>;
+        }
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"\n"</span>;
+    }
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">---------- Main ----------
+</span>
+<span class="org-type">int</span> <span class="org-function-name">main</span>() {
+    <span class="org-type">Cell</span> <span class="org-variable-name">source</span>{1, 1};
+    <span class="org-type">Cell</span> <span class="org-variable-name">goal</span>{10, 23};
+
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"=== Dijkstra's Algorithm (2D Grid) ===\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Grid: "</span> &lt;&lt; ROWS &lt;&lt; <span class="org-string">" x "</span> &lt;&lt; COLS &lt;&lt; <span class="org-string">" (8-connected)\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Source: ("</span> &lt;&lt; source.r &lt;&lt; <span class="org-string">", "</span> &lt;&lt; source.c &lt;&lt; <span class="org-string">")\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Goal:   ("</span> &lt;&lt; goal.r &lt;&lt; <span class="org-string">", "</span> &lt;&lt; goal.c &lt;&lt; <span class="org-string">")\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Note: no heuristic &#8212; explores uniformly outward\n\n"</span>;
+
+    <span class="org-keyword">auto</span> <span class="org-variable-name">result</span> = dijkstra(source, goal);
+
+    <span class="org-keyword">if</span> (result.path.empty()) {
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"No path found!\n"</span>;
+    } <span class="org-keyword">else</span> {
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Path found!\n"</span>;
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"  Path length:    "</span> &lt;&lt; result.path.size() &lt;&lt; <span class="org-string">" cells\n"</span>;
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"  Path cost:      "</span> &lt;&lt; result.path_cost &lt;&lt; <span class="org-string">"\n"</span>;
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"  Nodes expanded: "</span> &lt;&lt; result.nodes_expanded &lt;&lt; <span class="org-string">"\n"</span>;
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"  Grid cells:     "</span> &lt;&lt; ROWS * COLS &lt;&lt; <span class="org-string">"\n"</span>;
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"  Explored:       "</span>
+                  &lt;&lt; (100.0 * result.nodes_expanded / (ROWS * COLS))
+                  &lt;&lt; <span class="org-string">"% of grid\n\n"</span>;
+
+        printGrid(result.path, source, goal);
+
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"\nLegend: S=source G=goal *=path #=obstacle .=free\n"</span>;
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"\nNote: Dijkstra explores MORE nodes than A* because it has\n"</span>;
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"no heuristic to guide it toward the goal. Compare with astar.\n"</span>;
+    }
+
+    <span class="org-keyword">return</span> 0;
+}
+</pre>
+</div>
+</details>
+
+<p>
+To build and run:
+</p>
+<pre class="example" id="org49e7762">
+clang++ -std=c++17 -O2 -o dijkstra dijkstra.cpp &amp;&amp; ./dijkstra
+</pre>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script>
+// Sidebar toggle
+document.querySelector('.sidebar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  this.classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+document.querySelector('.top-bar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  document.querySelector('.sidebar-toggle').classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+
+// Search toggle
+(function() {
+  var overlay = document.querySelector('.search-overlay');
+  var input = document.querySelector('.search-input');
+  var results = document.querySelector('.search-results');
+  document.querySelector('.top-bar-search').addEventListener('click', function() {
+    overlay.classList.toggle('active');
+    if (overlay.classList.contains('active')) input.focus();
+  });
+  document.querySelector('.search-close').addEventListener('click', function() {
+    overlay.classList.remove('active');
+    input.value = '';
+    results.innerHTML = '';
+  });
+  var pages = [];
+  fetch('/search-index.json').then(function(r){return r.json();}).then(function(d){pages=d;});
+  input.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { results.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    results.innerHTML = html || '<p style="color:#64748b">No results</p>';
+  });
+
+  // Sidebar search
+  var sInput = document.querySelector('.sidebar-search-input');
+  var sResults = document.querySelector('.sidebar-search-results');
+  sInput.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { sResults.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    sResults.innerHTML = html || '<p style="color:rgba(255,255,255,0.4)">No results</p>';
+  });
+})();
+
+// Theme toggle
+(function() {
+  var stored = localStorage.getItem('theme');
+  if (stored) {
+    document.documentElement.setAttribute('data-theme', stored);
+  }
+  document.querySelector('.theme-toggle').addEventListener('click', function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+})();
+
+// Active nav highlight
+(function() {
+  var path = window.location.pathname;
+  document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (path === href || (href !== '/index.html' && path.indexOf(href.replace('.html','')) === 0)) {
+      link.classList.add('active');
+    }
+  });
+})();
+
+// Fade in / fade out on scroll
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    } else {
+      entry.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -20px 0px' });
+
+document.querySelectorAll('.intro p, .blog-card, .pub-entry, .timeline-item, .hero-image').forEach(function(el) {
+  el.classList.add('fade-item');
+  observer.observe(el);
+});
+
+// Scroll progress bar
+window.addEventListener('scroll', function() {
+  var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var progress = (scrollTop / scrollHeight) * 100;
+  document.querySelector('.scroll-progress').style.width = progress + String.fromCharCode(37);
+});
+
+// Tag filtering on blogs page
+(function() {
+  document.querySelectorAll('.card-tag').forEach(function(tag) {
+    tag.style.cursor = 'pointer';
+    tag.addEventListener('click', function(e) {
+      e.preventDefault();
+      var selected = this.textContent.trim();
+      var allCards = document.querySelectorAll('.blog-card');
+      var allItems = document.querySelectorAll('.timeline-item');
+      var isActive = this.classList.contains('tag-active');
+      document.querySelectorAll('.card-tag').forEach(function(t) { t.classList.remove('tag-active'); });
+      if (isActive) {
+        allCards.forEach(function(c) { c.style.display = ''; });
+        allItems.forEach(function(i) { i.style.display = ''; });
+      } else {
+        this.classList.add('tag-active');
+        allCards.forEach(function(c) {
+          var t = c.querySelector('.card-tag');
+          c.style.display = (t && t.textContent.trim() === selected) ? '' : 'none';
+        });
+        allItems.forEach(function(i) {
+          var visible = i.querySelectorAll('.blog-card[style=""], .blog-card:not([style])');
+          var hasVisible = Array.from(i.querySelectorAll('.blog-card')).some(function(c) { return c.style.display !== 'none'; });
+          i.style.display = hasVisible ? '' : 'none';
+        });
+      }
+    });
+  });
+})();
+</script>
+</div>
+</body>
+</html>

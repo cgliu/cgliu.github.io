@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2026-09-02 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Random Rapid-exploring Graph</title>
+<meta name="description" content="Explain how RRG works with simple examples" />
+<meta name="generator" content="Org Mode" />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<div id="preamble" class="status">
+<div class="scroll-progress"></div>
+<aside class="sidebar">
+  <div class="sidebar-inner">
+    <img src="/images/avatar.svg" alt="Chenggang Liu" class="sidebar-avatar"/>
+    <a href="/index.html" class="site-logo">Chenggang Liu</a>
+    <nav class="sidebar-nav">
+      <a href="/index.html">Home</a>
+      <a href="/blogs.html">Blogs</a>
+      <a href="/projects.html">Projects</a>
+      <a href="/publications.html">Publications</a>
+      <a href="/about.html">About</a>
+    </nav>
+    <div class="sidebar-social">
+      <a href="https://www.linkedin.com/in/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="https://github.com/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <a href="https://scholar.google.com/citations?user=omz_MCoAAAAJ&hl=en" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg></a>
+    </div>
+    <div class="sidebar-search">
+      <input type="text" class="sidebar-search-input" placeholder="Search..."/>
+      <div class="sidebar-search-results"></div>
+    </div>
+    <button class="theme-toggle" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</aside>
+<button class="sidebar-toggle" aria-label="Toggle menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="top-bar">
+  <button class="top-bar-toggle" aria-label="Toggle menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+  <a href="/index.html" class="top-bar-title">Chenggang Liu</a>
+  <button class="top-bar-search" aria-label="Open search bar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+  </button>
+</div>
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" class="search-input" placeholder="Search..."/>
+    <button class="search-close" aria-label="Close search">&times;</button>
+  </div>
+  <div class="search-results"></div>
+</div>
+</div>
+<div id="content" class="content">
+<header>
+<h1 class="title">Random Rapid-exploring Graph</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orge6b84c7">What is RRG method including Pros and Cons</a>
+<ul>
+<li><a href="#org5fc90af">Pros</a></li>
+<li><a href="#org7f124f0">Cons</a></li>
+</ul>
+</li>
+<li><a href="#orge82d658">How does it work</a>
+<ul>
+<li><a href="#org0272a8c">Algorithm Steps (per iteration)</a></li>
+<li><a href="#org471e7e5">Connection Radius Formula</a></li>
+<li><a href="#org261ed8b">Path Extraction</a></li>
+</ul>
+</li>
+<li><a href="#orgac984ed">What is the connection with RRT, PRM methods</a>
+<ul>
+<li><a href="#org080049c">RRT (Rapidly-exploring Random Tree)</a></li>
+<li><a href="#org3e62e25">PRM (Probabilistic Roadmap)</a></li>
+<li><a href="#orge9bcc8a">RRG's relationship to both</a></li>
+</ul>
+</li>
+<li><a href="#org7cbe775">RRG under Partial Observability</a>
+<ul>
+<li><a href="#org7671d37">The Core Problem</a></li>
+<li><a href="#org24d6f9d">Approach: Interleave Planning and Execution (Receding-Horizon RRG)</a>
+<ul>
+<li><a href="#org0de49e7">1. Maintain Three-State Occupancy Map</a></li>
+<li><a href="#org9fe44e6">2. Optimistic vs. Pessimistic Edge Validation</a></li>
+<li><a href="#org4934c3d">3. Incremental Graph Update Loop</a></li>
+<li><a href="#org358acf6">4. Lazy Collision Checking</a></li>
+<li><a href="#org9a7cf26">5. FOV-Aware Sampling Bias</a></li>
+<li><a href="#org420644c">6. Edge Confidence / Cost Augmentation</a></li>
+</ul>
+</li>
+<li><a href="#orga920bd9">Comparison with Related Online Methods</a></li>
+<li><a href="#org221af28">Key Advantages of RRG for Partial Observability</a></li>
+<li><a href="#org62a9ecd">Key Challenges</a></li>
+<li><a href="#orge27fcd2">References</a></li>
+</ul>
+</li>
+<li><a href="#org1ab1289">Examples</a></li>
+</ul>
+</div>
+</nav>
+<div id="outline-container-orge6b84c7" class="outline-2">
+<h2 id="orge6b84c7">What is RRG method including Pros and Cons</h2>
+<div class="outline-text-2" id="text-orge6b84c7">
+<p>
+RRG (Rapidly-exploring Random Graph) is a sampling-based motion planning
+algorithm introduced by Karaman &amp; Frazzoli (IJRR 2011). Unlike RRT which
+builds a tree, RRG builds a <b>graph</b> by connecting each new sample to ALL
+nearby nodes within a computed radius, not just a single parent.
+</p>
+
+<p>
+The key idea: when a new sample is added, connect it to every existing node
+within a ball of radius <code>r(n) = γ · (log(n)/n)^(1/d)</code>, where n is the
+current number of nodes, d is the dimensionality, and γ is a tuning
+constant. This creates a richly connected graph that can be searched for
+optimal paths.
+</p>
+</div>
+<div id="outline-container-org5fc90af" class="outline-3">
+<h3 id="org5fc90af">Pros</h3>
+<div class="outline-text-3" id="text-org5fc90af">
+<ul class="org-ul">
+<li><b>Asymptotically optimal</b>: as the number of samples n → ∞, the cost of
+the best path in the graph converges to the true optimal path cost
+(almost surely). This is a property RRT does NOT have.</li>
+<li><b>Rich connectivity</b>: multiple edges per node means alternative routes are
+available; Dijkstra or A* can extract the shortest path post-construction.</li>
+<li><b>Probabilistically complete</b>: if a solution exists, RRG will find it
+given enough samples.</li>
+<li><b>Simple to implement</b>: the core loop is straightforward — sample, steer,
+connect to all near neighbors.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org7f124f0" class="outline-3">
+<h3 id="org7f124f0">Cons</h3>
+<div class="outline-text-3" id="text-org7f124f0">
+<ul class="org-ul">
+<li><b>Higher memory usage</b>: stores a full graph (many edges per node) vs. a
+tree (one parent per node). Edge count grows as O(n log n).</li>
+<li><b>Slower per-iteration</b>: must perform a radius-neighbor search and
+collision-check multiple edges at each step, compared to RRT's single
+parent connection.</li>
+<li><b>Post-processing required</b>: unlike RRT which gives an immediate
+start-to-goal tree path, RRG requires a graph search (Dijkstra) to
+extract the best path.</li>
+<li><b>Parameter sensitivity</b>: the γ constant must be tuned — too small leads
+to sparse connectivity, too large wastes computation on redundant edges.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orge82d658" class="outline-2">
+<h2 id="orge82d658">How does it work</h2>
+<div class="outline-text-2" id="text-orge82d658">
+</div>
+<div id="outline-container-org0272a8c" class="outline-3">
+<h3 id="org0272a8c">Algorithm Steps (per iteration)</h3>
+<div class="outline-text-3" id="text-org0272a8c">
+<ol class="org-ol">
+<li><b>Sample</b>: generate a random point <code>x_rand</code> uniformly in the
+configuration space.</li>
+<li><b>Find Nearest</b>: locate the closest existing node <code>x_nearest</code> to <code>x_rand</code>.</li>
+<li><b>Steer</b>: move from <code>x_nearest</code> toward <code>x_rand</code> by at most <code>step_size</code>
+to produce <code>x_new</code>.</li>
+<li><b>Collision Check</b>: verify the segment from <code>x_nearest</code> to <code>x_new</code> is
+obstacle-free. If not, discard and repeat.</li>
+<li><b>Add Node</b>: insert <code>x_new</code> into the graph.</li>
+<li><b>Compute Radius</b>: calculate <code>r(n) = γ · (log(n)/n)^(1/d)</code>.</li>
+<li><b>Connect to Neighbors</b>: find ALL existing nodes within radius <code>r(n)</code> of
+<code>x_new</code>. For each, if the connecting segment is collision-free, add an
+undirected edge. <b>This is the key step that differentiates RRG from RRT.</b></li>
+<li><b>Goal Check</b>: if <code>x_new</code> is within <code>goal_radius</code> of the goal, stop
+building and run Dijkstra to find the shortest path.</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org471e7e5" class="outline-3">
+<h3 id="org471e7e5">Connection Radius Formula</h3>
+<div class="outline-text-3" id="text-org471e7e5">
+<pre class="example" id="org14f3af5">
+r(n) = γ · (log(n) / n)^(1/d)
+</pre>
+
+<ul class="org-ul">
+<li>n = number of nodes currently in the graph</li>
+<li>d = dimension of configuration space (2 for 2D planning)</li>
+<li>γ = tuning constant (must exceed a theoretical threshold for optimality)</li>
+</ul>
+
+<p>
+The radius shrinks as more nodes are added, so early iterations make long
+connections (ensuring connectivity) and later iterations make local ones
+(refining path quality).
+</p>
+</div>
+</div>
+<div id="outline-container-org261ed8b" class="outline-3">
+<h3 id="org261ed8b">Path Extraction</h3>
+<div class="outline-text-3" id="text-org261ed8b">
+<p>
+After the graph is built, Dijkstra's algorithm finds the shortest
+(least-cost) path from start to goal through the graph. The edge weights
+are Euclidean distances.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgac984ed" class="outline-2">
+<h2 id="orgac984ed">What is the connection with RRT, PRM methods</h2>
+<div class="outline-text-2" id="text-orgac984ed">
+<p>
+RRG sits between RRT and PRM, combining properties of both:
+</p>
+</div>
+<div id="outline-container-org080049c" class="outline-3">
+<h3 id="org080049c">RRT (Rapidly-exploring Random Tree)</h3>
+<div class="outline-text-3" id="text-org080049c">
+<ul class="org-ul">
+<li>Builds a <b>tree</b>: each new node connects to exactly ONE parent (the nearest
+node or best-cost parent).</li>
+<li>Explores space quickly by biasing growth toward unexplored regions.</li>
+<li>NOT asymptotically optimal — the first feasible path found is typically
+suboptimal and cannot be improved since the tree structure is fixed.</li>
+<li>RRT* improves on this by rewiring the tree, but still maintains tree structure.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org3e62e25" class="outline-3">
+<h3 id="org3e62e25">PRM (Probabilistic Roadmap)</h3>
+<div class="outline-text-3" id="text-org3e62e25">
+<ul class="org-ul">
+<li>A <b>multi-query</b> method: first builds a graph (roadmap) by sampling many
+points and connecting neighbors, then answers multiple start/goal queries
+on the same graph.</li>
+<li>Two-phase: construction phase (sample + connect) and query phase (graph
+search).</li>
+<li>Asymptotically optimal but designed for static environments with repeated
+queries.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orge9bcc8a" class="outline-3">
+<h3 id="orge9bcc8a">RRG's relationship to both</h3>
+<div class="outline-text-3" id="text-orge9bcc8a">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Property</th>
+<th scope="col" class="org-left">RRT</th>
+<th scope="col" class="org-left">RRG</th>
+<th scope="col" class="org-left">PRM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Structure</td>
+<td class="org-left">Tree</td>
+<td class="org-left">Graph</td>
+<td class="org-left">Graph</td>
+</tr>
+
+<tr>
+<td class="org-left">Edges per node</td>
+<td class="org-left">1 (parent)</td>
+<td class="org-left">Multiple</td>
+<td class="org-left">Multiple</td>
+</tr>
+
+<tr>
+<td class="org-left">Asymptotically optimal</td>
+<td class="org-left">No</td>
+<td class="org-left">Yes</td>
+<td class="org-left">Yes</td>
+</tr>
+
+<tr>
+<td class="org-left">Incremental</td>
+<td class="org-left">Yes</td>
+<td class="org-left">Yes</td>
+<td class="org-left">No (batch)</td>
+</tr>
+
+<tr>
+<td class="org-left">Single-query</td>
+<td class="org-left">Yes</td>
+<td class="org-left">Yes</td>
+<td class="org-left">No (multi)</td>
+</tr>
+
+<tr>
+<td class="org-left">Explores toward goal</td>
+<td class="org-left">Yes</td>
+<td class="org-left">Yes</td>
+<td class="org-left">No (uniform)</td>
+</tr>
+</tbody>
+</table>
+
+<ul class="org-ul">
+<li><b>RRG = RRT's incremental exploration + PRM's graph connectivity</b>.</li>
+<li>RRG keeps RRT's single-query, incremental sampling strategy (sample one
+point at a time, grow toward unexplored space), but adopts PRM's idea of
+connecting to multiple neighbors to form a graph.</li>
+<li>RRT* is derived from RRG: it is RRG with the additional constraint that
+the graph must remain a tree (achieved by keeping only the best-cost
+parent edge and rewiring). RRT* ⊂ RRG in terms of edges retained.</li>
+<li>The theoretical result (Karaman &amp; Frazzoli 2011) proves that RRT is NOT
+asymptotically optimal, while RRG and RRT* both ARE, precisely because
+they connect to multiple neighbors within the shrinking radius r(n).</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org7cbe775" class="outline-2">
+<h2 id="org7cbe775">RRG under Partial Observability</h2>
+<div class="outline-text-2" id="text-org7cbe775">
+<p>
+Standard RRG assumes a fully known, static environment — the obstacle map
+is complete before planning begins. In practice, a robot has limited
+sensors (LiDAR, depth camera) with a finite field of view (FOV) and cannot
+see through walls. This section describes how to adapt RRG to partial
+observation.
+</p>
+</div>
+<div id="outline-container-org7671d37" class="outline-3">
+<h3 id="org7671d37">The Core Problem</h3>
+<div class="outline-text-3" id="text-org7671d37">
+<ul class="org-ul">
+<li>The robot only observes obstacles within its sensor cone/range.</li>
+<li>Unobserved space is <b>unknown</b> — it might be free or occupied.</li>
+<li>Edges in the graph that pass through unknown space cannot be validated.</li>
+<li>The environment may also be dynamic (obstacles appear/disappear).</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org24d6f9d" class="outline-3">
+<h3 id="org24d6f9d">Approach: Interleave Planning and Execution (Receding-Horizon RRG)</h3>
+<div class="outline-text-3" id="text-org24d6f9d">
+<p>
+The key idea is to run RRG <b>incrementally</b> as the robot moves, updating
+the graph with new sensor observations at each step:
+</p>
+</div>
+<div id="outline-container-org0de49e7" class="outline-4">
+<h4 id="org0de49e7">1. Maintain Three-State Occupancy Map</h4>
+<div class="outline-text-4" id="text-org0de49e7">
+<p>
+Classify each region of space as one of:
+</p>
+<ul class="org-ul">
+<li><b>Free</b>: observed and confirmed empty.</li>
+<li><b>Occupied</b>: observed and confirmed obstacle.</li>
+<li><b>Unknown</b>: not yet observed (outside FOV or occluded).</li>
+</ul>
+
+<p>
+This is typically stored as an occupancy grid or octree (e.g., OctoMap).
+</p>
+</div>
+</div>
+<div id="outline-container-org9fe44e6" class="outline-4">
+<h4 id="org9fe44e6">2. Optimistic vs. Pessimistic Edge Validation</h4>
+<div class="outline-text-4" id="text-org9fe44e6">
+<p>
+Two strategies for treating unknown space during collision checking:
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Strategy</th>
+<th scope="col" class="org-left">Unknown space treated as</th>
+<th scope="col" class="org-left">Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Optimistic</td>
+<td class="org-left">Free</td>
+<td class="org-left">Explores aggressively; may hit new</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">obstacles and need to replan</td>
+</tr>
+
+<tr>
+<td class="org-left">Pessimistic</td>
+<td class="org-left">Occupied</td>
+<td class="org-left">Conservative; avoids unknowns but</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">may get stuck in narrow corridors</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+A common middle ground: treat unknown as free for graph <b>construction</b>
+(sampling and connecting), but only <b>commit</b> to executing edges that pass
+through confirmed free space. This gives the planner a candidate path while
+keeping execution safe.
+</p>
+</div>
+</div>
+<div id="outline-container-org4934c3d" class="outline-4">
+<h4 id="org4934c3d">3. Incremental Graph Update Loop</h4>
+<div class="outline-text-4" id="text-org4934c3d">
+<pre class="example" id="org845cc9b">
+while robot has not reached goal:
+    1. Observe: update occupancy map from current sensor data
+    2. Invalidate: remove/mark edges that now cross newly-discovered obstacles
+    3. Grow: add new RRG samples in the newly-revealed free space
+    4. Reconnect: attempt to reconnect orphaned subgraphs through new free space
+    5. Replan: run Dijkstra on the updated graph for best current path
+    6. Execute: follow the path for a short horizon (e.g., next few waypoints)
+    7. Repeat from current position
+</pre>
+</div>
+</div>
+<div id="outline-container-org358acf6" class="outline-4">
+<h4 id="org358acf6">4. Lazy Collision Checking</h4>
+<div class="outline-text-4" id="text-org358acf6">
+<p>
+A practical optimization: don't collision-check every edge upfront.
+Instead:
+</p>
+<ul class="org-ul">
+<li>Build the graph assuming all edges in unknown space are valid.</li>
+<li>When Dijkstra returns a path, check <b>only those edges</b> for collisions
+against the current map.</li>
+<li>If an edge is invalid, remove it, replan on the reduced graph.</li>
+<li>This avoids wasting computation on edges the robot will never traverse.</li>
+</ul>
+
+<p>
+This is the "Lazy" variant and applies well to RRG because of its dense
+connectivity — removing one invalid edge usually leaves alternative routes.
+</p>
+</div>
+</div>
+<div id="outline-container-org9a7cf26" class="outline-4">
+<h4 id="org9a7cf26">5. FOV-Aware Sampling Bias</h4>
+<div class="outline-text-4" id="text-org9a7cf26">
+<p>
+Instead of sampling uniformly over the entire space, bias toward:
+</p>
+<ul class="org-ul">
+<li>The <b>frontier</b> between known-free and unknown space (encourages exploration).</li>
+<li>The region along the current best path (refines the route being followed).</li>
+<li>The sensor FOV from the robot's current pose (samples here can be
+immediately validated).</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org420644c" class="outline-4">
+<h4 id="org420644c">6. Edge Confidence / Cost Augmentation</h4>
+<div class="outline-text-4" id="text-org420644c">
+<p>
+Assign higher traversal cost to edges passing through regions with fewer
+observations or high uncertainty. Dijkstra then naturally prefers
+well-observed routes:
+</p>
+
+<pre class="example" id="orgd386206">
+edge_cost(u, v) = euclidean(u, v) × (1 + α · uncertainty(u, v))
+</pre>
+
+<p>
+Where <code>uncertainty(u, v)</code> could be the fraction of the edge segment
+passing through unknown cells, and α is a risk-aversion parameter.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orga920bd9" class="outline-3">
+<h3 id="orga920bd9">Comparison with Related Online Methods</h3>
+<div class="outline-text-3" id="text-orga920bd9">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Method</th>
+<th scope="col" class="org-left">Structure</th>
+<th scope="col" class="org-left">Handles partial obs?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">D* / D* Lite</td>
+<td class="org-left">Grid</td>
+<td class="org-left">Yes — replans on grid changes</td>
+</tr>
+
+<tr>
+<td class="org-left">RRT-X</td>
+<td class="org-left">Tree</td>
+<td class="org-left">Yes — rewires tree online</td>
+</tr>
+
+<tr>
+<td class="org-left">RRTX</td>
+<td class="org-left">Tree</td>
+<td class="org-left">Yes — propagates cost changes</td>
+</tr>
+
+<tr>
+<td class="org-left">Online RRG (above)</td>
+<td class="org-left">Graph</td>
+<td class="org-left">Yes — invalidates/grows edges</td>
+</tr>
+
+<tr>
+<td class="org-left">Belief-space RRG</td>
+<td class="org-left">Graph</td>
+<td class="org-left">Yes — plans over belief states</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org221af28" class="outline-3">
+<h3 id="org221af28">Key Advantages of RRG for Partial Observability</h3>
+<div class="outline-text-3" id="text-org221af28">
+<ul class="org-ul">
+<li><b>Redundant paths</b>: the graph structure (vs. tree) means that when one
+edge is invalidated by a new obstacle, alternative routes likely exist
+without rebuilding from scratch.</li>
+<li><b>Incremental growth</b>: new samples integrate naturally as space is revealed.</li>
+<li><b>Dijkstra re-query is cheap</b>: after invalidating a few edges, re-running
+shortest-path on the existing graph is fast compared to rebuilding an
+entire plan. Specifically:
+<ul class="org-ul">
+<li>The graph (nodes + adjacency lists) already exists in memory — no
+sampling, steering, or collision-checking is needed to recreate it.</li>
+<li>Dijkstra on a graph with n nodes and m edges runs in O((n + m) log n)
+with a binary heap. For a typical RRG with ~2000 nodes and ~10k edges,
+this is sub-millisecond on modern hardware.</li>
+<li>Invalidating an edge is O(1) — just remove it from two adjacency
+lists. You don't recompute the entire graph topology.</li>
+<li>Contrast with replanning from scratch: that requires re-sampling
+thousands of points, performing collision checks for each (expensive
+geometric queries), and rebuilding all connections. This is orders of
+magnitude slower than a graph search on an existing structure.</li>
+<li>Further optimization: use D* Lite or LPA* instead of full Dijkstra.
+These algorithms propagate only the cost changes affected by the removed
+edges, making re-query even cheaper — often O(affected nodes) rather
+than O(entire graph).</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org62a9ecd" class="outline-3">
+<h3 id="org62a9ecd">Key Challenges</h3>
+<div class="outline-text-3" id="text-org62a9ecd">
+<ul class="org-ul">
+<li><b>Graph maintenance cost</b>: invalidating edges and checking consistency
+requires bookkeeping (adjacency updates, orphan detection).</li>
+<li><b>Optimality loss</b>: the graph was built under incomplete information, so
+the path is optimal w.r.t. current knowledge, not globally optimal.</li>
+<li><b>Latency</b>: sensor-to-replan loop must be fast enough for real-time
+execution — may need to limit graph size or use approximate NN search
+(kd-tree).</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orge27fcd2" class="outline-3">
+<h3 id="orge27fcd2">References</h3>
+<div class="outline-text-3" id="text-orge27fcd2">
+<ul class="org-ul">
+<li>Karaman &amp; Frazzoli, "Sampling-based algorithms for optimal motion
+planning", IJRR 2011.</li>
+<li>Otte &amp; Frazzoli, "RRTX: Asymptotically optimal single-query
+sampling-based motion planning with quick replanning", IJRR 2016.</li>
+<li>Hauser, "Lazy Collision Checking in Asymptotically-Optimal Motion
+Planning", ICRA 2015.</li>
+<li>Bry &amp; Roy, "Rapidly-exploring Random Belief Trees for Motion Planning
+Under Uncertainty", ICRA 2011.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org1ab1289" class="outline-2">
+<h2 id="org1ab1289">Examples</h2>
+<div class="outline-text-2" id="text-org1ab1289">
+<details><summary>Click to expand source code (rrg.cpp)</summary>
+<div class="org-src-container">
+<pre class="src src-cpp"><span class="org-doc">/**
+ * Rapidly-Exploring Random Graph (RRG)
+ *
+ * RRG is a sampling-based motion planning algorithm that builds a graph
+ * (not just a tree like RRT) by connecting new samples to ALL nearby nodes
+ * within a ball of radius r(n) = gamma * (log(n)/n)^(1/d), where:
+ *   - n = number of nodes in the graph
+ *   - d = dimension of the configuration space
+ *   - gamma = a tuning constant &gt; threshold for asymptotic optimality
+ *
+ * Unlike RRT, RRG maintains multiple edges per node, forming a graph that
+ * converges to optimal paths as the number of samples grows.
+ *
+ * Reference: Karaman &amp; Frazzoli, "Sampling-based algorithms for optimal
+ * motion planning", IJRR 2011.
+ */</span>
+
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;algorithm&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;cmath&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;fstream&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;iostream&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;limits&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;random&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;sstream&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;vector&gt;</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">---------- Configuration ----------
+</span>
+<span class="org-keyword">struct</span> <span class="org-type">Point</span> {
+    <span class="org-type">double</span> <span class="org-variable-name">x</span>;
+    <span class="org-type">double</span> <span class="org-variable-name">y</span>;
+
+    <span class="org-type">double</span> <span class="org-function-name">distanceTo</span>(<span class="org-keyword">const</span> <span class="org-type">Point</span>&amp; <span class="org-variable-name">other</span>) <span class="org-keyword">const</span> {
+        <span class="org-type">double</span> <span class="org-variable-name">dx</span> = x - other.x;
+        <span class="org-type">double</span> <span class="org-variable-name">dy</span> = y - other.y;
+        <span class="org-keyword">return</span> <span class="org-constant">std</span>::sqrt(<span class="org-type">dx</span> * <span class="org-variable-name">dx</span> + dy * dy);
+    }
+};
+
+<span class="org-keyword">struct</span> <span class="org-type">Obstacle</span> {
+    <span class="org-type">Point</span> <span class="org-variable-name">center</span>;
+    <span class="org-type">double</span> <span class="org-variable-name">radius</span>;
+
+    <span class="org-type">bool</span> <span class="org-function-name">contains</span>(<span class="org-keyword">const</span> <span class="org-type">Point</span>&amp; <span class="org-variable-name">p</span>) <span class="org-keyword">const</span> {
+        <span class="org-keyword">return</span> p.distanceTo(center) &lt;= radius;
+    }
+};
+
+<span class="org-keyword">struct</span> <span class="org-type">Node</span> {
+    <span class="org-type">int</span> <span class="org-variable-name">id</span>;
+    <span class="org-type">Point</span> <span class="org-variable-name">position</span>;
+    <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">int</span>&gt; <span class="org-variable-name">neighbors</span>;  <span class="org-comment-delimiter">// </span><span class="org-comment">adjacency list (graph edges)
+</span>};
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">---------- RRG Algorithm ----------
+</span>
+<span class="org-keyword">class</span> <span class="org-type">RRG</span> {
+<span class="org-keyword">public</span>:
+    <span class="org-function-name">RRG</span>(<span class="org-type">Point</span> <span class="org-variable-name">start</span>, <span class="org-type">Point</span> <span class="org-variable-name">goal</span>,
+        <span class="org-type">double</span> <span class="org-variable-name">x_min</span>, <span class="org-type">double</span> <span class="org-variable-name">x_max</span>,
+        <span class="org-type">double</span> <span class="org-variable-name">y_min</span>, <span class="org-type">double</span> <span class="org-variable-name">y_max</span>,
+        <span class="org-type">double</span> <span class="org-variable-name">step_size</span>,
+        <span class="org-type">double</span> <span class="org-variable-name">goal_radius</span>,
+        <span class="org-type">int</span> <span class="org-variable-name">max_iterations</span>,
+        <span class="org-type">double</span> <span class="org-variable-name">gamma_rrg</span>)
+        : start_(start)
+        , goal_(goal)
+        , x_min_(x_min)
+        , x_max_(x_max)
+        , y_min_(y_min)
+        , y_max_(y_max)
+        , step_size_(step_size)
+        , goal_radius_(goal_radius)
+        , max_iterations_(max_iterations)
+        , gamma_rrg_(gamma_rrg)
+        , gen_(<span class="org-constant">std</span>::random_device{}())
+        , dist_x_(x_min, x_max)
+        , dist_y_(y_min, y_max)
+    {
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Add start node
+</span>        <span class="org-type">Node</span> <span class="org-variable-name">start_node</span>;
+        start_node.id = 0;
+        start_node.position = start_;
+        nodes_.push_back(start_node);
+    }
+
+    <span class="org-type">void</span> <span class="org-function-name">addObstacle</span>(<span class="org-keyword">const</span> <span class="org-type">Obstacle</span>&amp; <span class="org-variable-name">obs</span>) {
+        obstacles_.push_back(obs);
+    }
+
+    <span class="org-type">bool</span> <span class="org-function-name">build</span>() {
+        <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">iter</span> = 0; iter &lt; max_iterations_; ++iter) {
+            <span class="org-comment-delimiter">// </span><span class="org-comment">1. Sample a random point
+</span>            <span class="org-type">Point</span> <span class="org-variable-name">x_rand</span> = sample();
+
+            <span class="org-comment-delimiter">// </span><span class="org-comment">2. Find the nearest node
+</span>            <span class="org-type">int</span> <span class="org-variable-name">nearest_id</span> = findNearest(x_rand);
+            <span class="org-keyword">const</span> <span class="org-type">Point</span>&amp; <span class="org-variable-name">x_nearest</span> = nodes_[nearest_id].position;
+
+            <span class="org-comment-delimiter">// </span><span class="org-comment">3. Steer toward the random sample
+</span>            <span class="org-type">Point</span> <span class="org-variable-name">x_new</span> = steer(x_nearest, x_rand);
+
+            <span class="org-comment-delimiter">// </span><span class="org-comment">4. Check if the new point is collision-free
+</span>            <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>isCollisionFree(x_nearest, x_new)) {
+                <span class="org-keyword">continue</span>;
+            }
+
+            <span class="org-comment-delimiter">// </span><span class="org-comment">5. Add the new node
+</span>            <span class="org-type">int</span> <span class="org-variable-name">new_id</span> = <span class="org-keyword">static_cast</span>&lt;<span class="org-type">int</span>&gt;(nodes_.size());
+            <span class="org-type">Node</span> <span class="org-variable-name">new_node</span>;
+            new_node.id = new_id;
+            new_node.position = x_new;
+            nodes_.push_back(new_node);
+
+            <span class="org-comment-delimiter">// </span><span class="org-comment">6. Find all nodes within the RRG radius
+</span>            <span class="org-type">double</span> <span class="org-variable-name">radius</span> = computeRadius();
+            <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">int</span>&gt; <span class="org-variable-name">near_ids</span> = findNear(x_new, radius);
+
+            <span class="org-comment-delimiter">// </span><span class="org-comment">7. Connect to ALL collision-free neighbors within radius
+</span>            <span class="org-comment-delimiter">//    </span><span class="org-comment">(This is the key difference from RRT: we form a GRAPH)
+</span>            <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">near_id</span> : near_ids) {
+                <span class="org-keyword">if</span> (near_id == new_id) <span class="org-keyword">continue</span>;
+                <span class="org-keyword">if</span> (isCollisionFree(<span class="org-type">nodes_</span>[near_id].position, x_new)) {
+                    addEdge(new_id, near_id);
+                }
+            }
+
+            <span class="org-comment-delimiter">// </span><span class="org-comment">Also ensure connection to nearest node if not already
+</span>            <span class="org-keyword">if</span> (<span class="org-constant">std</span>::find(<span class="org-type">nodes_</span>[new_id].neighbors.begin(),
+                          <span class="org-type">nodes_</span>[new_id].neighbors.end(),
+                          nearest_id) == nodes_[new_id].neighbors.end()) {
+                <span class="org-keyword">if</span> (isCollisionFree(<span class="org-type">nodes_</span>[nearest_id].position, x_new)) {
+                    addEdge(new_id, nearest_id);
+                }
+            }
+
+            <span class="org-comment-delimiter">// </span><span class="org-comment">8. Check if we reached the goal
+</span>            <span class="org-keyword">if</span> (x_new.distanceTo(goal_) &lt;= goal_radius_) {
+                goal_node_id_ = new_id;
+                <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Goal reached at iteration "</span> &lt;&lt; iter
+                          &lt;&lt; <span class="org-string">" with "</span> &lt;&lt; nodes_.size() &lt;&lt; <span class="org-string">" nodes.\n"</span>;
+                <span class="org-keyword">return</span> <span class="org-constant">true</span>;
+            }
+        }
+
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Goal not reached after "</span> &lt;&lt; max_iterations_
+                  &lt;&lt; <span class="org-string">" iterations ("</span> &lt;&lt; nodes_.size() &lt;&lt; <span class="org-string">" nodes).\n"</span>;
+        <span class="org-keyword">return</span> <span class="org-constant">false</span>;
+    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Find shortest path from start to goal using BFS/Dijkstra on the graph
+</span>    <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Point</span>&gt; <span class="org-function-name">findShortestPath</span>() <span class="org-keyword">const</span> {
+        <span class="org-keyword">if</span> (goal_node_id_ &lt; 0) <span class="org-keyword">return</span> {};
+
+        <span class="org-type">int</span> <span class="org-variable-name">n</span> = <span class="org-keyword">static_cast</span>&lt;<span class="org-type">int</span>&gt;(nodes_.size());
+        <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">double</span>&gt; <span class="org-variable-name">dist</span>(n, <span class="org-constant">std</span>::<span class="org-constant">numeric_limits</span>&lt;<span class="org-type">double</span>&gt;::infinity());
+        <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">int</span>&gt; <span class="org-variable-name">prev</span>(n, -1);
+        <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">bool</span>&gt; <span class="org-variable-name">visited</span>(n, <span class="org-constant">false</span>);
+
+        dist[0] = 0.0;
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Simple Dijkstra
+</span>        <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 0; i &lt; n; ++i) {
+            <span class="org-comment-delimiter">// </span><span class="org-comment">Find unvisited node with minimum distance
+</span>            <span class="org-type">int</span> <span class="org-variable-name">u</span> = -1;
+            <span class="org-type">double</span> <span class="org-variable-name">min_dist</span> = <span class="org-constant">std</span>::<span class="org-constant">numeric_limits</span>&lt;<span class="org-type">double</span>&gt;::infinity();
+            <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">j</span> = 0; j &lt; n; ++j) {
+                <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>visited[j] &amp;&amp; dist[j] &lt; min_dist) {
+                    min_dist = dist[j];
+                    u = j;
+                }
+            }
+            <span class="org-keyword">if</span> (u == -1) <span class="org-keyword">break</span>;
+            visited[u] = <span class="org-constant">true</span>;
+
+            <span class="org-comment-delimiter">// </span><span class="org-comment">Relax neighbors
+</span>            <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">v</span> : nodes_[u].neighbors) {
+                <span class="org-type">double</span> <span class="org-variable-name">edge_cost</span> = nodes_[u].position.distanceTo(<span class="org-type">nodes_</span>[v].position);
+                <span class="org-keyword">if</span> (dist[u] + edge_cost &lt; dist[v]) {
+                    dist[v] = dist[u] + edge_cost;
+                    prev[v] = u;
+                }
+            }
+        }
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Reconstruct path
+</span>        <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Point</span>&gt; <span class="org-variable-name">path</span>;
+        <span class="org-type">int</span> <span class="org-variable-name">current</span> = goal_node_id_;
+        <span class="org-keyword">while</span> (current != -1) {
+            path.push_back(<span class="org-type">nodes_</span>[current].position);
+            current = prev[current];
+        }
+        <span class="org-constant">std</span>::reverse(path.begin(), path.end());
+
+        <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>path.empty() &amp;&amp; path.front().distanceTo(start_) &lt; 1e-9) {
+            <span class="org-keyword">return</span> path;
+        }
+        <span class="org-keyword">return</span> {};  <span class="org-comment-delimiter">// </span><span class="org-comment">No path found
+</span>    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Statistics
+</span>    <span class="org-type">int</span> <span class="org-function-name">getNodeCount</span>() <span class="org-keyword">const</span> { <span class="org-keyword">return</span> <span class="org-keyword">static_cast</span>&lt;<span class="org-type">int</span>&gt;(nodes_.size()); }
+
+    <span class="org-type">int</span> <span class="org-function-name">getEdgeCount</span>() <span class="org-keyword">const</span> {
+        <span class="org-type">int</span> <span class="org-variable-name">count</span> = 0;
+        <span class="org-keyword">for</span> (<span class="org-keyword">const</span> <span class="org-keyword">auto</span>&amp; <span class="org-variable-name">node</span> : nodes_) {
+            count += <span class="org-keyword">static_cast</span>&lt;<span class="org-type">int</span>&gt;(node.neighbors.size());
+        }
+        <span class="org-keyword">return</span> count / 2;  <span class="org-comment-delimiter">// </span><span class="org-comment">each edge counted twice (undirected)
+</span>    }
+
+    <span class="org-type">double</span> <span class="org-function-name">getAverageDegree</span>() <span class="org-keyword">const</span> {
+        <span class="org-keyword">if</span> (nodes_.empty()) <span class="org-keyword">return</span> 0.0;
+        <span class="org-type">double</span> <span class="org-variable-name">total</span> = 0.0;
+        <span class="org-keyword">for</span> (<span class="org-keyword">const</span> <span class="org-keyword">auto</span>&amp; <span class="org-variable-name">node</span> : nodes_) {
+            total += node.neighbors.size();
+        }
+        <span class="org-keyword">return</span> total / nodes_.size();
+    }
+
+    <span class="org-keyword">const</span> <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Node</span>&gt;&amp; <span class="org-function-name">getNodes</span>() <span class="org-keyword">const</span> { <span class="org-keyword">return</span> nodes_; }
+    <span class="org-keyword">const</span> <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Obstacle</span>&gt;&amp; <span class="org-function-name">getObstacles</span>() <span class="org-keyword">const</span> { <span class="org-keyword">return</span> obstacles_; }
+    <span class="org-type">Point</span> <span class="org-function-name">getStart</span>() <span class="org-keyword">const</span> { <span class="org-keyword">return</span> start_; }
+    <span class="org-type">Point</span> <span class="org-function-name">getGoal</span>() <span class="org-keyword">const</span> { <span class="org-keyword">return</span> goal_; }
+    <span class="org-type">double</span> <span class="org-function-name">getXMin</span>() <span class="org-keyword">const</span> { <span class="org-keyword">return</span> x_min_; }
+    <span class="org-type">double</span> <span class="org-function-name">getXMax</span>() <span class="org-keyword">const</span> { <span class="org-keyword">return</span> x_max_; }
+    <span class="org-type">double</span> <span class="org-function-name">getYMin</span>() <span class="org-keyword">const</span> { <span class="org-keyword">return</span> y_min_; }
+    <span class="org-type">double</span> <span class="org-function-name">getYMax</span>() <span class="org-keyword">const</span> { <span class="org-keyword">return</span> y_max_; }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Export the graph visualization as SVG
+</span>    <span class="org-type">void</span> <span class="org-function-name">exportSVG</span>(<span class="org-keyword">const</span> <span class="org-constant">std</span>::<span class="org-type">string</span>&amp; <span class="org-variable-name">filename</span>,
+                   <span class="org-keyword">const</span> <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Point</span>&gt;&amp; <span class="org-variable-name">path</span> = {}) <span class="org-keyword">const</span> {
+        <span class="org-keyword">const</span> <span class="org-type">int</span> <span class="org-variable-name">img_width</span> = 800;
+        <span class="org-keyword">const</span> <span class="org-type">int</span> <span class="org-variable-name">img_height</span> = 800;
+        <span class="org-keyword">const</span> <span class="org-type">int</span> <span class="org-variable-name">margin</span> = 40;
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Coordinate transform: world -&gt; SVG pixels
+</span>        <span class="org-type">double</span> <span class="org-variable-name">sx</span> = (img_width - 2.0 * margin) / (x_max_ - x_min_);
+        <span class="org-type">double</span> <span class="org-variable-name">sy</span> = (img_height - 2.0 * margin) / (y_max_ - y_min_);
+
+        <span class="org-keyword">auto</span> <span class="org-variable-name">toSvgX</span> = [&amp;](<span class="org-type">double</span> <span class="org-variable-name">wx</span>) {
+            <span class="org-keyword">return</span> margin + (wx - x_min_) * sx;
+        };
+        <span class="org-keyword">auto</span> <span class="org-variable-name">toSvgY</span> = [&amp;](<span class="org-type">double</span> <span class="org-variable-name">wy</span>) {
+            <span class="org-comment-delimiter">// </span><span class="org-comment">Flip Y so that y increases upward
+</span>            <span class="org-keyword">return</span> img_height - margin - (wy - y_min_) * sy;
+        };
+
+        <span class="org-constant">std</span>::<span class="org-type">ofstream</span> <span class="org-variable-name">out</span>(filename);
+        <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>out.is_open()) {
+            <span class="org-constant">std</span>::cerr &lt;&lt; <span class="org-string">"Error: could not open "</span> &lt;&lt; filename &lt;&lt; <span class="org-string">" for writing.\n"</span>;
+            <span class="org-keyword">return</span>;
+        }
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">SVG header
+</span>        out &lt;&lt; <span class="org-string">"&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;\n"</span>;
+        out &lt;&lt; <span class="org-string">"&lt;svg xmlns=\"http://www.w3.org/2000/svg\" "</span>
+            &lt;&lt; <span class="org-string">"width=\""</span> &lt;&lt; img_width &lt;&lt; <span class="org-string">"\" height=\""</span> &lt;&lt; img_height &lt;&lt; <span class="org-string">"\" "</span>
+            &lt;&lt; <span class="org-string">"viewBox=\"0 0 "</span> &lt;&lt; img_width &lt;&lt; <span class="org-string">" "</span> &lt;&lt; img_height &lt;&lt; <span class="org-string">"\"&gt;\n"</span>;
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Background
+</span>        out &lt;&lt; <span class="org-string">"  &lt;rect width=\""</span> &lt;&lt; img_width &lt;&lt; <span class="org-string">"\" height=\""</span> &lt;&lt; img_height
+            &lt;&lt; <span class="org-string">"\" fill=\"#f8f9fa\" stroke=\"#333\" stroke-width=\"2\"/&gt;\n"</span>;
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Title
+</span>        out &lt;&lt; <span class="org-string">"  &lt;text x=\""</span> &lt;&lt; img_width / 2 &lt;&lt; <span class="org-string">"\" y=\"25\" "</span>
+            &lt;&lt; <span class="org-string">"text-anchor=\"middle\" font-family=\"sans-serif\" "</span>
+            &lt;&lt; <span class="org-string">"font-size=\"16\" font-weight=\"bold\" fill=\"#333\"&gt;"</span>
+            &lt;&lt; <span class="org-string">"Rapidly-Exploring Random Graph (RRG)&lt;/text&gt;\n"</span>;
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Draw obstacles
+</span>        <span class="org-keyword">for</span> (<span class="org-keyword">const</span> <span class="org-keyword">auto</span>&amp; <span class="org-variable-name">obs</span> : obstacles_) {
+            <span class="org-type">double</span> <span class="org-variable-name">cx</span> = toSvgX(obs.center.x);
+            <span class="org-type">double</span> <span class="org-variable-name">cy</span> = toSvgY(obs.center.y);
+            <span class="org-type">double</span> <span class="org-variable-name">r</span> = obs.radius * sx;  <span class="org-comment-delimiter">// </span><span class="org-comment">scale radius
+</span>            out &lt;&lt; <span class="org-string">"  &lt;circle cx=\""</span> &lt;&lt; cx &lt;&lt; <span class="org-string">"\" cy=\""</span> &lt;&lt; cy
+                &lt;&lt; <span class="org-string">"\" r=\""</span> &lt;&lt; r &lt;&lt; <span class="org-string">"\" fill=\"#e74c3c\" fill-opacity=\"0.6\" "</span>
+                &lt;&lt; <span class="org-string">"stroke=\"#c0392b\" stroke-width=\"1.5\"/&gt;\n"</span>;
+        }
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Draw graph edges (light gray, thin)
+</span>        out &lt;&lt; <span class="org-string">"  &lt;g stroke=\"#bdc3c7\" stroke-width=\"0.5\" stroke-opacity=\"0.6\"&gt;\n"</span>;
+        <span class="org-keyword">for</span> (<span class="org-keyword">const</span> <span class="org-keyword">auto</span>&amp; <span class="org-variable-name">node</span> : nodes_) {
+            <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">neighbor_id</span> : node.neighbors) {
+                <span class="org-comment-delimiter">// </span><span class="org-comment">Only draw each edge once (when neighbor_id &gt; node.id)
+</span>                <span class="org-keyword">if</span> (neighbor_id &gt; node.id) {
+                    <span class="org-type">double</span> <span class="org-variable-name">x1</span> = toSvgX(node.position.x);
+                    <span class="org-type">double</span> <span class="org-variable-name">y1</span> = toSvgY(node.position.y);
+                    <span class="org-type">double</span> <span class="org-variable-name">x2</span> = toSvgX(<span class="org-type">nodes_</span>[neighbor_id].position.x);
+                    <span class="org-type">double</span> <span class="org-variable-name">y2</span> = toSvgY(<span class="org-type">nodes_</span>[neighbor_id].position.y);
+                    out &lt;&lt; <span class="org-string">"    &lt;line x1=\""</span> &lt;&lt; x1 &lt;&lt; <span class="org-string">"\" y1=\""</span> &lt;&lt; y1
+                        &lt;&lt; <span class="org-string">"\" x2=\""</span> &lt;&lt; x2 &lt;&lt; <span class="org-string">"\" y2=\""</span> &lt;&lt; y2 &lt;&lt; <span class="org-string">"\"/&gt;\n"</span>;
+                }
+            }
+        }
+        out &lt;&lt; <span class="org-string">"  &lt;/g&gt;\n"</span>;
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Draw nodes (small blue dots)
+</span>        out &lt;&lt; <span class="org-string">"  &lt;g fill=\"#3498db\" fill-opacity=\"0.8\"&gt;\n"</span>;
+        <span class="org-keyword">for</span> (<span class="org-keyword">const</span> <span class="org-keyword">auto</span>&amp; <span class="org-variable-name">node</span> : nodes_) {
+            <span class="org-type">double</span> <span class="org-variable-name">cx</span> = toSvgX(node.position.x);
+            <span class="org-type">double</span> <span class="org-variable-name">cy</span> = toSvgY(node.position.y);
+            out &lt;&lt; <span class="org-string">"    &lt;circle cx=\""</span> &lt;&lt; cx &lt;&lt; <span class="org-string">"\" cy=\""</span> &lt;&lt; cy
+                &lt;&lt; <span class="org-string">"\" r=\"2.5\"/&gt;\n"</span>;
+        }
+        out &lt;&lt; <span class="org-string">"  &lt;/g&gt;\n"</span>;
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Draw shortest path (thick green line)
+</span>        <span class="org-keyword">if</span> (path.size() &gt;= 2) {
+            out &lt;&lt; <span class="org-string">"  &lt;polyline fill=\"none\" stroke=\"#27ae60\" "</span>
+                &lt;&lt; <span class="org-string">"stroke-width=\"3\" stroke-linecap=\"round\" "</span>
+                &lt;&lt; <span class="org-string">"stroke-linejoin=\"round\" points=\""</span>;
+            <span class="org-keyword">for</span> (<span class="org-type">size_t</span> <span class="org-variable-name">i</span> = 0; i &lt; path.size(); ++i) {
+                <span class="org-keyword">if</span> (i &gt; 0) out &lt;&lt; <span class="org-string">" "</span>;
+                out &lt;&lt; toSvgX(<span class="org-type">path</span>[i].x) &lt;&lt; <span class="org-string">","</span> &lt;&lt; toSvgY(<span class="org-type">path</span>[i].y);
+            }
+            out &lt;&lt; <span class="org-string">"\"/&gt;\n"</span>;
+
+            <span class="org-comment-delimiter">// </span><span class="org-comment">Draw path waypoints
+</span>            out &lt;&lt; <span class="org-string">"  &lt;g fill=\"#27ae60\"&gt;\n"</span>;
+            <span class="org-keyword">for</span> (<span class="org-type">size_t</span> <span class="org-variable-name">i</span> = 1; i + 1 &lt; path.size(); ++i) {
+                <span class="org-type">double</span> <span class="org-variable-name">cx</span> = toSvgX(<span class="org-type">path</span>[i].x);
+                <span class="org-type">double</span> <span class="org-variable-name">cy</span> = toSvgY(<span class="org-type">path</span>[i].y);
+                out &lt;&lt; <span class="org-string">"    &lt;circle cx=\""</span> &lt;&lt; cx &lt;&lt; <span class="org-string">"\" cy=\""</span> &lt;&lt; cy
+                    &lt;&lt; <span class="org-string">"\" r=\"4\"/&gt;\n"</span>;
+            }
+            out &lt;&lt; <span class="org-string">"  &lt;/g&gt;\n"</span>;
+        }
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Draw start (green) and goal (red) markers
+</span>        <span class="org-type">double</span> <span class="org-variable-name">start_cx</span> = toSvgX(start_.x);
+        <span class="org-type">double</span> <span class="org-variable-name">start_cy</span> = toSvgY(start_.y);
+        out &lt;&lt; <span class="org-string">"  &lt;circle cx=\""</span> &lt;&lt; start_cx &lt;&lt; <span class="org-string">"\" cy=\""</span> &lt;&lt; start_cy
+            &lt;&lt; <span class="org-string">"\" r=\"8\" fill=\"#2ecc71\" stroke=\"#1a9c4e\" stroke-width=\"2\"/&gt;\n"</span>;
+        out &lt;&lt; <span class="org-string">"  &lt;text x=\""</span> &lt;&lt; start_cx &lt;&lt; <span class="org-string">"\" y=\""</span> &lt;&lt; start_cy + 20
+            &lt;&lt; <span class="org-string">"\" text-anchor=\"middle\" font-family=\"sans-serif\" "</span>
+            &lt;&lt; <span class="org-string">"font-size=\"11\" fill=\"#1a9c4e\" font-weight=\"bold\"&gt;START&lt;/text&gt;\n"</span>;
+
+        <span class="org-type">double</span> <span class="org-variable-name">goal_cx</span> = toSvgX(goal_.x);
+        <span class="org-type">double</span> <span class="org-variable-name">goal_cy</span> = toSvgY(goal_.y);
+        out &lt;&lt; <span class="org-string">"  &lt;circle cx=\""</span> &lt;&lt; goal_cx &lt;&lt; <span class="org-string">"\" cy=\""</span> &lt;&lt; goal_cy
+            &lt;&lt; <span class="org-string">"\" r=\"8\" fill=\"#e67e22\" stroke=\"#d35400\" stroke-width=\"2\"/&gt;\n"</span>;
+        out &lt;&lt; <span class="org-string">"  &lt;text x=\""</span> &lt;&lt; goal_cx &lt;&lt; <span class="org-string">"\" y=\""</span> &lt;&lt; goal_cy + 20
+            &lt;&lt; <span class="org-string">"\" text-anchor=\"middle\" font-family=\"sans-serif\" "</span>
+            &lt;&lt; <span class="org-string">"font-size=\"11\" fill=\"#d35400\" font-weight=\"bold\"&gt;GOAL&lt;/text&gt;\n"</span>;
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Legend
+</span>        <span class="org-type">int</span> <span class="org-variable-name">lx</span> = img_width - 180;
+        <span class="org-type">int</span> <span class="org-variable-name">ly</span> = img_height - 120;
+        out &lt;&lt; <span class="org-string">"  &lt;rect x=\""</span> &lt;&lt; lx - 10 &lt;&lt; <span class="org-string">"\" y=\""</span> &lt;&lt; ly - 15
+            &lt;&lt; <span class="org-string">"\" width=\"170\" height=\"110\" fill=\"white\" "</span>
+            &lt;&lt; <span class="org-string">"fill-opacity=\"0.9\" stroke=\"#ccc\" rx=\"5\"/&gt;\n"</span>;
+        out &lt;&lt; <span class="org-string">"  &lt;text x=\""</span> &lt;&lt; lx &lt;&lt; <span class="org-string">"\" y=\""</span> &lt;&lt; ly
+            &lt;&lt; <span class="org-string">"\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#333\"&gt;"</span>
+            &lt;&lt; <span class="org-string">"&lt;tspan font-weight=\"bold\"&gt;Legend&lt;/tspan&gt;&lt;/text&gt;\n"</span>;
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Edges
+</span>        out &lt;&lt; <span class="org-string">"  &lt;line x1=\""</span> &lt;&lt; lx &lt;&lt; <span class="org-string">"\" y1=\""</span> &lt;&lt; ly + 15
+            &lt;&lt; <span class="org-string">"\" x2=\""</span> &lt;&lt; lx + 20 &lt;&lt; <span class="org-string">"\" y2=\""</span> &lt;&lt; ly + 15
+            &lt;&lt; <span class="org-string">"\" stroke=\"#bdc3c7\" stroke-width=\"1.5\"/&gt;\n"</span>;
+        out &lt;&lt; <span class="org-string">"  &lt;text x=\""</span> &lt;&lt; lx + 28 &lt;&lt; <span class="org-string">"\" y=\""</span> &lt;&lt; ly + 19
+            &lt;&lt; <span class="org-string">"\" font-family=\"sans-serif\" font-size=\"10\" fill=\"#555\"&gt;"</span>
+            &lt;&lt; <span class="org-string">"Graph edges&lt;/text&gt;\n"</span>;
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Path
+</span>        out &lt;&lt; <span class="org-string">"  &lt;line x1=\""</span> &lt;&lt; lx &lt;&lt; <span class="org-string">"\" y1=\""</span> &lt;&lt; ly + 33
+            &lt;&lt; <span class="org-string">"\" x2=\""</span> &lt;&lt; lx + 20 &lt;&lt; <span class="org-string">"\" y2=\""</span> &lt;&lt; ly + 33
+            &lt;&lt; <span class="org-string">"\" stroke=\"#27ae60\" stroke-width=\"3\"/&gt;\n"</span>;
+        out &lt;&lt; <span class="org-string">"  &lt;text x=\""</span> &lt;&lt; lx + 28 &lt;&lt; <span class="org-string">"\" y=\""</span> &lt;&lt; ly + 37
+            &lt;&lt; <span class="org-string">"\" font-family=\"sans-serif\" font-size=\"10\" fill=\"#555\"&gt;"</span>
+            &lt;&lt; <span class="org-string">"Shortest path&lt;/text&gt;\n"</span>;
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Obstacle
+</span>        out &lt;&lt; <span class="org-string">"  &lt;circle cx=\""</span> &lt;&lt; lx + 10 &lt;&lt; <span class="org-string">"\" cy=\""</span> &lt;&lt; ly + 51
+            &lt;&lt; <span class="org-string">"\" r=\"7\" fill=\"#e74c3c\" fill-opacity=\"0.6\"/&gt;\n"</span>;
+        out &lt;&lt; <span class="org-string">"  &lt;text x=\""</span> &lt;&lt; lx + 28 &lt;&lt; <span class="org-string">"\" y=\""</span> &lt;&lt; ly + 55
+            &lt;&lt; <span class="org-string">"\" font-family=\"sans-serif\" font-size=\"10\" fill=\"#555\"&gt;"</span>
+            &lt;&lt; <span class="org-string">"Obstacles&lt;/text&gt;\n"</span>;
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Start
+</span>        out &lt;&lt; <span class="org-string">"  &lt;circle cx=\""</span> &lt;&lt; lx + 10 &lt;&lt; <span class="org-string">"\" cy=\""</span> &lt;&lt; ly + 69
+            &lt;&lt; <span class="org-string">"\" r=\"5\" fill=\"#2ecc71\"/&gt;\n"</span>;
+        out &lt;&lt; <span class="org-string">"  &lt;text x=\""</span> &lt;&lt; lx + 28 &lt;&lt; <span class="org-string">"\" y=\""</span> &lt;&lt; ly + 73
+            &lt;&lt; <span class="org-string">"\" font-family=\"sans-serif\" font-size=\"10\" fill=\"#555\"&gt;"</span>
+            &lt;&lt; <span class="org-string">"Start&lt;/text&gt;\n"</span>;
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Goal
+</span>        out &lt;&lt; <span class="org-string">"  &lt;circle cx=\""</span> &lt;&lt; lx + 10 &lt;&lt; <span class="org-string">"\" cy=\""</span> &lt;&lt; ly + 87
+            &lt;&lt; <span class="org-string">"\" r=\"5\" fill=\"#e67e22\"/&gt;\n"</span>;
+        out &lt;&lt; <span class="org-string">"  &lt;text x=\""</span> &lt;&lt; lx + 28 &lt;&lt; <span class="org-string">"\" y=\""</span> &lt;&lt; ly + 91
+            &lt;&lt; <span class="org-string">"\" font-family=\"sans-serif\" font-size=\"10\" fill=\"#555\"&gt;"</span>
+            &lt;&lt; <span class="org-string">"Goal&lt;/text&gt;\n"</span>;
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Close SVG
+</span>        out &lt;&lt; <span class="org-string">"&lt;/svg&gt;\n"</span>;
+        out.close();
+
+        <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"\nSVG visualization saved to: "</span> &lt;&lt; filename &lt;&lt; <span class="org-string">"\n"</span>;
+    }
+
+<span class="org-keyword">private</span>:
+    <span class="org-type">Point</span> <span class="org-function-name">sample</span>() {
+        <span class="org-keyword">return</span> {dist_x_(gen_), dist_y_(gen_)};
+    }
+
+    <span class="org-type">int</span> <span class="org-function-name">findNearest</span>(<span class="org-keyword">const</span> <span class="org-type">Point</span>&amp; <span class="org-variable-name">p</span>) <span class="org-keyword">const</span> {
+        <span class="org-type">int</span> <span class="org-variable-name">nearest</span> = 0;
+        <span class="org-type">double</span> <span class="org-variable-name">min_dist</span> = <span class="org-constant">std</span>::<span class="org-constant">numeric_limits</span>&lt;<span class="org-type">double</span>&gt;::infinity();
+        <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 0; i &lt; <span class="org-keyword">static_cast</span>&lt;<span class="org-type">int</span>&gt;(nodes_.size()); ++i) {
+            <span class="org-type">double</span> <span class="org-variable-name">d</span> = p.distanceTo(<span class="org-type">nodes_</span>[i].position);
+            <span class="org-keyword">if</span> (d &lt; min_dist) {
+                min_dist = d;
+                nearest = i;
+            }
+        }
+        <span class="org-keyword">return</span> nearest;
+    }
+
+    <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">int</span>&gt; <span class="org-function-name">findNear</span>(<span class="org-keyword">const</span> <span class="org-type">Point</span>&amp; <span class="org-variable-name">p</span>, <span class="org-type">double</span> <span class="org-variable-name">radius</span>) <span class="org-keyword">const</span> {
+        <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">int</span>&gt; <span class="org-variable-name">near</span>;
+        <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 0; i &lt; <span class="org-keyword">static_cast</span>&lt;<span class="org-type">int</span>&gt;(nodes_.size()); ++i) {
+            <span class="org-keyword">if</span> (p.distanceTo(<span class="org-type">nodes_</span>[i].position) &lt;= radius) {
+                near.push_back(i);
+            }
+        }
+        <span class="org-keyword">return</span> near;
+    }
+
+    <span class="org-type">Point</span> <span class="org-function-name">steer</span>(<span class="org-keyword">const</span> <span class="org-type">Point</span>&amp; <span class="org-variable-name">from</span>, <span class="org-keyword">const</span> <span class="org-type">Point</span>&amp; <span class="org-variable-name">to</span>) <span class="org-keyword">const</span> {
+        <span class="org-type">double</span> <span class="org-variable-name">d</span> = from.distanceTo(to);
+        <span class="org-keyword">if</span> (d &lt;= step_size_) {
+            <span class="org-keyword">return</span> to;
+        }
+        <span class="org-type">double</span> <span class="org-variable-name">ratio</span> = step_size_ / d;
+        <span class="org-keyword">return</span> {
+            from.x + ratio * (to.x - from.x),
+            from.y + ratio * (to.y - from.y)
+        };
+    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Collision check: verify the segment from 'a' to 'b' doesn't hit obstacles
+</span>    <span class="org-type">bool</span> <span class="org-function-name">isCollisionFree</span>(<span class="org-keyword">const</span> <span class="org-type">Point</span>&amp; <span class="org-variable-name">a</span>, <span class="org-keyword">const</span> <span class="org-type">Point</span>&amp; <span class="org-variable-name">b</span>) <span class="org-keyword">const</span> {
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Check if endpoints are in free space
+</span>        <span class="org-keyword">for</span> (<span class="org-keyword">const</span> <span class="org-keyword">auto</span>&amp; <span class="org-variable-name">obs</span> : obstacles_) {
+            <span class="org-keyword">if</span> (obs.contains(a) || obs.contains(b)) {
+                <span class="org-keyword">return</span> <span class="org-constant">false</span>;
+            }
+        }
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Check along the segment at discrete intervals
+</span>        <span class="org-type">double</span> <span class="org-variable-name">d</span> = a.distanceTo(b);
+        <span class="org-type">int</span> <span class="org-variable-name">steps</span> = <span class="org-constant">std</span>::max(2, <span class="org-keyword">static_cast</span>&lt;<span class="org-type">int</span>&gt;(d / 0.1));
+        <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 1; i &lt; steps; ++i) {
+            <span class="org-type">double</span> <span class="org-variable-name">t</span> = <span class="org-keyword">static_cast</span>&lt;<span class="org-type">double</span>&gt;(i) / steps;
+            <span class="org-type">Point</span> <span class="org-variable-name">p</span> = {a.x + t * (b.x - a.x), a.y + t * (b.y - a.y)};
+            <span class="org-keyword">for</span> (<span class="org-keyword">const</span> <span class="org-keyword">auto</span>&amp; <span class="org-variable-name">obs</span> : obstacles_) {
+                <span class="org-keyword">if</span> (obs.contains(p)) {
+                    <span class="org-keyword">return</span> <span class="org-constant">false</span>;
+                }
+            }
+        }
+        <span class="org-keyword">return</span> <span class="org-constant">true</span>;
+    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">RRG connection radius: r(n) = gamma * (log(n)/n)^(1/d)
+</span>    <span class="org-type">double</span> <span class="org-function-name">computeRadius</span>() <span class="org-keyword">const</span> {
+        <span class="org-type">int</span> <span class="org-variable-name">n</span> = <span class="org-keyword">static_cast</span>&lt;<span class="org-type">int</span>&gt;(nodes_.size());
+        <span class="org-keyword">if</span> (n &lt;= 1) <span class="org-keyword">return</span> step_size_ * 2.0;
+
+        <span class="org-keyword">constexpr</span> <span class="org-type">int</span> <span class="org-variable-name">d</span> = 2;  <span class="org-comment-delimiter">// </span><span class="org-comment">2D space
+</span>        <span class="org-type">double</span> <span class="org-variable-name">r</span> = gamma_rrg_ * <span class="org-constant">std</span>::pow(<span class="org-constant">std</span>::log(<span class="org-keyword">static_cast</span>&lt;<span class="org-type">double</span>&gt;(n)) / n, 1.0 / d);
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Clamp to step_size to avoid disconnected components early on
+</span>        <span class="org-keyword">return</span> <span class="org-constant">std</span>::max(r, step_size_);
+    }
+
+    <span class="org-type">void</span> <span class="org-function-name">addEdge</span>(<span class="org-type">int</span> <span class="org-variable-name">u</span>, <span class="org-type">int</span> <span class="org-variable-name">v</span>) {
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Undirected graph: add both directions
+</span>        nodes_[u].neighbors.push_back(v);
+        nodes_[v].neighbors.push_back(u);
+    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Configuration
+</span>    <span class="org-type">Point</span> <span class="org-variable-name">start_</span>, <span class="org-variable-name">goal_</span>;
+    <span class="org-type">double</span> <span class="org-variable-name">x_min_</span>, <span class="org-variable-name">x_max_</span>, <span class="org-variable-name">y_min_</span>, <span class="org-variable-name">y_max_</span>;
+    <span class="org-type">double</span> <span class="org-variable-name">step_size_</span>;
+    <span class="org-type">double</span> <span class="org-variable-name">goal_radius_</span>;
+    <span class="org-type">int</span> <span class="org-variable-name">max_iterations_</span>;
+    <span class="org-type">double</span> <span class="org-variable-name">gamma_rrg_</span>;
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">State
+</span>    <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Node</span>&gt; <span class="org-variable-name">nodes_</span>;
+    <span class="org-constant">std</span>::<span class="org-type">vector</span>&lt;<span class="org-type">Obstacle</span>&gt; <span class="org-variable-name">obstacles_</span>;
+    <span class="org-type">int</span> <span class="org-variable-name">goal_node_id_</span> = -1;
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Random number generation
+</span>    <span class="org-constant">std</span>::<span class="org-type">mt19937</span> <span class="org-variable-name">gen_</span>;
+    <span class="org-constant">std</span>::<span class="org-type">uniform_real_distribution</span>&lt;<span class="org-type">double</span>&gt; <span class="org-variable-name">dist_x_</span>;
+    <span class="org-constant">std</span>::<span class="org-type">uniform_real_distribution</span>&lt;<span class="org-type">double</span>&gt; <span class="org-variable-name">dist_y_</span>;
+};
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">---------- Main ----------
+</span>
+<span class="org-type">int</span> <span class="org-function-name">main</span>() {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Define the planning problem
+</span>    <span class="org-type">Point</span> <span class="org-variable-name">start</span> = {1.0, 1.0};
+    <span class="org-type">Point</span> <span class="org-variable-name">goal</span>  = {9.0, 9.0};
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Parameters
+</span>    <span class="org-type">double</span> <span class="org-variable-name">x_min</span> = 0.0, <span class="org-variable-name">x_max</span> = 10.0;
+    <span class="org-type">double</span> <span class="org-variable-name">y_min</span> = 0.0, <span class="org-variable-name">y_max</span> = 10.0;
+    <span class="org-type">double</span> <span class="org-variable-name">step_size</span> = 0.5;
+    <span class="org-type">double</span> <span class="org-variable-name">goal_radius</span> = 0.5;
+    <span class="org-type">int</span> <span class="org-variable-name">max_iterations</span> = 5000;
+    <span class="org-type">double</span> <span class="org-variable-name">gamma_rrg</span> = 10.0;  <span class="org-comment-delimiter">// </span><span class="org-comment">Tuning constant for connection radius
+</span>
+    <span class="org-type">RRG</span> <span class="org-variable-name">rrg</span>(start, goal, x_min, x_max, y_min, y_max,
+            step_size, goal_radius, max_iterations, gamma_rrg);
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Add some circular obstacles
+</span>    rrg.addObstacle({{3.0, 3.0}, 1.0});
+    rrg.addObstacle({{5.0, 5.0}, 1.5});
+    rrg.addObstacle({{7.0, 3.0}, 1.0});
+    rrg.addObstacle({{3.0, 7.0}, 1.0});
+    rrg.addObstacle({{7.0, 7.0}, 0.8});
+
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"=== Rapidly-Exploring Random Graph (RRG) ===\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Start: ("</span> &lt;&lt; start.x &lt;&lt; <span class="org-string">", "</span> &lt;&lt; start.y &lt;&lt; <span class="org-string">")\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Goal:  ("</span> &lt;&lt; goal.x &lt;&lt; <span class="org-string">", "</span> &lt;&lt; goal.y &lt;&lt; <span class="org-string">")\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Space: ["</span> &lt;&lt; x_min &lt;&lt; <span class="org-string">","</span> &lt;&lt; x_max &lt;&lt; <span class="org-string">"] x ["</span>
+              &lt;&lt; y_min &lt;&lt; <span class="org-string">","</span> &lt;&lt; y_max &lt;&lt; <span class="org-string">"]\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Step size: "</span> &lt;&lt; step_size &lt;&lt; <span class="org-string">"\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Gamma (connection radius): "</span> &lt;&lt; gamma_rrg &lt;&lt; <span class="org-string">"\n\n"</span>;
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Build the graph
+</span>    <span class="org-type">bool</span> <span class="org-variable-name">found</span> = rrg.build();
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Print statistics
+</span>    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"\n--- Graph Statistics ---\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Nodes: "</span> &lt;&lt; rrg.getNodeCount() &lt;&lt; <span class="org-string">"\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Edges: "</span> &lt;&lt; rrg.getEdgeCount() &lt;&lt; <span class="org-string">"\n"</span>;
+    <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Average degree: "</span> &lt;&lt; rrg.getAverageDegree() &lt;&lt; <span class="org-string">"\n"</span>;
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Find and print shortest path
+</span>    <span class="org-keyword">if</span> (found) {
+        <span class="org-keyword">auto</span> <span class="org-variable-name">path</span> = rrg.findShortestPath();
+        <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>path.empty()) {
+            <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"\n--- Shortest Path (Dijkstra) ---\n"</span>;
+            <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Path length: "</span> &lt;&lt; path.size() &lt;&lt; <span class="org-string">" waypoints\n"</span>;
+            <span class="org-type">double</span> <span class="org-variable-name">total_cost</span> = 0.0;
+            <span class="org-keyword">for</span> (<span class="org-type">size_t</span> <span class="org-variable-name">i</span> = 1; i &lt; path.size(); ++i) {
+                total_cost += path[i - 1].distanceTo(path[i]);
+            }
+            <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Path cost: "</span> &lt;&lt; total_cost &lt;&lt; <span class="org-string">"\n"</span>;
+            <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"Waypoints:\n"</span>;
+            <span class="org-keyword">for</span> (<span class="org-type">size_t</span> <span class="org-variable-name">i</span> = 0; i &lt; path.size(); ++i) {
+                <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"  ["</span> &lt;&lt; i &lt;&lt; <span class="org-string">"] ("</span> &lt;&lt; path[i].x &lt;&lt; <span class="org-string">", "</span>
+                          &lt;&lt; path[i].y &lt;&lt; <span class="org-string">")\n"</span>;
+            }
+
+            <span class="org-comment-delimiter">// </span><span class="org-comment">Export SVG with path highlighted
+</span>            rrg.exportSVG(<span class="org-string">"rrg_output.svg"</span>, path);
+        } <span class="org-keyword">else</span> {
+            <span class="org-constant">std</span>::cout &lt;&lt; <span class="org-string">"\nNo path found in graph (disconnected).\n"</span>;
+            rrg.exportSVG(<span class="org-string">"rrg_output.svg"</span>);
+        }
+    } <span class="org-keyword">else</span> {
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Export SVG even if goal not reached (shows exploration)
+</span>        rrg.exportSVG(<span class="org-string">"rrg_output.svg"</span>);
+    }
+
+    <span class="org-keyword">return</span> 0;
+}
+</pre>
+</div>
+</details>
+
+
+
+<figure id="orgec18aca">
+<img src="rrg_output.svg" alt="rrg_output.svg" class="org-svg" width="80%">
+
+</figure>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script>
+// Sidebar toggle
+document.querySelector('.sidebar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  this.classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+document.querySelector('.top-bar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  document.querySelector('.sidebar-toggle').classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+
+// Search toggle
+(function() {
+  var overlay = document.querySelector('.search-overlay');
+  var input = document.querySelector('.search-input');
+  var results = document.querySelector('.search-results');
+  document.querySelector('.top-bar-search').addEventListener('click', function() {
+    overlay.classList.toggle('active');
+    if (overlay.classList.contains('active')) input.focus();
+  });
+  document.querySelector('.search-close').addEventListener('click', function() {
+    overlay.classList.remove('active');
+    input.value = '';
+    results.innerHTML = '';
+  });
+  var pages = [];
+  fetch('/search-index.json').then(function(r){return r.json();}).then(function(d){pages=d;});
+  input.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { results.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    results.innerHTML = html || '<p style="color:#64748b">No results</p>';
+  });
+
+  // Sidebar search
+  var sInput = document.querySelector('.sidebar-search-input');
+  var sResults = document.querySelector('.sidebar-search-results');
+  sInput.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { sResults.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    sResults.innerHTML = html || '<p style="color:rgba(255,255,255,0.4)">No results</p>';
+  });
+})();
+
+// Theme toggle
+(function() {
+  var stored = localStorage.getItem('theme');
+  if (stored) {
+    document.documentElement.setAttribute('data-theme', stored);
+  }
+  document.querySelector('.theme-toggle').addEventListener('click', function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+})();
+
+// Active nav highlight
+(function() {
+  var path = window.location.pathname;
+  document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (path === href || (href !== '/index.html' && path.indexOf(href.replace('.html','')) === 0)) {
+      link.classList.add('active');
+    }
+  });
+})();
+
+// Fade in / fade out on scroll
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    } else {
+      entry.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -20px 0px' });
+
+document.querySelectorAll('.intro p, .blog-card, .pub-entry, .timeline-item, .hero-image').forEach(function(el) {
+  el.classList.add('fade-item');
+  observer.observe(el);
+});
+
+// Scroll progress bar
+window.addEventListener('scroll', function() {
+  var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var progress = (scrollTop / scrollHeight) * 100;
+  document.querySelector('.scroll-progress').style.width = progress + String.fromCharCode(37);
+});
+
+// Tag filtering on blogs page
+(function() {
+  document.querySelectorAll('.card-tag').forEach(function(tag) {
+    tag.style.cursor = 'pointer';
+    tag.addEventListener('click', function(e) {
+      e.preventDefault();
+      var selected = this.textContent.trim();
+      var allCards = document.querySelectorAll('.blog-card');
+      var allItems = document.querySelectorAll('.timeline-item');
+      var isActive = this.classList.contains('tag-active');
+      document.querySelectorAll('.card-tag').forEach(function(t) { t.classList.remove('tag-active'); });
+      if (isActive) {
+        allCards.forEach(function(c) { c.style.display = ''; });
+        allItems.forEach(function(i) { i.style.display = ''; });
+      } else {
+        this.classList.add('tag-active');
+        allCards.forEach(function(c) {
+          var t = c.querySelector('.card-tag');
+          c.style.display = (t && t.textContent.trim() === selected) ? '' : 'none';
+        });
+        allItems.forEach(function(i) {
+          var visible = i.querySelectorAll('.blog-card[style=""], .blog-card:not([style])');
+          var hasVisible = Array.from(i.querySelectorAll('.blog-card')).some(function(c) { return c.style.display !== 'none'; });
+          i.style.display = hasVisible ? '' : 'none';
+        });
+      }
+    });
+  });
+})();
+</script>
+</div>
+</body>
+</html>
