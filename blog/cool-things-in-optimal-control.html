@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2026-09-04 -->
+<!-- 2026-10-18 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Cool Things in Optimal Control and Physics</title>
@@ -109,8 +109,8 @@
 <li><a href="#org8109284">Euler-Lagrange Equation</a>
 <ul>
 <li><a href="#org22f0ebd">History background</a></li>
-<li><a href="#orgd68d91d">Theorem</a></li>
-<li><a href="#orgaa187e6">Derivation</a></li>
+<li><a href="#org00fe65c">Theorem</a></li>
+<li><a href="#orga3f69e7">Derivation</a></li>
 </ul>
 </li>
 <li><a href="#org53dd8d3">Hamilton-Jacobi equation</a></li>
@@ -120,20 +120,20 @@
 <ul>
 <li><a href="#orgfeb4236">Bellman equation</a>
 <ul>
-<li><a href="#org473da15">Background</a></li>
+<li><a href="#orgc8c7f45">Background</a></li>
 <li><a href="#orge6caf00">Theoram</a></li>
 </ul>
 </li>
 <li><a href="#org5215561">Hamilton-Jacobi-Bellman equation (HJB)</a>
 <ul>
-<li><a href="#orgbaa8b97">Background</a></li>
-<li><a href="#org8f96dd3">Theorem</a></li>
-<li><a href="#org566d097">Derivation</a></li>
+<li><a href="#org36fc134">Background</a></li>
+<li><a href="#org31e57cc">Theorem</a></li>
+<li><a href="#org688fdef">Derivation</a></li>
 </ul>
 </li>
 <li><a href="#orgd2eff05">Pontryagin Maximum Principle</a>
 <ul>
-<li><a href="#org1890d25">Theorem</a></li>
+<li><a href="#orgc140026">Theorem</a></li>
 <li><a href="#orgae45d89">Connection to the HJB equation</a></li>
 <li><a href="#org6f27de4">Derivation using the method of Lagrange Multipliers</a></li>
 <li><a href="#org61dacbc">Discussion</a></li>
@@ -148,19 +148,19 @@
 <li><a href="#orgb92cc89">Action functional</a></li>
 <li><a href="#orge06364c">Principle of least action</a>
 <ul>
-<li><a href="#org436429f">Background</a></li>
+<li><a href="#org43fd0cd">Background</a></li>
 </ul>
 </li>
 <li><a href="#orga7cb3b0">Lagrangian mechanics</a>
 <ul>
-<li><a href="#org715774f">Background</a></li>
-<li><a href="#orgf41bbcf">Theorem</a></li>
+<li><a href="#org42ebf83">Background</a></li>
+<li><a href="#org258ecd9">Theorem</a></li>
 </ul>
 </li>
 <li><a href="#org244b6a7">Hamiltonian mechanics</a>
 <ul>
-<li><a href="#orgb612d57">Background</a></li>
-<li><a href="#orgcdd6317">Theorem</a></li>
+<li><a href="#orgd396b3f">Background</a></li>
+<li><a href="#org6a877aa">Theorem</a></li>
 <li><a href="#org90e8870">Link to Lagrangian mechanics</a></li>
 <li><a href="#org13a3706">Link to Newtonian mechanics</a></li>
 </ul>
@@ -223,7 +223,7 @@ The local maxima or minima can be found where the partial derivatives of \(\math
 <li>Intuition:</li>
 </ul>
 
-<figure id="org0f0fb38">
+<figure id="org970cc82">
 <img src="langrage-multiplier-method.png" alt="langrage-multiplier-method.png" width="400">
 
 <figcaption><span class="figure-number">Figure 1: </span>The red line shows the constraint g(x, y) = c. The blue lines are contours of f(x, y). The point where the red line tangentially touches a blue contour is the maximum of f(x, y), since d1 &gt; d2.</figcaption>
@@ -268,9 +268,9 @@ term coined by Euler himself in 1766.
 </p>
 </div>
 </div>
-<div id="outline-container-orgd68d91d" class="outline-4">
-<h4 id="orgd68d91d">Theorem</h4>
-<div class="outline-text-4" id="text-orgd68d91d">
+<div id="outline-container-org00fe65c" class="outline-4">
+<h4 id="org00fe65c">Theorem</h4>
+<div class="outline-text-4" id="text-org00fe65c">
 <p>
 In <i>calculus of variations</i>, the <i>Euler-Lagrange equation</i>, or <i>Lagrange's equation</i>, is a differential equation
 whose solutions are the functions for which a given functional is stationary. Because a differentiable functional is
@@ -303,9 +303,9 @@ The solution of this Eq. \ref{eq:el-eqn-2} is the stationary solution of Eq. \re
 </p>
 </div>
 </div>
-<div id="outline-container-orgaa187e6" class="outline-4">
-<h4 id="orgaa187e6">Derivation</h4>
-<div class="outline-text-4" id="text-orgaa187e6">
+<div id="outline-container-orga3f69e7" class="outline-4">
+<h4 id="orga3f69e7">Derivation</h4>
+<div class="outline-text-4" id="text-orga3f69e7">
 <p>
 For \(q\) to be a stationary solution of Eq. \ref{eq:el-eqn-1}:
 </p>
@@ -423,9 +423,9 @@ If \(l\) doesn't depend on \(x\), then \(H\) is constant.
 <h3 id="orgfeb4236">Bellman equation</h3>
 <div class="outline-text-3" id="text-orgfeb4236">
 </div>
-<div id="outline-container-org473da15" class="outline-4">
-<h4 id="org473da15">Background</h4>
-<div class="outline-text-4" id="text-org473da15">
+<div id="outline-container-orgc8c7f45" class="outline-4">
+<h4 id="orgc8c7f45">Background</h4>
+<div class="outline-text-4" id="text-orgc8c7f45">
 <p>
 A Bellman equation, named after its discoverer, Richard Bellman, also known as a dynamic programming equation, is a
 necessary condition for optimality associated with the mathematical optimization method known as dynamic programming.
@@ -467,9 +467,9 @@ J_k(x_k) =  \min_{u_k \in \mathcal{U}_k} \{ L_k(x_k, u_k) + J_{k+1}(x_{k+1}, u_{
 <h3 id="org5215561">Hamilton-Jacobi-Bellman equation (HJB)</h3>
 <div class="outline-text-3" id="text-org5215561">
 </div>
-<div id="outline-container-orgbaa8b97" class="outline-4">
-<h4 id="orgbaa8b97">Background</h4>
-<div class="outline-text-4" id="text-orgbaa8b97">
+<div id="outline-container-org36fc134" class="outline-4">
+<h4 id="org36fc134">Background</h4>
+<div class="outline-text-4" id="text-org36fc134">
 <p>
 The Hamilton-Jacobi-Bellman (HJB) equation is a partial differential equation which is central to optimal control
 theory. The solution of the HJB equation is the <i>value function</i>, which gives the optimal cost-to-go for a given
@@ -487,9 +487,9 @@ William Rowan Hamilton and Carl Gustav Jacob Jacobi.
 </p>
 </div>
 </div>
-<div id="outline-container-org8f96dd3" class="outline-4">
-<h4 id="org8f96dd3">Theorem</h4>
-<div class="outline-text-4" id="text-org8f96dd3">
+<div id="outline-container-org31e57cc" class="outline-4">
+<h4 id="org31e57cc">Theorem</h4>
+<div class="outline-text-4" id="text-org31e57cc">
 <p>
 For the continuous time optimal control problem:
 \[ V(\mathbf{x}, t) = \min_{\mathbf{u}} \{ \phi(x(T)) + \int_t^T l(\mathbf{x}(t),\mathbf{u}(t), t) dt \} \]
@@ -532,9 +532,9 @@ As we can see, if we can solve for \(V\) then we can find from it a close-form c
 </p>
 </div>
 </div>
-<div id="outline-container-org566d097" class="outline-4">
-<h4 id="org566d097">Derivation</h4>
-<div class="outline-text-4" id="text-org566d097">
+<div id="outline-container-org688fdef" class="outline-4">
+<h4 id="org688fdef">Derivation</h4>
+<div class="outline-text-4" id="text-org688fdef">
 <p>
 Intuitively, HJB can be derived as follows:
 </p>
@@ -564,10 +564,10 @@ on both sides, divide by \(dt\), and take the limit as \(dt\) approaches zero, t
 <h3 id="orgd2eff05">Pontryagin Maximum Principle</h3>
 <div class="outline-text-3" id="text-orgd2eff05">
 </div>
-<div id="outline-container-org1890d25" class="outline-4">
-<h4 id="org1890d25">Theorem</h4>
-<div class="outline-text-4" id="text-org1890d25">
-<div class="definition" id="org53a8aa3">
+<div id="outline-container-orgc140026" class="outline-4">
+<h4 id="orgc140026">Theorem</h4>
+<div class="outline-text-4" id="text-orgc140026">
+<div class="definition" id="org1d12546">
 <p>
 <a id="org19bbc06"></a>
 deterministic Hamiltonian
@@ -580,7 +580,7 @@ where \(\lambda(t)\) is the gradient of the optimal cost-to-go function (called 
 
 </div>
 
-<div class="theorem" id="orga88c917">
+<div class="theorem" id="orgb3fa687">
 <p>
 <a id="org443ec39"></a>
 continuous-time Pontryagin's maximum principle
@@ -816,9 +816,9 @@ The stationary solution of the action functional satisfies <a href="#org8109284"
 <h3 id="orge06364c">Principle of least action</h3>
 <div class="outline-text-3" id="text-orge06364c">
 </div>
-<div id="outline-container-org436429f" class="outline-4">
-<h4 id="org436429f">Background</h4>
-<div class="outline-text-4" id="text-org436429f">
+<div id="outline-container-org43fd0cd" class="outline-4">
+<h4 id="org43fd0cd">Background</h4>
+<div class="outline-text-4" id="text-org43fd0cd">
 <p>
 Credit for the formulation of the principle of least action is commonly given to Pierre Louis Maupertuis, who wrote
 about it in 1744 and 1746, although the true priority is less clear, as discussed below.
@@ -862,9 +862,9 @@ A good tutorial can be found at: <br>
 <h3 id="orga7cb3b0">Lagrangian mechanics</h3>
 <div class="outline-text-3" id="text-orga7cb3b0">
 </div>
-<div id="outline-container-org715774f" class="outline-4">
-<h4 id="org715774f">Background</h4>
-<div class="outline-text-4" id="text-org715774f">
+<div id="outline-container-org42ebf83" class="outline-4">
+<h4 id="org42ebf83">Background</h4>
+<div class="outline-text-4" id="text-org42ebf83">
 <p>
 Lagrangian mechanics is a re-formulation of classical mechanics that combines conservation of momentum with
 conservation of energy. It was introduced by Italian mathematician Joseph-Louis Lagrange in 1788. In Lagrangian
@@ -883,9 +883,9 @@ the path for which the <a href="#orgb92cc89">Action functional</a> is stationary
 </p>
 </div>
 </div>
-<div id="outline-container-orgf41bbcf" class="outline-4">
-<h4 id="orgf41bbcf">Theorem</h4>
-<div class="outline-text-4" id="text-orgf41bbcf">
+<div id="outline-container-org258ecd9" class="outline-4">
+<h4 id="org258ecd9">Theorem</h4>
+<div class="outline-text-4" id="text-org258ecd9">
 <p>
 Define the following scalar function (<a href="#orgb92cc89">Action functional</a>)
 </p>
@@ -937,9 +937,9 @@ According to Newton's second law, \(m\ddot{q}-(0,0,mg) = 0\).
 <h3 id="org244b6a7">Hamiltonian mechanics</h3>
 <div class="outline-text-3" id="text-org244b6a7">
 </div>
-<div id="outline-container-orgb612d57" class="outline-4">
-<h4 id="orgb612d57">Background</h4>
-<div class="outline-text-4" id="text-orgb612d57">
+<div id="outline-container-orgd396b3f" class="outline-4">
+<h4 id="orgd396b3f">Background</h4>
+<div class="outline-text-4" id="text-orgd396b3f">
 <p>
 Hamiltonian mechanics is a reformulation of classical mechanics that was introduced in 1833 by Irish mathematician
 William Rowan Hamilton. It arose from Lagrangian mechanics, a previous reformulation of classical mechanics introduced
@@ -950,9 +950,9 @@ degrees of freedom of the system), it expresses <b>first-order constraints on a 
 </p>
 </div>
 </div>
-<div id="outline-container-orgcdd6317" class="outline-4">
-<h4 id="orgcdd6317">Theorem</h4>
-<div class="outline-text-4" id="text-orgcdd6317">
+<div id="outline-container-org6a877aa" class="outline-4">
+<h4 id="org6a877aa">Theorem</h4>
+<div class="outline-text-4" id="text-org6a877aa">
 <p>
 In Hamiltonian mechanics, a classical physical system is described by a set of canonical coordinates \(r = (q, p)\),
 where each component of the coordinate \(q_i\), \(p_i\) is indexed to the frame of reference of the system. The time

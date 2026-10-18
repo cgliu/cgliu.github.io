@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2026-10-18 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>IROS 2026</title>
+<meta name="generator" content="Org Mode" />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<div class="scroll-progress"></div>
+<aside class="sidebar">
+  <div class="sidebar-inner">
+    <img src="/images/avatar.svg" alt="Chenggang Liu" class="sidebar-avatar"/>
+    <a href="/index.html" class="site-logo">Chenggang Liu</a>
+    <nav class="sidebar-nav">
+      <a href="/index.html">Home</a>
+      <a href="/blogs.html">Blogs</a>
+      <a href="/projects.html">Projects</a>
+      <a href="/publications.html">Publications</a>
+      <a href="/about.html">About</a>
+    </nav>
+    <div class="sidebar-social">
+      <a href="https://www.linkedin.com/in/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="https://github.com/cgliu" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <a href="https://scholar.google.com/citations?user=omz_MCoAAAAJ&hl=en" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg></a>
+    </div>
+    <div class="sidebar-search">
+      <input type="text" class="sidebar-search-input" placeholder="Search..."/>
+      <div class="sidebar-search-results"></div>
+    </div>
+    <button class="theme-toggle" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</aside>
+<button class="sidebar-toggle" aria-label="Toggle menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="top-bar">
+  <button class="top-bar-toggle" aria-label="Toggle menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+  <a href="/index.html" class="top-bar-title">Chenggang Liu</a>
+  <button class="top-bar-search" aria-label="Open search bar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+  </button>
+</div>
+<div class="search-overlay">
+  <div class="search-box">
+    <input type="text" class="search-input" placeholder="Search..."/>
+    <button class="search-close" aria-label="Close search">&times;</button>
+  </div>
+  <div class="search-results"></div>
+</div>
+</div>
+<div id="content" class="content">
+<header>
+<h1 class="title">IROS 2026</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org18e7d26">IROS 2026 at am Glance&#xa0;&#xa0;&#xa0;<span class="tag"><span class="export">export</span></span></a>
+<ul>
+<li><a href="#org21508ee">Papers Distribution (count, % of 1,929 papers)</a></li>
+<li><a href="#orgfe1dbaa">Self-driving Papers Distribution (count, % of 182 papers)</a></li>
+<li><a href="#org6eb3777">Exhibitor distribution (IROS 2026 exhibit hall)</a></li>
+</ul>
+</li>
+<li><a href="#orge864859">Research North Star</a>
+<ul>
+<li><a href="#orgb58e5b8">1. End-to-end</a></li>
+<li><a href="#org25f9e39">2. Multimodal trajectory generation</a></li>
+<li><a href="#org2af6d63">5. A safety layer</a></li>
+</ul>
+</li>
+<li><a href="#orgd33a455">Workshops</a>
+<ul>
+<li><a href="#orgc8d7e29">Sim2Real&#xa0;&#xa0;&#xa0;<span class="tag"><span class="export">export</span></span></a></li>
+<li><a href="#org9065c46">Learning-to-Optimize for Control in Robotics&#xa0;&#xa0;&#xa0;<span class="tag"><span class="export">export</span></span></a></li>
+</ul>
+</li>
+<li><a href="#orgb5095c7">Other Resource&#xa0;&#xa0;&#xa0;<span class="tag"><span class="export">export</span></span></a></li>
+</ul>
+</div>
+</nav>
+<div id="outline-container-org18e7d26" class="outline-2">
+<h2 id="org18e7d26">IROS 2026 at am Glance&#xa0;&#xa0;&#xa0;<span class="tag"><span class="export">export</span></span></h2>
+<div class="outline-text-2" id="text-org18e7d26">
+</div>
+<div id="outline-container-org21508ee" class="outline-3">
+<h3 id="org21508ee">Papers Distribution (count, % of 1,929 papers)</h3>
+<div class="outline-text-3" id="text-org21508ee">
+</div>
+<ul class="org-ul">
+<li><a id="orgb9589e7"></a>Based on themes<br>
+<div class="outline-text-4" id="text-orgb9589e7">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-right">
+
+<col  class="org-right">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Theme</th>
+<th scope="col" class="org-right">Papers</th>
+<th scope="col" class="org-right">Share</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Learning &amp; AI (RL, imitation/demonstration, deep learning)</td>
+<td class="org-right">800</td>
+<td class="org-right">41.5%</td>
+</tr>
+
+<tr>
+<td class="org-left">Navigation, Planning &amp; Control</td>
+<td class="org-right">511</td>
+<td class="org-right">26.5%</td>
+</tr>
+
+<tr>
+<td class="org-left">Locomotion &amp; Platforms (legged, aerial, marine, field, soft)</td>
+<td class="org-right">385</td>
+<td class="org-right">20.0%</td>
+</tr>
+
+<tr>
+<td class="org-left">Manipulation &amp; Grasping</td>
+<td class="org-right">299</td>
+<td class="org-right">15.5%</td>
+</tr>
+
+<tr>
+<td class="org-left">Perception &amp; Vision</td>
+<td class="org-right">277</td>
+<td class="org-right">14.4%</td>
+</tr>
+
+<tr>
+<td class="org-left">SLAM, Localization &amp; Mapping</td>
+<td class="org-right">229</td>
+<td class="org-right">11.9%</td>
+</tr>
+
+<tr>
+<td class="org-left">Multi-Robot &amp; Human-Robot Interaction</td>
+<td class="org-right">227</td>
+<td class="org-right">11.8%</td>
+</tr>
+
+<tr>
+<td class="org-left">Sensing &amp; Tactile</td>
+<td class="org-right">154</td>
+<td class="org-right">8.0%</td>
+</tr>
+
+<tr>
+<td class="org-left">Safety</td>
+<td class="org-right">128</td>
+<td class="org-right">6.6%</td>
+</tr>
+
+<tr>
+<td class="org-left">Mechanism &amp; Design</td>
+<td class="org-right">94</td>
+<td class="org-right">4.9%</td>
+</tr>
+
+<tr>
+<td class="org-left">Medical &amp; Assistive</td>
+<td class="org-right">88</td>
+<td class="org-right">4.6%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+<li><a id="orgfe81621"></a>Based on keywords (count, % of 1,929 papers)<br>
+<div class="outline-text-4" id="text-orgfe81621">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-right">
+
+<col  class="org-right">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Keyword</th>
+<th scope="col" class="org-right">Count</th>
+<th scope="col" class="org-right">%</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Reinforcement Learning</td>
+<td class="org-right">198</td>
+<td class="org-right">10.3%</td>
+</tr>
+
+<tr>
+<td class="org-left">Motion and Path Planning</td>
+<td class="org-right">152</td>
+<td class="org-right">7.9%</td>
+</tr>
+
+<tr>
+<td class="org-left">Deep Learning for Visual Perception</td>
+<td class="org-right">144</td>
+<td class="org-right">7.5%</td>
+</tr>
+
+<tr>
+<td class="org-left">Imitation Learning</td>
+<td class="org-right">121</td>
+<td class="org-right">6.3%</td>
+</tr>
+
+<tr>
+<td class="org-left">Deep Learning in Grasping and Manipulation</td>
+<td class="org-right">117</td>
+<td class="org-right">6.1%</td>
+</tr>
+
+<tr>
+<td class="org-left">Vision-Based Navigation</td>
+<td class="org-right">117</td>
+<td class="org-right">6.1%</td>
+</tr>
+
+<tr>
+<td class="org-left">Machine Learning for Robot Control</td>
+<td class="org-right">101</td>
+<td class="org-right">5.2%</td>
+</tr>
+
+<tr>
+<td class="org-left">Multi-Robot Systems</td>
+<td class="org-right">95</td>
+<td class="org-right">4.9%</td>
+</tr>
+
+<tr>
+<td class="org-left">Deep Learning Methods</td>
+<td class="org-right">91</td>
+<td class="org-right">4.7%</td>
+</tr>
+
+<tr>
+<td class="org-left">AI-Enabled Robotics</td>
+<td class="org-right">88</td>
+<td class="org-right">4.6%</td>
+</tr>
+
+<tr>
+<td class="org-left">Mapping</td>
+<td class="org-right">88</td>
+<td class="org-right">4.6%</td>
+</tr>
+
+<tr>
+<td class="org-left">Sensor Fusion</td>
+<td class="org-right">81</td>
+<td class="org-right">4.2%</td>
+</tr>
+
+<tr>
+<td class="org-left">Legged Robots</td>
+<td class="org-right">80</td>
+<td class="org-right">4.1%</td>
+</tr>
+
+<tr>
+<td class="org-left">Learning from Demonstration</td>
+<td class="org-right">80</td>
+<td class="org-right">4.1%</td>
+</tr>
+
+<tr>
+<td class="org-left">SLAM</td>
+<td class="org-right">76</td>
+<td class="org-right">3.9%</td>
+</tr>
+
+<tr>
+<td class="org-left">AI-Based Methods</td>
+<td class="org-right">76</td>
+<td class="org-right">3.9%</td>
+</tr>
+
+<tr>
+<td class="org-left">Optimization and Optimal Control</td>
+<td class="org-right">75</td>
+<td class="org-right">3.9%</td>
+</tr>
+
+<tr>
+<td class="org-left">Localization</td>
+<td class="org-right">75</td>
+<td class="org-right">3.9%</td>
+</tr>
+
+<tr>
+<td class="org-left">Autonomous Vehicle Navigation</td>
+<td class="org-right">74</td>
+<td class="org-right">3.8%</td>
+</tr>
+
+<tr>
+<td class="org-left">Force and Tactile Sensing</td>
+<td class="org-right">74</td>
+<td class="org-right">3.8%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+<li><a id="org04b482b"></a>Based on applications<br>
+<div class="outline-text-4" id="text-org04b482b">
+<p>
+About 57% of papers are general methods that state no specific application.
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-right">
+
+<col  class="org-right">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Application domain</th>
+<th scope="col" class="org-right">Papers</th>
+<th scope="col" class="org-right">Share</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Self-driving / Autonomous vehicles</td>
+<td class="org-right">182</td>
+<td class="org-right">9.4%</td>
+</tr>
+
+<tr>
+<td class="org-left">Humanoid / Legged locomotion</td>
+<td class="org-right">152</td>
+<td class="org-right">7.9%</td>
+</tr>
+
+<tr>
+<td class="org-left">Aerial / Drones / UAV</td>
+<td class="org-right">122</td>
+<td class="org-right">6.3%</td>
+</tr>
+
+<tr>
+<td class="org-left">Human-Robot Interaction / Collaboration</td>
+<td class="org-right">122</td>
+<td class="org-right">6.3%</td>
+</tr>
+
+<tr>
+<td class="org-left">Medical / Surgical / Healthcare</td>
+<td class="org-right">92</td>
+<td class="org-right">4.8%</td>
+</tr>
+
+<tr>
+<td class="org-left">Marine / Underwater</td>
+<td class="org-right">54</td>
+<td class="org-right">2.8%</td>
+</tr>
+
+<tr>
+<td class="org-left">Assistive / Rehab / Wearable / Prosthetics</td>
+<td class="org-right">39</td>
+<td class="org-right">2.0%</td>
+</tr>
+
+<tr>
+<td class="org-left">Manufacturing / Industrial</td>
+<td class="org-right">35</td>
+<td class="org-right">1.8%</td>
+</tr>
+
+<tr>
+<td class="org-left">Home / Service / Domestic</td>
+<td class="org-right">32</td>
+<td class="org-right">1.7%</td>
+</tr>
+
+<tr>
+<td class="org-left">Search &amp; Rescue / Disaster / Field</td>
+<td class="org-right">28</td>
+<td class="org-right">1.5%</td>
+</tr>
+
+<tr>
+<td class="org-left">Agriculture / Forestry</td>
+<td class="org-right">28</td>
+<td class="org-right">1.5%</td>
+</tr>
+
+<tr>
+<td class="org-left">Warehouse / Logistics</td>
+<td class="org-right">16</td>
+<td class="org-right">0.8%</td>
+</tr>
+
+<tr>
+<td class="org-left">Construction / Inspection</td>
+<td class="org-right">12</td>
+<td class="org-right">0.6%</td>
+</tr>
+
+<tr>
+<td class="org-left">Space / Planetary</td>
+<td class="org-right">11</td>
+<td class="org-right">0.6%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+<li><a id="org4f59a9e"></a>Based on institutions (all papers)<br>
+<div class="outline-text-4" id="text-org4f59a9e">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-right">
+
+<col  class="org-right">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Institution</th>
+<th scope="col" class="org-right">Papers</th>
+<th scope="col" class="org-right">Share</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Tsinghua University</td>
+<td class="org-right">91</td>
+<td class="org-right">4.7%</td>
+</tr>
+
+<tr>
+<td class="org-left">Carnegie Mellon University</td>
+<td class="org-right">77</td>
+<td class="org-right">4.0%</td>
+</tr>
+
+<tr>
+<td class="org-left">Zhejiang University</td>
+<td class="org-right">60</td>
+<td class="org-right">3.1%</td>
+</tr>
+
+<tr>
+<td class="org-left">HKUST</td>
+<td class="org-right">54</td>
+<td class="org-right">2.8%</td>
+</tr>
+
+<tr>
+<td class="org-left">National University of Singapore</td>
+<td class="org-right">50</td>
+<td class="org-right">2.6%</td>
+</tr>
+
+<tr>
+<td class="org-left">Shanghai Jiao Tong University</td>
+<td class="org-right">50</td>
+<td class="org-right">2.6%</td>
+</tr>
+
+<tr>
+<td class="org-left">Chinese University of Hong Kong</td>
+<td class="org-right">45</td>
+<td class="org-right">2.3%</td>
+</tr>
+
+<tr>
+<td class="org-left">Purdue University</td>
+<td class="org-right">45</td>
+<td class="org-right">2.3%</td>
+</tr>
+
+<tr>
+<td class="org-left">MIT</td>
+<td class="org-right">43</td>
+<td class="org-right">2.2%</td>
+</tr>
+
+<tr>
+<td class="org-left">University of Tokyo</td>
+<td class="org-right">43</td>
+<td class="org-right">2.2%</td>
+</tr>
+
+<tr>
+<td class="org-left">Georgia Tech</td>
+<td class="org-right">36</td>
+<td class="org-right">1.9%</td>
+</tr>
+
+<tr>
+<td class="org-left">KAIST</td>
+<td class="org-right">36</td>
+<td class="org-right">1.9%</td>
+</tr>
+
+<tr>
+<td class="org-left">Northeastern University</td>
+<td class="org-right">36</td>
+<td class="org-right">1.9%</td>
+</tr>
+
+<tr>
+<td class="org-left">Technical University of Munich</td>
+<td class="org-right">36</td>
+<td class="org-right">1.9%</td>
+</tr>
+
+<tr>
+<td class="org-left">Harbin Institute of Technology</td>
+<td class="org-right">33</td>
+<td class="org-right">1.7%</td>
+</tr>
+
+<tr>
+<td class="org-left">Nanyang Technological University</td>
+<td class="org-right">32</td>
+<td class="org-right">1.7%</td>
+</tr>
+
+<tr>
+<td class="org-left">Beijing Institute of Technology</td>
+<td class="org-right">32</td>
+<td class="org-right">1.7%</td>
+</tr>
+
+<tr>
+<td class="org-left">University of Michigan</td>
+<td class="org-right">31</td>
+<td class="org-right">1.6%</td>
+</tr>
+
+<tr>
+<td class="org-left">SUSTech</td>
+<td class="org-right">31</td>
+<td class="org-right">1.6%</td>
+</tr>
+
+<tr>
+<td class="org-left">University of Southern California</td>
+<td class="org-right">28</td>
+<td class="org-right">1.5%</td>
+</tr>
+
+<tr>
+<td class="org-left">Beihang University</td>
+<td class="org-right">27</td>
+<td class="org-right">1.4%</td>
+</tr>
+
+<tr>
+<td class="org-left">Peking University</td>
+<td class="org-right">27</td>
+<td class="org-right">1.4%</td>
+</tr>
+
+<tr>
+<td class="org-left">ETH Zurich</td>
+<td class="org-right">26</td>
+<td class="org-right">1.3%</td>
+</tr>
+
+<tr>
+<td class="org-left">Seoul National University</td>
+<td class="org-right">25</td>
+<td class="org-right">1.3%</td>
+</tr>
+
+<tr>
+<td class="org-left">Tongji University</td>
+<td class="org-right">24</td>
+<td class="org-right">1.2%</td>
+</tr>
+
+<tr>
+<td class="org-left">Institute of Automation, CAS</td>
+<td class="org-right">24</td>
+<td class="org-right">1.2%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+<li><a id="org133a64d"></a>Based on country / region<br>
+<div class="outline-text-4" id="text-org133a64d">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-right">
+
+<col  class="org-right">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Country</th>
+<th scope="col" class="org-right">Papers</th>
+<th scope="col" class="org-right">Share</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">China</td>
+<td class="org-right">571</td>
+<td class="org-right">29.6%</td>
+</tr>
+
+<tr>
+<td class="org-left">USA</td>
+<td class="org-right">528</td>
+<td class="org-right">27.4%</td>
+</tr>
+
+<tr>
+<td class="org-left">Japan</td>
+<td class="org-right">119</td>
+<td class="org-right">6.2%</td>
+</tr>
+
+<tr>
+<td class="org-left">Germany</td>
+<td class="org-right">105</td>
+<td class="org-right">5.4%</td>
+</tr>
+
+<tr>
+<td class="org-left">Korea</td>
+<td class="org-right">87</td>
+<td class="org-right">4.5%</td>
+</tr>
+
+<tr>
+<td class="org-left">Singapore</td>
+<td class="org-right">80</td>
+<td class="org-right">4.1%</td>
+</tr>
+
+<tr>
+<td class="org-left">UK</td>
+<td class="org-right">71</td>
+<td class="org-right">3.7%</td>
+</tr>
+
+<tr>
+<td class="org-left">Italy</td>
+<td class="org-right">42</td>
+<td class="org-right">2.2%</td>
+</tr>
+
+<tr>
+<td class="org-left">Switzerland</td>
+<td class="org-right">41</td>
+<td class="org-right">2.1%</td>
+</tr>
+
+<tr>
+<td class="org-left">Canada</td>
+<td class="org-right">31</td>
+<td class="org-right">1.6%</td>
+</tr>
+
+<tr>
+<td class="org-left">France</td>
+<td class="org-right">27</td>
+<td class="org-right">1.4%</td>
+</tr>
+
+<tr>
+<td class="org-left">Netherlands</td>
+<td class="org-right">14</td>
+<td class="org-right">0.7%</td>
+</tr>
+
+<tr>
+<td class="org-left">Other / Unresolved</td>
+<td class="org-right">456</td>
+<td class="org-right">23.6%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+</ul>
+</div>
+<div id="outline-container-orgfe1dbaa" class="outline-3">
+<h3 id="orgfe1dbaa">Self-driving Papers Distribution (count, % of 182 papers)</h3>
+<div class="outline-text-3" id="text-orgfe1dbaa">
+<p>
+Note: the method table below is over the 62 self-driving <i>ML-planner</i> papers (a
+subset of the 182), not all 182.
+</p>
+</div>
+<ul class="org-ul">
+<li><a id="orge0f8b09"></a>Based on sub-area<br>
+<div class="outline-text-4" id="text-orge0f8b09">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-right">
+
+<col  class="org-right">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Sub-area</th>
+<th scope="col" class="org-right">Papers</th>
+<th scope="col" class="org-right">Share</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Navigation (high-level: AV navigation, ITS)</td>
+<td class="org-right">104</td>
+<td class="org-right">57.1%</td>
+</tr>
+
+<tr>
+<td class="org-left">Perception (detection, segmentation, scene understanding)</td>
+<td class="org-right">67</td>
+<td class="org-right">36.8%</td>
+</tr>
+
+<tr>
+<td class="org-left">Learning methods (RL / DL / representation / imitation)</td>
+<td class="org-right">55</td>
+<td class="org-right">30.2%</td>
+</tr>
+
+<tr>
+<td class="org-left">Localization, Mapping &amp; SLAM</td>
+<td class="org-right">41</td>
+<td class="org-right">22.5%</td>
+</tr>
+
+<tr>
+<td class="org-left">Planning &amp; Decision-making</td>
+<td class="org-right">36</td>
+<td class="org-right">19.8%</td>
+</tr>
+
+<tr>
+<td class="org-left">Prediction &amp; Forecasting</td>
+<td class="org-right">29</td>
+<td class="org-right">15.9%</td>
+</tr>
+
+<tr>
+<td class="org-left">Safety</td>
+<td class="org-right">19</td>
+<td class="org-right">10.4%</td>
+</tr>
+
+<tr>
+<td class="org-left">Simulation &amp; Benchmarking</td>
+<td class="org-right">14</td>
+<td class="org-right">7.7%</td>
+</tr>
+
+<tr>
+<td class="org-left">Multi-agent / V2X</td>
+<td class="org-right">7</td>
+<td class="org-right">3.8%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+<li><a id="org8910b67"></a>Based on method<br>
+<div class="outline-text-4" id="text-org8910b67">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-right">
+
+<col  class="org-right">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">ML method family</th>
+<th scope="col" class="org-right">Papers</th>
+<th scope="col" class="org-right">Share of 62</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Reinforcement Learning (RL)</td>
+<td class="org-right">16</td>
+<td class="org-right">25.8%</td>
+</tr>
+
+<tr>
+<td class="org-left">VLM / LLM / foundation model</td>
+<td class="org-right">15</td>
+<td class="org-right">24.2%</td>
+</tr>
+
+<tr>
+<td class="org-left">Diffusion / score-based</td>
+<td class="org-right">14</td>
+<td class="org-right">22.6%</td>
+</tr>
+
+<tr>
+<td class="org-left">Transformer / attention</td>
+<td class="org-right">14</td>
+<td class="org-right">22.6%</td>
+</tr>
+
+<tr>
+<td class="org-left">Imitation / Behavior Cloning</td>
+<td class="org-right">6</td>
+<td class="org-right">9.7%</td>
+</tr>
+
+<tr>
+<td class="org-left">MPC + learning / hybrid control</td>
+<td class="org-right">6</td>
+<td class="org-right">9.7%</td>
+</tr>
+
+<tr>
+<td class="org-left">World model / model-based</td>
+<td class="org-right">5</td>
+<td class="org-right">8.1%</td>
+</tr>
+
+<tr>
+<td class="org-left">Autoregressive / sequence / tokens</td>
+<td class="org-right">4</td>
+<td class="org-right">6.5%</td>
+</tr>
+
+<tr>
+<td class="org-left">Vector quantization / codebook</td>
+<td class="org-right">2</td>
+<td class="org-right">3.2%</td>
+</tr>
+
+<tr>
+<td class="org-left">Flow matching / rectified flow</td>
+<td class="org-right">2</td>
+<td class="org-right">3.2%</td>
+</tr>
+
+<tr>
+<td class="org-left">Graph neural network</td>
+<td class="org-right">1</td>
+<td class="org-right">1.6%</td>
+</tr>
+
+<tr>
+<td class="org-left">GAN / VAE / generative (other)</td>
+<td class="org-right">1</td>
+<td class="org-right">1.6%</td>
+</tr>
+
+<tr>
+<td class="org-left">Inverse RL / IOC / cost learning</td>
+<td class="org-right">1</td>
+<td class="org-right">1.6%</td>
+</tr>
+
+<tr>
+<td class="org-left">(no specific method matched)</td>
+<td class="org-right">11</td>
+<td class="org-right">17.7%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+</ul>
+</div>
+<div id="outline-container-org6eb3777" class="outline-3">
+<h3 id="org6eb3777">Exhibitor distribution (IROS 2026 exhibit hall)</h3>
+<div class="outline-text-3" id="text-org6eb3777">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-right">
+
+<col  class="org-right">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Field</th>
+<th scope="col" class="org-right">Companies</th>
+<th scope="col" class="org-right">Share</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Humanoid / general-purpose embodied robots</td>
+<td class="org-right">24</td>
+<td class="org-right">13.6%</td>
+</tr>
+
+<tr>
+<td class="org-left">AI / data / simulation / software (physical AI)</td>
+<td class="org-right">24</td>
+<td class="org-right">13.6%</td>
+</tr>
+
+<tr>
+<td class="org-left">Manipulators / industrial / cobots</td>
+<td class="org-right">18</td>
+<td class="org-right">10.2%</td>
+</tr>
+
+<tr>
+<td class="org-left">Education / associations / publishers</td>
+<td class="org-right">15</td>
+<td class="org-right">8.5%</td>
+</tr>
+
+<tr>
+<td class="org-left">Dexterous hands / grippers / end-effectors</td>
+<td class="org-right">14</td>
+<td class="org-right">7.9%</td>
+</tr>
+
+<tr>
+<td class="org-left">Tactile / force / haptic sensing</td>
+<td class="org-right">14</td>
+<td class="org-right">7.9%</td>
+</tr>
+
+<tr>
+<td class="org-left">Actuators / motors / drives / components</td>
+<td class="org-right">12</td>
+<td class="org-right">6.8%</td>
+</tr>
+
+<tr>
+<td class="org-left">Big tech / industry / government labs</td>
+<td class="org-right">11</td>
+<td class="org-right">6.2%</td>
+</tr>
+
+<tr>
+<td class="org-left">LiDAR / depth / vision sensors</td>
+<td class="org-right">9</td>
+<td class="org-right">5.1%</td>
+</tr>
+
+<tr>
+<td class="org-left">Motion capture / tracking</td>
+<td class="org-right">8</td>
+<td class="org-right">4.5%</td>
+</tr>
+
+<tr>
+<td class="org-left">Quadruped / legged / aerial / field</td>
+<td class="org-right">8</td>
+<td class="org-right">4.5%</td>
+</tr>
+
+<tr>
+<td class="org-left">Medical / assistive / BCI / prosthetics</td>
+<td class="org-right">6</td>
+<td class="org-right">3.4%</td>
+</tr>
+
+<tr>
+<td class="org-left">Other / uncategorized</td>
+<td class="org-right">6</td>
+<td class="org-right">3.4%</td>
+</tr>
+
+<tr>
+<td class="org-left">Autonomous vehicles / driving</td>
+<td class="org-right">4</td>
+<td class="org-right">2.3%</td>
+</tr>
+
+<tr>
+<td class="org-left">Semiconductors / edge / power / hardware</td>
+<td class="org-right">4</td>
+<td class="org-right">2.3%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-orge864859" class="outline-2">
+<h2 id="orge864859">Research North Star</h2>
+<div class="outline-text-2" id="text-orge864859">
+</div>
+<div id="outline-container-orgb58e5b8" class="outline-3">
+<h3 id="orgb58e5b8">1. End-to-end</h3>
+<div class="outline-text-3" id="text-orgb58e5b8">
+</div>
+<ul class="org-ul">
+<li><a id="org5c84b0e"></a><a href="https://2026.ieee-iros.org/program/contributed_talks/#b70fe3:4895">[4895] NPPC: Neural Parametric Planning Cost for End-To-End Autonomous Driving</a>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="P0">P0</span>&#xa0;<span class="export">export</span>&#xa0;<span class="R0">R0</span></span><br>
+<div class="outline-text-4" id="text-org5c84b0e">
+</div>
+<ul class="org-ul">
+<li><a id="org304fae6"></a>Summary<br>
+<div class="outline-text-5" id="text-org304fae6">
+
+<figure id="orga38e739">
+<img src="images/20261015_074807.png" alt="20261015_074807.png" width="600">
+
+</figure>
+
+<p>
+Problems:
+</p>
+<ul class="org-ul">
+<li>E2E planners trained by behavior cloning (imitating expert trajectories)
+suffer from biases and compounding errors in closed loop.</li>
+<li>Inverse Optimal Control (IOC) can help by learning the expert's planning cost,
+but
+<ul class="org-ul">
+<li>prior IOC uses hand-crafted cost terms, may not fully capture nuanced human decisions.</li>
+<li>spatially discrete cost-maps (need rule-based post-processing), they may not
+accurately capture high-risk regions in the continuous driving space.</li>
+<li>High-dim neural scorers (limited to ranking predefined trajectory candidates),
+limited to scoring a set of predefined trajectory proposals during inference,
+restricting flexibility in the final trajectory.</li>
+</ul></li>
+</ul>
+
+<p>
+How:
+</p>
+<ul class="org-ul">
+<li>predicts a spatio-temporal cost-map as <b>a weighted sum of radial basis
+functions (RBFs)</b> conditioned on the scene</li>
+</ul>
+
+<p>
+Why interesting:
+</p>
+<ul class="org-ul">
+<li>parametric learnable cost</li>
+<li>combine rule-based cost and learned cost</li>
+</ul>
+</div>
+</li>
+<li><a id="org55c3f8e"></a>Method<br>
+<div class="outline-text-5" id="text-org55c3f8e">
+
+<figure id="org0f15384">
+<img src="images/20261004_124245.png" alt="20261004_124245.png" width="600">
+
+</figure>
+
+<ul class="org-ul">
+<li>NPPC predicts a spatio-temporal cost-map as <b>a weighted sum of radial basis
+functions (RBFs)</b> conditioned on the scene (low-dimensional, spatially
+continuous, learnable cost).</li>
+<li>Because it's low-dim, it plugs directly into
+downstream planners as an optimization objective with no post-processing,
+enabling maneuvers beyond predefined candidates.</li>
+<li>IOC
+<ul class="org-ul">
+<li>cost function: \(g(\cdot) = \sum_{k=1}^{K}w_{k}\phi(\cdot)\)</li>
+<li>RBF: \(\phi(x, \mu, \Sigma) = \frac{1}{1 + (x - \mu)^\top  \Sigma^{-1}(x-\mu)}\), where \(\mu\) is xy-coordinate.</li>
+<li>loss: max-margin loss which is the same as <a href="https://publications.ri.cmu.edu/maximum-margin-planning">Maximum Margin Planning</a>.</li>
+<li>Sampler: engineered sampler, which could be limit factor.</li>
+<li>Refer to End-to-end Interpretable Neural Motion Planner <a href="https://arxiv.org/pdf/2101.06679">https://arxiv.org/pdf/2101.06679</a></li>
+</ul></li>
+<li>Planner: sampling, ranking, and <b>optimization for refinement</b>. The
+refinement step is a major difference from previous work as shown in
+Fig. 1.</li>
+</ul>
+</div>
+</li>
+<li><a id="org47699b2"></a>Overall<br>
+<div class="outline-text-5" id="text-org47699b2">
+<p>
+max-margin IOC with an learnable/interpretable cost using RBF and optimization
+for final refinement.
+</p>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="outline-container-org25f9e39" class="outline-3">
+<h3 id="org25f9e39">2. Multimodal trajectory generation</h3>
+<div class="outline-text-3" id="text-org25f9e39">
+</div>
+<ul class="org-ul">
+<li><a id="org4eedca9"></a><a href="https://arxiv.org/abs/2606.26017">[706] G2DP: Diffusion Planning with Spatio-Temporal Grid Guidance</a>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="P0">P0</span>&#xa0;<span class="export">export</span></span><br>
+<div class="outline-text-4" id="text-org4eedca9">
+</div>
+<ul class="org-ul">
+<li><a id="orgb6a2173"></a>Summary<br>
+<div class="outline-text-5" id="text-orgb6a2173">
+
+<figure id="org7abca98">
+<img src="images/20261016_090544.png" alt="20261016_090544.png" width="600">
+
+</figure>
+<ul class="org-ul">
+<li>Problem:
+<ul class="org-ul">
+<li>Diffusion planners model diverse behaviors well but needs explicit guidance
+for safety/route adherence.</li>
+<li>Existing guidance using sparse entity-centric geometric queries or post
+refinement is not good at situational awareness and being fragile in
+interactive scenes.</li>
+</ul></li>
+<li>How
+<ul class="org-ul">
+<li>builds a differentiable spatio-temporal cost volume and injects dense
+gradients into the denoising loop</li>
+</ul></li>
+
+<li>Why interesting:
+<ul class="org-ul">
+<li>representation/guidance idea rather than a new generator</li>
+</ul></li>
+</ul>
+</div>
+</li>
+<li><a id="orgc66fe05"></a>Method<br>
+<div class="outline-text-5" id="text-orgc66fe05">
+
+<figure id="orga16e9ee">
+<img src="images/20261004_143552.png" alt="20261004_143552.png" width="600">
+
+</figure>
+
+
+<p>
+G2DP (Grid-Guided Diffusion Planning) enforces dense environmental constraints
+via inference-time guidance. It builds a differentiable spatio-temporal cost
+volume by fusing probabilistic future occupancy with a route-progress map,
+formulates it as a continuous safety energy functional, and injects dense
+gradients into the denoising loop to steer trajectories toward collision-free,
+progress-optimal regions.
+</p>
+<ul class="org-ul">
+<li>U-net to predict Occ map</li>
+<li>Fuse with route-aligned progress (encourage the ego to move forward and stay
+in the lane): \(\psi_{t}(u, v) = \gamma O_{t}(u, v) + (1-\gamma) R(u, v)\)</li>
+<li>To balance safety coverage with robustness, we propose a Top-K footprint aggregation strategy.</li>
+<li>Gradient-Based Denoising Steering.</li>
+</ul>
+</div>
+</li>
+<li><a id="orga3d5df1"></a>Result:<br>
+<div class="outline-text-5" id="text-orga3d5df1">
+<p>
+SOTA on nuPlan (+7.2 reactive score over the strongest IL baseline);
+top zero-shot transfer to interPlan and DeepScenario (collision avoidance
++10.15 over unguided on interPlan). Code available (HangYuu/G2DP). TUM /
+Mercedes-Benz / KIT. IROS 2026.
+</p>
+
+<ul class="org-ul">
+<li>Overall: well-rounded closed-loop result with strong zero-shot transfer
+(evidence of generalization); contribution is a representation/guidance idea
+rather than a new generator, so impact hinges on how much the dense grid beats
+cheaper guidance.</li>
+</ul>
+</div>
+</li>
+</ul>
+</li>
+<li><a id="orga7ef924"></a><a href="https://2026.ieee-iros.org/program/contributed_talks/#9d6fe5:398">[398] Vector Quantization for Trajectory Prediction</a>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="P0">P0</span>&#xa0;<span class="export">export</span></span><br>
+<div class="outline-text-4" id="text-orga7ef924">
+</div>
+<ul class="org-ul">
+<li><a id="org30924e4"></a>Summary<br>
+<div class="outline-text-5" id="text-org30924e4">
+
+<figure id="org65d3087">
+<img src="images/20261004_150211.png" alt="20261004_150211.png" width="600">
+
+</figure>
+
+
+<ul class="org-ul">
+<li>Problem: motion-forecasting decoders stayed simplistic.
+<ul class="org-ul">
+<li>Regression decoders (Winner-Takes-All) suffer training instability and mode
+collapse;</li>
+<li>heuristic classification over hand-crafted clusters/goals gives good mode
+coverage but poor absolute accuracy;</li>
+<li>autoregressive decoders are slow (token-by-token).
+Planners mostly act on the single most-likely mode, so that mode's quality
+matters most.</li>
+</ul></li>
+<li>How
+A novel trajectory decoding framework that transforms motion forecasting into a
+classification problem by learning <b>discrete latent trajectory priors</b> via
+Vector Quantization (VQ).</li>
+
+<li>Why interesting
+<ul class="org-ul">
+<li>interpretable decision encoder (Codebooks).</li>
+</ul></li>
+</ul>
+</div>
+</li>
+<li><a id="orgbabdc3e"></a>Method<br>
+<div class="outline-text-5" id="text-orgbabdc3e">
+
+<figure id="org228f63c">
+<img src="images/20261004_153100.png" alt="20261004_153100.png" width="600">
+
+</figure>
+
+<p>
+How to train vector quantizer and trajectory decoder  
+</p>
+
+
+<figure id="org8f9bc32">
+<img src="images/20261004_153113.png" alt="20261004_153113.png" width="600">
+
+</figure>
+
+<p>
+How to train scene encoder
+</p>
+
+
+<p>
+VQTraj frames trajectory decoding as <b>classification over discrete latent
+trajectory priors learned via Vector Quantization</b>. An autoencoder with
+finite-scalar quantization (FSQ) learns a codebook where one code encodes a full
+trajectory (interpretable, data-driven priors instead of heuristics). Pretrain
+the autoencoder to reconstruct futures, then reuse it as a drop-in decoder:
+adapted models just predict a distribution over latent priors.
+</p>
+<ul class="org-ul">
+<li>Autoencoder to c, then finite-scalar quantization (FSQ) to get discrete
+codebook,</li>
+</ul>
+</div>
+</li>
+<li><a id="org15c72c7"></a>Result<br>
+<div class="outline-text-5" id="text-org15c72c7">
+<p>
+Upgrades two SOTA models on Argoverse 2, improving both the top-1 prediction
+(minADE1, minFDE1) and ranked multimodal predictions (bminFDE6); strong
+zero-shot cross-dataset transfer to Waymo Open Motion. Waabi / Univ. Toronto.
+IROS 2026.
+</p>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="outline-container-org2af6d63" class="outline-3">
+<h3 id="org2af6d63">5. A safety layer</h3>
+<div class="outline-text-3" id="text-org2af6d63">
+</div>
+<ul class="org-ul">
+<li><a id="org959a0bc"></a><a href="https://arxiv.org/abs/2605.22189">[82] Learning a Unified Risk Map for Autonomous Driving</a>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="R0">R0</span>&#xa0;<span class="export">export</span></span><br>
+<div class="outline-text-4" id="text-org959a0bc">
+</div>
+<ul class="org-ul">
+<li><a id="org874a8d1"></a>Problem<br>
+<div class="outline-text-5" id="text-org874a8d1">
+
+<figure id="orgdfad220">
+<img src="images/20261014_115524.png" alt="20261014_115524.png" width="600">
+
+</figure>
+
+<ul class="org-ul">
+<li>Occlusion-aware prediction is hard under unobserved-region uncertainty.</li>
+<li>Prior methods either
+<ol class="org-ol">
+<li>overestimate risk (reachable-set, overly conservative) or</li>
+<li>predict poorly under high occlusion (trajectory/occupancy prediction).</li>
+</ol></li>
+<li>Occluded-interaction scenarios are also scarce in data.</li>
+
+<li>Key insight:
+<ul class="org-ul">
+<li>model a dense, planner-friendly <b>unified spatio-temporal risk field</b> that
+implicitly marginalizes over the uncertainty</li>
+<li>solve the data-scarcity problem with adversarial diffusion-based scenario
+generation.</li>
+</ul></li>
+<li>Why interesting
+<ul class="org-ul">
+<li>prediction-planning interface (model risk vs trajectory)</li>
+<li>interactive data generation</li>
+<li>predict risk</li>
+</ul></li>
+</ul>
+</div>
+</li>
+<li><a id="org49ae60a"></a>Method: four interconnected components (Fig. 2).<br>
+<div class="outline-text-5" id="text-org49ae60a">
+
+<figure id="orgcaa0f6d">
+<img src="images/20261014_104302.png" alt="20261014_104302.png" width="600">
+
+</figure>
+
+<ul class="org-ul">
+<li>Occlusion risk modeling (the risk field, 0.5 m grid \(\Omega\)):
+<ul class="org-ul">
+<li>Flow risk: spatial density of predicted multimodal trajectories (where
+traffic is likely), distance-decayed by \(e^{-\lambda D}\); stationary agents
+filtered by a speed threshold \(v_{min}\).</li>
+<li>Collision risk: built from spatio-temporal overlap events where the ego
+trajectory comes within \(\delta\) of a predicted trajectory.</li>
+<li>Fused linearly \(R_{total} = \alpha R_{flow} + \beta R_{collision}\), then
+Gaussian-filtered and normalized.</li>
+</ul></li>
+<li>Occlusion interaction data generation (diffusion):
+<ul class="org-ul">
+<li>samples hidden-agent
+initial states (position/speed) in occluded lane segments from map topology +
+ego FOV;</li>
+<li>a pretrained DDPM (transformer scene encoder + denoiser) predicts
+controls (accel \(\dot{v}\), yaw rate \(\dot{\psi}\)) rolled out via a bicycle
+model.</li>
+<li>A <b>guidance function</b> \(F(u^p) = \lambda_1 \min_t d_{inter} + \lambda_2
+    \min_t d_{road}\) steers generation toward adversarial-but-realistic
+(maximize interaction risk vs. SDF road adherence).</li>
+</ul></li>
+<li>Risk prediction network (lightweight, real-time ~6.67 ms / 150 FPS):
+<ul class="org-ul">
+<li>ray-traced FOV encoding \(f_{fov}\) + vectorized map \(f_{map}\) fused by
+cross-attention;</li>
+<li><b>lane anchors as queries</b> (QCNet-style) in a transformer decoder output
+per-anchor, multi-step risk scores (trained with MSE on modeled risk).</li>
+</ul></li>
+<li>Driving strategy: QP planner with composite cost \(C_{total} = w_1 C_{smooth} +
+  w_2 C_{reach} + w_3 C_{risk} + w_4 C_{collision}\), where \(C_{risk} = \sum_i R_i
+  v_i^2\) discourages speed in risky regions (slow down before a blind spot).</li>
+</ul>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd33a455" class="outline-2">
+<h2 id="orgd33a455">Workshops</h2>
+<div class="outline-text-2" id="text-orgd33a455">
+</div>
+<div id="outline-container-orgc8d7e29" class="outline-3">
+<h3 id="orgc8d7e29">Sim2Real&#xa0;&#xa0;&#xa0;<span class="tag"><span class="export">export</span></span></h3>
+<div class="outline-text-3" id="text-orgc8d7e29">
+<p>
+URL: <a href="https://sim2realgap.github.io/sim2real-and-control-workshop-iros2026/">https://sim2realgap.github.io/sim2real-and-control-workshop-iros2026/</a>
+</p>
+
+
+<figure id="orgfcd0e81">
+<img src="images/20261004_235828.png" alt="20261004_235828.png" width="600">
+
+</figure>
+
+
+
+<figure id="orgf3ccc8a">
+<img src="images/20261004_235921.png" alt="20261004_235921.png" width="600">
+
+</figure>
+
+<figure id="org817e411">
+<img src="images/20261005_000046.png" alt="20261005_000046.png" width="600">
+
+</figure>
+
+<figure id="orgb13b9d5">
+<img src="images/20261005_000128.png" alt="20261005_000128.png" width="600">
+
+</figure>
+
+
+
+<figure id="org2d92e04">
+<img src="images/20261005_000914.png" alt="20261005_000914.png" width="600">
+
+</figure>
+</div>
+</div>
+<div id="outline-container-org9065c46" class="outline-3">
+<h3 id="org9065c46">Learning-to-Optimize for Control in Robotics&#xa0;&#xa0;&#xa0;<span class="tag"><span class="export">export</span></span></h3>
+<div class="outline-text-3" id="text-org9065c46">
+
+<figure id="org13c0aa9">
+<img src="images/20261005_000333.png" alt="20261005_000333.png" width="600">
+
+</figure>
+
+<figure id="org28e2050">
+<img src="images/20261005_000532.png" alt="20261005_000532.png" width="600">
+
+</figure>
+
+<figure id="orgb217b17">
+<img src="images/20261005_000544.png" alt="20261005_000544.png" width="600">
+
+</figure>
+
+<figure id="org5675d5c">
+<img src="images/20261005_000617.png" alt="20261005_000617.png" width="600">
+
+</figure>
+
+<figure id="org602bf71">
+<img src="images/20261005_000714.png" alt="20261005_000714.png" width="600">
+
+</figure>
+
+<p>
+URL: <a href="https://ctrl-l2o-iros2026.github.io/Ctrl-L2O-IROS2026/#contents">https://ctrl-l2o-iros2026.github.io/Ctrl-L2O-IROS2026/#contents</a>
+Slides: <a href="https://drive.google.com/file/d/11-1-Jqa470X6eqztOKcmqy4xuMvk9r5x/view">https://drive.google.com/file/d/11-1-Jqa470X6eqztOKcmqy4xuMvk9r5x/view</a>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb5095c7" class="outline-2">
+<h2 id="orgb5095c7">Other Resource&#xa0;&#xa0;&#xa0;<span class="tag"><span class="export">export</span></span></h2>
+<div class="outline-text-2" id="text-orgb5095c7">
+<p>
+Others' notes: <a href="https://neo-x.github.io/blog/2026/09/28/IROS2026-Reading-List.html">https://neo-x.github.io/blog/2026/09/28/IROS2026-Reading-List.html</a>
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script>
+// Sidebar toggle
+document.querySelector('.sidebar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  this.classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+document.querySelector('.top-bar-toggle').addEventListener('click', function() {
+  document.querySelector('.sidebar').classList.toggle('active');
+  document.querySelector('.sidebar-toggle').classList.toggle('active');
+  document.body.classList.toggle('sidebar-open');
+});
+
+// Search toggle
+(function() {
+  var overlay = document.querySelector('.search-overlay');
+  var input = document.querySelector('.search-input');
+  var results = document.querySelector('.search-results');
+  document.querySelector('.top-bar-search').addEventListener('click', function() {
+    overlay.classList.toggle('active');
+    if (overlay.classList.contains('active')) input.focus();
+  });
+  document.querySelector('.search-close').addEventListener('click', function() {
+    overlay.classList.remove('active');
+    input.value = '';
+    results.innerHTML = '';
+  });
+  var pages = [];
+  fetch('/search-index.json').then(function(r){return r.json();}).then(function(d){pages=d;});
+  input.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { results.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    results.innerHTML = html || '<p style="color:#64748b">No results</p>';
+  });
+
+  // Sidebar search
+  var sInput = document.querySelector('.sidebar-search-input');
+  var sResults = document.querySelector('.sidebar-search-results');
+  sInput.addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    if (!q) { sResults.innerHTML = ''; return; }
+    var html = pages.filter(function(p) { return p.title.toLowerCase().indexOf(q) >= 0; })
+      .map(function(p) { return '<a href="' + p.url + '">' + p.title + '</a>'; }).join('');
+    sResults.innerHTML = html || '<p style="color:rgba(255,255,255,0.4)">No results</p>';
+  });
+})();
+
+// Theme toggle
+(function() {
+  var stored = localStorage.getItem('theme');
+  if (stored) {
+    document.documentElement.setAttribute('data-theme', stored);
+  }
+  document.querySelector('.theme-toggle').addEventListener('click', function() {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+})();
+
+// Active nav highlight
+(function() {
+  var path = window.location.pathname;
+  document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (path === href || (href !== '/index.html' && path.indexOf(href.replace('.html','')) === 0)) {
+      link.classList.add('active');
+    }
+  });
+})();
+
+// Fade in / fade out on scroll
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    } else {
+      entry.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -20px 0px' });
+
+document.querySelectorAll('.intro p, .blog-card, .pub-entry, .timeline-item, .hero-image').forEach(function(el) {
+  el.classList.add('fade-item');
+  observer.observe(el);
+});
+
+// Scroll progress bar
+window.addEventListener('scroll', function() {
+  var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var progress = (scrollTop / scrollHeight) * 100;
+  document.querySelector('.scroll-progress').style.width = progress + String.fromCharCode(37);
+});
+
+// Tag filtering on blogs page
+(function() {
+  document.querySelectorAll('.card-tag').forEach(function(tag) {
+    tag.style.cursor = 'pointer';
+    tag.addEventListener('click', function(e) {
+      e.preventDefault();
+      var selected = this.textContent.trim();
+      var allCards = document.querySelectorAll('.blog-card');
+      var allItems = document.querySelectorAll('.timeline-item');
+      var isActive = this.classList.contains('tag-active');
+      document.querySelectorAll('.card-tag').forEach(function(t) { t.classList.remove('tag-active'); });
+      if (isActive) {
+        allCards.forEach(function(c) { c.style.display = ''; });
+        allItems.forEach(function(i) { i.style.display = ''; });
+      } else {
+        this.classList.add('tag-active');
+        allCards.forEach(function(c) {
+          var t = c.querySelector('.card-tag');
+          c.style.display = (t && t.textContent.trim() === selected) ? '' : 'none';
+        });
+        allItems.forEach(function(i) {
+          var visible = i.querySelectorAll('.blog-card[style=""], .blog-card:not([style])');
+          var hasVisible = Array.from(i.querySelectorAll('.blog-card')).some(function(c) { return c.style.display !== 'none'; });
+          i.style.display = hasVisible ? '' : 'none';
+        });
+      }
+    });
+  });
+})();
+</script>
+</div>
+</body>
+</html>

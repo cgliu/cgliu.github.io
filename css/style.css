@@ -1067,6 +1067,64 @@ li {
   margin-bottom: 0.25rem;
 }
 
+/* Pretty content tables (org-exported) */
+.content table {
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  width: auto;
+  max-width: 100%;
+  font-size: 0.92rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.content table caption {
+  caption-side: top;
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  padding: 0 0 0.5rem 0.15rem;
+}
+
+.content table th,
+.content table td {
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--color-border);
+  vertical-align: top;
+}
+
+.content table thead th {
+  background: var(--color-bg-alt);
+  color: var(--color-heading);
+  font-weight: 600;
+  text-align: left;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.content table tbody tr:nth-child(even) {
+  background: var(--color-bg-alt);
+}
+
+.content table tbody tr:hover {
+  background: rgba(59, 130, 246, 0.08);
+}
+
+/* Respect org's own column alignment classes */
+.content table td.org-right,
+.content table th.org-right {
+  text-align: right;
+}
+.content table td.org-left,
+.content table th.org-left {
+  text-align: left;
+}
+.content table td.org-center,
+.content table th.org-center {
+  text-align: center;
+}
+
 /* Animations */
 @keyframes fadeInUp {
   from {
